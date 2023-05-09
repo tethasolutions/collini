@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Collini\**" />
+    <Content Remove="Collini\**" />
+    <EmbeddedResource Remove="Collini\**" />
+    <None Remove="Collini\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Collini.GestioneInterventi.Application\Collini.GestioneInterventi.Application.csproj" />
+    <ProjectReference Include="..\Collini.GestioneInterventi.Domain\Collini.GestioneInterventi.Domain.csproj" />
+    <ProjectReference Include="..\Collini.GestioneInterventi.Framework\Collini.GestioneInterventi.Framework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2023.1.425" />
+  </ItemGroup>
+
+</Project>

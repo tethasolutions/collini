@@ -1,0 +1,60 @@
+<div class="d-flex align-items-center mb-3">
+    <div class="col">
+        <h3>
+            Clienti
+        </h3>
+    </div>
+    <div class="col-auto">
+        <button (click)="createCustomer()" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i>
+            NUOVO
+        </button>
+    </div>
+</div>
+
+<kendo-grid [data]="dataCustomers" [pageSize]="stateGridCustomers.take" 
+            [skip]="stateGridCustomers.skip" [sort]="stateGridCustomers.sort" 
+            [filter]="stateGridCustomers.filter"
+            [group]="stateGridCustomers.group" filterable="menu" 
+            [sortable]="true" [pageable]="true" scrollable="none"
+            (dataStateChange)="dataStateChange($event)">
+    <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-column field="surname" title="Surname"></kendo-grid-column>
+    <!-- <kendo-grid-column field="type" title="Type"></kendo-grid-column> -->
+    <kendo-grid-column field="companyName" title="Company Name"></kendo-grid-column>
+    <kendo-grid-column field="city" title="City"></kendo-grid-column>
+    <kendo-grid-column field="address" title="Address"></kendo-grid-column>
+    <!-- <kendo-grid-column field="province" title="Province"></kendo-grid-column>
+    <kendo-grid-column field="zipCode" title="Zip Code"></kendo-grid-column> -->
+    <kendo-grid-column field="telephone" title="Telephone"></kendo-grid-column>
+    <!-- <kendo-grid-column field="email" title="Email"></kendo-grid-column> -->
+    <!-- <kendo-grid-column field="fiscalType" title="Fiscal Type"></kendo-grid-column>
+    <kendo-grid-column field="erpCode" title="ERP Code"></kendo-grid-column> -->
+    <kendo-grid-column field="alert" title="alert" filter="boolean">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.alert | bool}}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="customerSupplierId" [sortable]="false" [filterable]="false" title=" " [width]="1">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <button (click)="editCustomer(dataItem)" class="btn btn-primary btn-sm" title="Modifica">
+                <i class="fas fa-edit"></i>
+            </button>
+        </ng-template>
+    </kendo-grid-column>
+    <div *kendoGridDetailTemplate="let dataItem">
+        <kendo-grid [data]="dataItem.addresses" [sortable]="false" [pageable]="false" scrollable="none">
+            <kendo-grid-column field="city" title="City"></kendo-grid-column>
+            <kendo-grid-column field="address" title="Address"></kendo-grid-column>
+            <kendo-grid-column field="province" title="Province"></kendo-grid-column>
+            <kendo-grid-column field="zipCode" title="zipCode"></kendo-grid-column>
+            <kendo-grid-column field="mainAddress" title="Main Address">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{dataItem.mainAddress | bool}}
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</kendo-grid>
+
+<app-customer-modal #customerModal></app-customer-modal>
