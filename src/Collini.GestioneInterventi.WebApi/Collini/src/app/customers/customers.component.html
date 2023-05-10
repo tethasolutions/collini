@@ -35,7 +35,7 @@
             {{dataItem.alert | bool}}
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="customerSupplierId" [sortable]="false" [filterable]="false" title=" ">
+    <kendo-grid-column field="customerSupplierId" [sortable]="false" [filterable]="false" title=" " [width]="95">
         <ng-template kendoGridCellTemplate let-dataItem>
             <button (click)="editCustomer(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
                 <i class="fas fa-edit"></i>
@@ -46,6 +46,15 @@
         </ng-template>
     </kendo-grid-column>
     <div *kendoGridDetailTemplate="let dataItem">
+        <div class="d-flex align-items-center master-detail-grid-header">
+            <div class="col"></div>
+            <div class="col-auto">
+                <button (click)="createAddress()" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i>
+                    NUOVO INDIRIZZO
+                </button>
+            </div>
+        </div>
         <kendo-grid [data]="dataItem.addresses" [sortable]="false" [pageable]="false" scrollable="none">
             <kendo-grid-column field="city" title="City"></kendo-grid-column>
             <kendo-grid-column field="address" title="Address"></kendo-grid-column>
@@ -56,8 +65,24 @@
                     {{dataItem.mainAddress | bool}}
                 </ng-template>
             </kendo-grid-column>
+            <kendo-grid-column field="addressId" [sortable]="false" [filterable]="false" title=" " [width]="130">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <button (click)="editAddress(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button *ngIf="!dataItem.mainAddress"
+                        (click)="setAddressAsMain(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Seleziona come principale">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button *ngIf="!dataItem.mainAddress"
+                        (click)="deleteAddress(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Elimina">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </ng-template>
+            </kendo-grid-column>
         </kendo-grid>
     </div>
 </kendo-grid>
 
 <app-customer-modal #customerModal></app-customer-modal>
+<app-address-modal #addressModal></app-address-modal>
