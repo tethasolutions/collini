@@ -30,6 +30,12 @@ namespace Collini.GestioneInterventi.Dal.Mappings.Security
             builder.Property(e => e.EmailAddress)
                 .HasMaxLength(128);
 
+            builder.HasMany(e => e.Activities)
+                .WithOne(e => e.Operator)
+                .HasForeignKey(e => e.OperatorId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
             builder.HasData(GetData());
         }
 
