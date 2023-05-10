@@ -93,4 +93,19 @@ export class CustomersComponent extends BaseComponent implements OnInit {
       .subscribe()
     );
   }
+
+  deleteCustomer(customer: CustomerModel) {
+    this._messageBox.confirm(`Sei sicuro di voler cancellare il cliente ${customer.name} ${customer.surname}?`, 'Conferma l\'azione').subscribe(result => {
+      if (result == true) {
+        this._subscriptions.push(
+          this._customerService.deleteCustomer(customer.customerSupplierId)
+            .pipe(
+              tap(e => this._messageBox.success(`Cliente ${customer.name} ${customer.surname} cancellato con successo`)),
+              tap(() => this._readCustomers())
+            )
+          .subscribe()
+        );
+      }
+    });
+  }
 }

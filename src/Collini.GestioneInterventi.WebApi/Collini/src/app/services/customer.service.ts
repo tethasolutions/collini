@@ -47,6 +47,13 @@ export class CustomerService {
             );
     }
 
+    deleteCustomer(id: number) {
+        return this._http.delete<void>(`${this._baseUrl}/customer/${id}`)
+            .pipe(
+                map(() => { })
+            );
+    }
+
     getCustomer(id: number) {
         return this._http.get<CustomerModel>(`${this._baseUrl}/customer/${id}`)
             .pipe(
