@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Registry;
 
-public class ProductTypeMap : IEntityTypeConfiguration<ProductType>
+public class ProductTypeMap : BaseEntityMapping<ProductType>
 {
-    public void Configure(EntityTypeBuilder<ProductType> builder)
+    public override void Configure(EntityTypeBuilder<ProductType> builder)
     {
+        base.Configure(builder);
+
+        base.Configure(builder);
+
         builder.ToTable("ProductTypes", "Registry");
-
-        builder.Property(e => e.Code)
-            .HasMaxLength(16)
-            .IsRequired();
-
+        
         builder.Property(e => e.Name)
             .HasMaxLength(128)
             .IsRequired();

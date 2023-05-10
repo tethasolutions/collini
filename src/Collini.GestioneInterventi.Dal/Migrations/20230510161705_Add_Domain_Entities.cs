@@ -17,6 +17,30 @@ namespace Collini.GestioneInterventi.Dal.Migrations
             migrationBuilder.EnsureSchema(
                 name: "Registry");
 
+            migrationBuilder.AddColumn<string>(
+                name: "ColorHex",
+                schema: "Security",
+                table: "Users",
+                type: "nvarchar(16)",
+                maxLength: 16,
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
+                schema: "Security",
+                table: "Users",
+                type: "nvarchar(128)",
+                maxLength: 128,
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Surname",
+                schema: "Security",
+                table: "Users",
+                type: "nvarchar(128)",
+                maxLength: 128,
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "Contacts",
                 schema: "Registry",
@@ -31,13 +55,13 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     FiscalType = table.Column<int>(type: "int", nullable: false),
                     ErpCode = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
                     Alert = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -54,7 +78,6 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
@@ -69,7 +92,6 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
@@ -93,13 +115,13 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     IsMainAddress = table.Column<bool>(type: "bit", nullable: false),
                     ContactId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -124,21 +146,21 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    ExpirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    ExpirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
                     CustomerAddressId = table.Column<long>(type: "bigint", nullable: false),
                     SourceId = table.Column<long>(type: "bigint", nullable: false),
                     ProductTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -180,19 +202,19 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Start = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    End = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Start = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
+                    End = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     OperatorId = table.Column<long>(type: "bigint", nullable: false),
                     JobId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -224,18 +246,18 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExpoirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    ExpirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     JobId = table.Column<long>(type: "bigint", nullable: false),
                     SupplierId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -264,18 +286,18 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ExpoirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(14,2)", precision: 14, scale: 2, nullable: false),
+                    ExpirationDate = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    StatusChangedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     JobId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -303,13 +325,13 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     OrderId = table.Column<long>(type: "bigint", nullable: true),
                     QuotationId = table.Column<long>(type: "bigint", nullable: true),
                     ActivityId = table.Column<long>(type: "bigint", nullable: true),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -353,13 +375,13 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     DisplayName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     FileName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     NoteId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedById = table.Column<long>(type: "bigint", nullable: true),
-                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     EditedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EditedById = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedOn = table.Column<DateTimeOffset>(type: "datetimeoffset(3)", precision: 3, nullable: true),
                     DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeletedById = table.Column<long>(type: "bigint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -374,6 +396,14 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         principalTable: "Notes",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.UpdateData(
+                schema: "Security",
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: 1L,
+                columns: new[] { "ColorHex", "Name", "Surname" },
+                values: new object[] { null, null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Activities_JobId",
@@ -508,6 +538,21 @@ namespace Collini.GestioneInterventi.Dal.Migrations
             migrationBuilder.DropTable(
                 name: "Contacts",
                 schema: "Registry");
+
+            migrationBuilder.DropColumn(
+                name: "ColorHex",
+                schema: "Security",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "Name",
+                schema: "Security",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "Surname",
+                schema: "Security",
+                table: "Users");
         }
     }
 }

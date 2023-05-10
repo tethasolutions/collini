@@ -4,14 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Docs;
 
-public class JobMap : IEntityTypeConfiguration<Job>
+public class JobMap : BaseEntityMapping<Job>
 {
-    public void Configure(EntityTypeBuilder<Job> builder)
+    public override void Configure(EntityTypeBuilder<Job> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("Jobs", "Docs");
 
         builder.Property(e => e.Description)
-            .HasMaxLength(256)
             .IsRequired();
 
         builder.HasMany(e => e.Notes)

@@ -11,6 +11,9 @@ public class User : BaseEntity
     public bool Enabled { get; set; }
     public Role Role { get; set; }
     public string? EmailAddress { get; set; }
+    public string? ColorHex { get; set; }
+    public string? Name { get; set; }
+    public string? Surname { get; set; }
     
     public ICollection<Activity> Activities { get; set; }
 

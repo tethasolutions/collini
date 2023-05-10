@@ -37,7 +37,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -46,7 +47,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -59,10 +61,12 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<DateTimeOffset>("End")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -74,13 +78,15 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("Start")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("StatusChangedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.HasKey("Id");
 
@@ -106,7 +112,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<long>("CustomerAddressId")
                         .HasColumnType("bigint");
@@ -121,12 +128,12 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EditedBy")
                         .HasColumnType("nvarchar(max)");
@@ -135,10 +142,12 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<DateTimeOffset?>("ExpirationDate")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -149,15 +158,15 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     b.Property<long>("ProductTypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("SourceId")
-                        .IsRequired()
+                    b.Property<long>("SourceId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("StatusChangedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -193,7 +202,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -202,7 +212,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("EditedBy")
                         .HasColumnType("nvarchar(max)");
@@ -211,7 +222,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -257,7 +269,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -266,7 +279,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
@@ -280,7 +294,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("FileName")
                         .IsRequired()
@@ -319,7 +334,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -328,7 +344,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -340,10 +357,12 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
-                    b.Property<DateTimeOffset?>("ExpoirationDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTimeOffset?>("ExpirationDate")
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -355,7 +374,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("StatusChangedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<long>("SupplierId")
                         .HasColumnType("bigint");
@@ -378,7 +398,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(14, 2)
+                        .HasColumnType("decimal");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -387,7 +408,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -396,7 +418,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("EditedBy")
                         .HasColumnType("nvarchar(max)");
@@ -405,10 +428,12 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
-                    b.Property<DateTimeOffset?>("ExpoirationDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTimeOffset?>("ExpirationDate")
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -420,7 +445,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset?>("StatusChangedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.HasKey("Id");
 
@@ -451,7 +477,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -460,7 +487,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("EditedBy")
                         .HasColumnType("nvarchar(max)");
@@ -469,7 +497,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("ErpCode")
                         .HasMaxLength(16)
@@ -520,7 +549,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -529,7 +559,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("DeletedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(256)
@@ -542,7 +573,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset?>("EditedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(128)
@@ -588,11 +620,6 @@ namespace Collini.GestioneInterventi.Dal.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -610,11 +637,6 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -639,12 +661,20 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("ColorHex")
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
                     b.Property<string>("EmailAddress")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -658,6 +688,10 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Surname")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("UserName")
                         .IsRequired()

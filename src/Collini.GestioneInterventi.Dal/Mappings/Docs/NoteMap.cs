@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Docs;
 
-public class NoteMap : IEntityTypeConfiguration<Note>
+public class NoteMap : BaseEntityMapping<Note>
 {
-    public void Configure(EntityTypeBuilder<Note> builder)
+    public override void Configure(EntityTypeBuilder<Note> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("Notes", "Docs");
 
         builder.Property(e => e.Value)

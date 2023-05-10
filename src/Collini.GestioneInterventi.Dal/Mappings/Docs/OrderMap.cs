@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Docs;
 
-public class OrderMap : IEntityTypeConfiguration<Order>
+public class OrderMap : BaseEntityMapping<Order>
 {
-    public void Configure(EntityTypeBuilder<Order> builder)
+    public override void Configure(EntityTypeBuilder<Order> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("Orders", "Docs");
 
         builder.Property(e => e.Code)

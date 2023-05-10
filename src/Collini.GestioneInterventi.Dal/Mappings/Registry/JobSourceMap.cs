@@ -4,16 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Registry;
 
-public class JobSourceMap : IEntityTypeConfiguration<JobSource>
+public class JobSourceMap : BaseEntityMapping<JobSource>
 {
-    public void Configure(EntityTypeBuilder<JobSource> builder)
+    public override void Configure(EntityTypeBuilder<JobSource> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("JobSources", "Registry");
-
-        builder.Property(e => e.Code)
-            .HasMaxLength(16)
-            .IsRequired();
-
+        
         builder.Property(e => e.Name)
             .HasMaxLength(128)
             .IsRequired();

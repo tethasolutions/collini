@@ -17,7 +17,7 @@ public class Job : FullAuditedEntity
     public long CustomerAddressId { get; set; }
     public ContactAddress? CustomerAddress { get; set; }
 
-    public long? SourceId { get; set; }
+    public long SourceId { get; set; }
     public JobSource? Source { get; set; }
 
     public long ProductTypeId { get; set; }

@@ -3,7 +3,7 @@
 public class Quotation : FullAuditedEntity
 {
     public decimal Amount { get; set; }
-    public DateTimeOffset? ExpoirationDate { get; set; }
+    public DateTimeOffset? ExpirationDate { get; set; }
     public QuotationStatus Status { get; set; }
     public DateTimeOffset? StatusChangedOn { get; set; }
 

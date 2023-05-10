@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Registry;
 
-public class ContactAddressMap : IEntityTypeConfiguration<ContactAddress>
+public class ContactAddressMap : BaseEntityMapping<ContactAddress>
 {
-    public void Configure(EntityTypeBuilder<ContactAddress> builder)
+    public override void Configure(EntityTypeBuilder<ContactAddress> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("ContactAddresses", "Registry");
 
         builder.Property(e => e.Description)

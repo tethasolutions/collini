@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Docs;
 
-public class NoteAttachmentMap : IEntityTypeConfiguration<NoteAttachment>
+public class NoteAttachmentMap : BaseEntityMapping<NoteAttachment>
 {
-    public void Configure(EntityTypeBuilder<NoteAttachment> builder)
+    public override void Configure(EntityTypeBuilder<NoteAttachment> builder)
     {
+        base.Configure(builder);
+
         builder.ToTable("NoteAttachments", "Docs");
 
         builder.Property(e => e.DisplayName)
