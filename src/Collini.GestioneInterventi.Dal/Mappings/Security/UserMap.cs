@@ -5,10 +5,12 @@ using Collini.GestioneInterventi.Framework.Security;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Security
 {
-    public class UserMap : IEntityTypeConfiguration<User>
+    public class UserMap : BaseEntityMapping<User>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable("Users", "Security");
 
             builder.Property(e => e.UserName)
@@ -29,6 +31,21 @@ namespace Collini.GestioneInterventi.Dal.Mappings.Security
 
             builder.Property(e => e.EmailAddress)
                 .HasMaxLength(128);
+
+            builder.Property(e => e.ColorHex)
+                .HasMaxLength(16);
+
+            builder.Property(e => e.Name)
+                .HasMaxLength(128);
+
+            builder.Property(e => e.Surname)
+                .HasMaxLength(128);
+
+            builder.HasMany(e => e.Activities)
+                .WithOne(e => e.Operator)
+                .HasForeignKey(e => e.OperatorId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
 
             builder.HasData(GetData());
         }

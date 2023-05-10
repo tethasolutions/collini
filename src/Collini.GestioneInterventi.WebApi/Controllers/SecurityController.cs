@@ -44,7 +44,7 @@ public class SecurityController : ColliniApiController
     [HttpPost("users")]
     public async Task<IActionResult> CreateUser(UpdateUserRequest request)
     {
-        var user = new UserDto(request.UserName, request.Enabled, request.Role, request.EmailAddress, null);
+        var user = new UserDto(request.UserName, request.Enabled, request.Role, request.EmailAddress, null, request.ColorHex, request.Name, request.Surname);
         var result = await service.Register(user, request.Password);
 
         return CreatedAtAction(nameof(GetUser), new { result.Id }, result);
@@ -65,6 +65,8 @@ public class SecurityController : ColliniApiController
 
                 await context.EnableUser(request.Enabled);
                 context.ChangeEmailAddress(request.EmailAddress);
+                context.ChangeName(request.Name, request.Surname);
+                context.ChangeColor(request.ColorHex);
             });
 
         return NoContent();

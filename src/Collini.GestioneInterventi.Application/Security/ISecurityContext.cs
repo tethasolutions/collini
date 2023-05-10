@@ -7,7 +7,7 @@ namespace Collini.GestioneInterventi.Application.Security;
 
 public interface ISecurityContext : IDisposable
 {
-    void ChangeEmailAddress(string emailAddress);
+    void ChangeEmailAddress(string? emailAddress);
     Task ChangePassword(string password);
     Task EnableUser(bool enabled);
     Task ChangeUserName(string userName);
@@ -15,6 +15,8 @@ public interface ISecurityContext : IDisposable
     Task GenerateUniqueAccessToken();
     Task HashPasswordWithUniqueSalt(string password);
     Task EnsureUserNameIsUnique(string userName);
+    void ChangeName(string? name, string? surname);
+    void ChangeColor(string? hex);
 }
 
 public class SecurityContext : ISecurityContext
@@ -49,7 +51,7 @@ public class SecurityContext : ISecurityContext
         user.Enabled = enabled;
     }
 
-    public void ChangeEmailAddress(string emailAddress)
+    public void ChangeEmailAddress(string? emailAddress)
     {
         user.EmailAddress = emailAddress;
     }
@@ -126,7 +128,18 @@ public class SecurityContext : ISecurityContext
             throw new ColliniException($"Nome utente {userName} già in uso.");
         }
     }
-        
+
+    public void ChangeName(string? name, string? surname)
+    {
+        user.Name = name;
+        user.Surname = surname;
+    }
+
+    public void ChangeColor(string? hex)
+    {
+        user.ColorHex = hex;
+    }
+
     public void Dispose()
     {
     }
