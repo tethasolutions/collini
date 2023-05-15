@@ -33,6 +33,8 @@ export class CustomersComponent extends BaseComponent implements OnInit {
       sort: []
   };
 
+  customerSelezionato = new CustomerModel();
+
   constructor(
       private readonly _customerService: CustomerService,
       private readonly _addressesService: AddressesService,
@@ -55,8 +57,8 @@ export class CustomersComponent extends BaseComponent implements OnInit {
       this._customerService.readCustomers(this.stateGridCustomers)
         .pipe(
             tap(e => {
+              console.log(e);
               this.dataCustomers = e;
-              console.log(this.dataCustomers);
             })
         )
         .subscribe()
@@ -112,9 +114,10 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     });
   }
 
-  createAddress() {
+  createAddress(customer: CustomerModel) {
+    this.customerSelezionato = customer;
     const request = new AddressModel();
-
+    request.customerId = customer.customerSupplierId;
     this._subscriptions.push(
         this.addressModal.open(request)
             .pipe(
@@ -127,7 +130,8 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     );
   }
 
-  editAddress(address: AddressModel) {
+  editAddress(address: AddressModel, customer: CustomerModel) {
+    this.customerSelezionato = customer;
     this._subscriptions.push(
       this._addressesService.getAddress(address.addressId)
         .pipe(
@@ -162,6 +166,17 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   }
 
   setAddressAsMain(address: AddressModel) {
-    
+    this._messageBox.confirm(`Sei sicuro di voler selezionare l\'indirizzo come principale?`, 'Conferma l\'azione').subscribe(result => {
+      if (result == true) {
+        this._subscriptions.push(
+          this._addressesService.setAddressAsMain(address.addressId)
+            .pipe(
+              tap(e => this._messageBox.success(`L\'indirizzo selezionato come principale con successo`)),
+              tap(() => this._readCustomers())
+            )
+          .subscribe()
+        );
+      }
+    });
   }
 }

@@ -25,17 +25,13 @@ public class CustomersController : ColliniApiController
             new CustomerDto
             {
                 CustomerSupplierId = 1,
-                Type = "normal",
+                Type = "C",
                 CompanyName = "General Motors",
                 Name = "Smith",
                 Surname = "Tucson",
-                City = "Verona",
-                Address = "via Roma 15",
-                Province = "VR",
-                ZipCode = "25031",
                 Telephone = "+393889445428",
                 Email = "Smith_Tucson@gmail.com",
-                FiscalType = "S.P.A.",
+                FiscalType = "P",
                 ERPCode = "ERP123",
                 Alert = false,
                 Addresses = new List<AddressDto>
@@ -48,7 +44,7 @@ public class CustomersController : ColliniApiController
                         Address = "via Roma 15",
                         Province = "VR",
                         ZipCode = "25031",
-                        MainAddress = true
+                        IsMainAddress = true
                     },
                     new AddressDto
                     {
@@ -58,7 +54,7 @@ public class CustomersController : ColliniApiController
                         Address = "corso Milano 12",
                         Province = "TS",
                         ZipCode = "23084",
-                        MainAddress = false
+                        IsMainAddress = false
                     },
                     new AddressDto
                     {
@@ -68,24 +64,20 @@ public class CustomersController : ColliniApiController
                         Address = "via Ronchi 19",
                         Province = "BL",
                         ZipCode = "29057",
-                        MainAddress = false
+                        IsMainAddress = false
                     }
                 }
             },
             new CustomerDto
             {
                 CustomerSupplierId = 2,
-                Type = "special",
+                Type = "F",
                 CompanyName = "Cannon",
                 Name = "John",
                 Surname = "Travolta",
-                City = "Milano",
-                Address = "corso Garibaldi 11",
-                Province = "MN",
-                ZipCode = "21007",
                 Telephone = "+393888501683",
                 Email = "John_Travolta@gmail.com",
-                FiscalType = "S.R.L.",
+                FiscalType = "A",
                 ERPCode = "ERP456",
                 Alert = true,
                 Addresses = new List<AddressDto>
@@ -98,7 +90,7 @@ public class CustomersController : ColliniApiController
                         Address = "corso Garibaldi 11",
                         Province = "MN",
                         ZipCode = "21007",
-                        MainAddress = true
+                        IsMainAddress = true
                     },
                     new AddressDto
                     {
@@ -108,7 +100,7 @@ public class CustomersController : ColliniApiController
                         Address = "corso Milano 12",
                         Province = "TS",
                         ZipCode = "23084",
-                        MainAddress = false
+                        IsMainAddress = false
                     },
                     new AddressDto
                     {
@@ -118,24 +110,20 @@ public class CustomersController : ColliniApiController
                         Address = "via Ronchi 19",
                         Province = "BL",
                         ZipCode = "29057",
-                        MainAddress = false
+                        IsMainAddress = false
                     }
                 }
             },
             new CustomerDto
             {
                 CustomerSupplierId = 3,
-                Type = "prioritario",
+                Type = "C",
                 CompanyName = "IDM",
                 Name = "Alex",
                 Surname = "Ronaldo",
-                City = "Bergamo",
-                Address = "via Venezia 14",
-                Province = "BG",
-                ZipCode = "24001",
                 Telephone = "+393883504629",
                 Email = "Alex_Ronaldo@gmail.com",
-                FiscalType = "S.R.L.",
+                FiscalType = "G",
                 ERPCode = "ERP789",
                 Alert = true,
                 Addresses = new List<AddressDto>
@@ -148,7 +136,7 @@ public class CustomersController : ColliniApiController
                         Address = "via Venezia 14",
                         Province = "BG",
                         ZipCode = "24001",
-                        MainAddress = true
+                        IsMainAddress = true
                     },
                     new AddressDto
                     {
@@ -158,7 +146,7 @@ public class CustomersController : ColliniApiController
                         Address = "corso Milano 12",
                         Province = "TS",
                         ZipCode = "23084",
-                        MainAddress = false
+                        IsMainAddress = false
                     },
                     new AddressDto
                     {
@@ -168,7 +156,7 @@ public class CustomersController : ColliniApiController
                         Address = "via Ronchi 19",
                         Province = "BL",
                         ZipCode = "29057",
-                        MainAddress = false
+                        IsMainAddress = false
                     }
                 }
             }
@@ -191,17 +179,13 @@ public class CustomersController : ColliniApiController
         var customer = new CustomerDto
         {
             CustomerSupplierId = 3,
-            Type = "prioritario",
+            Type = "C",
             CompanyName = "IDM",
             Name = "Alex",
             Surname = "Ronaldo",
-            City = "Bergamo",
-            Address = "via Venezia 14",
-            Province = "BG",
-            ZipCode = "24001",
             Telephone = "+393883504629",
             Email = "Alex_Ronaldo@gmail.com",
-            FiscalType = "S.R.L.",
+            FiscalType = "A",
             ERPCode = "ERP789",
             Alert = true,
             Addresses = new List<AddressDto>
@@ -214,7 +198,7 @@ public class CustomersController : ColliniApiController
                     Address = "via Venezia 14",
                     Province = "BG",
                     ZipCode = "24001",
-                    MainAddress = true
+                    IsMainAddress = false
                 },
                 new AddressDto
                 {
@@ -224,7 +208,7 @@ public class CustomersController : ColliniApiController
                     Address = "corso Milano 12",
                     Province = "TS",
                     ZipCode = "23084",
-                    MainAddress = false
+                    IsMainAddress = false
                 },
                 new AddressDto
                 {
@@ -234,7 +218,7 @@ public class CustomersController : ColliniApiController
                     Address = "via Ronchi 19",
                     Province = "BL",
                     ZipCode = "29057",
-                    MainAddress = false
+                    IsMainAddress = true
                 }
             }
         };

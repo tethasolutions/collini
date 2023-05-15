@@ -48,4 +48,11 @@ export class AddressesService {
                 })
             );
     }
+
+    setAddressAsMain(id: number) {
+        return this._http.put<void>(`${this._baseUrl}/set-address-as-main/${id}`, null)
+            .pipe(
+                map(() => { })
+            );
+    }
 }

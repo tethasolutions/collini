@@ -28,7 +28,7 @@ public class AddressesController : ColliniApiController
             Address = "corso Milano 12",
             Province = "TS",
             ZipCode = "23084",
-            MainAddress = false
+            IsMainAddress = false
         };
 
         return address;
@@ -48,6 +48,12 @@ public class AddressesController : ColliniApiController
 
     [HttpPost("address")]
     public async Task<IActionResult> CreateAddress(AddressDto request)
+    {
+        return NoContent();
+    }
+
+    [HttpPut("set-address-as-main/{id}")]
+    public async Task<IActionResult> SetAddressAsMain(long id)
     {
         return NoContent();
     }

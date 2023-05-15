@@ -21,8 +21,11 @@
                 <div class="col-md-4">
                     <label>Fiscal Type</label>
                     <div class="form-group">
-                        <input class="form-control" name="fiscalType" [(ngModel)]="options.fiscalType" required
-                            maxlength="1" novalidate autocomplete="off" />
+                        <select class="form-select form-control" name="fiscalType" required [(ngModel)]="options.fiscalType">
+                            <option value="P">Privato</option>
+                            <option value="A">Azienda</option>
+                            <option value="G">Agenzia</option>
+                        </select>
                         <div class="validation-message" [control]="form.controls['fiscalType']"></div>
                     </div>
                 </div>
@@ -53,11 +56,11 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label>Address</label>
+                    <label>ERP Code</label>
                     <div class="form-group">
-                        <input class="form-control" name="address" [(ngModel)]="options.address" required
-                            maxlength="255" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['address']"></div>
+                        <input class="form-control" name="erpCode" [(ngModel)]="options.erpCode" required
+                            maxlength="50" novalidate autocomplete="off" />
+                        <div class="validation-message" [control]="form.controls['erpCode']"></div>
                     </div>
                 </div>
             </div>
@@ -78,17 +81,26 @@
                         <div class="validation-message" [control]="form.controls['telephone']"></div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <label>ERP Code</label>
-                    <div class="form-group">
-                        <input class="form-control" name="erpCode" [(ngModel)]="options.erpCode" required
-                            maxlength="50" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['erpCode']"></div>
-                    </div>
-                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-8">
+                    <label>Address</label>
+                    <div class="form-group">
+                        <kendo-combobox class="address-combobox"
+                            [data]="options.addresses" 
+                            [(value)]="options.mainAddress" 
+                            textField="fullAddress"
+                            valueField="addressId"
+                            (valueChange)="mainAddressChanged($event)">
+                        </kendo-combobox>
+                        <button (click)="createAddress()" type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <input [hidden]="true" class="form-control" name="address" [(ngModel)]="options.mainAddress" required novalidate autocomplete="off" />
+                        <div class="validation-message" [control]="form.controls['address']"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <label>Alert</label>
                     <div class="form-group">
                         <kendo-switch name="alert" [(ngModel)]="options.alert" onLabel="Si" offLabel="No">
@@ -108,3 +120,5 @@
         </form>
     </kendo-window>
 </div>
+
+<app-address-modal [customer]="options" #addressModal></app-address-modal>

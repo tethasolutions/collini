@@ -22,8 +22,7 @@
     <kendo-grid-column field="surname" title="Surname"></kendo-grid-column>
     <!-- <kendo-grid-column field="type" title="Type"></kendo-grid-column> -->
     <kendo-grid-column field="companyName" title="Company Name"></kendo-grid-column>
-    <kendo-grid-column field="city" title="City"></kendo-grid-column>
-    <kendo-grid-column field="address" title="Address"></kendo-grid-column>
+    <kendo-grid-column field="mainAddress.fullAddress" title="Address"></kendo-grid-column>
     <!-- <kendo-grid-column field="province" title="Province"></kendo-grid-column>
     <kendo-grid-column field="zipCode" title="Zip Code"></kendo-grid-column> -->
     <kendo-grid-column field="telephone" title="Telephone"></kendo-grid-column>
@@ -49,7 +48,7 @@
         <div class="d-flex align-items-center master-detail-grid-header">
             <div class="col"></div>
             <div class="col-auto">
-                <button (click)="createAddress()" class="btn btn-primary btn-sm">
+                <button (click)="createAddress(dataItem)" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i>
                     NUOVO INDIRIZZO
                 </button>
@@ -60,22 +59,22 @@
             <kendo-grid-column field="address" title="Address"></kendo-grid-column>
             <kendo-grid-column field="province" title="Province"></kendo-grid-column>
             <kendo-grid-column field="zipCode" title="zipCode"></kendo-grid-column>
-            <kendo-grid-column field="mainAddress" title="Main Address">
-                <ng-template kendoGridCellTemplate let-dataItem>
-                    {{dataItem.mainAddress | bool}}
+            <kendo-grid-column field="isMainAddress" title="Main Address">
+                <ng-template kendoGridCellTemplate let-dataItemAddress>
+                    {{dataItemAddress.isMainAddress | bool}}
                 </ng-template>
             </kendo-grid-column>
             <kendo-grid-column field="addressId" [sortable]="false" [filterable]="false" title=" " [width]="130">
-                <ng-template kendoGridCellTemplate let-dataItem>
-                    <button (click)="editAddress(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
+                <ng-template kendoGridCellTemplate let-dataItemAddress>
+                    <button (click)="editAddress(dataItemAddress, dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button *ngIf="!dataItem.mainAddress"
-                        (click)="setAddressAsMain(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Seleziona come principale">
+                    <button *ngIf="!dataItemAddress.isMainAddress"
+                        (click)="setAddressAsMain(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Seleziona come principale">
                         <i class="fas fa-check"></i>
                     </button>
-                    <button *ngIf="!dataItem.mainAddress"
-                        (click)="deleteAddress(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Elimina">
+                    <button *ngIf="!dataItemAddress.isMainAddress"
+                        (click)="deleteAddress(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Elimina">
                         <i class="fas fa-trash"></i>
                     </button>
                 </ng-template>
@@ -85,4 +84,4 @@
 </kendo-grid>
 
 <app-customer-modal #customerModal></app-customer-modal>
-<app-address-modal #addressModal></app-address-modal>
+<app-address-modal [customer]="customerSelezionato" #addressModal></app-address-modal>

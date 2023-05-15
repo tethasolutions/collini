@@ -1,7 +1,7 @@
 <div class="k-overlay" *ngIf="opened"></div>
 
 <div class="k-window-wrapper" *ngIf="opened">
-    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="700" [top]="110">
         <kendo-window-titlebar>
             <div class="k-window-title">
                 Indirizzo
@@ -15,9 +15,7 @@
                 <div class="col-md-4">
                     <label>Cliente</label>
                     <div class="form-group">
-                        <input class="form-control" name="customerId" [(ngModel)]="options.customerId" required
-                            maxlength="255" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['customerId']"></div>
+                        <input class="form-control" name="customerId" [disabled]="true" [value]="customer.customerDescription" />
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -57,9 +55,9 @@
                 <div class="col-md-3">
                     <label>Indirizzo principale</label>
                     <div class="form-group">
-                        <kendo-switch name="mainAddress" [(ngModel)]="options.mainAddress" onLabel="Si" offLabel="No">
+                        <kendo-switch name="isMainAddress" [(ngModel)]="options.isMainAddress" onLabel="Si" offLabel="No">
                         </kendo-switch>
-                        <div class="validation-message" [control]="form.controls['mainAddress']"></div>
+                        <div class="validation-message" [control]="form.controls['isMainAddress']"></div>
                     </div>
                 </div>
             </div>

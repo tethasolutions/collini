@@ -14,6 +14,6 @@ namespace Collini.GestioneInterventi.Application.Customers.DTOs
         public string Address { get; set; }
         public string Province { get; set; }
         public string ZipCode { get; set; }
-        public bool MainAddress { get; set; }
+        public bool IsMainAddress { get; set; }
     }
 }

@@ -23,9 +23,27 @@ export class CustomerService {
         return this._http.get<GridDataResult>(`${this._baseUrl}/customers?${params}`)
             .pipe(
                 map(e =>
-                    <GridDataResult>{
-                        data: hasGroups ? translateDataSourceResultGroups(e.data) : e.data,
-                        total: e.total
+                    {
+                        const customers: Array<CustomerModel> = [];
+                        e.data.forEach(item => {
+                            const customer: CustomerModel = Object.assign(new CustomerModel(), item);
+
+                            const addresses: Array<AddressModel> = [];
+                            customer.addresses.forEach(item => {
+                                const address: AddressModel = Object.assign(new AddressModel(), item);
+                                addresses.push(address);
+                            });
+                            customer.addresses = addresses;
+
+                            let mainAddress = addresses.find(x => x.isMainAddress);
+                            if (mainAddress == undefined) { mainAddress = new AddressModel(); }
+                            customer.mainAddress = mainAddress;
+                            customers.push(customer);
+                        });
+                        return <GridDataResult>{
+                            data: hasGroups ? translateDataSourceResultGroups(customers) : customers,
+                            total: e.total
+                        };
                     }
                 )
             );
@@ -58,7 +76,19 @@ export class CustomerService {
         return this._http.get<CustomerModel>(`${this._baseUrl}/customer/${id}`)
             .pipe(
                 map(e => {
-                    const customer = Object.assign(new CustomerModel(), e);
+                    const customer: CustomerModel = Object.assign(new CustomerModel(), e);
+
+                    const addresses: Array<AddressModel> = [];
+                    customer.addresses.forEach(item => {
+                        const address: AddressModel = Object.assign(new AddressModel(), item);
+                        addresses.push(address);
+                    });
+                    customer.addresses = addresses;
+
+                    let mainAddress = addresses.find(x => x.isMainAddress);
+                    if (mainAddress == undefined) { mainAddress = new AddressModel(); }
+                    customer.mainAddress = mainAddress;
+
                     return customer;
                 })
             );
