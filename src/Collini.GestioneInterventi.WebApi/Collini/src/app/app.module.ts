@@ -44,6 +44,7 @@ import { CustomerService } from './services/customer.service';
 import { CustomerModalComponent } from './customer-modal/customer-modal.component';
 import { AddressesService } from './services/addresses.service';
 import { AddressModalComponent } from './address-modal/address-modal.component';
+import { AddressesModalComponent } from './addresses-modal/addresses-modal.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -61,7 +62,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         MenuComponent,
         CustomersComponent,
         CustomerModalComponent,
-        AddressModalComponent
+        AddressModalComponent,
+        AddressesModalComponent
     ],
     imports: [
         BrowserModule,

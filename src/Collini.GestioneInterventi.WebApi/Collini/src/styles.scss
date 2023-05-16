@@ -157,3 +157,15 @@ textarea {
 .master-detail-grid-header {
     margin-bottom: 5px;
 }
+
+.confirm-dialog.k-dialog-wrapper {
+    z-index: 99999!important;
+}
+
+.confirm-dialog .k-overlay {
+    z-index: 99999!important;
+}
+
+.confirm-dialog .k-window {
+    z-index: 99999!important;
+}

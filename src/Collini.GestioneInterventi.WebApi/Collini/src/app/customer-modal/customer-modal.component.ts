@@ -7,7 +7,10 @@ import { markAsDirty } from '../services/common/functions';
 import { MessageBoxService } from '../services/common/message-box.service';
 import { Role } from '../services/security/models';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
+import { AddressesModalComponent } from '../addresses-modal/addresses-modal.component';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { CustomerService } from '../services/customer.service';
+import { AddressesService } from '../services/addresses.service';
 
 @Component({
   selector: 'app-customer-modal',
@@ -19,11 +22,14 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
   
     @ViewChild('form') form: NgForm;
     @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
+    @ViewChild('addressesModal', { static: true }) addressesModal: AddressesModalComponent;
 
     readonly role = Role;
 
     constructor(
-        private readonly _messageBox: MessageBoxService
+        private readonly _messageBox: MessageBoxService,
+        private readonly _customerService: CustomerService,
+        private readonly _addressesService: AddressesService
     ) {
         super();
     }
@@ -41,18 +47,45 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
     mainAddressChanged(address: AddressModel) {
         if (address === undefined) { return; }
         this.options.addresses.forEach((item: AddressModel) => {
-            item.isMainAddress = item.addressId === address.addressId;
+            item.isMainAddress = item.tempId === address.tempId;
         });
     }
 
     addNewAddress(address: AddressModel) {
-        this.options.addresses.push(address);
-        if (address.isMainAddress) {
-            this.options.addresses.forEach((item: AddressModel) => {
-                item.isMainAddress = item.addressId === address.addressId;
-            });
+        if (this.options.customerSupplierId == null) {
+            this.options.addresses.push(address);
+            if (address.isMainAddress) {
+                this.options.mainAddress = address;
+                this.options.addresses.forEach((item: AddressModel) => {
+                    item.isMainAddress = item.tempId === address.tempId;
+                });
+            }
+        } else {
+            this._subscriptions.push(
+                this._addressesService.createAddress(address)
+                    .pipe(
+                        map(e => e),
+                        tap(e => this._messageBox.success(`Indirizzo creato con successo`)),
+                        tap(() => this.readAddresses())
+                    )
+                    .subscribe()
+            );
         }
     }
+
+    readAddresses() {
+        this._subscriptions.push(
+          this._customerService.getCustomer(this.options.customerSupplierId)
+            .pipe(
+                map(e => {
+                  const result = Object.assign(new CustomerModel(), e);
+                  this.options.addresses = result.addresses;
+                }),
+                tap(() => {})
+            )
+          .subscribe()
+        );
+      }
 
     createAddress() {
         const request = new AddressModel();
@@ -63,6 +96,19 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                     filter(e => e),
                     tap(() => {
                         this.addNewAddress(request);
+                    })
+                )
+                .subscribe()
+        );
+    }
+
+    editAddresses() {
+        this._subscriptions.push(
+            this.addressesModal.open()
+                .pipe(
+                    filter(e => e),
+                    tap(() => {
+                        console.log('closed edit addresses')
                     })
                 )
                 .subscribe()

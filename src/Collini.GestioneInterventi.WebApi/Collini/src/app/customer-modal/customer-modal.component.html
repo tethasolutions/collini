@@ -65,6 +65,33 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-8">
+                    <label>Address</label>
+                    <div class="form-group">
+                        <kendo-combobox class="address-combobox"
+                            [data]="options.addresses" 
+                            [(value)]="options.mainAddress" 
+                            textField="fullAddress"
+                            valueField="tempId"
+                            (valueChange)="mainAddressChanged($event)">
+                        </kendo-combobox>
+                        <button (click)="createAddress()" type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <input [hidden]="true" class="form-control" name="address" [(ngModel)]="options.mainAddress" required novalidate autocomplete="off" />
+                        <div class="validation-message" [control]="form.controls['address']"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <div class="form-group">
+                        <button (click)="editAddresses()" type="button" class="btn btn-primary" title="Gestione indirizza">
+                            <i class="fa fa-edit"></i> Gestione indirizzi
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <label>Email</label>
                     <div class="form-group">
@@ -79,25 +106,6 @@
                         <input class="form-control" name="telephone" [(ngModel)]="options.telephone" required
                             maxlength="255" novalidate autocomplete="off" />
                         <div class="validation-message" [control]="form.controls['telephone']"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <label>Address</label>
-                    <div class="form-group">
-                        <kendo-combobox class="address-combobox"
-                            [data]="options.addresses" 
-                            [(value)]="options.mainAddress" 
-                            textField="fullAddress"
-                            valueField="addressId"
-                            (valueChange)="mainAddressChanged($event)">
-                        </kendo-combobox>
-                        <button (click)="createAddress()" type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                        <input [hidden]="true" class="form-control" name="address" [(ngModel)]="options.mainAddress" required novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['address']"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -122,3 +130,4 @@
 </div>
 
 <app-address-modal [customer]="options" #addressModal></app-address-modal>
+<app-addresses-modal [customer]="options" #addressesModal></app-addresses-modal>

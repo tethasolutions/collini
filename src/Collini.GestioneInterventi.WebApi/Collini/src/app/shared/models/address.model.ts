@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class AddressModel {
     addressId: number;
     customerId: number;
@@ -6,6 +8,7 @@ export class AddressModel {
     province: string;
     zipCode: string;
     isMainAddress: boolean;
+    tempId: string;
 
     get fullAddress(): string {
         let result = '';
@@ -24,5 +27,6 @@ export class AddressModel {
         this.province = null;
         this.zipCode = null;
         this.isMainAddress = false;
+        this.tempId = uuidv4();
     }
 }
