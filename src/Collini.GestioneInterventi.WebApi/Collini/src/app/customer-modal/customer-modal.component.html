@@ -69,6 +69,7 @@
                     <label>Address</label>
                     <div class="form-group">
                         <kendo-combobox class="address-combobox"
+                            [class.address-validation-error-combobox]="isAddressInValidationError"
                             [data]="options.addresses" 
                             [(value)]="options.mainAddress" 
                             textField="fullAddress"

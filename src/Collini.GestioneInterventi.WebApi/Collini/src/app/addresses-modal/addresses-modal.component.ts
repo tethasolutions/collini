@@ -61,7 +61,7 @@ export class AddressesModalComponent extends BaseComponent {
         this._subscriptions.push(
             this.addressModal.open(request)
                 .pipe(
-                    map(e => e),
+                    filter(e => e),
                     tap(e => {
                         this.customer.addresses.push(request);
                         if (request.isMainAddress) {
@@ -97,11 +97,11 @@ export class AddressesModalComponent extends BaseComponent {
         this._subscriptions.push(
             this.addressModal.open(request)
                 .pipe(
-                    map(e => e),
+                    filter(e => e),
                     tap(e => {
-                        var addressToEdit = this.customer.addresses.find(x => x.tempId === request.tempId);
-                        if (addressToEdit !== undefined) {
-                            addressToEdit = request;
+                        const indexAddressToEdit = this.customer.addresses.findIndex(x => x.tempId === request.tempId);
+                        if (indexAddressToEdit >= 0) {
+                            this.customer.addresses[indexAddressToEdit] = request;
                             if (request.isMainAddress) {
                                 this.customer.mainAddress = request;
                                 this.customer.addresses.forEach((item: AddressModel) => {
@@ -163,14 +163,20 @@ export class AddressesModalComponent extends BaseComponent {
   setAddressAsMain(address: AddressModel) {
     this._messageBox.confirm(`Sei sicuro di voler selezionare l\'indirizzo come principale?`, 'Conferma l\'azione').subscribe(result => {
       if (result == true) {
-        this._subscriptions.push(
-          this._addressesService.setAddressAsMain(address.addressId)
-            .pipe(
-              tap(e => this._messageBox.success(`L\'indirizzo selezionato come principale con successo`)),
-              tap(() => this.readAddresses())
-            )
-          .subscribe()
-        );
+        if (this.customer.customerSupplierId === null){
+            this.customer.addresses.forEach((item: AddressModel) => {
+                item.isMainAddress = item.tempId === address.tempId;
+            });
+        } else {
+            this._subscriptions.push(
+            this._addressesService.setAddressAsMain(address.addressId)
+                .pipe(
+                tap(e => this._messageBox.success(`L\'indirizzo selezionato come principale con successo`)),
+                tap(() => this.readAddresses())
+                )
+            .subscribe()
+            );
+        }
       }
     });
   }

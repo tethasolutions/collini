@@ -33,12 +33,12 @@
                     <button (click)="editAddress(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
                         <i class="fas fa-edit"></i>
                     </button>
+                    <button (click)="deleteAddress(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Elimina">
+                        <i class="fas fa-trash"></i>
+                    </button>
                     <button *ngIf="!dataItemAddress.isMainAddress"
                         (click)="setAddressAsMain(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Seleziona come principale">
                         <i class="fas fa-check"></i>
-                    </button>
-                    <button (click)="deleteAddress(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Elimina">
-                        <i class="fas fa-trash"></i>
                     </button>
                 </ng-template>
             </kendo-grid-column>

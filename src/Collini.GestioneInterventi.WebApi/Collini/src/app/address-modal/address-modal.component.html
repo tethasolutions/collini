@@ -12,7 +12,7 @@
 
 
             <div class="row">
-                <div class="col-md-4">
+                <div *ngIf="customer.customerSupplierId !== null" class="col-md-4">
                     <label>Cliente</label>
                     <div class="form-group">
                         <input class="form-control" name="customerId" [disabled]="true" [value]="customer.customerDescription" />

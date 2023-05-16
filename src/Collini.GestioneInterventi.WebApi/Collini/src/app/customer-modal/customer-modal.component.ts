@@ -26,6 +26,11 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
 
     readonly role = Role;
 
+    get isAddressInValidationError(): boolean {
+        if (this.form == undefined) { return false; }
+        return this.form.submitted && !this.form.controls['address'].valid;
+    }
+
     constructor(
         private readonly _messageBox: MessageBoxService,
         private readonly _customerService: CustomerService,
