@@ -10,6 +10,7 @@ import { CustomerModalComponent } from '../customer-modal/customer-modal.compone
 import { CustomerModel } from '../shared/models/customer.model';
 import { AddressModel } from '../shared/models/address.model';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -35,15 +36,20 @@ export class CustomersComponent extends BaseComponent implements OnInit {
 
   customerSelezionato = new CustomerModel();
 
+  anagraficaType: string;
+
   constructor(
       private readonly _customerService: CustomerService,
       private readonly _addressesService: AddressesService,
-      private readonly _messageBox: MessageBoxService
+      private readonly _messageBox: MessageBoxService,
+      private readonly _router: Router
   ) {
       super();
   }
 
   ngOnInit() {
+      if (this._router.url === '/customers') { this.anagraficaType = 'customers'; }
+      if (this._router.url === '/providers') { this.anagraficaType = 'providers'; }
       this._readCustomers();
   }
 
@@ -54,10 +60,9 @@ export class CustomersComponent extends BaseComponent implements OnInit {
 
   protected _readCustomers() {
     this._subscriptions.push(
-      this._customerService.readCustomers(this.stateGridCustomers)
+      this._customerService.readCustomers(this.stateGridCustomers, this.anagraficaType)
         .pipe(
             tap(e => {
-              console.log(e);
               this.dataCustomers = e;
             })
         )
@@ -67,13 +72,22 @@ export class CustomersComponent extends BaseComponent implements OnInit {
 
   createCustomer() {
     const request = new CustomerModel();
+    if (this.anagraficaType = 'customers') { request.type = 'C'; }
+    if (this.anagraficaType = 'providers') { request.type = 'F'; }
 
     this._subscriptions.push(
         this.customerModal.open(request)
             .pipe(
                 filter(e => e),
                 switchMap(() => this._customerService.createCustomer(request)),
-                tap(e => this._messageBox.success(`Cliente ${request.name} creato`)),
+                tap(e => {
+                  if (this.anagraficaType = 'customers') { 
+                    this._messageBox.success(`Cliente ${request.name} creato`);
+                  }
+                  if (this.anagraficaType = 'providers') { 
+                    this._messageBox.success(`Fornitore ${request.name} creato`);
+                  }
+                }),
                 tap(() => this._readCustomers())
             )
             .subscribe()

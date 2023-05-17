@@ -1,8 +1,7 @@
 <div class="d-flex align-items-center mb-3">
     <div class="col">
-        <h3>
-            Clienti
-        </h3>
+        <h3 *ngIf="anagraficaType == 'customers'">Clienti</h3>
+        <h3 *ngIf="anagraficaType == 'providers'">Fornitori</h3>
     </div>
     <div class="col-auto">
         <button (click)="createCustomer()" class="btn btn-primary btn-sm">
@@ -20,15 +19,9 @@
             (dataStateChange)="dataStateChange($event)">
     <kendo-grid-column field="name" title="Name"></kendo-grid-column>
     <kendo-grid-column field="surname" title="Surname"></kendo-grid-column>
-    <!-- <kendo-grid-column field="type" title="Type"></kendo-grid-column> -->
     <kendo-grid-column field="companyName" title="Company Name"></kendo-grid-column>
     <kendo-grid-column field="mainAddress.fullAddress" title="Address"></kendo-grid-column>
-    <!-- <kendo-grid-column field="province" title="Province"></kendo-grid-column>
-    <kendo-grid-column field="zipCode" title="Zip Code"></kendo-grid-column> -->
     <kendo-grid-column field="telephone" title="Telephone"></kendo-grid-column>
-    <!-- <kendo-grid-column field="email" title="Email"></kendo-grid-column> -->
-    <!-- <kendo-grid-column field="fiscalType" title="Fiscal Type"></kendo-grid-column>
-    <kendo-grid-column field="erpCode" title="ERP Code"></kendo-grid-column> -->
     <kendo-grid-column field="alert" title="alert" filter="boolean">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.alert | bool}}

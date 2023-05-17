@@ -14,7 +14,8 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'users', component: UsersComponent, canActivate: [AuthGuard.asInjectableGuard] },
-    { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard.asInjectableGuard] }
+    { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard.asInjectableGuard] },
+    { path: 'providers', component: CustomersComponent, canActivate: [AuthGuard.asInjectableGuard] }
 ];
 
 @NgModule({

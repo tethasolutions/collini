@@ -71,7 +71,7 @@ public class CustomersController : ColliniApiController
             new CustomerDto
             {
                 CustomerSupplierId = 2,
-                Type = "F",
+                Type = "C",
                 CompanyName = "Cannon",
                 Name = "John",
                 Surname = "Travolta",
@@ -118,6 +118,162 @@ public class CustomersController : ColliniApiController
             {
                 CustomerSupplierId = 3,
                 Type = "C",
+                CompanyName = "IDM",
+                Name = "Alex",
+                Surname = "Ronaldo",
+                Telephone = "+393883504629",
+                Email = "Alex_Ronaldo@gmail.com",
+                FiscalType = "G",
+                ERPCode = "ERP789",
+                Alert = true,
+                Addresses = new List<AddressDto>
+                {
+                    new AddressDto
+                    {
+                        AddressId = 7,
+                        CustomerId = 3,
+                        City = "Bergamo",
+                        Address = "via Venezia 14",
+                        Province = "BG",
+                        ZipCode = "24001",
+                        IsMainAddress = true
+                    },
+                    new AddressDto
+                    {
+                        AddressId = 8,
+                        CustomerId = 3,
+                        City = "Toscana",
+                        Address = "corso Milano 12",
+                        Province = "TS",
+                        ZipCode = "23084",
+                        IsMainAddress = false
+                    },
+                    new AddressDto
+                    {
+                        AddressId = 9,
+                        CustomerId = 3,
+                        City = "Bologna",
+                        Address = "via Ronchi 19",
+                        Province = "BL",
+                        ZipCode = "29057",
+                        IsMainAddress = false
+                    }
+                }
+            }
+        };
+
+        DataSourceResult result = new DataSourceResult
+        {
+            AggregateResults = null,
+            Errors = null,
+            Total = 3,
+            Data = customers
+        };
+
+        return result;
+    }
+
+    [HttpGet("providers")]
+    public async Task<DataSourceResult> GetProviders([DataSourceRequest] DataSourceRequest request)
+    {
+        List<CustomerDto> customers = new List<CustomerDto>
+        {
+            new CustomerDto
+            {
+                CustomerSupplierId = 1,
+                Type = "F",
+                CompanyName = "General Motors",
+                Name = "Smith",
+                Surname = "Tucson",
+                Telephone = "+393889445428",
+                Email = "Smith_Tucson@gmail.com",
+                FiscalType = "P",
+                ERPCode = "ERP123",
+                Alert = false,
+                Addresses = new List<AddressDto>
+                {
+                    new AddressDto
+                    {
+                        AddressId = 1,
+                        CustomerId = 1,
+                        City = "Verona",
+                        Address = "via Roma 15",
+                        Province = "VR",
+                        ZipCode = "25031",
+                        IsMainAddress = true
+                    },
+                    new AddressDto
+                    {
+                        AddressId = 2,
+                        CustomerId = 1,
+                        City = "Toscana",
+                        Address = "corso Milano 12",
+                        Province = "TS",
+                        ZipCode = "23084",
+                        IsMainAddress = false
+                    },
+                    new AddressDto
+                    {
+                        AddressId = 3,
+                        CustomerId = 1,
+                        City = "Bologna",
+                        Address = "via Ronchi 19",
+                        Province = "BL",
+                        ZipCode = "29057",
+                        IsMainAddress = false
+                    }
+                }
+            },
+            new CustomerDto
+            {
+                CustomerSupplierId = 2,
+                Type = "F",
+                CompanyName = "Cannon",
+                Name = "John",
+                Surname = "Travolta",
+                Telephone = "+393888501683",
+                Email = "John_Travolta@gmail.com",
+                FiscalType = "A",
+                ERPCode = "ERP456",
+                Alert = true,
+                Addresses = new List<AddressDto>
+                {
+                    new AddressDto
+                    {
+                        AddressId = 4,
+                        CustomerId = 2,
+                        City = "Milano",
+                        Address = "corso Garibaldi 11",
+                        Province = "MN",
+                        ZipCode = "21007",
+                        IsMainAddress = true
+                    },
+                    new AddressDto
+                    {
+                        AddressId = 5,
+                        CustomerId = 2,
+                        City = "Toscana",
+                        Address = "corso Milano 12",
+                        Province = "TS",
+                        ZipCode = "23084",
+                        IsMainAddress = false
+                    },
+                    new AddressDto
+                    {
+                        AddressId = 6,
+                        CustomerId = 2,
+                        City = "Bologna",
+                        Address = "via Ronchi 19",
+                        Province = "BL",
+                        ZipCode = "29057",
+                        IsMainAddress = false
+                    }
+                }
+            },
+            new CustomerDto
+            {
+                CustomerSupplierId = 3,
+                Type = "F",
                 CompanyName = "IDM",
                 Name = "Alex",
                 Surname = "Ronaldo",

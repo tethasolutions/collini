@@ -3,21 +3,12 @@
 <div class="k-window-wrapper" *ngIf="opened">
     <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
         <kendo-window-titlebar>
-            <div class="k-window-title">
-                Cliente
-            </div>
+            <div *ngIf="options.type == 'C'" class="k-window-title">Cliente</div>
+            <div *ngIf="options.type == 'F'" class="k-window-title">Fornitore</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <form name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
             <div class="row">
-                <div class="col-md-4">
-                    <label>Type</label>
-                    <div class="form-group">
-                        <input class="form-control" name="type" [(ngModel)]="options.type" required
-                            maxlength="1" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['type']"></div>
-                    </div>
-                </div>
                 <div class="col-md-4">
                     <label>Fiscal Type</label>
                     <div class="form-group">
