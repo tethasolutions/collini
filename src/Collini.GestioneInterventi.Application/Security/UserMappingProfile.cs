@@ -15,7 +15,8 @@ public class UserMappingProfile : Profile
             .IgnoreCommonMembers()
             .Ignore(x => x.AccessToken)
             .Ignore(x => x.PasswordHash)
-            .Ignore(x => x.Salt);
+            .Ignore(x => x.Salt)
+            .Ignore(x => x.Activities);
 
         CreateMap<User, UserReadModel>();
     }
