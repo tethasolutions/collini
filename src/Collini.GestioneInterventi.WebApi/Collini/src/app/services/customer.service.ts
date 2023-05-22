@@ -29,8 +29,8 @@ export class CustomerService {
                             const customer: CustomerModel = Object.assign(new CustomerModel(), item);
 
                             const addresses: Array<AddressModel> = [];
-                            customer.addresses.forEach(item => {
-                                const address: AddressModel = Object.assign(new AddressModel(), item);
+                            customer.addresses.forEach(addressitem => {
+                                const address: AddressModel = Object.assign(new AddressModel(), addressitem);
                                 addresses.push(address);
                             });
                             customer.addresses = addresses;

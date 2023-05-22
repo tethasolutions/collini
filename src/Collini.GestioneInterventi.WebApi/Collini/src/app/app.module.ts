@@ -45,6 +45,8 @@ import { CustomerModalComponent } from './customer-modal/customer-modal.componen
 import { AddressesService } from './services/addresses.service';
 import { AddressModalComponent } from './address-modal/address-modal.component';
 import { AddressesModalComponent } from './addresses-modal/addresses-modal.component';
+import { JobsService } from './services/jobs.service';
+import { JobsComponent } from './jobs/jobs.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -63,7 +65,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         CustomersComponent,
         CustomerModalComponent,
         AddressModalComponent,
-        AddressesModalComponent
+        AddressesModalComponent,
+        JobsComponent
     ],
     imports: [
         BrowserModule,
@@ -102,7 +105,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         Clipboard,
         AuthGuard,
         CustomerService,
-        AddressesService
+        AddressesService,
+        JobsService
     ],
     bootstrap: [AppComponent]
 })
