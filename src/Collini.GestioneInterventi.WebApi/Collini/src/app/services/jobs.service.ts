@@ -28,6 +28,7 @@ export class JobsService {
                         const jobs: Array<JobModel> = [];
                         e.data.forEach(item => {
                             const job: JobModel = Object.assign(new JobModel(), item);
+                            job.expirationDate = new Date(job.expirationDate);
                             job.customer = Object.assign(new ContactModel(), job.customer);
 
                             const addresses: Array<ContactAddressModel> = [];

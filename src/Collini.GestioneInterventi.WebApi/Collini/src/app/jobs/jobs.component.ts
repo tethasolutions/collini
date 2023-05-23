@@ -11,6 +11,7 @@ import { CustomerModel } from '../shared/models/customer.model';
 import { AddressModel } from '../shared/models/address.model';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Router, NavigationEnd } from '@angular/router';
+import { JobStatusEnum } from '../shared/enums/job-status.enum';
 
 @Component({
   selector: 'app-jobs',
@@ -31,6 +32,11 @@ export class JobsComponent extends BaseComponent implements OnInit {
       group: [],
       sort: []
   };
+
+  getGiobStatusString(index: number): string {
+    if (index >= 0) { return JobStatusEnum[index]; }
+    else { return ''; }
+  }
 
   constructor(
       private readonly _jobsService: JobsService,

@@ -33,6 +33,10 @@ public class JobsController : ColliniApiController
                 Description = "descrizione commessa test",
                 Status = JobStatus.Working,
                 StatusChangedOn = DateTime.Now,
+                ProductType = new ProductType
+                {
+                    Name = "Casseforti"
+                },
                 CustomerId = 1,
                 Customer = new Contact
                 {
@@ -80,6 +84,10 @@ public class JobsController : ColliniApiController
                 Description = "descrizione commessa test 2",
                 Status = JobStatus.Working,
                 StatusChangedOn = DateTime.Now,
+                ProductType = new ProductType
+                {
+                    Name = "Serrature"
+                },
                 CustomerId = 1,
                 Customer = new Contact
                 {
@@ -89,7 +97,7 @@ public class JobsController : ColliniApiController
                     Surname = "Tucson",
                     FiscalType = ContactFiscalType.PrivatePerson,
                     ErpCode = "ERP123",
-                    Alert = false,
+                    Alert = true,
                     Addresses = new List<ContactAddress>
                     {
                         new ContactAddress
@@ -127,6 +135,10 @@ public class JobsController : ColliniApiController
                 Description = "descrizione commessa test 3",
                 Status = JobStatus.Completed,
                 StatusChangedOn = DateTime.Now,
+                ProductType = new ProductType
+                {
+                    Name = "Chiavi"
+                },
                 CustomerId = 1,
                 Customer = new Contact
                 {

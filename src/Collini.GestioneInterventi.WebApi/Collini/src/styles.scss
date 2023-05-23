@@ -169,3 +169,15 @@ textarea {
 .confirm-dialog .k-window {
     z-index: 99999!important;
 }
+
+.k-table-td:has(.job-active) {
+    background-color: #0d6efd;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.k-table-td:has(.job-expired) {
+    background-color: #dc3545;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}

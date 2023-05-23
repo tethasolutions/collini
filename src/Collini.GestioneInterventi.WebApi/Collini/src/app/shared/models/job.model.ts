@@ -32,4 +32,14 @@ export class JobModel {
     quotations: QuotationModel[];
     orders: OrderModel[];
     activities: ActivityModel[];
+
+    get expired(): boolean {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const expiration = new Date(this.expirationDate);
+        expiration.setHours(0, 0, 0, 0);
+
+        return today > expiration;
+    }
 }
