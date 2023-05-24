@@ -3,8 +3,8 @@
 <div class="k-window-wrapper" *ngIf="opened">
     <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
         <kendo-window-titlebar>
-            <div *ngIf="options.type == 'C'" class="k-window-title">Cliente</div>
-            <div *ngIf="options.type == 'F'" class="k-window-title">Fornitore</div>
+            <div *ngIf="options.type == 0" class="k-window-title">Cliente</div>
+            <div *ngIf="options.type == 1" class="k-window-title">Fornitore</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <form name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
@@ -13,9 +13,9 @@
                     <label>Fiscal Type</label>
                     <div class="form-group">
                         <select class="form-select form-control" name="fiscalType" required [(ngModel)]="options.fiscalType">
-                            <option value="P">Privato</option>
-                            <option value="A">Azienda</option>
-                            <option value="G">Agenzia</option>
+                            <option value=0>Privato</option>
+                            <option value=1>Azienda</option>
+                            <option value=2>Condominio</option>
                         </select>
                         <div class="validation-message" [control]="form.controls['fiscalType']"></div>
                     </div>
@@ -84,22 +84,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <label>Email</label>
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="email" [(ngModel)]="options.email" required
-                            maxlength="128" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['email']"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label>Telephone</label>
-                    <div class="form-group">
-                        <input class="form-control" name="telephone" [(ngModel)]="options.telephone" required
-                            maxlength="255" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['telephone']"></div>
-                    </div>
-                </div>
                 <div class="col-md-4">
                     <label>Alert</label>
                     <div class="form-group">

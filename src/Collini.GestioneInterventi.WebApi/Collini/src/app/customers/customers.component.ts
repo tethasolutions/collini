@@ -72,8 +72,8 @@ export class CustomersComponent extends BaseComponent implements OnInit {
 
   createCustomer() {
     const request = new CustomerModel();
-    if (this.anagraficaType = 'customers') { request.type = 'C'; }
-    if (this.anagraficaType = 'providers') { request.type = 'F'; }
+    if (this.anagraficaType == 'customers') { request.type = 0; }
+    if (this.anagraficaType == 'providers') { request.type = 1; }
 
     this._subscriptions.push(
         this.customerModal.open(request)
@@ -81,10 +81,10 @@ export class CustomersComponent extends BaseComponent implements OnInit {
                 filter(e => e),
                 switchMap(() => this._customerService.createCustomer(request)),
                 tap(e => {
-                  if (this.anagraficaType = 'customers') { 
+                  if (this.anagraficaType == 'customers') { 
                     this._messageBox.success(`Cliente ${request.name} creato`);
                   }
-                  if (this.anagraficaType = 'providers') { 
+                  if (this.anagraficaType == 'providers') { 
                     this._messageBox.success(`Fornitore ${request.name} creato`);
                   }
                 }),
@@ -96,7 +96,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
 
   editCustomer(customer: CustomerModel) {
     this._subscriptions.push(
-      this._customerService.getCustomer(customer.customerSupplierId)
+      this._customerService.getCustomer(customer.id)
         .pipe(
             map(e => {
               return Object.assign(new CustomerModel(), e);
@@ -104,7 +104,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
             switchMap(e => this.customerModal.open(e)),
             filter(e => e),
             map(() => this.customerModal.options),
-            switchMap(e => this._customerService.updateCustomer(e, customer.customerSupplierId)),
+            switchMap(e => this._customerService.updateCustomer(e, customer.id)),
             map(() => this.customerModal.options),
             tap(e => this._messageBox.success(`Cliente ${e.name} aggiornato`)),
             tap(() => this._readCustomers())
@@ -117,7 +117,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     this._messageBox.confirm(`Sei sicuro di voler cancellare il cliente ${customer.name} ${customer.surname}?`, 'Conferma l\'azione').subscribe(result => {
       if (result == true) {
         this._subscriptions.push(
-          this._customerService.deleteCustomer(customer.customerSupplierId)
+          this._customerService.deleteCustomer(customer.id)
             .pipe(
               tap(e => this._messageBox.success(`Cliente ${customer.name} ${customer.surname} cancellato con successo`)),
               tap(() => this._readCustomers())
@@ -131,7 +131,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   createAddress(customer: CustomerModel) {
     this.customerSelezionato = customer;
     const request = new AddressModel();
-    request.customerId = customer.customerSupplierId;
+    request.contactId = customer.id;
     this._subscriptions.push(
         this.addressModal.open(request)
             .pipe(
@@ -147,7 +147,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   editAddress(address: AddressModel, customer: CustomerModel) {
     this.customerSelezionato = customer;
     this._subscriptions.push(
-      this._addressesService.getAddress(address.addressId)
+      this._addressesService.getAddress(address.id)
         .pipe(
             map(e => {
               return Object.assign(new AddressModel(), e);
@@ -155,7 +155,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
             switchMap(e => this.addressModal.open(e)),
             filter(e => e),
             map(() => this.addressModal.options),
-            switchMap(e => this._addressesService.updateAddress(e, address.addressId)),
+            switchMap(e => this._addressesService.updateAddress(e, address.id)),
             map(() => this.addressModal.options),
             tap(e => this._messageBox.success(`Indirizzo aggiornato con successo`)),
             tap(() => this._readCustomers())
@@ -168,7 +168,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     this._messageBox.confirm(`Sei sicuro di voler cancellare l\'indirizzo?`, 'Conferma l\'azione').subscribe(result => {
       if (result == true) {
         this._subscriptions.push(
-          this._addressesService.deleteAddress(address.addressId)
+          this._addressesService.deleteAddress(address.id)
             .pipe(
               tap(e => this._messageBox.success(`L\'indirizzo cancellato con successo`)),
               tap(() => this._readCustomers())
@@ -183,7 +183,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
     this._messageBox.confirm(`Sei sicuro di voler selezionare l\'indirizzo come principale?`, 'Conferma l\'azione').subscribe(result => {
       if (result == true) {
         this._subscriptions.push(
-          this._addressesService.setAddressAsMain(address.addressId)
+          this._addressesService.setAddressAsMain(address.id)
             .pipe(
               tap(e => this._messageBox.success(`L\'indirizzo selezionato come principale con successo`)),
               tap(() => this._readCustomers())

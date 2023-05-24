@@ -28,7 +28,7 @@
                     {{dataItemAddress.isMainAddress | bool}}
                 </ng-template>
             </kendo-grid-column>
-            <kendo-grid-column field="addressId" [sortable]="false" [filterable]="false" title=" " [width]="130">
+            <kendo-grid-column field="id" [sortable]="false" [filterable]="false" title=" " [width]="130">
                 <ng-template kendoGridCellTemplate let-dataItemAddress>
                     <button (click)="editAddress(dataItemAddress)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
                         <i class="fas fa-edit"></i>

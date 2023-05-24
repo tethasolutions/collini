@@ -57,7 +57,7 @@ export class AddressesModalComponent extends BaseComponent {
 
   createAddress() {
     const request = new AddressModel();
-    if (this.customer.customerSupplierId === null) {
+    if (this.customer.id === null) {
         this._subscriptions.push(
             this.addressModal.open(request)
                 .pipe(
@@ -76,7 +76,7 @@ export class AddressesModalComponent extends BaseComponent {
                 .subscribe()
         );
     } else {
-        request.customerId = this.customer.customerSupplierId;
+        request.contactId = this.customer.id;
         this._subscriptions.push(
             this.addressModal.open(request)
                 .pipe(
@@ -92,7 +92,7 @@ export class AddressesModalComponent extends BaseComponent {
   }
 
   editAddress(address: AddressModel) {
-    if (this.customer.customerSupplierId === null) {
+    if (this.customer.id === null) {
         const request: AddressModel = Object.assign(new AddressModel(), JSON.parse(JSON.stringify(address)));
         this._subscriptions.push(
             this.addressModal.open(request)
@@ -116,7 +116,7 @@ export class AddressesModalComponent extends BaseComponent {
         );
     } else {
        this._subscriptions.push(
-            this._addressesService.getAddress(address.addressId)
+            this._addressesService.getAddress(address.id)
                 .pipe(
                     map(e => {
                     return Object.assign(new AddressModel(), e);
@@ -124,7 +124,7 @@ export class AddressesModalComponent extends BaseComponent {
                     switchMap(e => this.addressModal.open(e)),
                     filter(e => e),
                     map(() => this.addressModal.options),
-                    switchMap(e => this._addressesService.updateAddress(e, address.addressId)),
+                    switchMap(e => this._addressesService.updateAddress(e, address.id)),
                     map(() => this.addressModal.options),
                     tap(e => this._messageBox.success(`Indirizzo aggiornato con successo`)),
                     tap(() => this.readAddresses())
@@ -136,7 +136,7 @@ export class AddressesModalComponent extends BaseComponent {
   }
 
   deleteAddress(address: AddressModel) {
-    if (this.customer.customerSupplierId === null) {
+    if (this.customer.id === null) {
         this._messageBox.confirm(`Sei sicuro di voler cancellare l\'indirizzo?`, 'Conferma l\'azione').subscribe(result => {
             if (result == true) {
                 if (address.isMainAddress) { this.customer.mainAddress = null; }
@@ -148,7 +148,7 @@ export class AddressesModalComponent extends BaseComponent {
         this._messageBox.confirm(`Sei sicuro di voler cancellare l\'indirizzo?`, 'Conferma l\'azione').subscribe(result => {
             if (result == true) {
                 this._subscriptions.push(
-                this._addressesService.deleteAddress(address.addressId)
+                this._addressesService.deleteAddress(address.id)
                     .pipe(
                     tap(e => this._messageBox.success(`L\'indirizzo cancellato con successo`)),
                     tap(() => this.readAddresses())
@@ -163,13 +163,13 @@ export class AddressesModalComponent extends BaseComponent {
   setAddressAsMain(address: AddressModel) {
     this._messageBox.confirm(`Sei sicuro di voler selezionare l\'indirizzo come principale?`, 'Conferma l\'azione').subscribe(result => {
       if (result == true) {
-        if (this.customer.customerSupplierId === null){
+        if (this.customer.id === null){
             this.customer.addresses.forEach((item: AddressModel) => {
                 item.isMainAddress = item.tempId === address.tempId;
             });
         } else {
             this._subscriptions.push(
-            this._addressesService.setAddressAsMain(address.addressId)
+            this._addressesService.setAddressAsMain(address.id)
                 .pipe(
                 tap(e => this._messageBox.success(`L\'indirizzo selezionato come principale con successo`)),
                 tap(() => this.readAddresses())
@@ -183,7 +183,7 @@ export class AddressesModalComponent extends BaseComponent {
 
   readAddresses() {
     this._subscriptions.push(
-      this._customerService.getCustomer(this.customer.customerSupplierId)
+      this._customerService.getCustomer(this.customer.id)
         .pipe(
             map(e => {
               const result = Object.assign(new CustomerModel(), e);

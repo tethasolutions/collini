@@ -57,7 +57,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
     }
 
     addNewAddress(address: AddressModel) {
-        if (this.options.customerSupplierId == null) {
+        if (this.options.id == null) {
             this.options.addresses.push(address);
             if (address.isMainAddress) {
                 this.options.mainAddress = address;
@@ -80,7 +80,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
 
     readAddresses() {
         this._subscriptions.push(
-          this._customerService.getCustomer(this.options.customerSupplierId)
+          this._customerService.getCustomer(this.options.id)
             .pipe(
                 map(e => {
                   const result = Object.assign(new CustomerModel(), e);
@@ -94,7 +94,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
 
     createAddress() {
         const request = new AddressModel();
-        request.customerId = this.options.customerSupplierId;
+        request.contactId = this.options.id;
         this._subscriptions.push(
             this.addressModal.open(request)
                 .pipe(

@@ -22,12 +22,14 @@ public class AddressesController : ColliniApiController
     {
         var address = new AddressDto
         {
-            AddressId = 8,
-            CustomerId = 3,
+            Id = 8,
+            ContactId = 3,
             City = "Toscana",
-            Address = "corso Milano 12",
+            StreetAddress = "corso Milano 12",
             Province = "TS",
             ZipCode = "23084",
+            Telephone = "+393883504629",
+            Email = "Alex_Ronaldo@gmail.com",
             IsMainAddress = false
         };
 

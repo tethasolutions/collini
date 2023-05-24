@@ -21,13 +21,13 @@
     <kendo-grid-column field="surname" title="Surname"></kendo-grid-column>
     <kendo-grid-column field="companyName" title="Company Name"></kendo-grid-column>
     <kendo-grid-column field="mainAddress.fullAddress" title="Address"></kendo-grid-column>
-    <kendo-grid-column field="telephone" title="Telephone"></kendo-grid-column>
+    <kendo-grid-column field="mainAddress.telephone" title="Telephone"></kendo-grid-column>
     <kendo-grid-column field="alert" title="alert" filter="boolean">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.alert | bool}}
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="customerSupplierId" [sortable]="false" [filterable]="false" title=" " [width]="95">
+    <kendo-grid-column field="id" [sortable]="false" [filterable]="false" title=" " [width]="95">
         <ng-template kendoGridCellTemplate let-dataItem>
             <button (click)="editCustomer(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
                 <i class="fas fa-edit"></i>
@@ -57,7 +57,7 @@
                     {{dataItemAddress.isMainAddress | bool}}
                 </ng-template>
             </kendo-grid-column>
-            <kendo-grid-column field="addressId" [sortable]="false" [filterable]="false" title=" " [width]="130">
+            <kendo-grid-column field="id" [sortable]="false" [filterable]="false" title=" " [width]="130">
                 <ng-template kendoGridCellTemplate let-dataItemAddress>
                     <button (click)="editAddress(dataItemAddress, dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica">
                         <i class="fas fa-edit"></i>
