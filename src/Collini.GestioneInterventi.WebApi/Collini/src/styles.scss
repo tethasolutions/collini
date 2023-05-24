@@ -86,6 +86,7 @@ textarea {
     top: 0;
     left: 0;
     overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);
 
     kendo-window {
         margin-bottom: 30px;
@@ -117,7 +118,7 @@ textarea {
 }
 
 .k-notification-group {
-    z-index: 10001;
+    z-index: 99999;
 }
 
 .mr-1 {
