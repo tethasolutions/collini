@@ -1,37 +1,52 @@
 import { AddressModel } from './address.model';
+import { ContactTypeEnum } from '../enums/contact-type.enum';
+import { ContactFiscalTypeEnum } from '../enums/contact-fiscal-type.enum';
 
 export class CustomerModel {
-    customerSupplierId: number;
-    type: string;
+    id: number;
+    type: ContactTypeEnum;
     companyName: string;
     name: string;
     surname: string;
-    city: string;
-    address: string;
-    province: string;
-    zipCode: string;
-    telephone: string;
-    email: string;
-    fiscalType: string;
+    /* telephone: string;
+    email: string; */
+    fiscalType: ContactFiscalTypeEnum;
     erpCode: string;
     alert: boolean;
     addresses: AddressModel[];
 
+    mainAddress: AddressModel;
+
+    get customerDescription(): string {
+        var result = '';
+        if (this.name !== null) { result +=  `${this.name} `; }
+        if (this.surname !== null) { result +=  `${this.surname}`; }
+        return result;
+    }
+
+    get typeDescription(): string {
+        if (this.type >= 0) { return ContactTypeEnum[this.type]; }
+        else { return ''; }
+    }
+
+    get fiscalTypeDescription(): string {
+        if (this.fiscalType >= 0) { return ContactFiscalTypeEnum[this.fiscalType]; }
+        else { return ''; }
+    }
+
     constructor() {
-        this.customerSupplierId = null;
+        this.id = null;
         this.type = null;
         this.companyName = null;
         this.name = null;
         this.surname = null;
-        this.city = null;
-        this.address = null;
-        this.province = null;
-        this.zipCode = null;
-        this.telephone = null;
-        this.email = null;
+        /* this.telephone = null;
+        this.email = null; */
         this.fiscalType = null;
         this.erpCode = null;
         this.alert = null;
         this.addresses = [];
+
+        this.mainAddress = null;
     }
 }

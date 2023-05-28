@@ -6,7 +6,7 @@ import { LogoutComponent } from './security/logout.component';
 import { LoginComponent } from './security/login.component';
 import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './customers/customers.component';
-
+import { JobsComponent } from './jobs/jobs.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,7 +14,9 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'users', component: UsersComponent, canActivate: [AuthGuard.asInjectableGuard] },
-    { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard.asInjectableGuard] }
+    { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard.asInjectableGuard] },
+    { path: 'providers', component: CustomersComponent, canActivate: [AuthGuard.asInjectableGuard] },
+    { path: 'jobs', component: JobsComponent, canActivate: [AuthGuard.asInjectableGuard] }
 ];
 
 @NgModule({

@@ -1,19 +1,34 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class AddressModel {
-    addressId: number;
-    customerId: number;
+    id: number;
+    contactId: number;
     city: string;
-    address: string;
+    streetAddress: string;
     province: string;
     zipCode: string;
-    mainAddress: boolean;
+    telephone: string;
+    email: string;
+    isMainAddress: boolean;
+    tempId: string;
+
+    get fullAddress(): string {
+        let result = '';
+        if (this.streetAddress !== null) { result += `${this.streetAddress}, `; }
+        if (this.city !== null) { result += `${this.city}, `; }
+        if (this.province !== null) { result += `${this.province}, `; }
+        if (this.zipCode !== null) { result += `${this.zipCode}`; }
+        return result;
+    }
 
     constructor() {
-        this.addressId = null;
-        this.customerId = null;
+        this.id = null;
+        this.contactId = null;
         this.city = null;
-        this.address = null;
+        this.streetAddress = null;
         this.province = null;
         this.zipCode = null;
-        this.mainAddress = false;
+        this.isMainAddress = false;
+        this.tempId = uuidv4();
     }
 }
