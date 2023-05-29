@@ -21,50 +21,13 @@ import { JobStatusEnum } from '../shared/enums/job-status.enum';
 
 export class JobsComponent extends BaseComponent implements OnInit {
 
-  dataJobs: GridDataResult;
-  stateGridJobs: State = {
-      skip: 0,
-      take: 10,
-      filter: {
-          filters: [],
-          logic: 'and'
-      },
-      group: [],
-      sort: []
-  };
-
-  getGiobStatusString(index: number): string {
-    if (index >= 0) { return JobStatusEnum[index]; }
-    else { return ''; }
-  }
-
-  constructor(
-      private readonly _jobsService: JobsService,
-      private readonly _messageBox: MessageBoxService,
-      private readonly _router: Router
-  ) {
+  constructor(private router: Router) {
       super();
   }
 
   ngOnInit() {
-      this._readJobs();
-  }
-
-  dataStateChange(state: State) {
-      this.stateGridJobs = state;
-      this._readJobs();
-  }
-
-  protected _readJobs() {
-    this._subscriptions.push(
-      this._jobsService.readJobs(this.stateGridJobs)
-        .pipe(
-            tap(e => {
-              console.log(e);
-              this.dataJobs = e;
-            })
-        )
-        .subscribe()
-    );
+    if (this.router.routerState.snapshot.url === '/jobs') {
+      this.router.navigate(['/jobs/acceptance']);
+    }
   }
 }

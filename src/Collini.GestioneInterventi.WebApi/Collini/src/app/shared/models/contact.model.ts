@@ -15,4 +15,11 @@ export class ContactModel {
     addresses: ContactAddressModel[];
     jobs: JobModel[];
     orders: OrderModel[];
+
+    get customerDescription(): string {
+        if (this.fiscalType == ContactFiscalTypeEnum.PrivatePerson) {
+            return `${this.name} ${this.surname}`;
+        }
+        return this.companyName;
+    }
 }

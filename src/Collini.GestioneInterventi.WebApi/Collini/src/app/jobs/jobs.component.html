@@ -3,22 +3,52 @@
         <!-- <h3 class="commesse-title">Commesse</h3> -->
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Accettazione commesse</a>
+                <a class="nav-link job-menu-link" aria-current="page"
+                        routerLink="acceptance"
+                        routerLinkActive="active">
+                    <div class="job-menu-title">Accettazione commesse</div>
+                    <div class="blue-number bage-number">4</div>
+                    <div class="red-number bage-number">8</div>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Commesse</a>
+                <a class="nav-link job-menu-link"
+                        routerLink="active"
+                        routerLinkActive="active">
+                    <div class="job-menu-title">Commesse</div>
+                    <div class="blue-number bage-number">4</div>
+                    <div class="red-number bage-number">8</div>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Preventivi</a>
+                <a class="nav-link job-menu-link">
+                    <div class="job-menu-title">Preventivi</div>
+                    <div class="blue-number bage-number">4</div>
+                    <div class="red-number bage-number">8</div>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Ordini fornitori</a>
+                <a class="nav-link job-menu-link">
+                    <div class="job-menu-title">Ordini fornitori</div>
+                    <div class="blue-number bage-number">4</div>
+                    <div class="red-number bage-number">8</div>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Interventi</a>
+                <a class="nav-link job-menu-link">
+                    <div class="job-menu-title">Interventi</div>
+                    <div class="blue-number bage-number">4</div>
+                    <div class="red-number bage-number">8</div>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link">Fatturati</a>
+                <a class="nav-link job-menu-link"
+                        routerLink="billed"
+                        routerLinkActive="active">
+                    <div class="job-menu-title">Fatturati</div>
+                    <div class="blue-number bage-number">4</div>
+                    <div class="red-number bage-number">8</div>
+                </a>
             </li>
         </ul>
     </div>
@@ -29,53 +59,4 @@
         </button>
     </div> -->
 </div>
-
-<kendo-grid [data]="dataJobs" [pageSize]="stateGridJobs.take" 
-            [skip]="stateGridJobs.skip" [sort]="stateGridJobs.sort" 
-            [filter]="stateGridJobs.filter"
-            [group]="stateGridJobs.group" filterable="menu" 
-            [sortable]="true" [pageable]="true" scrollable="none"
-            (dataStateChange)="dataStateChange($event)">
-    <kendo-grid-column field="expired" [sortable]="false" [filterable]="false" title=" ">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <div *ngIf="!dataItem.expired" class="job-active">&nbsp;</div>
-            <div *ngIf="dataItem.expired" class="job-expired">&nbsp;</div>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column field="expirationDate" title="Data commessa" filter="date" format="{0:d}"></kendo-grid-column>
-    <kendo-grid-column field="year" title="Num commessa"></kendo-grid-column>
-    <kendo-grid-column field="customer.name" title="Cliente">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <div *ngIf="!dataItem.customer.alert">{{dataItem.customer.name}}</div>
-            <div *ngIf="dataItem.customer.alert" class="customer-alert">
-                {{dataItem.customer.name}} <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            </div>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column field="productType.name" title="Categoria"></kendo-grid-column>
-    <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
-    <kendo-grid-column field="status" title="Stato">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            {{getGiobStatusString(dataItem.status)}}
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Note">
-                <i class="fas fa-sticky-note"></i>
-            </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Modifica">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Genera preventivo">
-                <i class="fas fa-hand-paper"></i>
-            </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Ordine fornitore">
-                <i class="fas fa-ticket"></i>
-            </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Genera intervento">
-                <i class="fas fa-bolt"></i>
-            </button>
-        </ng-template>
-    </kendo-grid-column>
-</kendo-grid>
+<router-outlet></router-outlet>

@@ -7,6 +7,28 @@
     cursor: pointer;
 }
 
-.customer-alert {
-    color: #dc3545;
+.job-menu-link {
+    float: left;
+}
+
+.job-menu-title {
+    float: left;
+    margin-right: 5px;
+}
+
+.bage-number {
+    float: left;
+    padding: 2px 8px;
+    border-radius: 15px;
+    margin: 0 1px;
+    color: white;
+    font-weight: bold;
+}
+
+.blue-number {
+    background-color: #0d6efd;
+}
+
+.red-number {
+    background-color: #dc3545;
 }

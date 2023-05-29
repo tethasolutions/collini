@@ -9,17 +9,21 @@ import { JobSourceModel } from './job-source.model';
 import { JobStatusEnum } from '../enums/job-status.enum';
 
 export class JobModel {
+
+    id: number;
+    createdOn: Date;
+
     number: number;
     year: number;
     expirationDate: Date;
     description: string;
     status: JobStatusEnum;
-    statusChangedOn: Date;
+    // statusChangedOn: Date;
 
-    customerId: number;
+    // customerId: number;
     customer: ContactModel;
 
-    customerAddressId: number;
+    /* customerAddressId: number;
     customerAddress: ContactAddressModel;
 
     sourceId: number;
@@ -31,7 +35,7 @@ export class JobModel {
     notes: NoteModel[];
     quotations: QuotationModel[];
     orders: OrderModel[];
-    activities: ActivityModel[];
+    activities: ActivityModel[]; */
 
     get expired(): boolean {
         const today = new Date();
@@ -41,5 +45,9 @@ export class JobModel {
         expiration.setHours(0, 0, 0, 0);
 
         return today > expiration;
+    }
+
+    get code(): string {
+        return `${this.number}/${this.year}`;
     }
 }

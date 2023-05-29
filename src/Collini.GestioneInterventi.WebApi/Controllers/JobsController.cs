@@ -1,4 +1,5 @@
 ﻿using Collini.GestioneInterventi.Application.Customers.DTOs;
+using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Security.DTOs;
 using Collini.GestioneInterventi.Domain.Docs;
@@ -24,22 +25,18 @@ public class JobsController : ColliniApiController
     public async Task<DataSourceResult> GetJobs([DataSourceRequest] DataSourceRequest request)
     {
         // JobReadModel
-        List<Job> jobs = new List<Job>
+        List<JobReadModel> jobs = new List<JobReadModel>
         {
-            new Job
+            new JobReadModel
             {
+                Id = 1,
+                CreatedOn = new DateTime(2023, 7, 12),
                 Number = 1,
                 Year = 2023,
                 ExpirationDate = new DateTime(2023, 8, 16),
                 Description = "descrizione commessa test",
                 Status = JobStatus.Working,
-                StatusChangedOn = DateTime.Now,
-                ProductType = new ProductType
-                {
-                    Name = "Casseforti"
-                },
-                CustomerId = 1,
-                Customer = new Contact
+                Customer = new ContactReadModel
                 {
                     Type = ContactType.Customer,
                     CompanyName = "General Motors",
@@ -48,9 +45,9 @@ public class JobsController : ColliniApiController
                     FiscalType = ContactFiscalType.PrivatePerson,
                     ErpCode = "ERP123",
                     Alert = false,
-                    Addresses = new List<ContactAddress>
+                    Addresses = new List<AddressDto>
                     {
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Verona",
                             StreetAddress = "via Roma 15",
@@ -58,7 +55,7 @@ public class JobsController : ColliniApiController
                             ZipCode = "25031",
                             IsMainAddress = true
                         },
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Toscana",
                             StreetAddress = "corso Milano 12",
@@ -66,7 +63,7 @@ public class JobsController : ColliniApiController
                             ZipCode = "23084",
                             IsMainAddress = false
                         },
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Bologna",
                             StreetAddress = "via Ronchi 19",
@@ -77,20 +74,16 @@ public class JobsController : ColliniApiController
                     }
                 }
             },
-            new Job
+            new JobReadModel
             {
+                Id = 2,
+                CreatedOn = new DateTime(2023, 4, 18),
                 Number = 2,
                 Year = 2023,
                 ExpirationDate = new DateTime(2023, 5, 16),
                 Description = "descrizione commessa test 2",
                 Status = JobStatus.Working,
-                StatusChangedOn = DateTime.Now,
-                ProductType = new ProductType
-                {
-                    Name = "Serrature"
-                },
-                CustomerId = 1,
-                Customer = new Contact
+                Customer = new ContactReadModel
                 {
                     Type = ContactType.Customer,
                     CompanyName = "General Motors",
@@ -99,9 +92,9 @@ public class JobsController : ColliniApiController
                     FiscalType = ContactFiscalType.PrivatePerson,
                     ErpCode = "ERP123",
                     Alert = true,
-                    Addresses = new List<ContactAddress>
+                    Addresses = new List<AddressDto>
                     {
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Verona",
                             StreetAddress = "via Roma 15",
@@ -109,7 +102,7 @@ public class JobsController : ColliniApiController
                             ZipCode = "25031",
                             IsMainAddress = true
                         },
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Toscana",
                             StreetAddress = "corso Milano 12",
@@ -117,7 +110,7 @@ public class JobsController : ColliniApiController
                             ZipCode = "23084",
                             IsMainAddress = false
                         },
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Bologna",
                             StreetAddress = "via Ronchi 19",
@@ -128,31 +121,27 @@ public class JobsController : ColliniApiController
                     }
                 }
             },
-            new Job
+            new JobReadModel
             {
+                Id = 3,
+                CreatedOn = new DateTime(2023, 4, 11),
                 Number = 3,
                 Year = 2023,
                 ExpirationDate = new DateTime(2023, 5, 17),
                 Description = "descrizione commessa test 3",
                 Status = JobStatus.Completed,
-                StatusChangedOn = DateTime.Now,
-                ProductType = new ProductType
-                {
-                    Name = "Chiavi"
-                },
-                CustomerId = 1,
-                Customer = new Contact
+                Customer = new ContactReadModel
                 {
                     Type = ContactType.Customer,
                     CompanyName = "General Motors",
                     Name = "Smith",
                     Surname = "Tucson",
-                    FiscalType = ContactFiscalType.PrivatePerson,
+                    FiscalType = ContactFiscalType.Company,
                     ErpCode = "ERP123",
                     Alert = false,
-                    Addresses = new List<ContactAddress>
+                    Addresses = new List<AddressDto>
                     {
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Verona",
                             StreetAddress = "via Roma 15",
@@ -160,7 +149,7 @@ public class JobsController : ColliniApiController
                             ZipCode = "25031",
                             IsMainAddress = true
                         },
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Toscana",
                             StreetAddress = "corso Milano 12",
@@ -168,7 +157,7 @@ public class JobsController : ColliniApiController
                             ZipCode = "23084",
                             IsMainAddress = false
                         },
-                        new ContactAddress
+                        new AddressDto
                         {
                             City = "Bologna",
                             StreetAddress = "via Ronchi 19",
