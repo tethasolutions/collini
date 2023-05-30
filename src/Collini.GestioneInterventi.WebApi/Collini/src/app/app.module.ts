@@ -22,6 +22,7 @@ import { DropDownButtonModule } from '@progress/kendo-angular-buttons';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { SchedulerModule } from '@progress/kendo-angular-scheduler';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { IntlModule } from '@progress/kendo-angular-intl';
 import { FormsModule } from '@angular/forms';
@@ -49,6 +50,7 @@ import { JobsService } from './services/jobs.service';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsActiveComponent } from './jobs-active/jobs-active.component';
 import { JobModalComponent } from './job-modal/job-modal.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -70,7 +72,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         AddressesModalComponent,
         JobsComponent,
         JobsActiveComponent,
-        JobModalComponent
+        JobModalComponent,
+        CalendarComponent
     ],
     imports: [
         BrowserModule,
@@ -91,7 +94,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         PDFExportModule,
         ExcelModule,
         InputsModule,
-        PDFModule
+        PDFModule,
+        SchedulerModule
     ],
     providers: [
         {

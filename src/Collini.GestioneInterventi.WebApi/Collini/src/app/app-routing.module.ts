@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { CustomersComponent } from './customers/customers.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsActiveComponent } from './jobs-active/jobs-active.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,7 +37,8 @@ const routes: Routes = [
                 component: JobsActiveComponent
             }
         ]
-    }
+    },
+    { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard.asInjectableGuard] }
 ];
 
 @NgModule({
