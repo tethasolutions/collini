@@ -1,3 +1,16 @@
+<div class="d-flex align-items-center mb-3">
+    <div class="col">
+        <h3 *ngIf="jobType == 'acceptance'">Accettazione commesse</h3>
+        <h3 *ngIf="jobType == 'active'">Commesse</h3>
+        <h3 *ngIf="jobType == 'billed'">Fatturati</h3>
+    </div>
+    <div class="col-auto">
+        <button (click)="createJob()" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i>
+            NUOVA
+        </button>
+    </div>
+</div>
 <kendo-grid [data]="dataJobs" [pageSize]="stateGridJobs.take" 
             [skip]="stateGridJobs.skip" [sort]="stateGridJobs.sort" 
             [filter]="stateGridJobs.filter"
@@ -47,3 +60,5 @@
         </ng-template>
     </kendo-grid-column>
 </kendo-grid>
+
+<app-job-modal #jobModal></app-job-modal>

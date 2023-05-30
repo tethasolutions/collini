@@ -48,6 +48,7 @@ import { AddressesModalComponent } from './addresses-modal/addresses-modal.compo
 import { JobsService } from './services/jobs.service';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsActiveComponent } from './jobs-active/jobs-active.component';
+import { JobModalComponent } from './job-modal/job-modal.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -68,7 +69,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         AddressModalComponent,
         AddressesModalComponent,
         JobsComponent,
-        JobsActiveComponent
+        JobsActiveComponent,
+        JobModalComponent
     ],
     imports: [
         BrowserModule,

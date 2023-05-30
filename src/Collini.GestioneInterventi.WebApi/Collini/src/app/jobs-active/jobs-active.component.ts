@@ -6,8 +6,8 @@ import { MessageBoxService } from '../services/common/message-box.service';
 import { BaseComponent } from '../shared/base.component';
 import { State } from '@progress/kendo-data-query';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
-import { CustomerModel } from '../shared/models/customer.model';
+import { JobModalComponent } from '../job-modal/job-modal.component';
+import { JobModel } from '../shared/models/job.model';
 import { AddressModel } from '../shared/models/address.model';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Router, NavigationEnd } from '@angular/router';
@@ -19,6 +19,8 @@ import { JobStatusEnum } from '../shared/enums/job-status.enum';
   styleUrls: ['./jobs-active.component.scss']
 })
 export class JobsActiveComponent extends BaseComponent implements OnInit {
+
+  @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
 
   jobType: string;
   
@@ -72,6 +74,29 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
             })
         )
         .subscribe()
+    );
+  }
+
+  createJob() {
+    const request = new JobModel();
+    this._subscriptions.push(
+      this.jobModal.open(request)
+          .pipe(
+              filter(e => e),
+              // switchMap(() => {
+                // this._customerService.createCustomer(request);
+              // }),
+              tap(e => {
+                /* if (this.anagraficaType == 'customers') { 
+                  this._messageBox.success(`Cliente ${request.name} creato`);
+                }
+                if (this.anagraficaType == 'providers') { 
+                  this._messageBox.success(`Fornitore ${request.name} creato`);
+                } */
+              }),
+              tap(() => this._readJobs())
+          )
+          .subscribe()
     );
   }
 }
