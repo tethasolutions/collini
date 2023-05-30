@@ -61,8 +61,10 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
   }
 
   protected _readJobs() {
+    console.log(this.jobType);
+    if (this.jobType == undefined) { return; }
     this._subscriptions.push(
-      this._jobsService.readJobs(this.stateGridJobs)
+      this._jobsService.readJobs(this.stateGridJobs, this.jobType)
         .pipe(
             tap(e => {
               console.log(e);

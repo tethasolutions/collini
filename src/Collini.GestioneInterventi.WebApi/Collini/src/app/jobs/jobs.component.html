@@ -7,8 +7,8 @@
                         routerLink="acceptance"
                         routerLinkActive="active">
                     <div class="job-menu-title">Accettazione commesse</div>
-                    <div class="blue-number bage-number">4</div>
-                    <div class="red-number bage-number">8</div>
+                    <div class="blue-number bage-number">{{jobCounters.acceptance.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.acceptance.expired}}</div>
                 </a>
             </li>
             <li class="nav-item">
@@ -16,29 +16,29 @@
                         routerLink="active"
                         routerLinkActive="active">
                     <div class="job-menu-title">Commesse</div>
-                    <div class="blue-number bage-number">4</div>
-                    <div class="red-number bage-number">8</div>
+                    <div class="blue-number bage-number">{{jobCounters.actives.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.actives.expired}}</div>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link job-menu-link">
                     <div class="job-menu-title">Preventivi</div>
-                    <div class="blue-number bage-number">4</div>
-                    <div class="red-number bage-number">8</div>
+                    <div class="blue-number bage-number">{{jobCounters.preventives.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.preventives.expired}}</div>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link job-menu-link">
                     <div class="job-menu-title">Ordini fornitori</div>
-                    <div class="blue-number bage-number">4</div>
-                    <div class="red-number bage-number">8</div>
+                    <div class="blue-number bage-number">{{jobCounters.supplierOrders.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.supplierOrders.expired}}</div>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link job-menu-link">
                     <div class="job-menu-title">Interventi</div>
-                    <div class="blue-number bage-number">4</div>
-                    <div class="red-number bage-number">8</div>
+                    <div class="blue-number bage-number">{{jobCounters.interventions.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.interventions.expired}}</div>
                 </a>
             </li>
             <li class="nav-item">
@@ -46,8 +46,8 @@
                         routerLink="billed"
                         routerLinkActive="active">
                     <div class="job-menu-title">Fatturati</div>
-                    <div class="blue-number bage-number">4</div>
-                    <div class="red-number bage-number">8</div>
+                    <div class="blue-number bage-number">{{jobCounters.billed.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.billed.expired}}</div>
                 </a>
             </li>
         </ul>

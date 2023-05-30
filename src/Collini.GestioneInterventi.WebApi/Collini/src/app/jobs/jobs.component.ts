@@ -12,6 +12,7 @@ import { AddressModel } from '../shared/models/address.model';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Router, NavigationEnd } from '@angular/router';
 import { JobStatusEnum } from '../shared/enums/job-status.enum';
+import { JobCountersModel } from "../shared/models/job-counters.model";
 
 @Component({
   selector: 'app-jobs',
@@ -21,13 +22,29 @@ import { JobStatusEnum } from '../shared/enums/job-status.enum';
 
 export class JobsComponent extends BaseComponent implements OnInit {
 
-  constructor(private router: Router) {
+  jobCounters = new JobCountersModel();
+
+  constructor(private router: Router, private readonly _jobsService: JobsService) {
       super();
+  }
+
+  protected getJobCounters() {
+    this._subscriptions.push(
+      this._jobsService.getJobCounters()
+        .pipe(
+            tap(e => {
+              console.log(e);
+              this.jobCounters = e;
+            })
+        )
+        .subscribe()
+    );
   }
 
   ngOnInit() {
     if (this.router.routerState.snapshot.url === '/jobs') {
       this.router.navigate(['/jobs/acceptance']);
     }
+    this.getJobCounters();
   }
 }

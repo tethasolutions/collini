@@ -7,6 +7,7 @@ import { State, toDataSourceRequestString, translateDataSourceResultGroups } fro
 import { ContactAddressModel } from '../shared/models/contact-address.model';
 import { JobModel } from '../shared/models/job.model';
 import { ContactModel } from '../shared/models/contact.model';
+import { JobCountersModel } from "../shared/models/job-counters.model";
 
 @Injectable()
 export class JobsService {
@@ -17,11 +18,11 @@ export class JobsService {
         private readonly _http: HttpClient
     ) {}
 
-    readJobs(state: State) {
+    readJobs(state: State, jobType: string) {
         const params = toDataSourceRequestString(state);
         const hasGroups = state.group && state.group.length;
 
-        return this._http.get<GridDataResult>(`${this._baseUrl}/jobs?${params}`)
+        return this._http.get<GridDataResult>(`${this._baseUrl}/jobs-${jobType}?${params}`)
             .pipe(
                 map(e =>
                     {
@@ -46,6 +47,16 @@ export class JobsService {
                         };
                     }
                 )
+            );
+    }
+
+    getJobCounters() {
+        return this._http.get<JobCountersModel>(`${this._baseUrl}/job-counters`)
+            .pipe(
+                map(e => {
+                    const jobCounters: JobCountersModel = Object.assign(new JobCountersModel(), e);
+                    return jobCounters;
+                })
             );
     }
 }
