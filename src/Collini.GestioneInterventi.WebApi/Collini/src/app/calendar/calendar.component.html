@@ -1,15 +1,47 @@
 <kendo-scheduler
-    [kendoSchedulerBinding]="events"
-    [selectedDate]="selectedDate"
-    scrollTime="08:00"
-    style="height: 600px;">
-    <kendo-scheduler-day-view> </kendo-scheduler-day-view>
+      [kendoSchedulerBinding]="events"
+      [selectedDate]="selectedDate"
+      [resources]="resources"
+      startTime="07:00"
+      endTime="19:00"
+      [selectedViewIndex]="1"
+      style="height: calc(100vh - 110px);">
+      <ng-template
+        kendoSchedulerEventTemplate
+        let-event="event"
+        let-resources="resources"
+      >
+        <!-- {{ event.title }} -->
+        <div>{{ event.dataItem.operatore }}</div>
+        <div class="cliente-title">{{ event.dataItem.cliente }}</div>
+        <div class="commessa-title">Commessa:<br>{{ event.dataItem.commessa }}</div>
+        <!-- <button (click)="test(event)">Test</button> -->
 
-    <kendo-scheduler-week-view> </kendo-scheduler-week-view>
+        <div>
+          <ng-container *ngFor="let resource of resources">
+            
+            <!-- <span *ngIf="!resource.length; else multipleResource">
+              <span
+                [style.background]="resource.color"
+                style="padding: 4px; margin: 4px;"
+              >
+                {{ resource.text }}
+              </span>
+            </span> -->
+            <ng-template #multipleResource>
+              <!-- <span
+                *ngFor="let item of resource"
+                [style.background]="item.color"
+                style="padding: 4px; margin: 4px;"
+              >
+                {{ item.text }}
+              </span> -->
+            </ng-template>
+          </ng-container>
+        </div>
+      </ng-template>
 
-    <kendo-scheduler-month-view> </kendo-scheduler-month-view>
+      <kendo-scheduler-day-view> </kendo-scheduler-day-view>
 
-    <kendo-scheduler-timeline-view> </kendo-scheduler-timeline-view>
-
-    <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
-</kendo-scheduler>
+      <kendo-scheduler-week-view> </kendo-scheduler-week-view>
+    </kendo-scheduler>

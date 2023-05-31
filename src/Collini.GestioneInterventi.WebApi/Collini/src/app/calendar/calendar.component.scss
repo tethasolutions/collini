@@ -1,0 +1,23 @@
+.commesse-scheduler {
+    
+}
+
+.commessa-title {
+    margin-top: 20px;
+    padding-left: 5px;
+}
+
+.cliente-title {
+    padding-left: 5px;
+    margin-top: 10px;
+}
+
+::ng-deep .k-event.k-selected {
+    color: black!important;
+    font-size: 14px;
+}
+
+::ng-deep kendo-scheduler .k-event {
+    color: black!important;
+    font-size: 14px;
+}
