@@ -1,6 +1,4 @@
-import { JobModel } from './job.model';
-
-export class JobSourceModel {
+export class SimpleLookupModel {
     id: number;
     name: string;
 

@@ -12,6 +12,7 @@ import { AddressModel } from '../shared/models/address.model';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { Router, NavigationEnd } from '@angular/router';
 import { JobStatusEnum } from '../shared/enums/job-status.enum';
+import { JobDetailModel } from '../shared/models/job-detail.model';
 
 @Component({
   selector: 'app-jobs-active',
@@ -78,25 +79,39 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
   }
 
   createJob() {
-    const request = new JobModel();
+    const request = new JobDetailModel();
+    this.jobModal.loadData();
     this._subscriptions.push(
       this.jobModal.open(request)
           .pipe(
               filter(e => e),
-              // switchMap(() => {
-                // this._customerService.createCustomer(request);
-              // }),
+              switchMap(() => this._jobsService.createJob(request)),
               tap(e => {
-                /* if (this.anagraficaType == 'customers') { 
-                  this._messageBox.success(`Cliente ${request.name} creato`);
-                }
-                if (this.anagraficaType == 'providers') { 
-                  this._messageBox.success(`Fornitore ${request.name} creato`);
-                } */
+                this._messageBox.success(`Job ${request.description} creato`);
               }),
               tap(() => this._readJobs())
           )
           .subscribe()
+    );
+  }
+
+  editJob(job: JobDetailModel) {
+    this.jobModal.loadData();
+    this._subscriptions.push(
+      this._jobsService.getJobDetail(job.id)
+        .pipe(
+            map(e => {
+              return e;
+            }),
+            switchMap(e => this.jobModal.open(e)),
+            filter(e => e),
+            map(() => this.jobModal.options),
+            switchMap(e => this._jobsService.updateJob(e, e.id)),
+            map(() => this.jobModal.options),
+            tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
+            tap(() => this._readJobs())
+        )
+      .subscribe()
     );
   }
 }

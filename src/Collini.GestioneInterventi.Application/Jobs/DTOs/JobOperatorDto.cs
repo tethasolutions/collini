@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Collini.GestioneInterventi.Application.Jobs.DTOs
 {
-    public class JobDto
+    public class JobOperatorDto
     {
+        public long Id { get; set; }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
     }
 }

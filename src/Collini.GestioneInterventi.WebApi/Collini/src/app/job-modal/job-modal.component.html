@@ -11,99 +11,114 @@
                 <div class="col-md-4">
                     <label>Operatore inserimento</label>
                     <div class="form-group">
-                        <select class="form-select form-control">
-                            <option value=0></option>
-                            <option value=1>Mario Rossi</option>
-                            <option value=2>Franco Donati</option>
-                            <option value=3>Bruno Valtemara</option>
-                        </select>
+                        <kendo-combobox [data]="operators" 
+                            [(ngModel)]="options.operatorId" 
+                            name="operatorId"
+                            textField="description"
+                            [valuePrimitive]="true"
+                            valueField="id">
+                        </kendo-combobox>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label>Data commessa</label>
                     <div class="form-group">
-                        <kendo-datepicker></kendo-datepicker>
+                        <kendo-datepicker name="createdOn" [(value)]="options.createdOn"></kendo-datepicker>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label>Data scadenza</label>
                     <div class="form-group">
-                        <kendo-datepicker></kendo-datepicker>
+                        <kendo-datepicker name="expirationDate" [(value)]="options.expirationDate"></kendo-datepicker>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>Cliente</label>
                     <div class="form-group">
-                        <select class="form-select form-control">
-                            <option value=0></option>
-                            <option value=1>Franco Donati</option>
-                            <option value=2>Mario Rossi</option>
-                            <option value=3>Bruno Valtemara</option>
-                        </select>
+                        <kendo-combobox [data]="customers" 
+                            class="customer-combobox"
+                            [(ngModel)]="options.customerId" 
+                            name="customerId"
+                            textField="customerDescription"
+                            [valuePrimitive]="true"
+                            valueField="id"
+                            (valueChange)="customerChanged($event)">
+                        </kendo-combobox>
+                        <button type="button" class="btn btn-primary add-customer-button" title="Nuovo cliente">
+                            <i class="fa fa-plus"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>Indirizzo</label>
                     <div class="form-group">
-                        <select class="form-select form-control">
-                            <option value=0></option>
-                            <option value=1>Milano, via Ronchi 1</option>
-                            <option value=2>Bergamo, via Gerardo dei Tintori 3</option>
-                            <option value=3>Monza, via Roma 11</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label>Fonte</label>
-                    <div class="form-group">
-                        <select class="form-select form-control">
-                            <option value=0></option>
-                            <option value=1>Fonte 1</option>
-                            <option value=2>Fonte 2</option>
-                            <option value=3>Fonte 3</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Categoria intervento</label>
-                    <div class="form-group">
-                        <select class="form-select form-control">
-                            <option value=0></option>
-                            <option value=1>Categoria 1</option>
-                            <option value=2>Categoria 2</option>
-                            <option value=3>Categoria 3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label>Stato</label>
-                    <div class="form-group">
-                        <select class="form-select form-control">
-                            <option value=0></option>
-                            <option value=1>Stato 1</option>
-                            <option value=2>Stato 2</option>
-                            <option value=3>Stato 3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label>&nbsp;</label>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" title="Note">
-                            <i class="fa fa-edit"></i> Note
+                        <kendo-combobox [data]="options.customer.addresses" 
+                            class="address-combobox"
+                            [(ngModel)]="options.customerAddressId" 
+                            name="customerAddressId"
+                            textField="fullAddress"
+                            [valuePrimitive]="true"
+                            valueField="id">
+                        </kendo-combobox>
+                        <button type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
+                            <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
+                    <label>Fonte</label>
+                    <div class="form-group">
+                        <kendo-combobox [data]="sources" 
+                            [(ngModel)]="options.sourceId" 
+                            name="sourceId"
+                            textField="name"
+                            [valuePrimitive]="true"
+                            valueField="id">
+                        </kendo-combobox>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Categoria intervento</label>
+                    <div class="form-group">
+                        <kendo-combobox [data]="productTypes" 
+                            [(ngModel)]="options.productTypeId" 
+                            name="productTypeId"
+                            textField="name"
+                            [valuePrimitive]="true"
+                            valueField="id">
+                        </kendo-combobox>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Stato</label>
+                    <div class="form-group">
+                        <kendo-combobox [data]="states" 
+                            [(ngModel)]="options.status" 
+                            name="status"
+                            textField="name"
+                            [valuePrimitive]="true"
+                            valueField="id">
+                        </kendo-combobox>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
                     <label>Descrizione richiesta</label>
                     <div class="form-group">
-                        <kendo-textarea></kendo-textarea>
+                        <kendo-textarea [(ngModel)]="options.description" name="description"></kendo-textarea>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="test()">
+                            <i class="fa fa-edit"></i> Note
+                        </button>
                     </div>
                 </div>
             </div>

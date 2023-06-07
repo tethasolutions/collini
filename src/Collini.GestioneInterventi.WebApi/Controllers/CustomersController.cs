@@ -412,7 +412,7 @@ public class CustomersController : ColliniApiController
     }
 
     [HttpPut("customer/{id}")]
-    public async Task<IActionResult> UpdateCustomer(long id, ContactDto request)
+    public async Task<IActionResult> UpdateCustomer(long id, [FromBody] ContactDto request)
     {
         return NoContent();
     }
@@ -424,7 +424,7 @@ public class CustomersController : ColliniApiController
     }
 
     [HttpPost("customer")]
-    public async Task<IActionResult> CreateCustomer(ContactDto request)
+    public async Task<IActionResult> CreateCustomer([FromBody] ContactDto request)
     {
         return NoContent();
     }

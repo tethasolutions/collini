@@ -12,5 +12,4 @@ export class ContactAddressModel {
     isMainAddress: boolean;
     contactId: number;
     contact: ContactModel;
-    jobs: JobModel[];
 }

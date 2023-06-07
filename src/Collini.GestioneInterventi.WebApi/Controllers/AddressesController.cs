@@ -37,7 +37,7 @@ public class AddressesController : ColliniApiController
     }
 
     [HttpPut("address/{id}")]
-    public async Task<IActionResult> UpdateAddress(long id, AddressDto request)
+    public async Task<IActionResult> UpdateAddress(long id, [FromBody] AddressDto request)
     {
         return NoContent();
     }
@@ -49,7 +49,7 @@ public class AddressesController : ColliniApiController
     }
 
     [HttpPost("address")]
-    public async Task<IActionResult> CreateAddress(AddressDto request)
+    public async Task<IActionResult> CreateAddress([FromBody] AddressDto request)
     {
         return NoContent();
     }
