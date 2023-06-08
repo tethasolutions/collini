@@ -8,14 +8,14 @@ export class CustomerModel {
     companyName: string;
     name: string;
     surname: string;
-    /* telephone: string;
-    email: string; */
     fiscalType: ContactFiscalTypeEnum;
     erpCode: string;
     alert: boolean;
     addresses: AddressModel[];
 
     mainAddress: AddressModel;
+    telephone: string;
+    email: string;
 
     get customerDescription(): string {
         var result = '';
@@ -40,13 +40,13 @@ export class CustomerModel {
         this.companyName = null;
         this.name = null;
         this.surname = null;
-        /* this.telephone = null;
-        this.email = null; */
         this.fiscalType = null;
         this.erpCode = null;
         this.alert = null;
         this.addresses = [];
 
         this.mainAddress = null;
+        this.telephone = null;
+        this.email = null;
     }
 }

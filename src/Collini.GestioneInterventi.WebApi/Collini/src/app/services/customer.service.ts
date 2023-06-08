@@ -50,6 +50,7 @@ export class CustomerService {
     }
 
     createCustomer(request: CustomerModel) {
+        this.setCustomerTelephoneAndEmailInMainAddress(request);
         return this._http.post<CustomerModel>(`${this._baseUrl}/customer`, request)
             .pipe(
                 map(e => {
@@ -59,10 +60,19 @@ export class CustomerService {
     }
 
     updateCustomer(request: CustomerModel, id: number) {
+        this.setCustomerTelephoneAndEmailInMainAddress(request);
         return this._http.put<void>(`${this._baseUrl}/customer/${id}`, request)
             .pipe(
                 map(() => { })
             );
+    }
+
+    setCustomerTelephoneAndEmailInMainAddress(request: CustomerModel) {
+        const mainAddress = request.addresses.find(x => x.isMainAddress == true);
+        if (mainAddress != undefined) {
+            mainAddress.telephone = request.telephone;
+            mainAddress.email = request.email;
+        }
     }
 
     deleteCustomer(id: number) {
@@ -88,6 +98,9 @@ export class CustomerService {
                     let mainAddress = addresses.find(x => x.isMainAddress);
                     if (mainAddress == undefined) { mainAddress = new AddressModel(); }
                     customer.mainAddress = mainAddress;
+
+                    customer.telephone = mainAddress.telephone;
+                    customer.email = mainAddress.email;
 
                     return customer;
                 })
