@@ -35,6 +35,7 @@
     </kendo-grid-column>
     <kendo-grid-column field="productType.name" title="Categoria"></kendo-grid-column>
     <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
+    <kendo-grid-column field="customerAddress.fullAddress" title="Indirizzo"></kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{getGiobStatusString(dataItem.status)}}

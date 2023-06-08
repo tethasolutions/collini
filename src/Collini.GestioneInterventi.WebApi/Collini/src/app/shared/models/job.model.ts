@@ -7,6 +7,8 @@ import { QuotationModel } from './quotation.model';
 import { ProductTypeModel } from './product-type.model';
 import { JobSourceModel } from './job-source.model';
 import { JobStatusEnum } from '../enums/job-status.enum';
+import { AddressModel } from './address.model';
+import { CustomerModel } from './customer.model';
 
 export class JobModel {
 
@@ -21,10 +23,9 @@ export class JobModel {
     // statusChangedOn: Date;
 
     // customerId: number;
-    customer: ContactModel;
+    customer: CustomerModel;
 
     /* customerAddressId: number;
-    customerAddress: ContactAddressModel;
 
     sourceId: number;
     source: JobSourceModel;
@@ -36,6 +37,8 @@ export class JobModel {
     quotations: QuotationModel[];
     orders: OrderModel[];
     activities: ActivityModel[]; */
+
+    customerAddress: AddressModel;
 
     get expired(): boolean {
         const today = new Date();
@@ -49,5 +52,17 @@ export class JobModel {
 
     get code(): string {
         return `${this.number}/${this.year}`;
+    }
+
+    constructor() {
+        this.id = null;
+        this.createdOn = null;
+        this.number = null;
+        this.year = null;
+        this.expirationDate = null;
+        this.description = null;
+        this.status = null;
+        this.customer = new CustomerModel();
+        this.customerAddress = new AddressModel();
     }
 }

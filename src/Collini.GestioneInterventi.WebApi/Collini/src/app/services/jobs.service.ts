@@ -37,14 +37,20 @@ export class JobsService {
                             const job: JobModel = Object.assign(new JobModel(), item);
                             job.expirationDate = new Date(job.expirationDate);
                             job.createdOn = new Date(job.createdOn);
-                            job.customer = Object.assign(new ContactModel(), job.customer);
+                            job.customer = Object.assign(new CustomerModel(), job.customer);
 
-                            const addresses: Array<ContactAddressModel> = [];
+                            const addresses: Array<AddressModel> = [];
                             job.customer.addresses.forEach(addressItem => {
-                                const address: ContactAddressModel = Object.assign(new ContactAddressModel(), addressItem);
+                                const address: AddressModel = Object.assign(new AddressModel(), addressItem);
                                 addresses.push(address);
                             });
                             job.customer.addresses = addresses;
+
+                            const mainAddress = addresses.find(x => x.isMainAddress == true);
+                            if (mainAddress != undefined) {
+                                job.customerAddress = mainAddress;
+                            }
+
                             jobs.push(job);
                         });
                         return <GridDataResult>{
