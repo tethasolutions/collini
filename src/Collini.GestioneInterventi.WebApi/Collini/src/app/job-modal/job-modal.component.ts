@@ -30,6 +30,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   @ViewChild('customerModal', { static: true }) customerModal: CustomerModalComponent;
   @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
   readonly role = Role;
+  name = '';
 
   operators: Array<JobOperatorModel> = [];
   customers: Array<CustomerModel> = [];
