@@ -14,6 +14,10 @@ import { JobOperatorModel } from '../shared/models/job-operator.model';
 import { SimpleLookupModel } from '../shared/models/simple-lookup.model';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { JobStatusEnum } from '../shared/enums/job-status.enum';
+import { AddressModalComponent } from '../address-modal/address-modal.component';
+import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
+import { CustomerService } from '../services/customer.service';
+import { AddressesService } from '../services/addresses.service';
 
 @Component({
   selector: 'app-job-modal',
@@ -23,6 +27,8 @@ import { JobStatusEnum } from '../shared/enums/job-status.enum';
 export class JobModalComponent extends ModalComponent<JobDetailModel> {
 
   @ViewChild('form') form: NgForm;
+  @ViewChild('customerModal', { static: true }) customerModal: CustomerModalComponent;
+  @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
   readonly role = Role;
 
   operators: Array<JobOperatorModel> = [];
@@ -31,8 +37,12 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   productTypes: Array<ProductTypeModel> = [];
   states: Array<SimpleLookupModel> = [];
 
-  constructor(private readonly _messageBox: MessageBoxService, private readonly _jobsService: JobsService) {
+  constructor(private readonly _messageBox: MessageBoxService, 
+              private readonly _jobsService: JobsService,
+              private readonly _addressesService: AddressesService,
+              private readonly _customerService: CustomerService) {
     super();
+    this.options = new JobDetailModel();
   }
 
   protected _canClose() {
@@ -57,12 +67,15 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     );
   }
 
-  protected _readJobCustomers() {
+  protected _readJobCustomers(creatoNuovoCustomer = false) {
     this._subscriptions.push(
       this._jobsService.getJobCustomers()
         .pipe(
             tap(e => {
               this.customers = e;
+              if (creatoNuovoCustomer) {
+                this.customerChanged(this.options.customerId);
+              }
             })
         )
         .subscribe()
@@ -115,6 +128,71 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
           this.states.push({id: <any>JobStatusEnum[n], name: n});
         }
     }
+  }
+
+  createAddress() {
+      const request = new AddressModel();
+      request.contactId = this.options.id;
+      this._subscriptions.push(
+          this.addressModal.open(request)
+              .pipe(
+                  filter(e => e),
+                  tap(() => {
+                      this.addNewAddress(request);
+                  })
+              )
+              .subscribe()
+      );
+  }
+
+  addNewAddress(address: AddressModel) {
+    this._subscriptions.push(
+      this._addressesService.createAddress(address)
+          .pipe(
+              map(e => e),
+              tap(e => {
+                this.options.customerAddressId = e;
+                address.id = e;
+                const customerSelezionato: CustomerModel = this.customers.find(x => x.id === this.options.customerId);
+                if (customerSelezionato != undefined) { 
+                  customerSelezionato.addresses.push(address);
+                }
+                this._messageBox.success(`Indirizzo creato con successo`)
+              }),
+              tap(() => {
+                // this._readJobCustomers(true);
+              })
+          )
+          .subscribe()
+    );
+
+    /* this.options.customer.addresses.push(address);
+    if (address.isMainAddress) {
+        this.options.customer.mainAddress = address;
+        this.options.customerAddress = address;
+        this.options.customer.addresses.forEach((item: AddressModel) => {
+            item.isMainAddress = item.tempId === address.tempId;
+        });
+    } */
+  }
+
+  createCustomer() {
+    const request = new CustomerModel();
+    request.type = 0;
+
+    this._subscriptions.push(
+        this.customerModal.open(request)
+            .pipe(
+                filter(e => e),
+                switchMap(() => this._customerService.createCustomer(request)),
+                tap(e => {
+                  this.options.customerId = e;
+                  this._messageBox.success(`Cliente ${request.name} creato`);
+                }),
+                tap(() => this._readJobCustomers(true))
+            )
+            .subscribe()
+    );
   }
 
   public loadData() {

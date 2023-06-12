@@ -17,7 +17,7 @@ export class AddressesService {
     ) {}
 
     createAddress(request: AddressModel) {
-        return this._http.post<AddressModel>(`${this._baseUrl}/address`, request)
+        return this._http.post<number>(`${this._baseUrl}/address`, request)
             .pipe(
                 map(e => {
                     return e;

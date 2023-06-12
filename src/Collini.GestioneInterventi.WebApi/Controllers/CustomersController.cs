@@ -426,6 +426,6 @@ public class CustomersController : ColliniApiController
     [HttpPost("customer")]
     public async Task<IActionResult> CreateCustomer([FromBody] ContactDto request)
     {
-        return NoContent();
+        return Ok(2);
     }
 }

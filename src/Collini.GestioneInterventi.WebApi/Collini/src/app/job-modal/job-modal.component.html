@@ -46,7 +46,7 @@
                             valueField="id"
                             (valueChange)="customerChanged($event)">
                         </kendo-combobox>
-                        <button type="button" class="btn btn-primary add-customer-button" title="Nuovo cliente">
+                        <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button" title="Nuovo cliente">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
@@ -59,10 +59,11 @@
                             [(ngModel)]="options.customerAddressId" 
                             name="customerAddressId"
                             textField="fullAddress"
+                            [disabled]="options.customerId == null"
                             [valuePrimitive]="true"
                             valueField="id">
                         </kendo-combobox>
-                        <button type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
+                        <button [disabled]="options.customerId == null" (click)="createAddress()" type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
@@ -133,3 +134,6 @@
         </form>
     </kendo-window>
 </div>
+
+<app-customer-modal #customerModal></app-customer-modal>
+<app-address-modal [customer]="options.customer" #addressModal></app-address-modal>

@@ -51,7 +51,7 @@ public class AddressesController : ColliniApiController
     [HttpPost("address")]
     public async Task<IActionResult> CreateAddress([FromBody] AddressDto request)
     {
-        return NoContent();
+        return Ok(5);
     }
 
     [HttpPut("set-address-as-main/{id}")]
