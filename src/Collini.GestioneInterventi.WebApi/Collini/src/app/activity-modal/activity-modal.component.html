@@ -1,0 +1,74 @@
+<div class="k-overlay" *ngIf="opened"></div>
+
+<div class="k-window-wrapper" *ngIf="opened">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
+        <kendo-window-titlebar>
+            <div class="k-window-title">Intervento</div>
+            <button kendoWindowCloseAction></button>
+        </kendo-window-titlebar>
+        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
+            <div class="row">
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Operatore inserimento</label>
+                        <kendo-combobox [data]="operators" 
+                            [(ngModel)]="options.operatorId" 
+                            name="operatorId"
+                            textField="description"
+                            [valuePrimitive]="true"
+                            valueField="id"
+                            required>
+                        </kendo-combobox>
+                        <kendo-formerror>Operatore è il campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Data inizio</label>
+                        <kendo-datepicker name="start" [(ngModel)]="options.start" required></kendo-datepicker>
+                        <kendo-formerror>Data inizio è il campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Data fine</label>
+                        <kendo-datepicker name="end" [(ngModel)]="options.end" required></kendo-datepicker>
+                        <kendo-formerror>Data fine è il campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Stato</label>
+                        <kendo-combobox [data]="states"
+                            [(ngModel)]="options.status" 
+                            name="status"
+                            textField="name"
+                            [valuePrimitive]="true"
+                            valueField="id"
+                            required>
+                        </kendo-combobox>
+                        <kendo-formerror>Stato è il campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="test()">
+                            <i class="fa fa-edit"></i> Note
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right mt-5">
+                <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
+                    ANNULLA
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    SALVA
+                </button>
+            </div>
+        </form>
+    </kendo-window>
+</div>

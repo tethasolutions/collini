@@ -14,4 +14,17 @@ export class ActivityModel {
     jobId: number;
     job: JobModel;
     notes: NoteModel[];
+
+    constructor() {
+        this.description = null;
+        this.start = new Date();
+        this.end = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));
+        this.status = ActivityStatusEnum.Planned;
+        this.statusChangedOn = new Date();
+        this.operatorId = null;
+        this.operator = new UserModel();
+        this.jobId = null;
+        this.job = new JobModel();
+        this.notes = [];
+    }
 }

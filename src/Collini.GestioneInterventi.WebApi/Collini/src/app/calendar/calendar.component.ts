@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SchedulerEvent } from '@progress/kendo-angular-scheduler';
+import { ActivityModel } from '../shared/models/activity.model';
+import { BaseComponent } from '../shared/base.component';
+import { ActivityModalComponent } from '../activity-modal/activity-modal.component';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { MessageBoxService } from '../services/common/message-box.service';
+import { ActivitiesService } from '../services/activities.service';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent {
+export class CalendarComponent extends BaseComponent implements OnInit {
   
+  @ViewChild('activityModal', { static: true }) activityModal: ActivityModalComponent;
+
   public selectedDate: Date = displayDate;
   public events: SchedulerEvent[] = sampleDataWithResources;
 
@@ -39,8 +47,38 @@ export class CalendarComponent {
     },
   ];
 
+  constructor(
+      private readonly _messageBox: MessageBoxService,
+      private readonly _activitiesService: ActivitiesService
+  ) {
+      super();
+  }
+
   test(event: any) {
     console.log(event);
+  }
+
+  aggiungiNuovoIntervento() {
+    const request = new ActivityModel();
+    this.activityModal.loadData();
+    this._subscriptions.push(
+        this.activityModal.open(request)
+            .pipe(
+                filter(e => e),
+                switchMap(() => this._activitiesService.createActivity(request)),
+                tap(e => {
+                  this._messageBox.success(`Intervento creato`);
+                }),
+                tap(() => {
+                  // this._readCustomers();
+                })
+            )
+            .subscribe()
+    );
+  }
+
+  ngOnInit() {
+      
   }
 }
 

@@ -51,6 +51,8 @@ import { JobsComponent } from './jobs/jobs.component';
 import { JobsActiveComponent } from './jobs-active/jobs-active.component';
 import { JobModalComponent } from './job-modal/job-modal.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ActivityModalComponent } from './activity-modal/activity-modal.component';
+import { ActivitiesService } from './services/activities.service';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -73,7 +75,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         JobsComponent,
         JobsActiveComponent,
         JobModalComponent,
-        CalendarComponent
+        CalendarComponent,
+        ActivityModalComponent
     ],
     imports: [
         BrowserModule,
@@ -114,7 +117,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         AuthGuard,
         CustomerService,
         AddressesService,
-        JobsService
+        JobsService,
+        ActivitiesService
     ],
     bootstrap: [AppComponent]
 })

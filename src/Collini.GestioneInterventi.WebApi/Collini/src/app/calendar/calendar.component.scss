@@ -21,3 +21,23 @@
     color: black!important;
     font-size: 14px;
 }
+
+::ng-deep .calendar-interventi .k-scheduler-toolbar {
+    display: block;
+}
+
+::ng-deep .calendar-interventi .k-scheduler-toolbar .scheduler-navigazione {
+    float: left;
+}
+
+::ng-deep .calendar-interventi .k-scheduler-toolbar .scheduler-selettore-view {
+    float: right;
+}
+
+::ng-deep .nuovo-intervento-button {
+    float: right;
+    margin-top: 2px;
+    margin-right: 15px;
+    height: 35px;
+    background-color: #0257d5;
+}
