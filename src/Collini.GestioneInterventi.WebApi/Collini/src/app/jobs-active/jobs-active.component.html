@@ -43,7 +43,7 @@
     </kendo-grid-column>
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
         <ng-template kendoGridCellTemplate let-dataItem>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Note">
+            <button class="btn btn-primary btn-sm grid-action-button" title="Note" (click)="viewNotes(dataItem)">
                 <i class="fas fa-sticky-note"></i>
             </button>
             <button class="btn btn-primary btn-sm grid-action-button" title="Modifica" (click)="editJob(dataItem)">
@@ -63,3 +63,4 @@
 </kendo-grid>
 
 <app-job-modal #jobModal></app-job-modal>
+<app-notes-modal [note]="jobNotes" #notesModal></app-notes-modal>

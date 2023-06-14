@@ -1,0 +1,34 @@
+<div class="k-overlay" *ngIf="opened"></div>
+
+<div class="k-window-wrapper" *ngIf="opened">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="700" [top]="110">
+        <kendo-window-titlebar>
+            <div class="k-window-title">
+                Note
+            </div>
+            <button kendoWindowCloseAction></button>
+        </kendo-window-titlebar>
+        <div class="row">
+            <div class="col-md-12">
+                <kendo-grid [data]="note">
+                    <kendo-grid-column field="createdOn" title="Data Nota" filter="date" format="{0:d}"> </kendo-grid-column>
+                    <kendo-grid-column field="operator.customerDescription" title="Operatore"> </kendo-grid-column>
+                    <kendo-grid-column field="type" title="Tipo"></kendo-grid-column>
+                    <kendo-grid-column field="value" title="Note"></kendo-grid-column>
+                    <kendo-grid-column title="Allegati">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div *ngIf="dataItem.attachments.length > 0">
+                                <i class="fa fa-paperclip"></i> Allegati 
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+        <div class="text-right mt-5">
+            <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
+                CHIUDI
+            </button>
+        </div>
+    </kendo-window>
+</div>

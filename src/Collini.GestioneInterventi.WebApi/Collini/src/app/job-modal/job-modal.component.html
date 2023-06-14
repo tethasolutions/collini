@@ -130,10 +130,10 @@
                         <kendo-formerror>Descrizione richiesta è il campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
-                <div class="col-md-4">
+                <div *ngIf="options.id != null" class="col-md-4">
                     <label>&nbsp;</label>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" title="Note" (click)="test()">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="viewNotes()">
                             <i class="fa fa-edit"></i> Note
                         </button>
                     </div>
@@ -153,3 +153,4 @@
 
 <app-customer-modal #customerModal></app-customer-modal>
 <app-address-modal [customer]="options.customer" #addressModal></app-address-modal>
+<app-notes-modal [note]="jobNotes" #notesModal></app-notes-modal>

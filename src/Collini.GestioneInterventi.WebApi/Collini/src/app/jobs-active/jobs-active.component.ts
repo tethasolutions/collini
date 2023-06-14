@@ -13,6 +13,9 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 import { Router, NavigationEnd } from '@angular/router';
 import { JobStatusEnum } from '../shared/enums/job-status.enum';
 import { JobDetailModel } from '../shared/models/job-detail.model';
+import { NotesModalComponent } from '../notes-modal/notes-modal.component';
+import { NotesService } from '../services/notes.service';
+import { NoteModel } from '../shared/models/note.model';
 
 @Component({
   selector: 'app-jobs-active',
@@ -22,8 +25,11 @@ import { JobDetailModel } from '../shared/models/job-detail.model';
 export class JobsActiveComponent extends BaseComponent implements OnInit {
 
   @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
+  @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
 
   jobType: string;
+
+  jobNotes: Array<NoteModel> = [];
   
   dataJobs: GridDataResult;
   stateGridJobs: State = {
@@ -44,6 +50,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
   constructor(
       private readonly _jobsService: JobsService,
+      private readonly _notesService: NotesService,
       private readonly _messageBox: MessageBoxService,
       private readonly _router: Router
   ) {
@@ -110,6 +117,19 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
             map(() => this.jobModal.options),
             tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
             tap(() => this._readJobs())
+        )
+      .subscribe()
+    );
+  }
+
+  viewNotes(job: JobDetailModel) {
+    this._subscriptions.push(
+      this._notesService.getJobNotes(job.id)
+        .pipe(
+            map(e => {
+              this.jobNotes = e;
+            }),
+            switchMap(e => this.notesModal.open(e))
         )
       .subscribe()
     );

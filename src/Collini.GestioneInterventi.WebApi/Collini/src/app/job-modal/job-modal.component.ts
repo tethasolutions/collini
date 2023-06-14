@@ -18,6 +18,9 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
 import { CustomerService } from '../services/customer.service';
 import { AddressesService } from '../services/addresses.service';
+import { NotesModalComponent } from '../notes-modal/notes-modal.component';
+import { NoteModel } from '../shared/models/note.model';
+import { NotesService } from '../services/notes.service';
 
 @Component({
   selector: 'app-job-modal',
@@ -29,6 +32,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   @ViewChild('form') form: NgForm;
   @ViewChild('customerModal', { static: true }) customerModal: CustomerModalComponent;
   @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
+  @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
   readonly role = Role;
   name = '';
 
@@ -37,11 +41,13 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   sources: Array<JobSourceModel> = [];
   productTypes: Array<ProductTypeModel> = [];
   states: Array<SimpleLookupModel> = [];
+  jobNotes: Array<NoteModel> = [];
 
   constructor(private readonly _messageBox: MessageBoxService, 
               private readonly _jobsService: JobsService,
               private readonly _addressesService: AddressesService,
-              private readonly _customerService: CustomerService) {
+              private readonly _customerService: CustomerService,
+              private readonly _notesService: NotesService) {
     super();
     this.options = new JobDetailModel();
   }
@@ -105,10 +111,6 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
         )
         .subscribe()
     );
-  }
-
-  test() {
-    console.log(this.options);
   }
 
   customerChanged(customerId: number) {
@@ -193,6 +195,19 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
                 tap(() => this._readJobCustomers(true))
             )
             .subscribe()
+    );
+  }
+
+  viewNotes() {
+    this._subscriptions.push(
+      this._notesService.getJobNotes(this.options.id)
+        .pipe(
+            map(e => {
+              this.jobNotes = e;
+            }),
+            switchMap(e => this.notesModal.open(e))
+        )
+      .subscribe()
     );
   }
 
