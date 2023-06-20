@@ -20,7 +20,7 @@
         kendoSchedulerEventTemplate
         let-event="event"
         let-resources="resources">
-
+        <div [class.intervento-elaborato]="event.dataItem.status == 1"></div>
         <div class="operatore-title">
           <ng-container *ngFor="let resource of resources">
             <span *ngIf="!resource.length; else multipleResource">

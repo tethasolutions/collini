@@ -44,7 +44,8 @@ export class ActivitiesService {
                             description: dataItem.description,
                             operatorId: dataItem.operatorId,
                             cliente: dataItem.customer,
-                            commessa: dataItem.job
+                            commessa: dataItem.job,
+                            status: dataItem.status
                         }
                     ));
 

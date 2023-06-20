@@ -21,6 +21,13 @@
     font-size: 14px;
 }
 
+::ng-deep kendo-scheduler .k-event:has(.intervento-elaborato) {
+    /* background-image: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(254, 255, 255, 0.3) 6px, rgba(255, 255, 255, 0.3) 6px); */
+    /* background-color: rgba(128, 128, 128, 0.45)!important; */
+
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 3px, black 6px, black 6px);
+}
+
 ::ng-deep kendo-scheduler .k-event {
     color: black!important;
     font-size: 14px;

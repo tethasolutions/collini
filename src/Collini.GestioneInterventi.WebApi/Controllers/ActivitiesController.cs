@@ -44,7 +44,7 @@ public class ActivitiesController : ColliniApiController
                     OperatorId = 2,
                     Start = new DateTime(2023, 6, 21, 10, 25, 0),
                     End = new DateTime(2023, 6, 21, 14, 50, 0),
-                    Status = ActivityStatus.Planned,
+                    Status = ActivityStatus.Canceled,
                     Customer = "Cliente 2",
                     Job = "Job 2"
                 },
@@ -54,7 +54,7 @@ public class ActivitiesController : ColliniApiController
                     OperatorId = 3,
                     Start = new DateTime(2023, 6, 22, 10, 25, 0),
                     End = new DateTime(2023, 6, 22, 14, 50, 0),
-                    Status = ActivityStatus.Planned,
+                    Status = ActivityStatus.CompletedUnsuccessfully,
                     Customer = "Cliente 3",
                     Job = "Job 3"
                 },
@@ -64,7 +64,7 @@ public class ActivitiesController : ColliniApiController
                     OperatorId = 4,
                     Start = new DateTime(2023, 6, 23, 10, 25, 0),
                     End = new DateTime(2023, 6, 23, 14, 50, 0),
-                    Status = ActivityStatus.Planned,
+                    Status = ActivityStatus.CompletedSuccessfully,
                     Customer = "Cliente 4",
                     Job = "Job 4"
                 },
