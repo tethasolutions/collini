@@ -1,7 +1,7 @@
 <kendo-scheduler
-      [kendoSchedulerBinding]="events"
+      [kendoSchedulerBinding]="calendar.activities"
       [selectedDate]="selectedDate"
-      [resources]="resources"
+      [resources]="calendar.resourcesSettings"
       startTime="09:00"
       endTime="19:30"
       class="calendar-interventi"
@@ -19,36 +19,21 @@
       <ng-template
         kendoSchedulerEventTemplate
         let-event="event"
-        let-resources="resources"
-      >
-        <!-- {{ event.title }} -->
-        <div>{{ event.dataItem.operatore }}</div>
-        <div class="cliente-title">{{ event.dataItem.cliente }}</div>
-        <div class="commessa-title">Commessa:<br>{{ event.dataItem.commessa }}</div>
-        <!-- <button (click)="test(event)">Test</button> -->
+        let-resources="resources">
 
-        <div>
+        <div class="operatore-title">
           <ng-container *ngFor="let resource of resources">
-            
-            <!-- <span *ngIf="!resource.length; else multipleResource">
-              <span
-                [style.background]="resource.color"
-                style="padding: 4px; margin: 4px;"
-              >
-                {{ resource.text }}
-              </span>
-            </span> -->
+            <span *ngIf="!resource.length; else multipleResource">
+              {{ resource.description }}
+            </span>
             <ng-template #multipleResource>
-              <!-- <span
-                *ngFor="let item of resource"
-                [style.background]="item.color"
-                style="padding: 4px; margin: 4px;"
-              >
-                {{ item.text }}
-              </span> -->
+              <span>{{ item.description }}</span>
             </ng-template>
           </ng-container>
         </div>
+        <div class="cliente-title">{{ event.dataItem.cliente }}</div>
+        <div class="commessa-title">Commessa:<br>{{ event.dataItem.commessa }}</div>
+        <!-- <button (click)="test(event)">Test</button> -->
       </ng-template>
 
       <kendo-scheduler-day-view> </kendo-scheduler-day-view>

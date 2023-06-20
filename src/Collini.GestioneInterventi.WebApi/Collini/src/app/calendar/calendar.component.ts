@@ -6,6 +6,7 @@ import { ActivityModalComponent } from '../activity-modal/activity-modal.compone
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { MessageBoxService } from '../services/common/message-box.service';
 import { ActivitiesService } from '../services/activities.service';
+import { CalendarModel } from '../shared/models/calendar.model';
 
 @Component({
   selector: 'app-calendar',
@@ -16,36 +17,25 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   
   @ViewChild('activityModal', { static: true }) activityModal: ActivityModalComponent;
 
-  public selectedDate: Date = displayDate;
+  calendar = new CalendarModel();
+
+  // public selectedDate: Date = displayDate;
+  public selectedDate: Date = new Date();
   public events: SchedulerEvent[] = sampleDataWithResources;
 
-  public resources: any[] = [
+  /* public resources: any[] = [
     {
-      name: "Rooms",
       data: [
         { text: "Meeting Room 101", value: 1, color: "#ffc000" },
         { text: "Meeting Room 201", value: 2, color: "#92d050" },
-        { text: "Meeting Room 301", value: 3, color: "#00b0f0" },
+        { text: "Meeting Room 301", value: 3, color: "#00b0f0" }
       ],
       field: "roomId",
       valueField: "value",
       textField: "text",
       colorField: "color",
-    },
-    {
-      name: "Attendees",
-      data: [
-        { text: "Alex", value: 1, color: "#f8a398" },
-        { text: "Bob", value: 2, color: "#51a0ed" },
-        { text: "Charlie", value: 3, color: "#56ca85" },
-      ],
-      multiple: true,
-      field: "attendees",
-      valueField: "value",
-      textField: "text",
-      colorField: "color",
-    },
-  ];
+    }
+  ]; */
 
   constructor(
       private readonly _messageBox: MessageBoxService,
@@ -77,8 +67,21 @@ export class CalendarComponent extends BaseComponent implements OnInit {
     );
   }
 
+  protected _getCalendar() {
+    this._subscriptions.push(
+      this._activitiesService.getCalendar()
+        .pipe(
+            tap(e => {
+              console.log(e);
+              this.calendar = e;
+            })
+        )
+        .subscribe()
+    );
+  }
+
   ngOnInit() {
-      
+    this._getCalendar();
   }
 }
 
@@ -101,7 +104,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Operatore 1",
         "cliente": "Cliente xxx",
-        "commessa": "001/2023"
+        "commessa": "001/2023",
+        "color": "red"
     },
     {
         "TaskID": 122,
@@ -119,7 +123,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Operatore 3",
         "cliente": "Cliente xxx",
-        "commessa": "003/2023"
+        "commessa": "003/2023",
+        "color": "blue"
     },
     {
         "TaskID": 123,
@@ -137,7 +142,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Operatore 2",
         "cliente": "Cliente xxx",
-        "commessa": "002/2023"
+        "commessa": "002/2023",
+        "color": "green"
     },
     {
         "TaskID": 124,
@@ -155,7 +161,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Operatore 1",
         "cliente": "Cliente xxx",
-        "commessa": "004/2023"
+        "commessa": "004/2023",
+        "color": "red"
     },
     {
         "TaskID": 125,
@@ -173,7 +180,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Oper. 1",
         "cliente": "Cliente xxx",
-        "commessa": "005/2023"
+        "commessa": "005/2023",
+        "color": "green"
     },
     {
         "TaskID": 126,
@@ -191,7 +199,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Oper. 3",
         "cliente": "Cliente xxx",
-        "commessa": "006/2023"
+        "commessa": "006/2023",
+        "color": "red"
     },
     {
         "TaskID": 127,
@@ -209,7 +218,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Oper. 3",
         "cliente": "Cliente xxx",
-        "commessa": "007/2023"
+        "commessa": "007/2023",
+        "color": "blue"
     },
     {
         "TaskID": 127,
@@ -227,7 +237,8 @@ const baseData: any[] = [
         "IsAllDay": false,
         "operatore": "Oper. 2",
         "cliente": "Cliente xxx",
-        "commessa": "008/2023"
+        "commessa": "008/2023",
+        "color": "red"
     }
 ];
 
@@ -263,7 +274,8 @@ export const sampleData = baseData.map(dataItem => (
         
         operatore: dataItem.operatore,
         cliente: dataItem.cliente,
-        commessa: dataItem.commessa
+        commessa: dataItem.commessa,
+        color: dataItem.color
     }
 ));
 
@@ -285,7 +297,8 @@ export const sampleDataWithResources = baseData.map(dataItem => (
         commessa: dataItem.commessa,
         // roomId: randomInt(1, 2),
         roomId: dataItem.RoomID,
-        attendees: [randomInt(1, 3)]
+        attendees: [randomInt(1, 3)],
+        color: dataItem.color
     }
 ));
 
