@@ -9,6 +9,14 @@
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <div class="row">
+            <div class="col-md-12 text-right note-grid-header-buttons">
+                <button (click)="aggiungiNota()" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i>
+                    NUOVA NOTA
+                </button>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <kendo-grid [data]="note">
                     <kendo-grid-column field="createdOn" title="Data Nota" filter="date" format="{0:d}"> </kendo-grid-column>
@@ -20,6 +28,13 @@
                             <div *ngIf="dataItem.attachments.length > 0">
                                 <i class="fa fa-paperclip"></i> Allegati 
                             </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="id" [sortable]="false" [filterable]="false" title=" " [width]="60">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <button (click)="modificaNota(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica nota">
+                                <i class="fas fa-edit"></i>
+                            </button>
                         </ng-template>
                     </kendo-grid-column>
                 </kendo-grid>

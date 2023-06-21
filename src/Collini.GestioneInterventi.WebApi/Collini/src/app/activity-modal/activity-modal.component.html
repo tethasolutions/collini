@@ -54,7 +54,7 @@
                         <kendo-formerror>Commessa è il campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
-                <div class="col-md-4">
+                <div *ngIf="options.id != null" class="col-md-4">
                     <label>&nbsp;</label>
                     <div>
                         <button type="button" class="btn btn-primary" title="Note" (click)="viewNotes()">

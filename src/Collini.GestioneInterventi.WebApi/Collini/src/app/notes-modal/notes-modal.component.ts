@@ -21,6 +21,14 @@ export class NotesModalComponent extends ModalComponent<any> {
         super();
     }
 
+    aggiungiNota() {
+        
+    }
+    
+    modificaNota(nota: NoteModel) {
+        console.log(nota);
+    }
+
     protected _canClose() {
         return true;
     }
