@@ -11,6 +11,9 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ActivityStatusEnum } from '../shared/enums/activity-status.enum';
 import { SimpleLookupModel } from '../shared/models/simple-lookup.model';
 import { JobModel } from '../shared/models/job.model';
+import { NotesService } from '../services/notes.service';
+import { NoteModel } from '../shared/models/note.model';
+import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 
 @Component({
   selector: 'app-activity-modal',
@@ -20,15 +23,18 @@ import { JobModel } from '../shared/models/job.model';
 export class ActivityModalComponent extends ModalComponent<ActivityModel> {
 
     @ViewChild('form') form: NgForm;
+    @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
     readonly role = Role;
 
     operators: Array<JobOperatorModel> = [];
     jobs: Array<JobModel> = [];
     states: Array<SimpleLookupModel> = [];
+    activityNotes: Array<NoteModel> = [];
 
     constructor(
         private readonly _messageBox: MessageBoxService,
-        private readonly _jobsService: JobsService
+        private readonly _jobsService: JobsService,
+        private readonly _notesService: NotesService
     ) {
         super();
     }
@@ -75,6 +81,19 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
             }
         }
     }
+
+    viewNotes() {
+        this._subscriptions.push(
+          this._notesService.getActivityNotes(this.options.id)
+            .pipe(
+                map(e => {
+                  this.activityNotes = e;
+                }),
+                switchMap(e => this.notesModal.open(e))
+            )
+          .subscribe()
+        );
+      }
 
     public loadData() {
         this._readOperators();
