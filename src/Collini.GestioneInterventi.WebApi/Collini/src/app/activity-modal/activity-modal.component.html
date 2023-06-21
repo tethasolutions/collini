@@ -7,13 +7,14 @@
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
-            <div class="row">
+            <div class="row form-group">
                 <div class="col-md-4">
-                    <kendo-formfield class="form-group">
+                    <kendo-formfield>
                         <label>Operatore inserimento</label>
                         <kendo-combobox [data]="operators" 
                             [(ngModel)]="options.operatorId" 
                             name="operatorId"
+                            [disabled]="options.id != null"
                             textField="description"
                             [valuePrimitive]="true"
                             valueField="id"
@@ -23,23 +24,48 @@
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
-                    <kendo-formfield class="form-group">
+                    <kendo-formfield>
                         <label>Data inizio</label>
-                        <kendo-datepicker name="start" [(ngModel)]="options.start" required></kendo-datepicker>
+                        <kendo-datepicker [disabled]="options.id != null" name="start" [(ngModel)]="options.start" required></kendo-datepicker>
                         <kendo-formerror>Data inizio è il campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
-                    <kendo-formfield class="form-group">
+                    <kendo-formfield>
                         <label>Data fine</label>
-                        <kendo-datepicker name="end" [(ngModel)]="options.end" required></kendo-datepicker>
+                        <kendo-datepicker [disabled]="options.id != null" name="end" [(ngModel)]="options.end" required></kendo-datepicker>
                         <kendo-formerror>Data fine è il campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
+                <div class="col-md-8">
+                    <kendo-formfield>
+                        <label>Commessa</label>
+                        <kendo-combobox [data]="jobs" 
+                            [(ngModel)]="options.jobId" 
+                            name="jobId"
+                            [disabled]="options.id != null"
+                            textField="description"
+                            [valuePrimitive]="true"
+                            valueField="id"
+                            required>
+                        </kendo-combobox>
+                        <kendo-formerror>Commessa è il campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
                 <div class="col-md-4">
-                    <kendo-formfield class="form-group">
+                    <label>&nbsp;</label>
+                    <div>
+                        <button type="button" class="btn btn-primary" title="Note">
+                            <i class="fa fa-edit"></i> Note
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div *ngIf="options.id != null" class="col-md-4">
+                    <kendo-formfield>
                         <label>Stato</label>
                         <kendo-combobox [data]="states"
                             [(ngModel)]="options.status" 
@@ -51,14 +77,6 @@
                         </kendo-combobox>
                         <kendo-formerror>Stato è il campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
-                </div>
-                <div class="col-md-4">
-                    <label>&nbsp;</label>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" title="Note" (click)="test()">
-                            <i class="fa fa-edit"></i> Note
-                        </button>
-                    </div>
                 </div>
             </div>
             <div class="text-right mt-5">

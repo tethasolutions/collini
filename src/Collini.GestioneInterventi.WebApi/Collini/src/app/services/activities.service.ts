@@ -22,6 +22,18 @@ export class ActivitiesService {
         private readonly _http: HttpClient
     ) {}
 
+    getActivity(id: number) {
+        return this._http.get<ActivityModel>(`${this._baseUrl}/activity/${id}`)
+            .pipe(
+                map(e => {
+                    const activity = Object.assign(new ActivityModel(), e);
+                    activity.start = new Date(activity.start);
+                    activity.end = new Date(activity.end);
+                    return activity;
+                })
+            );
+    }
+
     getCalendar() {
         return this._http.get<CalendarModel>(`${this._baseUrl}/calendar`)
             .pipe(
@@ -37,6 +49,7 @@ export class ActivitiesService {
 
                     const events = activities.map(dataItem => (
                         <SchedulerEvent> {
+                            id: dataItem.id,
                             start: new Date(dataItem.start),
                             end: new Date(dataItem.end),
                             isAllDay: false,
@@ -77,6 +90,13 @@ export class ActivitiesService {
                 map(e => {
                     return e;
                 })
+            );
+    }
+
+    updateActivity(request: ActivityModel, id: number) {
+        return this._http.put<void>(`${this._baseUrl}/activity/${id}`, request)
+            .pipe(
+                map(() => { })
             );
     }
 }

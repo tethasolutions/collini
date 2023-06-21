@@ -4,6 +4,7 @@
       [resources]="calendar.resourcesSettings"
       startTime="09:00"
       endTime="19:30"
+      (eventClick)="modificaIntervento($event)"
       class="calendar-interventi"
       [selectedViewIndex]="1"
       style="height: calc(100vh - 110px);">

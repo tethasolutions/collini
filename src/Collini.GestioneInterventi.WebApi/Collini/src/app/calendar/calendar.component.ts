@@ -48,6 +48,26 @@ export class CalendarComponent extends BaseComponent implements OnInit {
     console.log(event);
   }
 
+  modificaIntervento(event: any) {
+    this.activityModal.loadData();
+    this._subscriptions.push(
+      this._activitiesService.getActivity(event.event.id)
+        .pipe(
+            map(e => {
+              return e;
+            }),
+            switchMap(e => this.activityModal.open(e)),
+            filter(e => e),
+            map(() => this.activityModal.options),
+            switchMap(e => this._activitiesService.updateActivity(e, e.id)),
+            map(() => this.activityModal.options),
+            tap(e => this._messageBox.success(`Intervento aggiornato`)),
+            tap(() => this._getCalendar())
+        )
+      .subscribe()
+    );
+  }
+
   aggiungiNuovoIntervento() {
     const request = new ActivityModel();
     this.activityModal.loadData();
@@ -60,7 +80,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
                   this._messageBox.success(`Intervento creato`);
                 }),
                 tap(() => {
-                  // this._readCustomers();
+                  this._getCalendar();
                 })
             )
             .subscribe()

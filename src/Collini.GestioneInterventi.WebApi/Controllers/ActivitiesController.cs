@@ -1,5 +1,6 @@
 ﻿using Collini.GestioneInterventi.Application.Activities.DTOs;
 using Collini.GestioneInterventi.Application.Customers.DTOs;
+using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Security.DTOs;
 using Collini.GestioneInterventi.Domain.Docs;
@@ -121,5 +122,29 @@ public class ActivitiesController : ColliniApiController
     public async Task<IActionResult> CreateActivity([FromBody] ActivityDto request)
     {
         return Ok(2);
+    }
+
+    [HttpGet("activity/{id}")]
+    public async Task<ActivityViewModel> GetActivity(long id)
+    {
+        var activity = new ActivityViewModel
+        {
+            Id = 2,
+            OperatorId = 2,
+            Start = new DateTime(2023, 6, 21, 10, 25, 0),
+            End = new DateTime(2023, 6, 21, 14, 50, 0),
+            Status = ActivityStatus.Canceled,
+            Customer = "Cliente 2",
+            JobId = 2,
+            Job = "Job 2"
+        };
+
+        return activity;
+    }
+
+    [HttpPut("activity/{id}")]
+    public async Task<IActionResult> UpdateActivity(long id, [FromBody] ActivityDto job)
+    {
+        return NoContent();
     }
 }

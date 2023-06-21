@@ -10,6 +10,7 @@ import { JobsService } from '../services/jobs.service';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ActivityStatusEnum } from '../shared/enums/activity-status.enum';
 import { SimpleLookupModel } from '../shared/models/simple-lookup.model';
+import { JobModel } from '../shared/models/job.model';
 
 @Component({
   selector: 'app-activity-modal',
@@ -22,6 +23,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     readonly role = Role;
 
     operators: Array<JobOperatorModel> = [];
+    jobs: Array<JobModel> = [];
     states: Array<SimpleLookupModel> = [];
 
     constructor(
@@ -53,6 +55,18 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
         );
     }
 
+    protected _readjobs() {
+        this._subscriptions.push(
+          this._jobsService.getAllJobs()
+            .pipe(
+                tap(e => {
+                  this.jobs = e;
+                })
+            )
+            .subscribe()
+        );
+    }
+
     setStates() {
         this.states = [];
         for(var n in ActivityStatusEnum) {
@@ -64,6 +78,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
 
     public loadData() {
         this._readOperators();
+        this._readjobs();
         this.setStates();
     }
 }

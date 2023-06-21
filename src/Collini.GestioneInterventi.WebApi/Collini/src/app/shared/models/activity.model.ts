@@ -4,6 +4,7 @@ import { UserModel } from './user.model';
 import { ActivityStatusEnum } from '../enums/activity-status.enum';
 
 export class ActivityModel {
+    id: number;
     description: string;
     start: Date;
     end: Date;
@@ -16,6 +17,7 @@ export class ActivityModel {
     notes: NoteModel[];
 
     constructor() {
+        this.id = null;
         this.description = null;
         this.start = new Date();
         this.end = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));

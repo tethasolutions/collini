@@ -1,6 +1,7 @@
 import { ActivityStatusEnum } from '../enums/activity-status.enum';
 
 export class ActivityCalendarModel {
+    id: number;
     description: string;
     start: Date;
     end: Date;
@@ -10,6 +11,7 @@ export class ActivityCalendarModel {
     job: string;
 
     constructor() {
+        this.id = null;
         this.description = null;
         this.start = new Date();
         this.end = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));

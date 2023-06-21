@@ -195,4 +195,23 @@ export class JobsService {
                 map(() => { })
             );
     }
+
+    getAllJobs() {
+        return this._http.get<Array<JobModel>>(`${this._baseUrl}/all-jobs`)
+            .pipe(
+                map(result =>
+                    {
+                        const jobs: Array<JobModel> = [];
+                        result.forEach(item => {
+                            const job: JobModel = Object.assign(new JobModel(), item);
+                            job.expirationDate = new Date(job.expirationDate);
+                            job.createdOn = new Date(job.createdOn);
+                            job.customer = Object.assign(new CustomerModel(), job.customer);
+                            jobs.push(job);
+                        });
+                        return jobs;
+                    }
+                )
+            );
+    }
 }
