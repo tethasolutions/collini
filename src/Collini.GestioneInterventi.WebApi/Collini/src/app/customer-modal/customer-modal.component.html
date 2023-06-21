@@ -85,6 +85,7 @@
                             [data]="options.addresses" 
                             [(value)]="options.mainAddress" 
                             textField="fullAddress"
+                            suggest="true"
                             valueField="tempId"
                             (valueChange)="mainAddressChanged($event)">
                         </kendo-combobox>
