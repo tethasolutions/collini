@@ -40,6 +40,10 @@ export class JobModel {
 
     customerAddress: AddressModel;
 
+    get fullDescription(): string {
+        return `${this.id} - ${this.customer.customerDescription} - ${this.customerAddress.fullAddress}`;
+    }
+
     get expired(): boolean {
         const today = new Date();
         today.setHours(0, 0, 0, 0);

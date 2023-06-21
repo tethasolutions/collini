@@ -207,6 +207,19 @@ export class JobsService {
                             job.expirationDate = new Date(job.expirationDate);
                             job.createdOn = new Date(job.createdOn);
                             job.customer = Object.assign(new CustomerModel(), job.customer);
+
+                            const addresses: Array<AddressModel> = [];
+                            job.customer.addresses.forEach(addressItem => {
+                                const address: AddressModel = Object.assign(new AddressModel(), addressItem);
+                                addresses.push(address);
+                            });
+                            job.customer.addresses = addresses;
+
+                            const mainAddress = addresses.find(x => x.isMainAddress == true);
+                            if (mainAddress != undefined) {
+                                job.customerAddress = mainAddress;
+                            }
+
                             jobs.push(job);
                         });
                         return jobs;
