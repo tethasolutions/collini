@@ -19,8 +19,12 @@
         <div class="row">
             <div class="col-md-12">
                 <kendo-grid [data]="allegati">
-                    <kendo-grid-column field="displayName" title="Nome file"> </kendo-grid-column>
-                    <kendo-grid-column field="fileName" title="Immagine"></kendo-grid-column>
+                    <kendo-grid-column field="displayName" title="Nome file" [width]="200"></kendo-grid-column>
+                    <kendo-grid-column field="fileName" title="Immagine">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <img [src]="dataItem.fileName" width="300" alt="immagine">
+                        </ng-template>
+                    </kendo-grid-column>
                     <kendo-grid-column field="id" [sortable]="false" [filterable]="false" title=" " [width]="60">
                         <ng-template kendoGridCellTemplate let-dataItem>
                             <button (click)="modificaAllegato(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica allegato">
