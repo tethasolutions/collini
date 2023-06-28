@@ -21,11 +21,11 @@
                 <kendo-grid [data]="note">
                     <kendo-grid-column field="createdOn" title="Data Nota" filter="date" format="{0:d}"> </kendo-grid-column>
                     <kendo-grid-column field="operator.customerDescription" title="Operatore"> </kendo-grid-column>
-                    <kendo-grid-column field="type" title="Tipo"></kendo-grid-column>
+                    <!-- <kendo-grid-column field="type" title="Tipo"></kendo-grid-column> -->
                     <kendo-grid-column field="value" title="Note"></kendo-grid-column>
                     <kendo-grid-column title="Allegati">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <div *ngIf="dataItem.attachments.length > 0">
+                            <div *ngIf="dataItem.attachments.length > 0" (click)="viewNoteAttachments(dataItem)" class="allegati-button">
                                 <i class="fa fa-paperclip"></i> Allegati 
                             </div>
                         </ng-template>
@@ -48,3 +48,4 @@
     </kendo-window>
 </div>
 <app-note-modal #noteModal></app-note-modal>
+<app-note-attachments-modal #notesAtachmentsModal></app-note-attachments-modal>

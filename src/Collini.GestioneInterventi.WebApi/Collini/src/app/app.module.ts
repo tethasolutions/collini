@@ -56,6 +56,8 @@ import { ActivitiesService } from './services/activities.service';
 import { NotesService } from './services/notes.service';
 import { NotesModalComponent } from './notes-modal/notes-modal.component';
 import { NoteModalComponent } from './note-modal/note-modal.component';
+import { NoteAttachmentsModalComponent } from './note-attachments-modal/note-attachments-modal.component';
+import { NoteAttachmentModalComponent } from './note-attachment-modal/note-attachment-modal.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -81,7 +83,9 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         CalendarComponent,
         ActivityModalComponent,
         NotesModalComponent,
-        NoteModalComponent
+        NoteModalComponent,
+        NoteAttachmentsModalComponent,
+        NoteAttachmentModalComponent
     ],
     imports: [
         BrowserModule,

@@ -24,6 +24,14 @@
                         <kendo-formerror>Operatore è il campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
+                <div *ngIf="options.id != null" class="col-md-4">
+                    <label>&nbsp;</label>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="viewAttachments()">
+                            <i class="fa fa-edit"></i> Allegati
+                        </button>
+                    </div>
+                </div>
             </div>
             <div class="row form-group">
                 <div class="col-md-8">
@@ -45,3 +53,4 @@
         </form>
     </kendo-window>
 </div>
+<app-note-attachments-modal #notesAtachmentsModal></app-note-attachments-modal>

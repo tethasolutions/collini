@@ -11,6 +11,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
 
 namespace Collini.GestioneInterventi.WebApi.Controllers;
 
@@ -202,14 +203,26 @@ public class NotesController : ColliniApiController
                 Alert = false
             },
             Attachments = new List<NoteAttachmentReadModel>
+            {
+                new NoteAttachmentReadModel
                 {
-                    new NoteAttachmentReadModel
-                    {
-                        Id = 1,
-                        DisplayName = "allegato 1",
-                        FileName = "file1.png"
-                    }
+                    Id = 1,
+                    DisplayName = "allegato 1",
+                    FileName = "file1.png"
+                },
+                new NoteAttachmentReadModel
+                {
+                    Id = 2,
+                    DisplayName = "allegato 2",
+                    FileName = "file2.png"
+                },
+                new NoteAttachmentReadModel
+                {
+                    Id = 3,
+                    DisplayName = "allegato 3",
+                    FileName = "file3.png"
                 }
+            }
         };
 
         return noteDetail;
@@ -223,6 +236,60 @@ public class NotesController : ColliniApiController
 
     [HttpPost("note")]
     public async Task<IActionResult> CreateNote([FromBody] NoteDto request)
+    {
+        return Ok(2);
+    }
+
+    [HttpGet("notes-attachments/{noteId}")]
+    public async Task<List<NoteAttachmentReadModel>> GetNoteAttachments(long noteId)
+    {
+        List<NoteAttachmentReadModel> attachments = new List<NoteAttachmentReadModel>
+        {
+            new NoteAttachmentReadModel
+            {
+                Id = 1,
+                DisplayName = "allegato 1",
+                FileName = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdba8xL_9XnvWHLChJys72Kpk-QdCAo0lqPzJ8avvAwiubsfAYvSNSyd04tNUOOTge-9U&usqp=CAU"
+            },
+            new NoteAttachmentReadModel
+            {
+                Id = 2,
+                DisplayName = "allegato 2",
+                FileName = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR205noDjp2Tqv9_Srpri1cI-Ikl0MtdoH8q-6eML-z2m6dIFgK9eczVrEx1CCFdHkSKJ8&usqp=CAU"
+            },
+            new NoteAttachmentReadModel
+            {
+                Id = 3,
+                DisplayName = "allegato 3",
+                FileName = "https://goods-photos.static1-sima-land.com/items/2400734/0/400.jpg?v=1602131867"
+            }
+        };
+
+        return attachments;
+    }
+
+    [HttpGet("note-attachment-detail/{id}")]
+    public async Task<NoteAttachmentReadModel> GetNoteAttachmentDetail(long id)
+    {
+        NoteAttachmentReadModel attachment = new NoteAttachmentReadModel
+        {
+            Id = 1,
+            DisplayName = "allegato 1",
+            FileName = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdba8xL_9XnvWHLChJys72Kpk-QdCAo0lqPzJ8avvAwiubsfAYvSNSyd04tNUOOTge-9U&usqp=CAU"
+        };
+
+        return attachment;
+    }
+
+
+    [HttpPut("note-attachment/{id}")]
+    public async Task<IActionResult> UpdateNoteAttachment(long id, [FromBody] NoteAttachmentDto request)
+    {
+        return NoContent();
+    }
+
+    [HttpPost("note-attachment")]
+    public async Task<IActionResult> CreateNoteAttachment([FromBody] NoteAttachmentDto request)
     {
         return Ok(2);
     }

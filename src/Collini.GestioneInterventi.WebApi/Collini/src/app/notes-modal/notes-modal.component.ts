@@ -9,6 +9,7 @@ import { NoteModel } from '../shared/models/note.model';
 import { NoteModalComponent } from '../note-modal/note-modal.component';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { NotesService } from '../services/notes.service';
+import { NoteAttachmentsModalComponent } from '../note-attachments-modal/note-attachments-modal.component';
 
 @Component({
   selector: 'app-notes-modal',
@@ -27,6 +28,7 @@ export class NotesModalComponent extends ModalComponent<any> {
     note: Array<NoteModel> = [];
 
     @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+    @ViewChild('notesAtachmentsModal', { static: true }) notesAtachmentsModal: NoteAttachmentsModalComponent;
 
     constructor(private readonly _messageBox: MessageBoxService, private readonly _notesService: NotesService) {
         super();
@@ -104,6 +106,12 @@ export class NotesModalComponent extends ModalComponent<any> {
         if (this.notesType == 'job') {
             this._readJobNotes();
         }
+    }
+
+    viewNoteAttachments(nota: NoteModel) {
+      this.notesAtachmentsModal.id = nota.id;
+      this.notesAtachmentsModal.loadData();
+      this.notesAtachmentsModal.open(null);
     }
 
     protected _canClose() {

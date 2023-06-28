@@ -13,7 +13,7 @@ import { SimpleLookupModel } from '../shared/models/simple-lookup.model';
 import { JobModel } from '../shared/models/job.model';
 import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
-import { NotesModalComponent } from '../notes-modal/notes-modal.component';
+import { NoteAttachmentsModalComponent } from '../note-attachments-modal/note-attachments-modal.component';
 
 @Component({
   selector: 'app-note-modal',
@@ -23,6 +23,7 @@ import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 export class NoteModalComponent extends ModalComponent<NoteModel> {
 
     @ViewChild('form') form: NgForm;
+    @ViewChild('notesAtachmentsModal', { static: true }) notesAtachmentsModal: NoteAttachmentsModalComponent;
 
     operators: Array<JobOperatorModel> = [];
 
@@ -60,5 +61,9 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
       return this.form.valid;
     }
 
-
+    viewAttachments() {
+      this.notesAtachmentsModal.id = this.options.id;
+      this.notesAtachmentsModal.loadData();
+      this.notesAtachmentsModal.open(null);
+    }
 }

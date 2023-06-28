@@ -98,4 +98,44 @@ export class NotesService {
                 map(() => { })
             );
     }
+
+    getNoteAttachments(noteId: number) {
+        return this._http.get<Array<NoteAttachmentModel>>(`${this._baseUrl}/notes-attachments/${noteId}`)
+            .pipe(
+                map(response => {
+                    const noteAttachments: Array<NoteAttachmentModel> = [];
+                    response.forEach((attachmentItem: any) => {
+                        const attachment: NoteAttachmentModel = Object.assign(new NoteAttachmentModel(), attachmentItem);
+                        noteAttachments.push(attachment);
+                    });
+                    return noteAttachments;
+                })
+            );
+    }
+
+    getNoteAttachmentDetail(id: number) {
+        return this._http.get<NoteAttachmentModel>(`${this._baseUrl}/note-attachment-detail/${id}`)
+            .pipe(
+                map(e => {
+                    const noteAttachment: NoteAttachmentModel = Object.assign(new NoteAttachmentModel(), e);
+                    return noteAttachment;
+                })
+            );
+    }
+
+    createNoteAttachment(request: NoteAttachmentModel) {
+        return this._http.post<number>(`${this._baseUrl}/note-attachment`, request)
+            .pipe(
+                map(e => {
+                    return e;
+                })
+            );
+    }
+
+    updateNoteAttachment(request: NoteAttachmentModel, id: number) {
+        return this._http.put<void>(`${this._baseUrl}/note-attachment/${id}`, request)
+            .pipe(
+                map(() => { })
+            );
+    }
 }
