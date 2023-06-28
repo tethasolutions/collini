@@ -43,11 +43,6 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
       sort: []
   };
 
-  getGiobStatusString(index: number): string {
-    if (index >= 0) { return JobStatusEnum[index]; }
-    else { return ''; }
-  }
-
   constructor(
       private readonly _jobsService: JobsService,
       private readonly _notesService: NotesService,

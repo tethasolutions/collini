@@ -857,7 +857,7 @@
         <note priority="1" from="meaning">kendo.grid.groupPanelEmpty</note>
       </trans-unit>
       <trans-unit id="1243399825085142134" datatype="html">
-        <source>No records available.</source>
+        <source>Nessun elemento disponibile</source>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@progress/kendo-angular-grid/fesm2020/progress-kendo-angular-grid.mjs</context>
           <context context-type="linenumber">21061</context>

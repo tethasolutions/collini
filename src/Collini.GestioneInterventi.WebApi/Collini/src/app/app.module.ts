@@ -58,6 +58,8 @@ import { NotesModalComponent } from './notes-modal/notes-modal.component';
 import { NoteModalComponent } from './note-modal/note-modal.component';
 import { NoteAttachmentsModalComponent } from './note-attachments-modal/note-attachments-modal.component';
 import { NoteAttachmentModalComponent } from './note-attachment-modal/note-attachment-modal.component';
+import { JobStatusEnum } from './shared/enums/job-status.enum';
+import { JobStatusPipe } from './pipes/job-status.pipe';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -85,7 +87,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         NotesModalComponent,
         NoteModalComponent,
         NoteAttachmentsModalComponent,
-        NoteAttachmentModalComponent
+        NoteAttachmentModalComponent,
+        JobStatusPipe
     ],
     imports: [
         BrowserModule,

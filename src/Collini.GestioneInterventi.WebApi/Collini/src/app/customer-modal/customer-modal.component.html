@@ -10,7 +10,7 @@
         <form name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
             <div class="row">
                 <div class="col-md-4">
-                    <label>Fiscal Type</label>
+                    <label>Tipo cliente</label>
                     <div class="form-group">
                         <select class="form-select form-control" name="fiscalType" required [(ngModel)]="options.fiscalType">
                             <option value=0>Privato</option>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label>Company Name</label>
+                    <label>Ragione sociale</label>
                     <div class="form-group">
                         <input class="form-control" name="companyName" [(ngModel)]="options.companyName" required
                             maxlength="255" novalidate autocomplete="off" />
@@ -38,14 +38,14 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <label>Name</label>
+                    <label>Nome</label>
                     <div class="form-group">
                         <input class="form-control" name="name" [(ngModel)]="options.name"
                             maxlength="255" novalidate autocomplete="off" />
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label>Surname</label>
+                    <label>Cognome</label>
                     <div class="form-group">
                         <input class="form-control" name="surname" [(ngModel)]="options.surname"
                             maxlength="255" novalidate autocomplete="off" />
@@ -78,7 +78,7 @@
             </div>
             <div class="row">
                 <div class="col-md-8">
-                    <label>Address</label>
+                    <label>Indirizzo</label>
                     <div class="form-group">
                         <kendo-combobox class="address-combobox"
                             [class.address-validation-error-combobox]="isAddressInValidationError"

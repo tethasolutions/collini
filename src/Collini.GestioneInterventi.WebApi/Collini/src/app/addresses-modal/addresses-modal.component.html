@@ -1,7 +1,7 @@
 <div class="k-overlay" *ngIf="opened"></div>
 
 <div class="k-window-wrapper" *ngIf="opened">
-    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="700" [top]="110">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="1000" [top]="110">
         <kendo-window-titlebar>
             <div class="k-window-title">
                 Gestione indirizzi
@@ -19,11 +19,11 @@
             </div>
         </div>
         <kendo-grid [data]="customer.addresses" [sortable]="false" [pageable]="false" scrollable="none">
-            <kendo-grid-column field="city" title="City"></kendo-grid-column>
-            <kendo-grid-column field="address" title="Address"></kendo-grid-column>
-            <kendo-grid-column field="province" title="Province"></kendo-grid-column>
-            <kendo-grid-column field="zipCode" title="zipCode"></kendo-grid-column>
-            <kendo-grid-column field="isMainAddress" title="Main Address">
+            <kendo-grid-column field="city" title="Città"></kendo-grid-column>
+            <kendo-grid-column field="address" title="Indirizzo"></kendo-grid-column>
+            <kendo-grid-column field="province" title="Provincia"></kendo-grid-column>
+            <kendo-grid-column field="zipCode" title="CAP"></kendo-grid-column>
+            <kendo-grid-column field="isMainAddress" title="Principale">
                 <ng-template kendoGridCellTemplate let-dataItemAddress>
                     {{dataItemAddress.isMainAddress | bool}}
                 </ng-template>

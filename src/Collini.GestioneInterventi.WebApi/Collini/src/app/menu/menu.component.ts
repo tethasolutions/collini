@@ -34,7 +34,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
                 e => e.startsWith('/jobs'),
                 e => e.isAuthenticated()
             ),
-            new MenuEntry(['/calendar'], 'Calendar',
+            new MenuEntry(['/calendar'], 'Calendario',
                 e => e.startsWith('/calendar'),
                 e => e.isAuthenticated()
             ),

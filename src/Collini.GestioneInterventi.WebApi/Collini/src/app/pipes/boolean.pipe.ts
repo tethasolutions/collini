@@ -18,3 +18,4 @@ export class BooleanPipe extends BaseComponent implements PipeTransform {
     }
 
 }
+
