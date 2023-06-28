@@ -42,7 +42,6 @@ public class NotesController : ColliniApiController
                     ErpCode = "ERP123",
                     Alert = false
                 },
-                Type = "Commessa",
                 Attachments = new List<NoteAttachmentReadModel>
                 {
                     new NoteAttachmentReadModel
@@ -69,7 +68,6 @@ public class NotesController : ColliniApiController
                     ErpCode = "ERP456",
                     Alert = true
                 },
-                Type = "Intervento",
                 Attachments = new List<NoteAttachmentReadModel>()
             },
             new NoteReadModel
@@ -88,7 +86,6 @@ public class NotesController : ColliniApiController
                     ErpCode = "ERP789",
                     Alert = true
                 },
-                Type = "Commessa",
                 Attachments = new List<NoteAttachmentReadModel>
                 {
                     new NoteAttachmentReadModel
@@ -125,7 +122,6 @@ public class NotesController : ColliniApiController
                     ErpCode = "ERP123",
                     Alert = false
                 },
-                Type = "Commessa",
                 Attachments = new List<NoteAttachmentReadModel>
                 {
                     new NoteAttachmentReadModel
@@ -152,7 +148,6 @@ public class NotesController : ColliniApiController
                     ErpCode = "ERP456",
                     Alert = true
                 },
-                Type = "Intervento",
                 Attachments = new List<NoteAttachmentReadModel>()
             },
             new NoteReadModel
@@ -171,7 +166,6 @@ public class NotesController : ColliniApiController
                     ErpCode = "ERP789",
                     Alert = true
                 },
-                Type = "Commessa",
                 Attachments = new List<NoteAttachmentReadModel>
                 {
                     new NoteAttachmentReadModel
@@ -185,5 +179,51 @@ public class NotesController : ColliniApiController
         };
 
         return activityNotes;
+    }
+
+    [HttpGet("note-detail/{noteId}")]
+    public async Task<NoteReadModel> GetNoteDetail(long noteId)
+    {
+        NoteReadModel noteDetail = new NoteReadModel
+        {
+            Id = 1,
+            Value = "Nota 1",
+            CreatedOn = new DateTime(2023, 6, 10),
+            OperatorId = 1,
+            Operator = new ContactDto
+            {
+                Id = 1,
+                Type = ContactType.Customer,
+                CompanyName = "General Motors",
+                Name = "Smith",
+                Surname = "Tucson",
+                FiscalType = ContactFiscalType.PrivatePerson,
+                ErpCode = "ERP123",
+                Alert = false
+            },
+            Attachments = new List<NoteAttachmentReadModel>
+                {
+                    new NoteAttachmentReadModel
+                    {
+                        Id = 1,
+                        DisplayName = "allegato 1",
+                        FileName = "file1.png"
+                    }
+                }
+        };
+
+        return noteDetail;
+    }
+
+    [HttpPut("note/{id}")]
+    public async Task<IActionResult> UpdateNote(long id, [FromBody] NoteDto request)
+    {
+        return NoContent();
+    }
+
+    [HttpPost("note")]
+    public async Task<IActionResult> CreateNote([FromBody] NoteDto request)
+    {
+        return Ok(2);
     }
 }

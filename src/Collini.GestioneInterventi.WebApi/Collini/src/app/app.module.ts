@@ -55,6 +55,7 @@ import { ActivityModalComponent } from './activity-modal/activity-modal.componen
 import { ActivitiesService } from './services/activities.service';
 import { NotesService } from './services/notes.service';
 import { NotesModalComponent } from './notes-modal/notes-modal.component';
+import { NoteModalComponent } from './note-modal/note-modal.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -79,7 +80,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         JobModalComponent,
         CalendarComponent,
         ActivityModalComponent,
-        NotesModalComponent
+        NotesModalComponent,
+        NoteModalComponent
     ],
     imports: [
         BrowserModule,

@@ -83,7 +83,10 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     }
 
     viewNotes() {
-        this._subscriptions.push(
+        this.notesModal.id = this.options.id;
+        this.notesModal.loadData();
+        this.notesModal.open(null);
+        /* this._subscriptions.push(
           this._notesService.getActivityNotes(this.options.id)
             .pipe(
                 map(e => {
@@ -92,7 +95,26 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
                 switchMap(e => this.notesModal.open(e))
             )
           .subscribe()
-        );
+        ); */
+
+
+        /* this._subscriptions.push(
+          this.notesModal.open(null)
+              .pipe(
+                  filter(e => e),
+                  tap(e => {
+                      this.customer.addresses.push(request);
+                      if (request.isMainAddress) {
+                          this.customer.mainAddress = request;
+                          this.customer.addresses.forEach((item: AddressModel) => {
+                              item.isMainAddress = item.tempId === request.tempId;
+                          });
+                      }
+                      this._messageBox.success(`Indirizzo creato con successo`);
+                  })
+              )
+              .subscribe()
+        ); */
       }
 
     public loadData() {

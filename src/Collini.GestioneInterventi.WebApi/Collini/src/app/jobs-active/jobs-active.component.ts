@@ -123,7 +123,10 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
   }
 
   viewNotes(job: JobDetailModel) {
-    this._subscriptions.push(
+    this.notesModal.id = job.id;
+    this.notesModal.loadData();
+    this.notesModal.open(null);
+    /* this._subscriptions.push(
       this._notesService.getJobNotes(job.id)
         .pipe(
             map(e => {
@@ -132,6 +135,6 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
             switchMap(e => this.notesModal.open(e))
         )
       .subscribe()
-    );
+    ); */
   }
 }

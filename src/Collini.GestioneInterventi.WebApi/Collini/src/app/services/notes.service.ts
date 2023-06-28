@@ -59,4 +59,43 @@ export class NotesService {
         });
         return notes;
     }
+
+    getNoteDetail(id: number) {
+        return this._http.get<NoteModel>(`${this._baseUrl}/note-detail/${id}`)
+            .pipe(
+                map(e => {
+                    const nota = Object.assign(new NoteModel(), e);
+
+                    const operator: CustomerModel = Object.assign(new CustomerModel(), nota.operator);
+                    nota.operator = operator;
+        
+                    nota.createdOn = new Date(nota.createdOn);
+        
+                    const attachments: Array<NoteAttachmentModel> = [];
+                    nota.attachments.forEach((attachmentItem: any) => {
+                        const attachment: NoteAttachmentModel = Object.assign(new NoteAttachmentModel(), attachmentItem);
+                        attachments.push(attachment);
+                    });
+                    nota.attachments = attachments;
+
+                    return nota;
+                })
+            );
+    }
+
+    createNote(request: NoteModel) {
+        return this._http.post<number>(`${this._baseUrl}/note`, request)
+            .pipe(
+                map(e => {
+                    return e;
+                })
+            );
+    }
+
+    updateNote(request: NoteModel, id: number) {
+        return this._http.put<void>(`${this._baseUrl}/note/${id}`, request)
+            .pipe(
+                map(() => { })
+            );
+    }
 }

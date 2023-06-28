@@ -199,7 +199,10 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   }
 
   viewNotes() {
-    this._subscriptions.push(
+    this.notesModal.id = this.options.id;
+    this.notesModal.loadData();
+    this.notesModal.open(null);
+    /* this._subscriptions.push(
       this._notesService.getJobNotes(this.options.id)
         .pipe(
             map(e => {
@@ -208,7 +211,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
             switchMap(e => this.notesModal.open(e))
         )
       .subscribe()
-    );
+    ); */
   }
 
   public loadData() {

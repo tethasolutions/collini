@@ -6,6 +6,9 @@ import { markAsDirty } from '../services/common/functions';
 import { MessageBoxService } from '../services/common/message-box.service';
 import { Role } from '../services/security/models';
 import { NoteModel } from '../shared/models/note.model';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { NotesService } from '../services/notes.service';
 
 @Component({
   selector: 'app-notes-modal',
@@ -15,18 +18,92 @@ import { NoteModel } from '../shared/models/note.model';
 
 export class NotesModalComponent extends ModalComponent<any> {
 
-    @Input() note: Array<NoteModel> = [];
+    // @Input() note: Array<NoteModel> = [];
 
-    constructor() {
+    
+    @Input() notesType: string = null;
+    public id: number = null;
+
+    note: Array<NoteModel> = [];
+
+    @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+
+    constructor(private readonly _messageBox: MessageBoxService, private readonly _notesService: NotesService) {
         super();
     }
 
     aggiungiNota() {
-        
+        const request = new NoteModel();
+        if (this.notesType == 'activity') { request.activityId = this.id; }
+        if (this.notesType == 'job') { request.jobId = this.id; }
+        this.noteModal.loadData();
+        this._subscriptions.push(
+            this.noteModal.open(request)
+                .pipe(
+                    filter(e => e),
+                    switchMap(() => this._notesService.createNote(request)),
+                    tap(e => {
+                      this._messageBox.success(`Nota creata`);
+                    }),
+                    tap(() => {
+                      this.loadData();
+                    })
+                )
+                .subscribe()
+        );
     }
-    
+
     modificaNota(nota: NoteModel) {
-        console.log(nota);
+        this.noteModal.loadData();
+        this._subscriptions.push(
+          this._notesService.getNoteDetail(nota.id)
+            .pipe(
+                map(e => {
+                  return e;
+                }),
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),
+                tap(() => this.loadData())
+            )
+          .subscribe()
+        );
+    }
+
+    protected _readActivityNotes() {
+        this._subscriptions.push(
+          this._notesService.getActivityNotes(this.id)
+            .pipe(
+                tap(e => {
+                  this.note = e;
+                })
+            )
+            .subscribe()
+        );
+    }
+
+    protected _readJobNotes() {
+        this._subscriptions.push(
+          this._notesService.getJobNotes(this.id)
+            .pipe(
+                tap(e => {
+                  this.note = e;
+                })
+            )
+            .subscribe()
+        );
+    }
+  
+    public loadData() {
+        if (this.notesType == 'activity') {
+            this._readActivityNotes();
+        }
+        if (this.notesType == 'job') {
+            this._readJobNotes();
+        }
     }
 
     protected _canClose() {

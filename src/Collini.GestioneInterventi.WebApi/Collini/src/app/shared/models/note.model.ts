@@ -8,27 +8,28 @@ import { CustomerModel } from './customer.model';
 export class NoteModel {
     id: number;
     value: string;
-    /* jobId: number;
-    job: JobModel;
+    jobId: number;
     orderId: number;
-    order: OrderModel;
     quotationId: number;
-    quotation: QuotationModel;
     activityId: number;
-    activity: ActivityModel; */
-
     createdOn: Date;
+    operatorId: number;
     operator: CustomerModel;
-    type: string;
 
     attachments: NoteAttachmentModel[];
 
     constructor() {
         this.id = null;
         this.value = null;
+
+        this.jobId = null;
+        this.orderId = null;
+        this.quotationId = null;
+        this.activityId = null;
+
         this.createdOn = new Date();
+        this.operatorId = null;
         this.operator = null;
-        this.type = null;
         this.attachments = [];
     }
 }
