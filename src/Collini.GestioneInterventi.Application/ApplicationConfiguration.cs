@@ -1,5 +1,4 @@
-﻿using Collini.GestioneInterventi.Application.Customers.Services;
-using Collini.GestioneInterventi.Application.Security;
+﻿using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Session;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,9 +12,7 @@ public static class ApplicationConfiguration
         services
             .AddScoped<ISecurityContextFactory, SecurityContextFactory>()
             .AddScoped<ISecurityService, SecurityService>()
-            .AddScoped<IAccessTokenProvider, TAccessTokenProvider>()  
-            .AddScoped<IContactService, ContactService>()
-            .AddScoped<IAddressService, AddressService>();;
+            .AddScoped<IAccessTokenProvider, TAccessTokenProvider>();
 
         return services;
     }

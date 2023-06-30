@@ -160,7 +160,7 @@ public static class WebApiConfiguration
             default:
                 response.ContentType = "text/plain";
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await response.WriteAsync(error?.Message ?? "An error occurred.");
+                await response.WriteAsync("Si è verificato un errore imprevisto.");
                 break;
         }
     }

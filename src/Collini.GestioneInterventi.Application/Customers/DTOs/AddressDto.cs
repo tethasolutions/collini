@@ -8,8 +8,8 @@ namespace Collini.GestioneInterventi.Application.Customers.DTOs
 {
     public class AddressDto
     {
-        public long? Id { get; set; }
-        public long? ContactId { get; set; }
+        public long Id { get; set; }
+        public long ContactId { get; set; }
         public string City { get; set; }
         public string StreetAddress { get; set; }
         public string Province { get; set; }

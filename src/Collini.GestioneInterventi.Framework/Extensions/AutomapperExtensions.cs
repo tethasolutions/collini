@@ -74,17 +74,14 @@ namespace Collini.GestioneInterventi.Framework.Extensions
                 expression = expression
                     .Ignore(nameof(AuditedEntity.CreatedOn))
                     .Ignore(nameof(AuditedEntity.CreatedBy))
-                    .Ignore(nameof(AuditedEntity.CreatedById))
                     .Ignore(nameof(AuditedEntity.EditedOn))
-                    .Ignore(nameof(AuditedEntity.EditedBy))
-                    .Ignore(nameof(AuditedEntity.EditedById));
+                    .Ignore(nameof(AuditedEntity.EditedBy));
             }
 
             if (FullAuditedEntityType.IsAssignableFrom(destType))
             {
                 expression = expression
                     .Ignore(nameof(FullAuditedEntity.DeletedBy))
-                    .Ignore(nameof(FullAuditedEntity.DeletedById))
                     .Ignore(nameof(FullAuditedEntity.DeletedOn));
             }
 
