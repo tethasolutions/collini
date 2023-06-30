@@ -22,6 +22,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Api - Dev": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:60094;http://localhost:60093",
+      "dotnetRunMessages": "true"    
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",
