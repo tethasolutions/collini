@@ -17,13 +17,16 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
         Task<NoteReadModel> GetNoteDetail(long noteId);
         Task<NoteDto> UpdateNote(long id, NoteDto noteDto);
         Task<NoteDto> CreateNote(NoteDto noteDto);
-        Task<List<NoteAttachmentReadModel>> GetNoteAttachments(long noteId);
+        Task<IEnumerable<NoteAttachmentReadModel>> GetNoteAttachments(long noteId);
         Task<NoteAttachmentReadModel> GetNoteAttachmentDetail(long id);
         Task<NoteAttachmentDto> UpdateNoteAttachment(long id, NoteAttachmentDto attachmentDto); 
         Task<NoteAttachmentDto> CreateNoteAttachment(NoteAttachmentDto attachmentDto);
+        Task<IEnumerable<NoteReadModel>> GetQuotationNotes(long quotationId);
+
+        Task<IEnumerable<NoteReadModel>> GetOrderNotes(long orderId);
     }
 
-    public class NoteService
+    public class NoteService:INotesService
     {
         private readonly IMapper mapper;
         private readonly IRepository<Note> noteRepository;
@@ -145,6 +148,27 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
             await dbContext.SaveChanges();
 
             return attachment.MapTo<NoteAttachmentDto>(mapper);
+        }
+
+        public async Task<IEnumerable<NoteReadModel>> GetQuotationNotes(long quotationId)
+        {
+            
+            var notes = noteRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.QuotationId == quotationId)
+                .ToArrayAsync();
+            return notes.MapTo<IEnumerable<NoteReadModel>>(mapper);
+        }
+
+        public async Task<IEnumerable<NoteReadModel>> GetOrderNotes(long orderId)
+        {
+            var notes = noteRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.OrderId == orderId)
+                .ToArrayAsync();
+            return notes.MapTo<IEnumerable<NoteReadModel>>(mapper);
         }
     }
 }

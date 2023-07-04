@@ -1,5 +1,8 @@
-﻿using Collini.GestioneInterventi.Application.Customers.DTOs;
+﻿using Collini.GestioneInterventi.Application.Activities.DTOs;
+using Collini.GestioneInterventi.Application.Activities.Services;
+using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Application.Orders.DTOs;
+using Collini.GestioneInterventi.Application.Orders.Services;
 using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Security.DTOs;
 using Collini.GestioneInterventi.Domain.Docs;
@@ -17,202 +20,53 @@ namespace Collini.GestioneInterventi.WebApi.Controllers;
 [RequireUser]
 public class OrdersController : ColliniApiController
 {
-    public OrdersController()
+    private readonly IOrderService orderService;
+    public OrdersController(IOrderService orderService)
     {
+        this.orderService = orderService;
     }
 
     [HttpGet("orders")]
     public async Task<DataSourceResult> GetOrders([DataSourceRequest] DataSourceRequest request)
     {
-        List<OrderReadModel> orders = new List<OrderReadModel>
-        {
-            new OrderReadModel
-            {
-                Id = 1,
-                Code = "0001",
-                ExpirationDate = new DateTime(2023, 8, 16),
-                Description = "descrizione ordine test",
-                Status = OrderStatus.Pending,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Supplier = new ContactReadModel
-                {
-                    Type = ContactType.Supplier,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP123",
-                    Alert = false,
-                }
-            },
-            new OrderReadModel
-            {
-                Id = 2,
-                Code = "0002",
-                ExpirationDate = new DateTime(2023, 8, 16),
-                Description = "descrizione ordine test",
-                Status = OrderStatus.Completed,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Supplier = new ContactReadModel
-                {
-                    Type = ContactType.Supplier,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP123",
-                    Alert = false,
-                }
-            },
-            new OrderReadModel
-            {
-                Id = 3,
-                Code = "0003",
-                ExpirationDate = new DateTime(2023, 8, 16),
-                Description = "descrizione ordine test",
-                Status = OrderStatus.Canceled,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Supplier = new ContactReadModel
-                {
-                    Type = ContactType.Supplier,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP123",
-                    Alert = false,
-                }
-            }
-        };
-
-        DataSourceResult result = new DataSourceResult
-        {
-            AggregateResults = null,
-            Errors = null,
-            Total = 3,
-            Data = orders
-        };
-
-        return result;
+        var orders = await orderService.GetOrders();
+        return await orders.ToDataSourceResultAsync(request);
     }
 
 
     [HttpGet("order-detail/{id}")]
-    public async Task<OrderDetailDto> GetOrderDetail(long id)
+    public async Task<OrderDetailDto> GetOrderDetail(long orderId)
     {
-        OrderDetailDto order = new OrderDetailDto
-        {
-            Id = 1,
-            Code = "0001",
-            ExpirationDate = new DateTime(2023, 8, 16),
-            Description = "descrizione ordine test",
-            Status = OrderStatus.Pending,
-            JobCode = "1/2023",
-            CustomerName = "Cliente 1",
-            JobDescription = "descrizione commessa test",
-            Supplier = new ContactDto
-            {
-                Type = ContactType.Supplier,
-                CompanyName = "General Motors",
-                Name = "Smith",
-                Surname = "Tucson",
-                FiscalType = ContactFiscalType.Company,
-                ErpCode = "ERP123",
-                Alert = false,
-            }
-        };
-
+        var order = await orderService.GetOrderDetail(orderId);
         return order;
     }
 
     [HttpPost("create-order")]
-    public async Task<IActionResult> CreateOrder([FromBody] OrderDetailDto order)
+    public async Task<IActionResult> CreateOrder([FromBody] OrderDetailDto orderDto)
     {
-        return NoContent();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await orderService.CreateOrder(orderDto);
+        return Ok(orderDto);
     }
 
     [HttpPut("update-order/{id}")]
-    public async Task<IActionResult> UpdateOrder(long id, [FromBody] OrderDetailDto order)
+    public async Task<IActionResult> UpdateOrder(long id, [FromBody] OrderDetailDto orderDto)
     {
-        return NoContent();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await orderService.UpdateOrder(id, orderDto);
+        return Ok(orderDto);
     }
 
     [HttpGet("all-orders")]
     public async Task<List<OrderReadModel>> getAllOrders()
     {
-        List<OrderReadModel> orders = new List<OrderReadModel>
-        {
-            new OrderReadModel
-            {
-                Id = 1,
-                Code = "0001",
-                ExpirationDate = new DateTime(2023, 8, 16),
-                Description = "descrizione ordine test",
-                Status = OrderStatus.Pending,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Supplier = new ContactReadModel
-                {
-                    Type = ContactType.Supplier,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP123",
-                    Alert = false,
-                }
-            },
-            new OrderReadModel
-            {
-                Id = 2,
-                Code = "0002",
-                ExpirationDate = new DateTime(2023, 8, 16),
-                Description = "descrizione ordine test",
-                Status = OrderStatus.Completed,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Supplier = new ContactReadModel
-                {
-                    Type = ContactType.Supplier,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP123",
-                    Alert = false,
-                }
-            },
-            new OrderReadModel
-            {
-                Id = 3,
-                Code = "0003",
-                ExpirationDate = new DateTime(2023, 8, 16),
-                Description = "descrizione ordine test",
-                Status = OrderStatus.Canceled,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Supplier = new ContactReadModel
-                {
-                    Type = ContactType.Supplier,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP123",
-                    Alert = false,
-                }
-            }
-        };
-
-        return orders;
+        var jobs = await orderService.getAllOrders();
+        return jobs.ToList();
     }
 }
