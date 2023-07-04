@@ -21,28 +21,28 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Operatore è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Data inizio</label>
                         <kendo-datepicker [disabled]="options.id != null" name="start" [(ngModel)]="options.start" required></kendo-datepicker>
-                        <kendo-formerror>Data inizio è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Data inizio è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Data fine</label>
                         <kendo-datepicker [disabled]="options.id != null" name="end" [(ngModel)]="options.end" required></kendo-datepicker>
-                        <kendo-formerror>Data fine è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Data fine è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-md-8">
                     <kendo-formfield>
-                        <label>Commessa</label>
+                        <label>Richiesta</label>
                         <kendo-combobox [data]="jobs" 
                             [(ngModel)]="options.jobId" 
                             name="jobId"
@@ -53,7 +53,7 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Commessa è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Richiesta è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div *ngIf="options.id != null" class="col-md-4">
@@ -78,7 +78,7 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Stato è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>

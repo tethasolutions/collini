@@ -182,3 +182,9 @@ textarea {
     border-top: 1px solid white;
     border-bottom: 1px solid white;
 }
+
+@media (min-width: 1400px) {
+    .container {
+        max-width:1650px !important;
+    }
+}

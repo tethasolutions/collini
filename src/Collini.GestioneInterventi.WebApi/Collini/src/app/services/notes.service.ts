@@ -28,6 +28,26 @@ export class NotesService {
             );
     }
 
+    getQuotationNotes(quotationId: number) {
+        return this._http.get<Array<NoteModel>>(`${this._baseUrl}/quotation-notes/${quotationId}`)
+            .pipe(
+                map(response => {
+                    const notes = this.getNotesArray(response);
+                    return notes;
+                })
+            );
+    }
+
+    getOrderNotes(orderId: number) {
+        return this._http.get<Array<NoteModel>>(`${this._baseUrl}/order-notes/${orderId}`)
+            .pipe(
+                map(response => {
+                    const notes = this.getNotesArray(response);
+                    return notes;
+                })
+            );
+    }
+
     getActivityNotes(activityId: number) {
         return this._http.get<Array<NoteModel>>(`${this._baseUrl}/activity-notes/${activityId}`)
             .pipe(

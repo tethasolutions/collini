@@ -1,8 +1,8 @@
 <div class="d-flex align-items-center mb-3">
     <div class="col">
-        <h3 *ngIf="jobType == 'acceptance'">Accettazione commesse</h3>
-        <h3 *ngIf="jobType == 'active'">Commesse</h3>
-        <h3 *ngIf="jobType == 'billed'">Fatturati</h3>
+        <h3 *ngIf="jobType == 'acceptance'">Richieste</h3>
+        <h3 *ngIf="jobType == 'active'">In lavorazione</h3>
+        <h3 *ngIf="jobType == 'billed'">Contabilizzati</h3>
     </div>
     <div class="col-auto">
         <button (click)="createJob()" class="btn btn-primary btn-sm">
@@ -23,8 +23,8 @@
             <div *ngIf="dataItem.expired" class="job-expired">&nbsp;</div>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="createdOn" title="Data commessa" filter="date" format="{0:d}"></kendo-grid-column>
-    <kendo-grid-column field="code" title="Num commessa"></kendo-grid-column>
+    <kendo-grid-column field="createdOn" title="Data richiesta" filter="date" format="{0:d}"></kendo-grid-column>
+    <kendo-grid-column field="code" title="Progr."></kendo-grid-column>
     <kendo-grid-column field="customer.name" title="Cliente">
         <ng-template kendoGridCellTemplate let-dataItem>
             <div *ngIf="!dataItem.customer.alert">{{dataItem.customer.customerDescription}}</div>

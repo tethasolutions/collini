@@ -38,6 +38,7 @@ export class NotesModalComponent extends ModalComponent<any> {
         const request = new NoteModel();
         if (this.notesType == 'activity') { request.activityId = this.id; }
         if (this.notesType == 'job') { request.jobId = this.id; }
+        if (this.notesType == 'quotation') { request.quotationId = this.id; }
         this.noteModal.loadData();
         this._subscriptions.push(
             this.noteModal.open(request)
@@ -99,12 +100,41 @@ export class NotesModalComponent extends ModalComponent<any> {
         );
     }
   
+    protected _readQuotationNotes() {
+      this._subscriptions.push(
+        this._notesService.getQuotationNotes(this.id)
+          .pipe(
+              tap(e => {
+                this.note = e;
+              })
+          )
+          .subscribe()
+      );
+  }
+  
+  protected _readOrderNotes() {
+    this._subscriptions.push(
+      this._notesService.getOrderNotes(this.id)
+        .pipe(
+            tap(e => {
+              this.note = e;
+            })
+        )
+        .subscribe()
+    );
+}
     public loadData() {
         if (this.notesType == 'activity') {
             this._readActivityNotes();
         }
         if (this.notesType == 'job') {
             this._readJobNotes();
+        }
+        if (this.notesType == 'quotation') {
+            this._readQuotationNotes();
+        }
+        if (this.notesType == 'order') {
+            this._readOrderNotes();
         }
     }
 

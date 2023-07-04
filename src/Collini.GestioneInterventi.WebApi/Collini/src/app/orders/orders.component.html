@@ -1,0 +1,45 @@
+<div class="d-flex align-items-center mb-3">
+    <div class="col">
+        <h3>Ordini fornitori</h3>
+    </div>
+    <!-- <div class="col-auto">
+        <button (click)="createOrder()" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i>
+            NUOVO
+        </button>
+    </div> -->
+</div>
+<kendo-grid [data]="dataOrders" [pageSize]="stateGridOrders.take" 
+            [skip]="stateGridOrders.skip" [sort]="stateGridOrders.sort" 
+            [filter]="stateGridOrders.filter"
+            [group]="stateGridOrders.group" filterable="menu" 
+            [sortable]="true" [pageable]="true" scrollable="none"
+            (dataStateChange)="dataStateChange($event)">
+    <kendo-grid-column field="expired" [sortable]="false" [filterable]="false" title=" " width="25px">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div *ngIf="!dataItem.expired" class="job-active">&nbsp;</div>
+            <div *ngIf="dataItem.expired" class="job-expired">&nbsp;</div>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="code" title="Num Ord."></kendo-grid-column>
+    <kendo-grid-column field="supplier.name" title="Fornitore"></kendo-grid-column>
+    <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
+    <kendo-grid-column field="status" title="Stato">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.status | orderStatus}}
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <button class="btn btn-primary btn-sm grid-action-button" title="Note" (click)="viewNotes(dataItem)">
+                <i class="fas fa-sticky-note"></i>
+            </button>
+            <button class="btn btn-primary btn-sm grid-action-button" title="Modifica" (click)="editOrder(dataItem)">
+                <i class="fas fa-edit"></i>
+            </button>
+        </ng-template>
+    </kendo-grid-column>
+</kendo-grid>
+
+<app-notes-modal notesType="order" #notesModal></app-notes-modal>
+<app-order-modal #orderModal></app-order-modal>

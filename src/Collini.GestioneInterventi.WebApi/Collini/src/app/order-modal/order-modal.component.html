@@ -1,0 +1,102 @@
+<div class="k-overlay" *ngIf="opened"></div>
+
+<div class="k-window-wrapper" *ngIf="opened">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
+        <kendo-window-titlebar>
+            <div class="k-window-title">Ordine fornitore</div>
+            <button kendoWindowCloseAction></button>
+        </kendo-window-titlebar>
+        <form class="k-form" name="updateOrderForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
+            <div class="row">
+                <div class="col-md-12">
+                    {{options.jobCode}} - {{options.jobDescription}}
+                </div>
+                <div class="col-md-12">
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Num Ordine</label>
+                        <kendo-textbox [(ngModel)]="options.code" name="code" required></kendo-textbox>
+                        <kendo-formerror>Num Ordine è un campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Data scadenza</label>
+                        <kendo-datepicker name="expirationDate" [(ngModel)]="options.expirationDate" required></kendo-datepicker>
+                        <kendo-formerror>Data scadenza è un campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+                <div class="col-md-4">
+                    <kendo-formfield class="form-group">
+                        <label>Stato</label>
+                        <kendo-dropdownlist [data]="states"
+                            [(ngModel)]="options.status"
+                            name="status"
+                            [valuePrimitive]="true"
+                            required>
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                {{dataItem | orderStatus}}
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                {{dataItem | orderStatus}}
+                            </ng-template>
+                        </kendo-dropdownlist>
+                        <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <kendo-formfield class="form-group">
+                        <label>Fornitore</label>
+                        <kendo-combobox [data]="suppliers" 
+                            [(ngModel)]="options.supplierId" 
+                            name="supplierId"
+                            suggest="true"
+                            class="customer-combobox"
+                            textField="supplierDescription"
+                            [valuePrimitive]="true"
+                            valueField="id"
+                            (valueChange)="customerChanged($event)"
+                            required>
+                        </kendo-combobox>
+                        <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button" title="Nuovo fornitore">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <kendo-formerror>Fornitore è un campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <kendo-formfield class="form-group">
+                        <label>Descrizione</label>
+                        <kendo-textarea [(ngModel)]="options.description" name="description"></kendo-textarea>
+                    </kendo-formfield>
+                </div>
+                <div *ngIf="options.id != null" class="col-md-4">
+                    <label>&nbsp;</label>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="viewNotes()">
+                            <i class="fa fa-edit"></i> Note
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right mt-5">
+                <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
+                    ANNULLA
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    SALVA
+                </button>
+            </div>
+        </form>
+    </kendo-window>
+</div>
+
+<app-notes-modal notesType="order" #notesModal></app-notes-modal>

@@ -9,6 +9,8 @@ import { CustomersComponent } from './customers/customers.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { JobsActiveComponent } from './jobs-active/jobs-active.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { QuotationsComponent } from './quotations/quotations.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -35,9 +37,18 @@ const routes: Routes = [
             {
                 path: 'billed',
                 component: JobsActiveComponent
+            },
+            { 
+                path: 'quotations', 
+                component: QuotationsComponent 
+            },
+            { 
+                path: 'orders', 
+                component: OrdersComponent 
             }
         ]
     },
+    { path: 'orders', component: OrdersComponent },
     { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard.asInjectableGuard] }
 ];
 

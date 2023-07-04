@@ -3,7 +3,7 @@
 <div class="k-window-wrapper" *ngIf="opened">
     <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
         <kendo-window-titlebar>
-            <div class="k-window-title">Commessa</div>
+            <div class="k-window-title">Richiesta</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <form class="k-form" name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
@@ -20,21 +20,21 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Operatore è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
-                        <label>Data commessa</label>
+                        <label>Data richiesta</label>
                         <kendo-datepicker name="createdOn" [(ngModel)]="options.createdOn" required></kendo-datepicker>
-                        <kendo-formerror>Data commessa è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Data richiesta è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Data scadenza</label>
                         <kendo-datepicker name="expirationDate" [(ngModel)]="options.expirationDate" required></kendo-datepicker>
-                        <kendo-formerror>Data scadenza è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Data scadenza è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                         <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button" title="Nuovo cliente">
                             <i class="fa fa-plus"></i>
                         </button>
-                        <kendo-formerror>Cliente è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Cliente è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-6">
@@ -77,7 +77,7 @@
                         <button [disabled]="options.customerId == null" (click)="createAddress()" type="button" class="btn btn-primary add-address-button" title="Nuovo indirizzo">
                             <i class="fa fa-plus"></i>
                         </button>
-                        <kendo-formerror>Indirizzo è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Indirizzo è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Fonte è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Fonte è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
@@ -109,7 +109,7 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Categoria intervento è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Categoria intervento è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
@@ -124,7 +124,7 @@
                             valueField="id"
                             required>
                         </kendo-combobox>
-                        <kendo-formerror>Stato è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                     <kendo-formfield class="form-group">
                         <label>Descrizione richiesta</label>
                         <kendo-textarea [(ngModel)]="options.description" name="description" required></kendo-textarea>
-                        <kendo-formerror>Descrizione richiesta è il campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Descrizione richiesta è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div *ngIf="options.id != null" class="col-md-4">

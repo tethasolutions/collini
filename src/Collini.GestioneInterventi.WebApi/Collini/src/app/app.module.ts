@@ -60,6 +60,15 @@ import { NoteAttachmentsModalComponent } from './note-attachments-modal/note-att
 import { NoteAttachmentModalComponent } from './note-attachment-modal/note-attachment-modal.component';
 import { JobStatusEnum } from './shared/enums/job-status.enum';
 import { JobStatusPipe } from './pipes/job-status.pipe';
+import { QuotationsComponent } from './quotations/quotations.component';
+import { QuotationsService } from './services/quotations.service';
+import { QuotationStatusPipe } from './pipes/quotation-status.pipe';
+import { OrderStatusEnum } from './shared/enums/order-status.enum';
+import { OrdersComponent } from './orders/orders.component';
+import { OrderStatusPipe } from './pipes/order-status.pipe';
+import { OrdersService } from './services/orders.service';
+import { QuotationModalComponent } from './quotation-modal/quotation-modal.component';
+import { OrderModalComponent } from './order-modal/order-modal.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -82,13 +91,19 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         JobsComponent,
         JobsActiveComponent,
         JobModalComponent,
+        QuotationsComponent,
+        QuotationModalComponent,
+        OrdersComponent,
+        OrderModalComponent,
         CalendarComponent,
         ActivityModalComponent,
         NotesModalComponent,
         NoteModalComponent,
         NoteAttachmentsModalComponent,
         NoteAttachmentModalComponent,
-        JobStatusPipe
+        JobStatusPipe,
+        QuotationStatusPipe,
+        OrderStatusPipe
     ],
     imports: [
         BrowserModule,
@@ -130,6 +145,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         CustomerService,
         AddressesService,
         JobsService,
+        QuotationsService,
+        OrdersService,
         ActivitiesService,
         NotesService
     ],

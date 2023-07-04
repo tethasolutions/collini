@@ -4,14 +4,15 @@ import { NoteModel } from './note.model';
 import { OrderStatusEnum } from '../enums/order-status.enum';
 
 export class OrderModel {
+    id: number;
     code: string;
     description: string;
     expirationDate: Date;
     status: OrderStatusEnum;
-    statusChangedOn: Date;
     jobId: number;
-    job: JobModel;
+    customerName: string;
+    jobCode: string;
+    jobDescription: string;
     supplierId: number;
     supplier: ContactModel;
-    notes: NoteModel[];
 }

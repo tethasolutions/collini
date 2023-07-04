@@ -3,11 +3,12 @@ import { NoteModel } from './note.model';
 import { QuotationStatusEnum } from '../enums/quotation-status.enum';
 
 export class QuotationModel {
+    id: number;
     amount: number;
     expirationDate: Date;
     status: QuotationStatusEnum;
-    statusChangedOn: Date;
     jobId: number;
-    job: JobModel;
-    notes: NoteModel[];
+    customerName: string;
+    jobCode: string;
+    jobDescription: string;
 }
