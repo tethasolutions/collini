@@ -1,5 +1,7 @@
 ﻿using Collini.GestioneInterventi.Application.Customers.DTOs;
+using Collini.GestioneInterventi.Application.Orders.Services;
 using Collini.GestioneInterventi.Application.Quotations.DTOs;
+using Collini.GestioneInterventi.Application.Quotations.Services;
 using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Security.DTOs;
 using Collini.GestioneInterventi.Domain.Docs;
@@ -17,116 +19,53 @@ namespace Collini.GestioneInterventi.WebApi.Controllers;
 [RequireUser]
 public class QuotationsController : ColliniApiController
 {
-    public QuotationsController()
+    private readonly IQuotationService quotationService;
+    public QuotationsController(IQuotationService quotationService)
     {
+        this.quotationService = quotationService;
     }
 
     [HttpGet("quotations")]
     public async Task<DataSourceResult> GetQuotations([DataSourceRequest] DataSourceRequest request)
     {
-        List<QuotationReadModel> quotations = new List<QuotationReadModel>
-        {
-            new QuotationReadModel
-            {
-                Id = 1,
-                ExpirationDate = new DateTime(2023, 7, 17),
-                Amount = 120,
-                JobCode = "1/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Status = QuotationStatus.Pending
-            },
-            new QuotationReadModel
-            {
-                Id = 2,
-                ExpirationDate = new DateTime(2023, 6, 17),
-                Amount = 120,
-                JobCode = "2/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Status = QuotationStatus.Refused
-            },
-            new QuotationReadModel
-            {
-                Id = 3,
-                ExpirationDate = new DateTime(2023, 5, 17),
-                Amount = 100,
-                JobCode = "3/2023",
-                CustomerName = "Cliente 1",
-                JobDescription = "descrizione commessa test",
-                Status = QuotationStatus.Accepted
-            }
-        };
-
-        DataSourceResult result = new DataSourceResult
-        {
-            AggregateResults = null,
-            Errors = null,
-            Total = 3,
-            Data = quotations
-        };
-
-        return result;
+        var quotations = (await quotationService.GetQuotations()).ToList();
+        return await quotations.ToDataSourceResultAsync(request);
     }
 
 
     [HttpGet("quotation-detail/{id}")]
-    public async Task<QuotationDetailDto> GetQuotationDetail(long id)
+    public async Task<QuotationDetailDto> GetQuotationDetail(long quotationId)
     {
-        QuotationDetailDto quotation = new QuotationDetailDto
-        {
-            Id = 1,
-            ExpirationDate = new DateTime(2023, 8, 16),
-            Amount = 100,
-            JobCode = "1/2023",
-            CustomerName = "Cliente 1",
-            JobDescription = "descrizione commessa test",
-            Status = QuotationStatus.Pending,
-        };
-
+        var quotation = await quotationService.GetQuotationDetail(quotationId);
         return quotation;
     }
 
     [HttpPost("create-quotation")]
-    public async Task<IActionResult> CreateQuotation([FromBody] QuotationDetailDto quotation)
+    public async Task<IActionResult> CreateQuotation([FromBody] QuotationDetailDto quotationDto)
     {
-        return NoContent();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await quotationService.CreateQuotation(quotationDto);
+        return Ok(quotationDto);
     }
 
     [HttpPut("update-quotation/{id}")]
-    public async Task<IActionResult> UpdateQuotation(long id, [FromBody] QuotationDetailDto quotation)
+    public async Task<IActionResult> UpdateQuotation(long id, [FromBody] QuotationDetailDto quotationDto)
     {
-        return NoContent();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await quotationService.UpdateQuotation(id, quotationDto);
+        return Ok(quotationDto);
     }
 
     [HttpGet("all-quotations")]
     public async Task<List<QuotationReadModel>> getAllQuotations()
     {
-        List<QuotationReadModel> quotations = new List<QuotationReadModel>
-        {
-            new QuotationReadModel
-            {
-                Id = 1,
-                ExpirationDate = new DateTime(2023, 7, 17),
-                Amount = 120,
-                Status = QuotationStatus.Pending
-            },
-            new QuotationReadModel
-            {
-                Id = 2,
-                ExpirationDate = new DateTime(2023, 6, 17),
-                Amount = 120,
-                Status = QuotationStatus.Refused
-            },
-            new QuotationReadModel
-            {
-                Id = 3,
-                ExpirationDate = new DateTime(2023, 5, 17),
-                Amount = 100,
-                Status = QuotationStatus.Accepted
-            }
-        };
-
+        List<QuotationReadModel> quotations = (await quotationService.getAllQuotations()).ToList();
         return quotations;
     }
 }
