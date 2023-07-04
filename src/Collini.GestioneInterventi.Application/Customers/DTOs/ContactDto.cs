@@ -9,7 +9,7 @@ namespace Collini.GestioneInterventi.Application.Customers.DTOs
 {
     public class ContactDto
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public ContactType Type { get; set; }
         public string CompanyName { get; set; }
         public string Name { get; set; }

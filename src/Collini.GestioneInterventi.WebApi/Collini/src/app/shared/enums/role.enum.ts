@@ -1,3 +1,4 @@
 export enum RoleEnum {
-    Administrator
+    Administrator,
+    Operator
 }

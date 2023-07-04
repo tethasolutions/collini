@@ -1,4 +1,5 @@
 ﻿using Collini.GestioneInterventi.Application.Customers.DTOs;
+using Collini.GestioneInterventi.Application.Customers.Services;
 using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Security.DTOs;
 using Collini.GestioneInterventi.WebApi.Auth;
@@ -13,50 +14,61 @@ namespace Collini.GestioneInterventi.WebApi.Controllers;
 [RequireUser]
 public class AddressesController : ColliniApiController
 {
-    public AddressesController()
+    private readonly IAddressService addressService;
+
+    public AddressesController(
+        IAddressService addressService)
     {
+        this.addressService = addressService;
     }
 
     [HttpGet("address/{id}")]
-    public async Task<AddressDto> GetAddress(long id)
+    public async Task<ActionResult<AddressDto>> GetAddress(long id)
     {
-        var address = new AddressDto
-        {
-            Id = 8,
-            ContactId = 3,
-            City = "Toscana",
-            StreetAddress = "corso Milano 12",
-            Province = "TS",
-            ZipCode = "23084",
-            Telephone = "+393883504629",
-            Email = "Alex_Ronaldo@gmail.com",
-            IsMainAddress = false
-        };
+        var address = await addressService.GetAddress(id);
 
-        return address;
+        return Ok(address);
     }
 
     [HttpPut("address/{id}")]
     public async Task<IActionResult> UpdateAddress(long id, [FromBody] AddressDto request)
     {
-        return NoContent();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        var address = await addressService.UpdateAddress(id, request);
+
+        return Ok(address);
     }
 
     [HttpDelete("address/{id}")]
     public async Task<IActionResult> DeleteAddress(long id)
     {
-        return NoContent();
+        await addressService.DeleteAddress(id);
+
+        return Ok();
     }
 
     [HttpPost("address")]
     public async Task<IActionResult> CreateAddress([FromBody] AddressDto request)
     {
-        return Ok(5);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        var address = await addressService.CreateAddress(request);
+
+        return Ok(address);
     }
 
     [HttpPut("set-address-as-main/{id}")]
     public async Task<IActionResult> SetAddressAsMain(long id)
     {
-        return NoContent();
+        var address = await addressService.SetMainAddress(id);
+
+        return Ok(address);
     }
 }
