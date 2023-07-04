@@ -1,12 +1,6 @@
 ﻿using Collini.GestioneInterventi.Application.Customers.DTOs;
-using Collini.GestioneInterventi.Domain.Docs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Collini.GestioneInterventi.Application.Note.DTOs
+namespace Collini.GestioneInterventi.Application.Notes.DTOs
 {
     public class NoteDto
     {
