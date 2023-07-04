@@ -12,6 +12,7 @@ using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Domain.Registry;
 using Collini.GestioneInterventi.Domain.Security;
+using Collini.GestioneInterventi.Framework.Exceptions;
 using Collini.GestioneInterventi.Framework.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -77,21 +78,18 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
 
         public async Task<JobDetailDto> UpdateJob(long id, JobDetailDto jobDto)
         {
-            if (id == 0)
-                throw new ApplicationException("Impossibile aggiornare un job con id 0");
-
-            var job = await jobRepository
-                .Query()
-                .Where(x => x.Id == id)
-                .SingleOrDefaultAsync();
+            var job = await jobRepository.Get(id);
 
             if (job == null)
-                throw new ApplicationException($"Impossibile trovare il job con id {id}");
-
+            {
+                throw new NotFoundException(typeof(Note), id);
+            }
             jobDto.MapTo(job, mapper);
-            jobRepository.Update(job);
+
             await dbContext.SaveChanges();
+
             return job.MapTo<JobDetailDto>(mapper);
+
         }
 
         public async Task<JobDetailDto> CreateJob(JobDetailDto jobDto)
