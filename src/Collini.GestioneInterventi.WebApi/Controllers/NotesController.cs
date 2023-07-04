@@ -37,79 +37,7 @@ public class NotesController : ColliniApiController
     [HttpGet("quotation-notes/{quotationId}")]
     public async Task<List<NoteReadModel>> GetQuotationNotes(long quotationId)
     {
-        List<NoteReadModel> quotationNotes = new List<NoteReadModel>
-        {
-            new NoteReadModel
-            {
-                Id = 1,
-                Value = "Nota 1",
-                CreatedOn = new DateTime(2023, 6, 10),
-                Operator = new ContactDto
-                {
-                    Id = 1,
-                    Type = ContactType.Customer,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.PrivatePerson,
-                    ErpCode = "ERP123",
-                    Alert = false
-                },
-                Attachments = new List<NoteAttachmentReadModel>
-                {
-                    new NoteAttachmentReadModel
-                    {
-                        Id = 1,
-                        DisplayName = "allegato 1",
-                        FileName = "file1.png"
-                    }
-                }
-            },
-            new NoteReadModel
-            {
-                Id = 2,
-                Value = "Nota 2",
-                CreatedOn = new DateTime(2023, 6, 11),
-                Operator = new ContactDto
-                {
-                    Id = 2,
-                    Type = ContactType.Customer,
-                    CompanyName = "Cannon",
-                    Name = "John",
-                    Surname = "Travolta",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP456",
-                    Alert = true
-                },
-                Attachments = new List<NoteAttachmentReadModel>()
-            },
-            new NoteReadModel
-            {
-                Id = 3,
-                Value = "Nota 3",
-                CreatedOn = new DateTime(2023, 6, 12),
-                Operator = new ContactDto
-                {
-                    Id = 3,
-                    Type = ContactType.Customer,
-                    CompanyName = "IDM",
-                    Name = "Alex",
-                    Surname = "Ronaldo",
-                    FiscalType = ContactFiscalType.Building,
-                    ErpCode = "ERP789",
-                    Alert = true
-                },
-                Attachments = new List<NoteAttachmentReadModel>
-                {
-                    new NoteAttachmentReadModel
-                    {
-                        Id = 2,
-                        DisplayName = "allegato 2",
-                        FileName = "file2.png"
-                    }
-                }
-            }
-        };
+        List<NoteReadModel> quotationNotes = (await noteService.GetQuotationNotes(quotationId)).ToList();
 
         return quotationNotes;
     }
@@ -117,79 +45,7 @@ public class NotesController : ColliniApiController
     [HttpGet("order-notes/{orderId}")]
     public async Task<List<NoteReadModel>> GetOrderNotes(long orderId)
     {
-        List<NoteReadModel> orderNotes = new List<NoteReadModel>
-        {
-            new NoteReadModel
-            {
-                Id = 1,
-                Value = "Nota 1",
-                CreatedOn = new DateTime(2023, 6, 10),
-                Operator = new ContactDto
-                {
-                    Id = 1,
-                    Type = ContactType.Customer,
-                    CompanyName = "General Motors",
-                    Name = "Smith",
-                    Surname = "Tucson",
-                    FiscalType = ContactFiscalType.PrivatePerson,
-                    ErpCode = "ERP123",
-                    Alert = false
-                },
-                Attachments = new List<NoteAttachmentReadModel>
-                {
-                    new NoteAttachmentReadModel
-                    {
-                        Id = 1,
-                        DisplayName = "allegato 1",
-                        FileName = "file1.png"
-                    }
-                }
-            },
-            new NoteReadModel
-            {
-                Id = 2,
-                Value = "Nota 2",
-                CreatedOn = new DateTime(2023, 6, 11),
-                Operator = new ContactDto
-                {
-                    Id = 2,
-                    Type = ContactType.Customer,
-                    CompanyName = "Cannon",
-                    Name = "John",
-                    Surname = "Travolta",
-                    FiscalType = ContactFiscalType.Company,
-                    ErpCode = "ERP456",
-                    Alert = true
-                },
-                Attachments = new List<NoteAttachmentReadModel>()
-            },
-            new NoteReadModel
-            {
-                Id = 3,
-                Value = "Nota 3",
-                CreatedOn = new DateTime(2023, 6, 12),
-                Operator = new ContactDto
-                {
-                    Id = 3,
-                    Type = ContactType.Customer,
-                    CompanyName = "IDM",
-                    Name = "Alex",
-                    Surname = "Ronaldo",
-                    FiscalType = ContactFiscalType.Building,
-                    ErpCode = "ERP789",
-                    Alert = true
-                },
-                Attachments = new List<NoteAttachmentReadModel>
-                {
-                    new NoteAttachmentReadModel
-                    {
-                        Id = 2,
-                        DisplayName = "allegato 2",
-                        FileName = "file2.png"
-                    }
-                }
-            }
-        };
+        List<NoteReadModel> orderNotes = (await noteService.GetOrderNotes(orderId)).ToList();
 
         return orderNotes;
     }
@@ -233,7 +89,7 @@ public class NotesController : ColliniApiController
     [HttpGet("notes-attachments/{noteId}")]
     public async Task<List<NoteAttachmentReadModel>> GetNoteAttachments(long noteId)
     {
-        List<NoteAttachmentReadModel> attachments = await noteService.GetNoteAttachments(noteId);
+        List<NoteAttachmentReadModel> attachments = (await noteService.GetNoteAttachments(noteId)).ToList();
         return attachments;
     }
 
