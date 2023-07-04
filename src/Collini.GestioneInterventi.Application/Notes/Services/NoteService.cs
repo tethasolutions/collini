@@ -23,14 +23,14 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
         Task<NoteAttachmentDto> CreateNoteAttachment(NoteAttachmentDto attachmentDto);
     }
 
-    public class NotesService
+    public class NoteService
     {
         private readonly IMapper mapper;
         private readonly IRepository<Note> noteRepository;
         private readonly IRepository<NoteAttachment> noteAttachmentRepository;
         private readonly IColliniDbContext dbContext;
 
-        public NotesService(
+        public NoteService(
             IMapper mapper,
             IRepository<Note> noteRepository,
             IColliniDbContext dbContext, IRepository<NoteAttachment> noteAttachmentRepository)
