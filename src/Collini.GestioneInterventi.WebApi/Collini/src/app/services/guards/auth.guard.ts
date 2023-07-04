@@ -30,7 +30,7 @@ export class AuthGuard {
                 return this._security.isAuthenticated();
             case url === '/providers':
                 return this._security.isAuthenticated();
-            case url === '/jobs':
+            case url.startsWith('/jobs'):
                 return this._security.isAuthenticated();
             case url === '/calendar':
                 return this._security.isAuthenticated();
