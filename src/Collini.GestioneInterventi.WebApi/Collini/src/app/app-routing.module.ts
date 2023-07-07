@@ -11,6 +11,7 @@ import { JobsActiveComponent } from './jobs-active/jobs-active.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { QuotationsComponent } from './quotations/quotations.component';
 import { OrdersComponent } from './orders/orders.component';
+import { ActivitiesComponent } from './activities/activities.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -45,6 +46,10 @@ const routes: Routes = [
             { 
                 path: 'orders', 
                 component: OrdersComponent 
+            },
+            { 
+                path: 'activities', 
+                component: ActivitiesComponent
             }
         ]
     },

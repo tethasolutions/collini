@@ -70,6 +70,8 @@ import { OrdersService } from './services/orders.service';
 import { QuotationModalComponent } from './quotation-modal/quotation-modal.component';
 import { OrderModalComponent } from './order-modal/order-modal.component';
 import { RolePipe } from './pipes/role.pipe';
+import { ActivitiesComponent } from './activities/activities.component';
+import { ActivityStatusPipe } from './pipes/activity-status.pipe';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -98,6 +100,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         OrderModalComponent,
         CalendarComponent,
         ActivityModalComponent,
+        ActivitiesComponent,
         NotesModalComponent,
         NoteModalComponent,
         NoteAttachmentsModalComponent,
@@ -105,6 +108,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         JobStatusPipe,
         QuotationStatusPipe,
         OrderStatusPipe,
+        ActivityStatusPipe,
         RolePipe
     ],
     imports: [
