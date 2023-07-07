@@ -30,15 +30,14 @@ namespace Collini.GestioneInterventi.Application.Notes
 
             CreateMap<NoteAttachment, NoteAttachmentReadModel>();
             CreateMap<NoteAttachmentReadModel, NoteAttachment>()
-                .Ignore(x=>x.NoteId)
                 .Ignore(x=>x.Note)
+                .Ignore(x => x.NoteId)
                 .IgnoreCommonMembers();
 
 
             CreateMap<NoteAttachment, NoteAttachmentDto>();
             CreateMap<NoteAttachmentDto, NoteAttachment>()
                 .Ignore(x=>x.Note)
-                .Ignore(x=>x.NoteId)
                 .IgnoreCommonMembers();
 
         }

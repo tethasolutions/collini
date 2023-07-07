@@ -24,4 +24,8 @@
     <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2023.1.425" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Notes\" />
+  </ItemGroup>
+
 </Project>

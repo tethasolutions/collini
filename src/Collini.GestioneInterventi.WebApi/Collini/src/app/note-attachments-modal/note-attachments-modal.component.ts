@@ -10,6 +10,7 @@ import { NoteAttachmentModalComponent } from '../note-attachment-modal/note-atta
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { NotesService } from '../services/notes.service';
 import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
+import { ApiUrls } from '../services/common/api-urls';
 
 @Component({
   selector: 'app-note-attachments-modal',
@@ -17,10 +18,12 @@ import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
   styleUrls: ['./note-attachments-modal.component.scss']
 })
 export class NoteAttachmentsModalComponent extends ModalComponent<any> {
-  
+
   public id: number = null;
   allegati: Array<NoteAttachmentModel> = [];
   @ViewChild('noteAttachmentModal', { static: true }) noteAttachmentModal: NoteAttachmentModalComponent;
+
+  readonly baseUrl = `${ApiUrls.baseUrl}/attachments/`;
 
   constructor(private readonly _messageBox: MessageBoxService, private readonly _notesService: NotesService) {
     super();

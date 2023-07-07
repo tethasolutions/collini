@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpEventType, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
+import { filter, map } from 'rxjs/operators';
 import { ApiUrls } from './common/api-urls';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
@@ -13,12 +13,12 @@ import { NoteAttachmentUploadFileModel } from '../shared/models/note-attachment-
 
 @Injectable()
 export class NotesService {
-    
+
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/notes`;
 
     constructor(
         private readonly _http: HttpClient
-    ) {}
+    ) { }
 
     getJobNotes(jobId: number) {
         return this._http.get<Array<NoteModel>>(`${this._baseUrl}/job-notes/${jobId}`)
@@ -90,9 +90,9 @@ export class NotesService {
 
                     const operator: UserModel = Object.assign(new UserModel(), nota.operator);
                     nota.operator = operator;
-        
+
                     nota.createdOn = new Date(nota.createdOn);
-        
+
                     const attachments: Array<NoteAttachmentModel> = [];
                     nota.attachments.forEach((attachmentItem: any) => {
                         const attachment: NoteAttachmentModel = Object.assign(new NoteAttachmentModel(), attachmentItem);
@@ -162,12 +162,22 @@ export class NotesService {
     }
 
     uploadNoteAttachmentFile(file: File) {
-        return this._http.post<NoteAttachmentUploadFileModel>(`${this._baseUrl}/note-attachment/upload-file`,file)
+        const formData = new FormData();
+
+        formData.append(file.name, file);
+
+        const uploadReq = new HttpRequest("POST",
+            `${this._baseUrl}/note-attachment/upload-file`,
+            formData,
+            {
+                reportProgress: false
+            });
+
+        return this._http.request(uploadReq)
             .pipe(
-                map(e => {
-                    const uploadFile: NoteAttachmentUploadFileModel = Object.assign(new NoteAttachmentUploadFileModel(), e);
-                    return uploadFile;
-                })
+                filter(e => e.type === HttpEventType.Response),
+                map(e => (e as HttpResponse<NoteAttachmentUploadFileModel>).body),
+                map(e => new NoteAttachmentUploadFileModel(e.fileName, e.originalFileName))
             );
     }
 }

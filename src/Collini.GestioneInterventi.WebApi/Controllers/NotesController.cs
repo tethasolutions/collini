@@ -15,6 +15,8 @@ using Collini.GestioneInterventi.Application.Notes.DTOs;
 using Collini.GestioneInterventi.Application.Notes.Services;
 using Collini.GestioneInterventi.Application.Activities.Services;
 using Collini.GestioneInterventi.Domain.Docs;
+using System.IO;
+using Collini.GestioneInterventi.Framework.Configuration;
 
 namespace Collini.GestioneInterventi.WebApi.Controllers;
 
@@ -22,9 +24,12 @@ namespace Collini.GestioneInterventi.WebApi.Controllers;
 public class NotesController : ColliniApiController
 {
     private readonly INotesService noteService;
-    public NotesController(INotesService noteService)
+    private readonly IColliniConfiguration configuration;
+
+    public NotesController(INotesService noteService, IColliniConfiguration configuration)
     {
         this.noteService = noteService;
+        this.configuration = configuration;
     }
 
     [HttpGet("job-notes/{jobId}")]
@@ -126,8 +131,41 @@ public class NotesController : ColliniApiController
     [HttpPost("note-attachment/upload-file")]
     public async Task<IActionResult> UploadFile()
     {
-        return Ok();
+        var file = Request.Form.Files.FirstOrDefault();
+
+        if (file == null)
+        {
+            return BadRequest();
+        }
+
+        var fileName = await SaveFile(file);
+
+        return Ok(new
+        {
+            fileName,
+            originalFileName = Path.GetFileName(file.FileName)
+        });
     }
 
+    private async Task<string> SaveFile(IFormFile file)
+    {
+        var extension = Path.GetExtension(file.FileName);
+        var fileName = Guid.NewGuid() + extension;
+        var folder = configuration.AttachmentsPath;
+
+        Directory.CreateDirectory(folder);
+
+        var path = Path.Combine(folder, fileName);
+
+        await using (var stream = file.OpenReadStream())
+        {
+            await using (var fileStream = System.IO.File.OpenWrite(path))
+            {
+                await stream.CopyToAsync(fileStream);
+            }
+        }
+
+        return fileName;
+    }
 
 }

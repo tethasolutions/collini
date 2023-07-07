@@ -1,6 +1,11 @@
 
-export class NoteAttachmentUploadFileModel 
+export class NoteAttachmentUploadFileModel
 {
-        success:boolean;
-        fileName: string;        
+    constructor(
+        readonly fileName: string,
+        readonly originalFileName: string
+    ){
+
+    }
+
 }

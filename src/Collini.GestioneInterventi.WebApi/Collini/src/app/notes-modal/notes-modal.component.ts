@@ -12,16 +12,16 @@ import { NotesService } from '../services/notes.service';
 import { NoteAttachmentsModalComponent } from '../note-attachments-modal/note-attachments-modal.component';
 
 @Component({
-  selector: 'app-notes-modal',
-  templateUrl: './notes-modal.component.html',
-  styleUrls: ['./notes-modal.component.scss']
+    selector: 'app-notes-modal',
+    templateUrl: './notes-modal.component.html',
+    styleUrls: ['./notes-modal.component.scss']
 })
 
 export class NotesModalComponent extends ModalComponent<any> {
 
     // @Input() note: Array<NoteModel> = [];
 
-    
+
     @Input() notesType: string = null;
     public id: number = null;
 
@@ -36,9 +36,7 @@ export class NotesModalComponent extends ModalComponent<any> {
 
     aggiungiNota() {
         const request = new NoteModel();
-        if (this.notesType == 'activity') { request.activityId = this.id; }
-        if (this.notesType == 'job') { request.jobId = this.id; }
-        if (this.notesType == 'quotation') { request.quotationId = this.id; }
+        this._setParentId(request);
         this.noteModal.loadData();
         this._subscriptions.push(
             this.noteModal.open(request)
@@ -46,83 +44,91 @@ export class NotesModalComponent extends ModalComponent<any> {
                     filter(e => e),
                     switchMap(() => this._notesService.createNote(request)),
                     tap(e => {
-                      this._messageBox.success(`Nota creata`);
+                        this._messageBox.success(`Nota creata`);
                     }),
                     tap(() => {
-                      this.loadData();
+                        this.loadData();
                     })
                 )
                 .subscribe()
         );
     }
 
+    private _setParentId(note: NoteModel){
+        if (this.notesType == 'activity') { note.activityId = this.id; }
+        if (this.notesType == 'job') { note.jobId = this.id; }
+        if (this.notesType == 'quotation') { note.quotationId = this.id; }
+        if (this.notesType == 'order') { note.orderId = this.id; }
+    }
+
     modificaNota(nota: NoteModel) {
         this.noteModal.loadData();
         this._subscriptions.push(
-          this._notesService.getNoteDetail(nota.id)
-            .pipe(
-                map(e => {
-                  return e;
-                }),
-                switchMap(e => this.noteModal.open(e)),
-                filter(e => e),
-                map(() => this.noteModal.options),
-                switchMap(e => this._notesService.updateNote(e, e.id)),
-                map(() => this.noteModal.options),
-                tap(e => this._messageBox.success(`Nota aggiornata`)),
-                tap(() => this.loadData())
-            )
-          .subscribe()
+            this._notesService.getNoteDetail(nota.id)
+                .pipe(
+                    map(e => {
+                        this._setParentId(e);
+                        return e;
+                    }),
+                    switchMap(e => this.noteModal.open(e)),
+                    filter(e => e),
+                    map(() => this.noteModal.options),
+                    switchMap(e => this._notesService.updateNote(e, e.id)),
+                    map(() => this.noteModal.options),
+                    tap(e => this._messageBox.success(`Nota aggiornata`)),
+                    tap(() => this.loadData())
+                )
+                .subscribe()
         );
     }
 
     protected _readActivityNotes() {
         this._subscriptions.push(
-          this._notesService.getActivityNotes(this.id)
-            .pipe(
-                tap(e => {
-                  this.note = e;
-                })
-            )
-            .subscribe()
+            this._notesService.getActivityNotes(this.id)
+                .pipe(
+                    tap(e => {
+                        this.note = e;
+                    })
+                )
+                .subscribe()
         );
     }
 
     protected _readJobNotes() {
         this._subscriptions.push(
-          this._notesService.getJobNotes(this.id)
-            .pipe(
-                tap(e => {
-                  this.note = e;
-                })
-            )
-            .subscribe()
+            this._notesService.getJobNotes(this.id)
+                .pipe(
+                    tap(e => {
+                        this.note = e;
+                    })
+                )
+                .subscribe()
         );
     }
-  
+
     protected _readQuotationNotes() {
-      this._subscriptions.push(
-        this._notesService.getQuotationNotes(this.id)
-          .pipe(
-              tap(e => {
-                this.note = e;
-              })
-          )
-          .subscribe()
-      );
-  }
-  
-  protected _readOrderNotes() {
-    this._subscriptions.push(
-      this._notesService.getOrderNotes(this.id)
-        .pipe(
-            tap(e => {
-              this.note = e;
-            })
-        )
-        .subscribe()
-    );
-}
+        this._subscriptions.push(
+            this._notesService.getQuotationNotes(this.id)
+                .pipe(
+                    tap(e => {
+                        this.note = e;
+                    })
+                )
+                .subscribe()
+        );
+    }
+
+    protected _readOrderNotes() {
+        this._subscriptions.push(
+            this._notesService.getOrderNotes(this.id)
+                .pipe(
+                    tap(e => {
+                        this.note = e;
+                    })
+                )
+                .subscribe()
+        );
+    }
     public loadData() {
         if (this.notesType == 'activity') {
             this._readActivityNotes();
@@ -139,9 +145,9 @@ export class NotesModalComponent extends ModalComponent<any> {
     }
 
     viewNoteAttachments(nota: NoteModel) {
-      this.notesAtachmentsModal.id = nota.id;
-      this.notesAtachmentsModal.loadData();
-      this.notesAtachmentsModal.open(null);
+        this.notesAtachmentsModal.id = nota.id;
+        this.notesAtachmentsModal.loadData();
+        this.notesAtachmentsModal.open(null);
     }
 
     protected _canClose() {

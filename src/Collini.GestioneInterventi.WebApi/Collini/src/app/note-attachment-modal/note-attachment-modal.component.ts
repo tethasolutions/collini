@@ -18,48 +18,51 @@ import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-note-attachment-modal',
-  templateUrl: './note-attachment-modal.component.html',
-  styleUrls: ['./note-attachment-modal.component.scss']
+    selector: 'app-note-attachment-modal',
+    templateUrl: './note-attachment-modal.component.html',
+    styleUrls: ['./note-attachment-modal.component.scss']
 })
 export class NoteAttachmentModalComponent extends ModalComponent<NoteAttachmentModel> {
-  
-  @ViewChild('form') form: NgForm;
 
-  constructor(
-      private readonly _messageBox: MessageBoxService,
-      private readonly _jobsService: JobsService,
-      private readonly _notesService: NotesService,
-      private readonly _http: HttpClient
-  ) {
-      super();
-  }
+    @ViewChild('form') form: NgForm;
 
-  protected _canClose() {
-    markAsDirty(this.form);
-
-    if (this.form.invalid) {
-        this._messageBox.error('Compilare correttamente tutti i campi');
+    constructor(
+        private readonly _messageBox: MessageBoxService,
+        private readonly _jobsService: JobsService,
+        private readonly _notesService: NotesService,
+        private readonly _http: HttpClient
+    ) {
+        super();
     }
 
-    return this.form.valid;
-  }
+    protected _canClose() {
+        markAsDirty(this.form);
 
-  fileName = '';
+        if (this.form.invalid) {
+            this._messageBox.error('Compilare correttamente tutti i campi');
+        }
 
+        return this.form.valid;
+    }
 
-  onFileSelected(event: { target: { files: File[]; }; }) {
+    onFileSelected(event: { target: { files: File[]; }; }) {
+        const file: File = event.target.files[0];
 
-      const file:File = event.target.files[0];
+        if (!file) {
+            this.options.fileName = null;
+            return;
+        }
 
-      if (file) 
-      {       
-          const formData = new FormData();
-          formData.append("file", file);
-          const upload$ = this._http.post("/api/notes/note-attachment", formData);
-          upload$.subscribe();
-          this.options.fileName = file.name;
-      }
-  }
+        this._subscriptions.push(
+            this._notesService.uploadNoteAttachmentFile(file)
+            .pipe(
+                tap(e => {
+                    this.options.fileName = e.fileName;
+                    this.options.displayName = e.originalFileName;
+                })
+            )
+            .subscribe()
+        );
+    }
 
 }
