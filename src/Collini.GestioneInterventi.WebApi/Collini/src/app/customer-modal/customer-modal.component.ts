@@ -11,6 +11,7 @@ import { AddressesModalComponent } from '../addresses-modal/addresses-modal.comp
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { CustomerService } from '../services/customer.service';
 import { AddressesService } from '../services/addresses.service';
+import { ContactFiscalTypeEnum } from '../shared/enums/contact-fiscal-type.enum';
 
 @Component({
   selector: 'app-customer-modal',
@@ -25,6 +26,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
     @ViewChild('addressesModal', { static: true }) addressesModal: AddressesModalComponent;
 
     readonly role = Role;
+    readonly fiscalType = ContactFiscalTypeEnum;
 
     get isAddressInValidationError(): boolean {
         if (this.form == undefined) { return false; }
@@ -39,6 +41,12 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
         super();
     }
 
+    onFiscalTypeChange()
+    {
+        this.options.companyName = null;
+        this.options.name = null;
+        this.options.surname = null;
+    }
     protected _canClose() {
         markAsDirty(this.form);
 

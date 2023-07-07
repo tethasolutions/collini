@@ -43,23 +43,35 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
 
         public async Task<OrderDetailDto> UpdateOrder(long id,OrderDetailDto orderdtDto)
         {
-            var activity = await orderRepository.Get(id);
+            if (id == 0)
+                throw new ApplicationException("Impossibile aggiornare una nota con id 0");
 
-            if (activity == null)
-            {
-                throw new NotFoundException(typeof(Order), id);
-            }
-            orderdtDto.MapTo(activity, mapper);
+            var order= await orderRepository
+                .Query()
+                .AsNoTracking()
+                //.Include(x=>x.Supplier)
+                //.Include(x=>x.Job)
+                //.Include(x=>x.Notes)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();;
 
+            if (order == null)
+                throw new ApplicationException($"Impossibile trovare una nota con id {id}");
+
+            orderdtDto.MapTo(order, mapper);
+            orderRepository.Update(order);
             await dbContext.SaveChanges();
 
-            return activity.MapTo<OrderDetailDto>(mapper);
+            return order.MapTo<OrderDetailDto>(mapper);
+            
         }
 
         public async Task<IEnumerable<OrderDetailDto>> GetOrders()
         {
             var orders = await orderRepository
                 .Query()
+                .Include(x=>x.Supplier)
+                .Include(x=>x.Job)
                 .AsNoTracking()
                 .ToArrayAsync();
 
@@ -72,16 +84,18 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             if (id == 0)
                 throw new ApplicationException("Impossibile recuperare un order con id 0");
 
-            var job = await orderRepository
+            var order = await orderRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Supplier)
+                .Include(x=>x.Job)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
-            if (job == null)
+            if (order == null)
                 throw new ApplicationException($"Impossibile trovare l'order con id {id}");
 
-            return job.MapTo<OrderDetailDto>(mapper);
+            return order.MapTo<OrderDetailDto>(mapper);
         }
 
         public async Task<OrderDetailDto> CreateOrder(OrderDetailDto orderDto)
@@ -96,6 +110,8 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         {
             var orders = await orderRepository
                 .Query()
+                .Include(x=>x.Supplier)
+                .Include(x=>x.Job)
                 .AsNoTracking()
                 .ToArrayAsync();
 

@@ -35,12 +35,16 @@ export class User {
         readonly enabled: boolean,
         readonly role: Role,
         readonly emailAddress: string,
+        readonly name: string,
+        readonly surname: string,
+        readonly colorHex: string,
         readonly accessToken: string
+        
     ) {
     }
 
     static build(obj: User) {
-        return new User(obj.id, obj.userName, obj.enabled, obj.role, obj.emailAddress,
+        return new User(obj.id, obj.userName, obj.enabled, obj.role, obj.emailAddress,obj.name,obj.surname,obj.colorHex,
             obj.accessToken);
     }
 
@@ -60,16 +64,19 @@ export class UpdateUserRequest {
         public enabled: boolean,
         public role: Role,
         public emailAddress: string,
-        public password: string
+        public password: string,
+        readonly name: string,
+        readonly surname: string,
+        readonly colorHex: string,
     ) {
     }
 
     static empty() {
-        return new UpdateUserRequest(null, true, Role.Operator, null, null);
+        return new UpdateUserRequest(null, true, Role.Operator, null, null,null,null,null);
     }
 
     static fromUser(user: User) {
-        return new UpdateUserRequest(user.userName, user.enabled, user.role, user.emailAddress, null);
+        return new UpdateUserRequest(user.userName, user.enabled, user.role, user.emailAddress, null, user.name,user.surname,user.colorHex);
     }
 
 }

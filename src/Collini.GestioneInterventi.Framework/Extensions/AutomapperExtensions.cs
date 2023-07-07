@@ -60,6 +60,42 @@ namespace Collini.GestioneInterventi.Framework.Extensions
                 .ForMember(memberName, z => z.Ignore());
         }
 
+        public static IMappingExpression<TSource, TDest> IgnoreCommonMembersWithoutCreatedOn<TSource, TDest>(
+            this IMappingExpression<TSource, TDest> expression)
+            where TDest : BaseEntity
+        {
+            var destType = typeof(TDest);
+
+            expression = expression
+                .Ignore(e => e.Id);
+
+            if (AuditedEntityType.IsAssignableFrom(destType))
+            {
+                expression = expression
+                    .Ignore(nameof(AuditedEntity.CreatedBy))
+                    .Ignore(nameof(AuditedEntity.CreatedById))
+                    .Ignore(nameof(AuditedEntity.EditedOn))
+                    .Ignore(nameof(AuditedEntity.EditedBy))
+                    .Ignore(nameof(AuditedEntity.EditedById));
+            }
+
+            if (FullAuditedEntityType.IsAssignableFrom(destType))
+            {
+                expression = expression
+                    .Ignore(nameof(FullAuditedEntity.DeletedBy))
+                    .Ignore(nameof(FullAuditedEntity.DeletedById))
+                    .Ignore(nameof(FullAuditedEntity.DeletedOn));
+            }
+
+            if (SoftDeleteType.IsAssignableFrom(destType))
+            {
+                expression = expression
+                    .Ignore(nameof(FullAuditedEntity.IsDeleted));
+            }
+
+            return expression;
+        }
+
         public static IMappingExpression<TSource, TDest> IgnoreCommonMembers<TSource, TDest>(
             this IMappingExpression<TSource, TDest> expression)
             where TDest : BaseEntity

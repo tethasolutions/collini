@@ -53,7 +53,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             IRepository<ProductType> productTypeRepository,
             IColliniDbContext dbContext, IRepository<JobSource> jobSourceRepository, IRepository<User> userRepository,
             IRepository<Quotation> quotationRepository, IRepository<Order> orderRepository,
-            IRepository<Activity> activityRepository)
+            IRepository<Activity> activityRepository, IRepository<Contact> contactRepository)
         {
             this.productTypeRepository = productTypeRepository;
             this.mapper = mapper;
@@ -64,6 +64,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             this.quotationRepository = quotationRepository;
             this.orderRepository = orderRepository;
             this.activityRepository = activityRepository;
+            this.contactRepository = contactRepository;
         }
 
         public async Task<IEnumerable<JobReadModel>> GetAllJobs()
@@ -71,6 +72,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var jobs = await jobRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Customer)
                 .ToArrayAsync();
 
             return jobs.MapTo<IEnumerable<JobReadModel>>(mapper);
@@ -78,14 +80,29 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
 
         public async Task<JobDetailDto> UpdateJob(long id, JobDetailDto jobDto)
         {
-            var job = await jobRepository.Get(id);
+
+            if (id == 0)
+                throw new ApplicationException("Impossibile aggiornare un job con id 0");
+
+            var job= await jobRepository
+                .Query()
+                .AsNoTracking()
+                //.Include(x=>x.Customer)
+                //.Include(x=>x.CustomerAddress)
+                //.Include(x=>x.Notes)
+                //.Include(x=>x.Orders)
+                //.Include(x=>x.Quotations)
+                //.Include(x=>x.Source)
+                //.Include(x=>x.ProductType)
+                //.Include(x=>x.Activities)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();;
 
             if (job == null)
-            {
-                throw new NotFoundException(typeof(Note), id);
-            }
-            jobDto.MapTo(job, mapper);
+                throw new ApplicationException($"Impossibile trovare job con id {id}");
 
+            jobDto.MapTo(job, mapper);
+            jobRepository.Update(job);
             await dbContext.SaveChanges();
 
             return job.MapTo<JobDetailDto>(mapper);
@@ -98,7 +115,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 throw new ApplicationException("Impossibile creare un nuovo job con un id già esistente");
 
             var job = jobDto.MapTo<Job>(mapper);
-            jobRepository.Insert(job);
+            await jobRepository.Insert(job);
             await dbContext.SaveChanges();
 
             return job.MapTo<JobDetailDto>(mapper);
@@ -112,6 +129,11 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var job = await jobRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Customer)
+                .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.CustomerAddress)
+                .Include(x=>x.Source)
+                .Include(x=>x.ProductType)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -246,6 +268,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var billedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Customer)
                 .Where(x => x.Status == JobStatus.Billed)
                 .ToArrayAsync();
             return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
@@ -256,6 +279,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var billedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Customer)
                 .Where(x => x.Status == JobStatus.Working)
                 .ToArrayAsync();
             return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
@@ -266,6 +290,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var billedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Customer)
                 .Where(x => x.Status == JobStatus.Pending)
                 .ToArrayAsync();
             return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);

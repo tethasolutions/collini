@@ -9,17 +9,17 @@ public class ApplicationProfile : Profile
 {
     public ApplicationProfile()
     {
-        CreateMap<ContactDto, Contact>()
-            .IgnoreCommonMembers()
-            .Ignore(x => x.Jobs)
-            .Ignore(x => x.Orders)
-            .ReverseMap();
+        //CreateMap<ContactDto, Contact>()
+        //    .IgnoreCommonMembers()
+        //    .Ignore(x => x.Jobs)
+        //    .Ignore(x => x.Orders)
+        //    .ReverseMap();
 
-        CreateMap<AddressDto, ContactAddress>()
-            .IgnoreCommonMembers()
-            .Ignore(x => x.Description)
-            .Ignore(x => x.Contact)
-            .Ignore(x => x.Jobs)
-            .ReverseMap();
+        //CreateMap<AddressDto, ContactAddress>()
+        //    .IgnoreCommonMembers()
+        //    .Ignore(x => x.Description)
+        //    .Ignore(x => x.Contact)
+        //    .Ignore(x => x.Jobs)
+        //    .ReverseMap();
     }
 }

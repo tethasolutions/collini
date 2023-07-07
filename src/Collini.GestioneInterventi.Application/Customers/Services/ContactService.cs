@@ -49,7 +49,7 @@ public class ContactService : IContactService
             throw new ApplicationException("Impossibile creare un nuovo contatto con un id già esistente");
 
         var contact = dto.MapTo<Contact>(mapper);
-        contactRepository.Insert(contact);
+        await contactRepository.Insert(contact);
         await dbContext.SaveChanges();
 
         return contact.MapTo<ContactDto>(mapper);
@@ -83,7 +83,9 @@ public class ContactService : IContactService
 
         var contact = await contactRepository
             .Query()
-            .Include(x => x.Addresses)
+            //.Include(x => x.Orders)
+            //.Include(x=>x.Jobs)
+            //.Include(x => x.Addresses)
             .Where(x => x.Id == id)
             .SingleOrDefaultAsync();
 

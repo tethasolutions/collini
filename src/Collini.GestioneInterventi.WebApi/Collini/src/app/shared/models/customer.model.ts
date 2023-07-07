@@ -42,7 +42,7 @@ export class CustomerModel {
         this.surname = null;
         this.fiscalType = null;
         this.erpCode = null;
-        this.alert = null;
+        this.alert = false;
         this.addresses = [];
 
         this.mainAddress = null;

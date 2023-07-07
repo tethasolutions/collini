@@ -57,14 +57,23 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
         public async Task<ActivityDto> UpdateActivity(long id, ActivityDto activityDto)        
         {
-            var activity = await activityRepository.Get(id);
+            if (id == 0)
+                throw new ApplicationException("Impossibile aggiornare una attività con id 0");
+
+            var activity= await activityRepository
+                .Query()
+                //.Include(x=>x.Operator)
+                //.Include(x=>x.Job)
+                //.Include(x=>x.Notes)
+                .AsNoTracking()
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
 
             if (activity == null)
-            {
-                throw new NotFoundException(typeof(Activity), id);
-            }
-            activityDto.MapTo(activity, mapper);
+                throw new ApplicationException($"Impossibile trovare attività con id {id}");
 
+            activityDto.MapTo(activity, mapper);
+            activityRepository.Update(activity);
             await dbContext.SaveChanges();
 
             return activity.MapTo<ActivityDto>(mapper);
@@ -75,16 +84,17 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             if (id == 0)
                 throw new ApplicationException("Impossibile recuperare un activity con id 0");
 
-            var job = await activityRepository
+            var activity = await activityRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Job)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
-            if (job == null)
+            if (activity == null)
                 throw new ApplicationException($"Impossibile trovare l'activity con id {id}");
 
-            return job.MapTo<ActivityViewModel>(mapper);
+            return activity.MapTo<ActivityViewModel>(mapper);
            
         }
 
@@ -92,14 +102,14 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         {
             CalendarViewModel calendar = new CalendarViewModel();
 
-            var activities = activityRepository
+            var activities = await activityRepository
                 .Query()
                 .AsNoTracking()
-                .Include(x => x.Operator)
+                .Include(x=>x.Job)
                 .ToArrayAsync();
 
             calendar.Activities = activities.MapTo<IEnumerable<ActivityViewModel>>(mapper).ToList();
-            calendar.Resources = (await activities).Select(x => x.Operator).Distinct()
+            calendar.Resources = activities.Select(x => x.Operator).Distinct()
                 .MapTo<IEnumerable<CalendarResourceViewModel>>(mapper).ToList();
             return calendar;
 

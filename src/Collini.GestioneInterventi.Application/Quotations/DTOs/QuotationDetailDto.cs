@@ -15,8 +15,8 @@ namespace Collini.GestioneInterventi.Application.Quotations.DTOs
         public DateTimeOffset? ExpirationDate { get; set; }
         public QuotationStatus Status { get; set; }
         public long JobId { get; set; }
-        public string CustomerName { get; set; }
-        public string JobCode { get; set; }
+        public string? CustomerName { get; set; }
+        public string? JobCode { get; set; }
         public string? JobDescription { get; set; }
     }
 }

@@ -12,7 +12,7 @@
                 <div class="col-md-4">
                     <label>Tipo cliente</label>
                     <div class="form-group">
-                        <select class="form-select form-control" name="fiscalType" required [(ngModel)]="options.fiscalType">
+                        <select class="form-select form-control" name="fiscalType" (change)="onFiscalTypeChange()" required [(ngModel)]="options.fiscalType">
                             <option value=0>Privato</option>
                             <option value=1>Azienda</option>
                             <option value=2>Condominio</option>
@@ -23,7 +23,9 @@
                 <div class="col-md-4">
                     <label>Ragione sociale</label>
                     <div class="form-group">
-                        <input class="form-control" name="companyName" [(ngModel)]="options.companyName" required
+                        <input class="form-control" name="companyName" d [(ngModel)]="options.companyName" 
+                        [disabled]="options.fiscalType == fiscalType.PrivatePerson"
+                        [required]="options.fiscalType != fiscalType.PrivatePerson"
                             maxlength="255" novalidate autocomplete="off" />
                         <div class="validation-message" [control]="form.controls['companyName']"></div>
                     </div>
@@ -41,13 +43,17 @@
                     <label>Nome</label>
                     <div class="form-group">
                         <input class="form-control" name="name" [(ngModel)]="options.name"
+                        [disabled]="options.fiscalType != fiscalType.PrivatePerson"
+                        [required]="options.fiscalType == fiscalType.PrivatePerson"
                             maxlength="255" novalidate autocomplete="off" />
                     </div>
                 </div>
                 <div class="col-md-4">
                     <label>Cognome</label>
-                    <div class="form-group">
+                    <div class="form-group">                        
                         <input class="form-control" name="surname" [(ngModel)]="options.surname"
+                        [disabled]="options.fiscalType != fiscalType.PrivatePerson"
+                        [required]="options.fiscalType == fiscalType.PrivatePerson"
                             maxlength="255" novalidate autocomplete="off" />
                     </div>
                 </div>

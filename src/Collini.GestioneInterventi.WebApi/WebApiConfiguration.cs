@@ -30,15 +30,17 @@ public static class WebApiConfiguration
             .AddNewtonsoftJson(e => SetupJsonSettings(e.SerializerSettings));
 
         // Get configuration from appsettings.json
-        var colliniConfiguration = PerformBaseSetup(services, configuration);
+            var colliniConfiguration = PerformBaseSetup(services, configuration);
 
-        // App
-        services
-            .AddHttpContextAccessor()
-            .AddFramework<ColliniSession>(colliniConfiguration)
-            .AddDal()
-            .AddApplication<AccessTokenProvider>()
-            .AddMappings();
+       
+            // App
+            services
+                .AddHttpContextAccessor()
+                .AddFramework<ColliniSession>(colliniConfiguration)
+                .AddDal()
+                .AddApplication<AccessTokenProvider>()
+                .AddMappings();
+       
 
         return services;
     }

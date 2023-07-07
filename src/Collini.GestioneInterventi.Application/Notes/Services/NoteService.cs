@@ -46,9 +46,10 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<IEnumerable<NoteReadModel>> GetJobNotes(long jobId)
         {
-            var notes = noteRepository
+            var notes = await noteRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Attachments)
                 .Where(x => x.JobId == jobId)
                 .ToArrayAsync();
             return notes.MapTo<IEnumerable<NoteReadModel>>(mapper);
@@ -56,9 +57,10 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<IEnumerable<NoteReadModel>> GetActivityNotes(long activityId)
         {
-            var notes = noteRepository
+            var notes = await noteRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Attachments)
                 .Where(x => x.ActivityId == activityId)
                 .ToArrayAsync();
             return notes.MapTo<IEnumerable<NoteReadModel>>(mapper);
@@ -66,9 +68,10 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<NoteReadModel> GetNoteDetail(long noteId)
         {
-            var note = noteRepository
+            var note = await noteRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Attachments)
                 .Where(x => x.Id == noteId)
                 .SingleOrDefaultAsync();
 
@@ -77,17 +80,30 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<NoteDto> UpdateNote(long id, NoteDto noteDto)
         {
-            var note = await noteRepository.Get(id);
+
+            if (id == 0)
+                throw new ApplicationException("Impossibile aggiornare una nota con id 0");
+
+            var note= await noteRepository
+                .Query()
+                .AsNoTracking()
+                //.Include(x=>x.Attachments)
+                //.Include(x=>x.Job)
+                //.Include(x=>x.Quotation)
+                //.Include(x=>x.Activity)
+                //.Include(x=>x.Order)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();;
 
             if (note == null)
-            {
-                throw new NotFoundException(typeof(Note), id);
-            }
-            noteDto.MapTo(note, mapper);
+                throw new ApplicationException($"Impossibile trovare una nota con id {id}");
 
+            noteDto.MapTo(note, mapper);
+            noteRepository.Update(note);
             await dbContext.SaveChanges();
 
             return note.MapTo<NoteDto>(mapper);
+
         }
 
         public async Task<NoteDto> CreateNote(NoteDto noteDto)
@@ -103,7 +119,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<IEnumerable<NoteAttachmentReadModel>> GetNoteAttachments(long noteId)
         {
-            var noteAttachments = noteRepository
+            var noteAttachments = await noteRepository
                 .Query()
                 .AsNoTracking()
                 .Where(x => x.Id == noteId)
@@ -115,7 +131,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<NoteAttachmentReadModel> GetNoteAttachmentDetail(long attachmentId)
         {
-            var noteAttachment = noteAttachmentRepository
+            var noteAttachment = await noteAttachmentRepository
                 .Query()
                 .AsNoTracking()
                 .Where(x => x.Id == attachmentId)
@@ -153,7 +169,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
         public async Task<IEnumerable<NoteReadModel>> GetQuotationNotes(long quotationId)
         {
             
-            var notes = noteRepository
+            var notes = await noteRepository
                 .Query()
                 .AsNoTracking()
                 .Where(x => x.QuotationId == quotationId)
@@ -163,7 +179,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<IEnumerable<NoteReadModel>> GetOrderNotes(long orderId)
         {
-            var notes = noteRepository
+            var notes = await noteRepository
                 .Query()
                 .AsNoTracking()
                 .Where(x => x.OrderId == orderId)

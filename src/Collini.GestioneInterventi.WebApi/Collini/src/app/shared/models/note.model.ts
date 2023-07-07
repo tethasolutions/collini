@@ -4,6 +4,8 @@ import { NoteAttachmentModel } from './note-attachment.model';
 import { QuotationModel } from './quotation.model';
 import { ActivityModel } from './activity.model';
 import { CustomerModel } from './customer.model';
+import { JobOperatorModel } from './job-operator.model';
+import { UserModel } from './user.model';
 
 export class NoteModel {
     id: number;
@@ -14,7 +16,7 @@ export class NoteModel {
     activityId: number;
     createdOn: Date;
     operatorId: number;
-    operator: CustomerModel;
+    operator: UserModel;
 
     attachments: NoteAttachmentModel[];
 

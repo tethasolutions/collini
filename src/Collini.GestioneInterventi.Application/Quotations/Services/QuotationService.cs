@@ -45,6 +45,8 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         {
             var quotations = await quotationRepository
                 .Query()
+                .Include(x=>x.Job)
+                .Include(x=>x.Notes)
                 .AsNoTracking()
                 .ToArrayAsync();
 
@@ -56,16 +58,18 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             if (id == 0)
                 throw new ApplicationException("Impossibile recuperare una quotation con id 0");
 
-            var job = await quotationRepository
+            var quotation = await quotationRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x=>x.Job)
+                .Include(x=>x.Notes)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
-            if (job == null)
+            if (quotation == null)
                 throw new ApplicationException($"Impossibile trovare la quotation con id {id}");
 
-            return job.MapTo<QuotationDetailDto>(mapper);
+            return quotation.MapTo<QuotationDetailDto>(mapper);
         }
 
         public async Task<QuotationDetailDto> CreateQuotation(QuotationDetailDto quotationDto)
@@ -79,27 +83,40 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         public async Task<QuotationDetailDto> UpdateQuotation(long id, QuotationDetailDto quotationDto)
         {
 
-            var quotation = await quotationRepository.Get(id);
+
+            if (id == 0)
+                throw new ApplicationException("Impossibile aggiornare una quotation con id 0");
+
+            var quotation= await quotationRepository
+                .Query()
+                .AsNoTracking()
+                //.Include(x=>x.Job)
+                //.Include(x=>x.Notes)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();;
 
             if (quotation == null)
-            {
-                throw new NotFoundException(typeof(Quotation), id);
-            }
-            quotationDto.MapTo(quotation, mapper);
+                throw new ApplicationException($"Impossibile trovare una quotation con id {id}");
 
+            quotationDto.MapTo(quotation, mapper);
+            quotationRepository.Update(quotation);
             await dbContext.SaveChanges();
 
             return quotation.MapTo<QuotationDetailDto>(mapper);
+
+            
         }
 
         public async Task<IEnumerable<QuotationReadModel>> getAllQuotations()
         {
-            var orders = await quotationRepository
+            var quotations = await quotationRepository
                 .Query()
+                .Include(x=>x.Job)
+                .Include(x=>x.Notes)
                 .AsNoTracking()
                 .ToArrayAsync();
 
-            return orders.MapTo<IEnumerable<QuotationReadModel>>(mapper);
+            return quotations.MapTo<IEnumerable<QuotationReadModel>>(mapper);
         }
     }
 }

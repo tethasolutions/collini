@@ -18,9 +18,9 @@ namespace Collini.GestioneInterventi.Application.Orders.DTOs
         public long SupplierId { get; set; }
         public ContactReadModel? Supplier { get; set; }
         public long JobId { get; set; }
-        public string JobCode { get; set; }
+        public string? JobCode { get; set; }
         public string? JobDescription { get; set; }
-        public string CustomerName { get; set; }
+        public string? CustomerName { get; set; }
         public OrderStatus Status { get; set; }
     }
 }

@@ -69,6 +69,7 @@ import { OrderStatusPipe } from './pipes/order-status.pipe';
 import { OrdersService } from './services/orders.service';
 import { QuotationModalComponent } from './quotation-modal/quotation-modal.component';
 import { OrderModalComponent } from './order-modal/order-modal.component';
+import { RolePipe } from './pipes/role.pipe';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -103,7 +104,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         NoteAttachmentModalComponent,
         JobStatusPipe,
         QuotationStatusPipe,
-        OrderStatusPipe
+        OrderStatusPipe,
+        RolePipe
     ],
     imports: [
         BrowserModule,

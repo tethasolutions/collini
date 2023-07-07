@@ -12,8 +12,7 @@ export class ActivityModel {
     statusChangedOn: Date;
     operatorId: number;
     operator: UserModel;
-    jobId: number;
-    job: JobModel;
+    jobId: number; 
     notes: NoteModel[];
 
     constructor() {
@@ -26,7 +25,7 @@ export class ActivityModel {
         this.operatorId = null;
         this.operator = new UserModel();
         this.jobId = null;
-        this.job = new JobModel();
+        
         this.notes = [];
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Collini.GestioneInterventi.Application.Customers.DTOs;
+using Collini.GestioneInterventi.Application.Jobs.DTOs;
+using Collini.GestioneInterventi.Application.Security.DTOs;
 
 namespace Collini.GestioneInterventi.Application.Notes.DTOs
 {
@@ -8,7 +10,7 @@ namespace Collini.GestioneInterventi.Application.Notes.DTOs
         public string? Value { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public long OperatorId { get; set; }
-        public ContactDto Operator { get; set; }
+        public UserDto Operator { get; set; }
         public long? JobId { get; set; }
         public long? OrderId { get; set; }
         public long? QuotationId { get; set; }

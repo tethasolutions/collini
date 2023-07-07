@@ -8,6 +8,7 @@ import { AddressModel } from '../shared/models/address.model';
 import { NoteModel } from '../shared/models/note.model';
 import { CustomerModel } from '../shared/models/customer.model';
 import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
+import { UserModel } from '../shared/models/user.model';
 
 @Injectable()
 export class NotesService {
@@ -63,7 +64,7 @@ export class NotesService {
         listeNote.forEach(item => {
             const nota = Object.assign(new NoteModel(), item);
 
-            const operator: CustomerModel = Object.assign(new CustomerModel(), nota.operator);
+            const operator: UserModel = Object.assign(new UserModel(), nota.operator);
             nota.operator = operator;
 
             nota.createdOn = new Date(nota.createdOn);
@@ -86,7 +87,7 @@ export class NotesService {
                 map(e => {
                     const nota = Object.assign(new NoteModel(), e);
 
-                    const operator: CustomerModel = Object.assign(new CustomerModel(), nota.operator);
+                    const operator: UserModel = Object.assign(new UserModel(), nota.operator);
                     nota.operator = operator;
         
                     nota.createdOn = new Date(nota.createdOn);

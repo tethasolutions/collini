@@ -9,8 +9,9 @@
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <form name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
+           
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label>Nome utente</label>
                     <div class="form-group">
                         <input class="form-control" name="field_1" [(ngModel)]="options.userName" required
@@ -18,30 +19,76 @@
                         <div class="validation-message" [control]="form.controls['field_1']"></div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label>Password</label>
                     <div class="form-group">
                         <input class="form-control" name="field_2" [(ngModel)]="options.password" maxlength="16"
                             novalidate autocomplete="off" />
                         <div class="validation-message" [control]="form.controls['field_2']"></div>
                     </div>
+                </div>               
+
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Nome</label>
+                    <div class="form-group">
+                        <input class="form-control" name="field_3" [(ngModel)]="options.name" required
+                            maxlength="64" novalidate autocomplete="off" />
+                        <div class="validation-message" [control]="form.controls['field_1']"></div>
+                    </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
+                    <label>Cognome</label>
+                    <div class="form-group">
+                        <input class="form-control" name="field_4" [(ngModel)]="options.surname" maxlength="16"
+                            novalidate autocomplete="off" />
+                        <div class="validation-message" [control]="form.controls['field_2']"></div>
+                    </div>
+                </div>               
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Email</label>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="field_5" [(ngModel)]="options.emailAddress"
+                            maxlength="128" novalidate autocomplete="off" />
+                        <div class="validation-message" [control]="form.controls['field_3']"></div>
+                    </div>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Ruolo</label>
+                    <div class="form-group">
+                        <kendo-dropdownlist [data]="roles" [(ngModel)]="options.role" name="role" required [valuePrimitive]="true">
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                    {{dataItem|role}}
+                            </ng-template>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                    {{dataItem|role}}   
+                            </ng-template>
+                        </kendo-dropdownlist>
+                    </div>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Colore</label>
+                    <div class="form-group">
+                        <kendo-colorpicker name="colorHex" [(ngModel)]="options.colorHex" format="hex" required>
+                        </kendo-colorpicker>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-2">
                     <label>Abilitato</label>
                     <div class="form-group">
                         <kendo-switch name="enabled" [(ngModel)]="options.enabled" onLabel="Si" offLabel="No">
                         </kendo-switch>
                         <div class="validation-message" [control]="form.controls['enabled']"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Email</label>
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="field_3" [(ngModel)]="options.emailAddress"
-                            maxlength="128" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['field_3']"></div>
                     </div>
                 </div>
             </div>

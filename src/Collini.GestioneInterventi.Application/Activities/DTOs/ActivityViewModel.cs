@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Collini.GestioneInterventi.Application.Jobs.DTOs;
 
 namespace Collini.GestioneInterventi.Application.Activities.DTOs
 {
@@ -14,9 +15,6 @@ namespace Collini.GestioneInterventi.Application.Activities.DTOs
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
         public ActivityStatus Status { get; set; }
-        public string Customer { get; set; }
-
         public long JobId { get; set; }
-        public string Job { get; set; }
     }
 }
