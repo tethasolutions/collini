@@ -22,6 +22,29 @@ export class ActivitiesService {
         private readonly _http: HttpClient
     ) {}
 
+    readActivities(state: State) {
+        const params = toDataSourceRequestString(state);
+        const hasGroups = state.group && state.group.length;
+
+        return this._http.get<GridDataResult>(`${this._baseUrl}/activities?${params}`)
+            .pipe(
+                map(e =>
+                    {
+                        const activities: Array<ActivityModel> = [];
+                        e.data.forEach(item => {
+                            const activity: ActivityModel = Object.assign(new ActivityModel(), item);
+
+                            activities.push(activity);
+                        });
+                        return <GridDataResult>{
+                            data: hasGroups ? translateDataSourceResultGroups(activities) : activities,
+                            total: e.total
+                        };
+                    }
+                )
+            );
+    }
+
     getActivity(id: number) {
         return this._http.get<ActivityModel>(`${this._baseUrl}/activity/${id}`)
             .pipe(

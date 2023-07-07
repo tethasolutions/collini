@@ -79,7 +79,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
               filter(e => e),
               switchMap(() => this._ordersService.createOrder(request)),
               tap(e => {
-                this._messageBox.success(`Preventivo creato`);
+                this._messageBox.success(`Ordine creato`);
               }),
               tap(() => this._readOrders())
           )
