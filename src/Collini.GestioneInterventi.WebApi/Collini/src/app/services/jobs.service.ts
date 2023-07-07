@@ -17,7 +17,7 @@ import { JobDetailModel } from '../shared/models/job-detail.model';
 
 @Injectable()
 export class JobsService {
-    
+
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/jobs`;
 
     constructor(
@@ -88,6 +88,34 @@ export class JobsService {
 
     getJobCustomers() {
         return this._http.get<Array<CustomerModel>>(`${this._baseUrl}/job-customers`)
+            .pipe(
+                map(response => {
+                    const customers: Array<CustomerModel> = [];
+
+                    response.forEach(item => {
+                        const customer: CustomerModel = Object.assign(new CustomerModel(), item);
+
+                        const addresses: Array<AddressModel> = [];
+                        customer.addresses.forEach(addressItem => {
+                            const address: AddressModel = Object.assign(new AddressModel(), addressItem);
+                            addresses.push(address);
+                        });
+                        customer.addresses = addresses;
+
+                        let mainAddress = addresses.find(x => x.isMainAddress);
+                        if (mainAddress == undefined) { mainAddress = new AddressModel(); }
+                        customer.mainAddress = mainAddress;
+
+                        customers.push(customer);
+                    });
+
+                    return customers;
+                })
+            );
+    }
+
+    getJobSuppliers() {
+        return this._http.get<Array<CustomerModel>>(`${this._baseUrl}/job-suppliers`)
             .pipe(
                 map(response => {
                     const customers: Array<CustomerModel> = [];

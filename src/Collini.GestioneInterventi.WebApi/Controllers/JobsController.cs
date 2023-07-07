@@ -71,6 +71,13 @@ public class JobsController : ColliniApiController
        return jobCustomers.ToList();
     }
 
+    [HttpGet("job-suppliers")]
+    public async Task<List<ContactReadModel>> GetJobSuppliers()
+    {
+        var jobCustomers = await jobsService.GetJobSuppliers();
+        return jobCustomers.ToList();
+    }
+
     [HttpGet("job-sources")]
     public async Task<List<JobSourceDto>> GetJobSources()
     {

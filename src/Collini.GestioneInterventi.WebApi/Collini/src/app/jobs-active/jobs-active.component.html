@@ -11,10 +11,10 @@
         </button>
     </div>
 </div>
-<kendo-grid [data]="dataJobs" [pageSize]="stateGridJobs.take" 
-            [skip]="stateGridJobs.skip" [sort]="stateGridJobs.sort" 
+<kendo-grid [data]="dataJobs" [pageSize]="stateGridJobs.take"
+            [skip]="stateGridJobs.skip" [sort]="stateGridJobs.sort"
             [filter]="stateGridJobs.filter"
-            [group]="stateGridJobs.group" filterable="menu" 
+            [group]="stateGridJobs.group" filterable="menu"
             [sortable]="true" [pageable]="true" scrollable="none"
             (dataStateChange)="dataStateChange($event)">
     <kendo-grid-column field="expired" [sortable]="false" [filterable]="false" title=" ">
@@ -49,13 +49,13 @@
             <button class="btn btn-primary btn-sm grid-action-button" title="Modifica" (click)="editJob(dataItem)">
                 <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Genera preventivo">
+            <button class="btn btn-primary btn-sm grid-action-button" title="Genera preventivo" (click)="createQuotation(dataItem)">
                 <i class="fas fa-hand-paper"></i>
             </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Ordine fornitore">
+            <button class="btn btn-primary btn-sm grid-action-button" title="Ordine fornitore" (click)="createOrder(dataItem)">
                 <i class="fas fa-ticket"></i>
             </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Genera intervento">
+            <button class="btn btn-primary btn-sm grid-action-button" title="Genera intervento" (click)="createActivity(dataItem)">
                 <i class="fas fa-bolt"></i>
             </button>
         </ng-template>
@@ -64,3 +64,6 @@
 
 <app-job-modal #jobModal></app-job-modal>
 <app-notes-modal notesType="job" #notesModal></app-notes-modal>
+<app-quotation-modal #quotationModal></app-quotation-modal>
+<app-order-modal #orderModal></app-order-modal>
+<app-activity-modal #activityModal></app-activity-modal>

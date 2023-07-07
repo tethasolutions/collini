@@ -27,6 +27,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         Task<IEnumerable<ProductTypeDto>> GetJobProductTypes();
         Task<IEnumerable<JobSourceDto>> GetJobSources();
         Task<IEnumerable<ContactReadModel>> GetJobCustomers();
+        Task<IEnumerable<ContactReadModel>> GetJobSuppliers();
+        
         Task<IEnumerable<JobOperatorDto>> GetOperators();
         Task<JobCountersDto> GetJobCounters();
         Task<IEnumerable<JobReadModel>> GetJobsBilled();
@@ -115,6 +117,16 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 throw new ApplicationException("Impossibile creare un nuovo job con un id già esistente");
 
             var job = jobDto.MapTo<Job>(mapper);
+            
+            // TODO MB Introdurre un campo "Data commessa" in Job, non usare il campo CreatedOn
+            var year = DateTimeOffset.UtcNow.Year;
+            var currentNumber = await jobRepository.Query()
+                .Where(e => e.Year == year)
+                .MaxAsync(e => (int?) e.Number);
+
+            job.Year = year;
+            job.Number = (currentNumber ?? 0) + 1;
+
             await jobRepository.Insert(job);
             await dbContext.SaveChanges();
 
@@ -172,6 +184,20 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x => x.Addresses)
                 .Where(x => x.Type == ContactType.Customer)
                 .OrderBy(x => x.CompanyName ?? x.Surname)
+                .ToArrayAsync();
+
+            return customers.MapTo<IEnumerable<ContactReadModel>>(mapper);
+        }
+
+        public async Task<IEnumerable<ContactReadModel>> GetJobSuppliers()
+        {
+
+            var customers = await contactRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x => x.Addresses)
+                .Where(x => x.Type == ContactType.Supplier)
+                .OrderBy(x => x.CompanyName)
                 .ToArrayAsync();
 
             return customers.MapTo<IEnumerable<ContactReadModel>>(mapper);

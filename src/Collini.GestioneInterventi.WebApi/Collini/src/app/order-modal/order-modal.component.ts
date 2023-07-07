@@ -12,55 +12,72 @@ import { NotesService } from '../services/notes.service';
 import { OrderDetailModel } from '../shared/models/order-detail.model';
 import { OrdersService } from '../services/orders.service';
 import { OrderStatusEnum } from '../shared/enums/order-status.enum';
+import { JobsService } from '../services/jobs.service';
+import { CustomerModel } from '../shared/models/customer.model';
 
 @Component({
-  selector: 'app-order-modal',
-  templateUrl: './order-modal.component.html',
-  styleUrls: ['./order-modal.component.scss']
+    selector: 'app-order-modal',
+    templateUrl: './order-modal.component.html',
+    styleUrls: ['./order-modal.component.scss']
 })
 export class OrderModalComponent extends ModalComponent<OrderDetailModel> {
 
-  @ViewChild('form') form: NgForm;
-  @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
-  readonly role = Role;
-  name = '';
+    @ViewChild('form') form: NgForm;
+    @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+    readonly role = Role;
+    name = '';
 
-  states = listEnum<OrderStatusEnum>(OrderStatusEnum);
-  orderNotes: Array<NoteModel> = [];
+    states = listEnum<OrderStatusEnum>(OrderStatusEnum);
+    orderNotes: Array<NoteModel> = [];
+    suppliers: CustomerModel[] = [];
 
-  constructor(private readonly _messageBox: MessageBoxService, 
-              private readonly _ordersService: OrdersService,
-              private readonly _notesService: NotesService) {
-    super();
-    this.options = new OrderDetailModel();
-  }
+    constructor(private readonly _messageBox: MessageBoxService,
+        private readonly _ordersService: OrdersService,
+        private readonly _notesService: NotesService,
+        private readonly _jobsService: JobsService) {
+        super();
+        this.options = new OrderDetailModel();
+    }
 
-  protected _canClose() {
-      markAsDirty(this.form);
+    protected _canClose() {
+        markAsDirty(this.form);
 
-      if (this.form.invalid) {
-          this._messageBox.error('Compilare correttamente tutti i campi');
-      }
+        if (this.form.invalid) {
+            this._messageBox.error('Compilare correttamente tutti i campi');
+        }
 
-      return this.form.valid;
-  }
+        return this.form.valid;
+    }
 
-  viewNotes() {
-    // this.notesModal.id = this.options.code;
-    // this.notesModal.loadData();
-    // this.notesModal.open(null);
-    /* this._subscriptions.push(
-      this._notesService.getJobNotes(this.options.id)
-        .pipe(
-            map(e => {
-              this.jobNotes = e;
-            }),
-            switchMap(e => this.notesModal.open(e))
-        )
-      .subscribe()
-    ); */
-  }
+    viewNotes() {
+        // this.notesModal.id = this.options.code;
+        // this.notesModal.loadData();
+        // this.notesModal.open(null);
+        /* this._subscriptions.push(
+          this._notesService.getJobNotes(this.options.id)
+            .pipe(
+                map(e => {
+                  this.jobNotes = e;
+                }),
+                switchMap(e => this.notesModal.open(e))
+            )
+          .subscribe()
+        ); */
+    }
 
-  public loadData() {
-  }
+    customerChanged(event: any){
+
+    }
+
+    createCustomer(){
+
+    }
+
+    public loadData() {
+        this._jobsService.getJobSuppliers()
+            .pipe(
+                tap(e => this.suppliers = e)
+            )
+            .subscribe();
+    }
 }

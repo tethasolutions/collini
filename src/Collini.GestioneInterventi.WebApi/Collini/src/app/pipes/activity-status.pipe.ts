@@ -4,7 +4,7 @@ import { ActivityStatusEnum } from '../shared/enums/activity-status.enum';
 import { compileClassMetadata } from '@angular/compiler';
 
 @Pipe({
-    name: 'orderStatus'
+    name: 'activityStatus'
 })
 export class ActivityStatusPipe extends BaseComponent implements PipeTransform {
 

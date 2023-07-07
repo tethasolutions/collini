@@ -6,13 +6,14 @@
             <div class="k-window-title">Ordine fornitore</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
-        <form class="k-form" name="updateOrderForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
+        <form class="k-form" name="updateOrderForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()"
+            *ngIf="options">
             <div class="row">
                 <div class="col-md-12">
                     {{options.jobCode}} - {{options.jobDescription}}
                 </div>
                 <div class="col-md-12">
-                    <hr/>
+                    <hr />
                 </div>
             </div>
             <div class="row">
@@ -26,18 +27,16 @@
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Data scadenza</label>
-                        <kendo-datepicker name="expirationDate" [(ngModel)]="options.expirationDate" required></kendo-datepicker>
+                        <kendo-datepicker name="expirationDate" [(ngModel)]="options.expirationDate"
+                            required></kendo-datepicker>
                         <kendo-formerror>Data scadenza è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Stato</label>
-                        <kendo-dropdownlist [data]="states"
-                            [(ngModel)]="options.status"
-                            name="status"
-                            [valuePrimitive]="true"
-                            required>
+                        <kendo-dropdownlist [data]="states" [(ngModel)]="options.status" name="status"
+                            [valuePrimitive]="true" required>
                             <ng-template kendoDropDownListValueTemplate let-dataItem>
                                 {{dataItem | orderStatus}}
                             </ng-template>
@@ -53,18 +52,12 @@
                 <div class="col-md-6">
                     <kendo-formfield class="form-group">
                         <label>Fornitore</label>
-                        <kendo-combobox [data]="suppliers" 
-                            [(ngModel)]="options.supplierId" 
-                            name="supplierId"
-                            suggest="true"
-                            class="customer-combobox"
-                            textField="supplierDescription"
-                            [valuePrimitive]="true"
-                            valueField="id"
-                            (valueChange)="customerChanged($event)"
-                            required>
+                        <kendo-combobox [data]="suppliers" [(ngModel)]="options.supplierId" name="supplierId"
+                            suggest="true" class="customer-combobox" textField="customerDescription"
+                            [valuePrimitive]="true" valueField="id" (valueChange)="customerChanged($event)" required>
                         </kendo-combobox>
-                        <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button" title="Nuovo fornitore">
+                        <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button hidden"
+                            title="Nuovo fornitore">
                             <i class="fa fa-plus"></i>
                         </button>
                         <kendo-formerror>Fornitore è un campo obbligatorio</kendo-formerror>
