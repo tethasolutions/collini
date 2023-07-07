@@ -21,6 +21,7 @@ export class CustomerModel {
         var result = '';
         if (this.name !== null) { result +=  `${this.name} `; }
         if (this.surname !== null) { result +=  `${this.surname}`; }
+        if (this.companyName !== null) { result = this.companyName; }
         return result;
     }
 

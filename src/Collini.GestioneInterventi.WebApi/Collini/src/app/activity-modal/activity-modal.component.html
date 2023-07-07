@@ -6,20 +6,15 @@
             <div class="k-window-title">Intervento</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
-        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options">
+        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()"
+            *ngIf="options">
             <div class="row form-group">
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Operatore inserimento</label>
-                        <kendo-combobox [data]="operators" 
-                            [(ngModel)]="options.operatorId" 
-                            name="operatorId"
-                            suggest="true"
-                            [disabled]="options.id != null"
-                            textField="description"
-                            [valuePrimitive]="true"
-                            valueField="id"
-                            required>
+                        <kendo-combobox [data]="operators" [(ngModel)]="options.operatorId" name="operatorId"
+                            suggest="true" [disabled]="options.id != null" textField="description"
+                            [valuePrimitive]="true" valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
@@ -27,14 +22,16 @@
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Data inizio</label>
-                        <kendo-datepicker [disabled]="options.id != null" name="start" [(ngModel)]="options.start" required></kendo-datepicker>
+                        <kendo-datetimepicker [disabled]="options.id != null" name="start" [(ngModel)]="options.start"
+                            required format="dd/MM/yyyy HH:mm" [max]="options.end"></kendo-datetimepicker>
                         <kendo-formerror>Data inizio è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Data fine</label>
-                        <kendo-datepicker [disabled]="options.id != null" name="end" [(ngModel)]="options.end" required></kendo-datepicker>
+                        <kendo-datetimepicker [disabled]="options.id != null" name="end" [(ngModel)]="options.end"
+                            required format="dd/MM/yyyy HH:mm" [min]="options.start"></kendo-datetimepicker>
                         <kendo-formerror>Data fine è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
@@ -43,15 +40,9 @@
                 <div class="col-md-8">
                     <kendo-formfield>
                         <label>Richiesta</label>
-                        <kendo-combobox [data]="jobs" 
-                            [(ngModel)]="options.jobId" 
-                            name="jobId"
-                            suggest="true"
-                            [disabled]="options.id != null"
-                            textField="fullDescription"
-                            [valuePrimitive]="true"
-                            valueField="id"
-                            required>
+                        <kendo-combobox [data]="jobs" [(ngModel)]="options.jobId" name="jobId" suggest="true"
+                            [disabled]="options.id != null" textField="fullDescription" [valuePrimitive]="true"
+                            valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Richiesta è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
@@ -69,14 +60,8 @@
                 <div *ngIf="options.id != null" class="col-md-4">
                     <kendo-formfield>
                         <label>Stato</label>
-                        <kendo-combobox [data]="states"
-                            [(ngModel)]="options.status" 
-                            name="status"
-                            suggest="true"
-                            textField="name"
-                            [valuePrimitive]="true"
-                            valueField="id"
-                            required>
+                        <kendo-combobox [data]="states" [(ngModel)]="options.status" name="status" suggest="true"
+                            textField="name" [valuePrimitive]="true" valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>

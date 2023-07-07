@@ -30,5 +30,7 @@ export class AddressModel {
         this.zipCode = null;
         this.isMainAddress = false;
         this.tempId = uuidv4();
+        this.telephone = null;
+        this.email = null;
     }
 }

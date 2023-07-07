@@ -8,10 +8,11 @@ import { MessageBoxService } from '../services/common/message-box.service';
 import { Role } from '../services/security/models';
 import { AddressModalComponent } from '../address-modal/address-modal.component';
 import { AddressesModalComponent } from '../addresses-modal/addresses-modal.component';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { CustomerService } from '../services/customer.service';
 import { AddressesService } from '../services/addresses.service';
 import { ContactFiscalTypeEnum } from '../shared/enums/contact-fiscal-type.enum';
+import { ContactTypeEnum } from '../shared/enums/contact-type.enum';
 
 @Component({
   selector: 'app-customer-modal',
@@ -20,13 +21,14 @@ import { ContactFiscalTypeEnum } from '../shared/enums/contact-fiscal-type.enum'
 })
 
 export class CustomerModalComponent extends ModalComponent<CustomerModel> {
-  
+
     @ViewChild('form') form: NgForm;
     @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
     @ViewChild('addressesModal', { static: true }) addressesModal: AddressesModalComponent;
 
     readonly role = Role;
     readonly fiscalType = ContactFiscalTypeEnum;
+    readonly type = ContactTypeEnum
 
     get isAddressInValidationError(): boolean {
         if (this.form == undefined) { return false; }

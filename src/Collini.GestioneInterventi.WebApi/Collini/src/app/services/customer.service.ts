@@ -9,7 +9,7 @@ import { CustomerModel } from '../shared/models/customer.model';
 
 @Injectable()
 export class CustomerService {
-    
+
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/customers`;
 
     constructor(
@@ -50,7 +50,6 @@ export class CustomerService {
     }
 
     createCustomer(request: CustomerModel) {
-        this.setCustomerTelephoneAndEmailInMainAddress(request);
         return this._http.post<number>(`${this._baseUrl}/customer`, request)
             .pipe(
                 map(e => {
@@ -60,19 +59,10 @@ export class CustomerService {
     }
 
     updateCustomer(request: CustomerModel, id: number) {
-        this.setCustomerTelephoneAndEmailInMainAddress(request);
         return this._http.put<void>(`${this._baseUrl}/customer/${id}`, request)
             .pipe(
                 map(() => { })
             );
-    }
-
-    setCustomerTelephoneAndEmailInMainAddress(request: CustomerModel) {
-        const mainAddress = request.addresses.find(x => x.isMainAddress == true);
-        if (mainAddress != undefined) {
-            mainAddress.telephone = request.telephone;
-            mainAddress.email = request.email;
-        }
     }
 
     deleteCustomer(id: number) {

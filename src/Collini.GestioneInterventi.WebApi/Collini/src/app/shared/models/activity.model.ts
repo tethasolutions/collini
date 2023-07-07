@@ -12,20 +12,20 @@ export class ActivityModel {
     statusChangedOn: Date;
     operatorId: number;
     operator: UserModel;
-    jobId: number; 
+    jobId: number;
     notes: NoteModel[];
 
     constructor() {
         this.id = null;
         this.description = null;
         this.start = new Date();
-        this.end = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));
+        this.end = new Date(this.start.getTime() + (1000 * 60 * 60));
         this.status = ActivityStatusEnum.Planned;
         this.statusChangedOn = new Date();
         this.operatorId = null;
         this.operator = new UserModel();
         this.jobId = null;
-        
+
         this.notes = [];
     }
 }

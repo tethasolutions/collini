@@ -82,7 +82,31 @@ public class AddressService : IAddressService
             throw new NotFoundException(typeof(ContactAddress), id);
         }
 
+        var wasMainAddress = address.IsMainAddress;
+
         addressDto.MapTo(address, mapper);
+
+        if (address.IsMainAddress)
+        {
+            ResetAddresses(address.ContactId, id);
+        }
+        else if (wasMainAddress)
+        {
+            var firstAddress = await contactAddressRepository.Query()
+                .FirstOrDefaultAsync(x => x.ContactId == address.ContactId && x.Id != address.Id);
+
+            if (firstAddress != null)
+            {
+                firstAddress.IsMainAddress = true;
+                contactAddressRepository.Update(firstAddress);
+            }
+            else
+            {
+                address.IsMainAddress = true;
+            }
+        }
+
+        contactAddressRepository.Update(address);
 
         await dbContext.SaveChanges();
 
@@ -101,13 +125,7 @@ public class AddressService : IAddressService
 
         if (address.IsMainAddress)
         {
-            ResetAddresses(address.ContactId, address.Id);
-            
-            var firstAddress = await contactAddressRepository
-                .Query()
-                .FirstAsync(x => x.ContactId == address.ContactId && x.Id != address.Id);
-
-            firstAddress.IsMainAddress = true;
+            throw new ColliniException("Non puoi eliminare l'indirizzo principale");
         }
         
         contactAddressRepository.Delete(address);

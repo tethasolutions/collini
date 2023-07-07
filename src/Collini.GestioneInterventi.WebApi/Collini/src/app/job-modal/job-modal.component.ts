@@ -3,7 +3,7 @@ import { ModalComponent } from '../shared/modal.component';
 import { JobDetailModel } from '../shared/models/job-detail.model';
 import { NgForm } from '@angular/forms';
 import { Role } from '../services/security/models';
-import { markAsDirty } from '../services/common/functions';
+import { listEnum, markAsDirty } from '../services/common/functions';
 import { MessageBoxService } from '../services/common/message-box.service';
 import { JobsService } from '../services/jobs.service';
 import { AddressModel } from '../shared/models/address.model';
@@ -40,10 +40,10 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   customers: Array<CustomerModel> = [];
   sources: Array<JobSourceModel> = [];
   productTypes: Array<ProductTypeModel> = [];
-  states: Array<SimpleLookupModel> = [];
+  states = listEnum<JobStatusEnum>(JobStatusEnum);
   jobNotes: Array<NoteModel> = [];
 
-  constructor(private readonly _messageBox: MessageBoxService, 
+  constructor(private readonly _messageBox: MessageBoxService,
               private readonly _jobsService: JobsService,
               private readonly _addressesService: AddressesService,
               private readonly _customerService: CustomerService,
@@ -115,22 +115,13 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
 
   customerChanged(customerId: number) {
     this.options.customerAddressId = null;
-    if (customerId == undefined) { 
+    if (customerId == undefined) {
       this.options.customer = new CustomerModel();
-      return; 
+      return;
     }
     const nuovoCustomerSelezionato: CustomerModel = this.customers.find(x => x.id === customerId);
     if (nuovoCustomerSelezionato == undefined) { return; }
     this.options.customer = nuovoCustomerSelezionato;
-  }
-
-  setStates() {
-    this.states = [];
-    for(var n in JobStatusEnum) {
-        if (typeof JobStatusEnum[n] === 'number') {
-          this.states.push({id: <any>JobStatusEnum[n], name: n});
-        }
-    }
   }
 
   createAddress() {
@@ -157,7 +148,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
                 this.options.customerAddressId = e;
                 address.id = e;
                 const customerSelezionato: CustomerModel = this.customers.find(x => x.id === this.options.customerId);
-                if (customerSelezionato != undefined) { 
+                if (customerSelezionato != undefined) {
                   customerSelezionato.addresses.push(address);
                 }
                 this._messageBox.success(`Indirizzo creato con successo`)
@@ -219,6 +210,5 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this._readJobCustomers();
     this._readJobSources();
     this._readJobProductTypes();
-    this.setStates();
   }
 }
