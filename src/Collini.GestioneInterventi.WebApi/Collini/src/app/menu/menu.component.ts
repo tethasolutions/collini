@@ -16,6 +16,14 @@ export class MenuComponent extends BaseComponent implements OnInit {
     readonly dropDownMenuEntry = DropDownMenuEntry;
     readonly menu: Menu = new Menu(
         [
+            new MenuEntry(['/jobs'], 'Gestione Richieste',
+                e => e.startsWith('/jobs'),
+                e => e.isAuthenticated()
+            ),
+            new MenuEntry(['/calendar'], 'Calendario',
+                e => e.startsWith('/calendar'),
+                e => e.isAuthenticated()
+            ),
             new DropDownMenuEntry('Anagrafiche', [
                 new MenuEntry(['/users'], 'Utenti',
                     e => e.startsWith('/users'),
@@ -30,14 +38,6 @@ export class MenuComponent extends BaseComponent implements OnInit {
                     e => e.isAuthenticated()
                 )
             ]),
-            new MenuEntry(['/jobs'], 'Gestione Richieste',
-                e => e.startsWith('/jobs'),
-                e => e.isAuthenticated()
-            ),
-            new MenuEntry(['/calendar'], 'Calendario',
-                e => e.startsWith('/calendar'),
-                e => e.isAuthenticated()
-            ),
             new MenuEntry(['/logout'], 'Logout',
                 () => false,
                 e => e.isAuthenticated()
