@@ -25,7 +25,6 @@ export class ActivityModel {
         this.operatorId = null;
         this.operator = new UserModel();
         this.jobId = null;
-
         this.notes = [];
     }
 }

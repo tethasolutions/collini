@@ -6,11 +6,10 @@ namespace Collini.GestioneInterventi.Application.Notes.DTOs
 {
     public class NoteDto
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string? Value { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public long OperatorId { get; set; }
-        public UserDto Operator { get; set; }
         public long? JobId { get; set; }
         public long? OrderId { get; set; }
         public long? QuotationId { get; set; }

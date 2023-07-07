@@ -10,7 +10,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.DTOs
 {
     public class QuotationDetailDto
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public decimal Amount { get; set; }
         public DateTimeOffset? ExpirationDate { get; set; }
         public QuotationStatus Status { get; set; }

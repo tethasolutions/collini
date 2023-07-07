@@ -228,39 +228,41 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ToArrayAsync();
 
 
-            return new JobCountersDto
+            var ret = new JobCountersDto
             {
                 Acceptance = new JobCounterDto()
                 {
-                    Active = acceptedJobs.Count(x => x.ExpirationDate <= DateTimeOffset.Now),
+                    Active = acceptedJobs.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
                     Expired = acceptedJobs.Count(x => x.ExpirationDate < DateTimeOffset.Now)
                 },
                 Actives = new JobCounterDto()
                 {
-                    Active = activeJobs.Count(x => x.ExpirationDate <= DateTimeOffset.Now),
+                    Active = activeJobs.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
                     Expired = activeJobs.Count(x => x.ExpirationDate < DateTimeOffset.Now)
                 },
                 Preventives = new JobCounterDto()
                 {
-                    Active = preventives.Count(x => x.ExpirationDate <= DateTimeOffset.Now),
+                    Active = preventives.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
                     Expired = preventives.Count(x => x.ExpirationDate < DateTimeOffset.Now)
                 },
                 SupplierOrders = new JobCounterDto()
                 {
-                    Active = supplierorders.Count(x => x.ExpirationDate <= DateTimeOffset.Now),
+                    Active = supplierorders.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
                     Expired = supplierorders.Count(x => x.ExpirationDate < DateTimeOffset.Now)
                 },
                 Interventions = new JobCounterDto()
                 {
-                    Active = interventions.Count(x => x.Start <= DateTimeOffset.Now && x.End >= DateTimeOffset.Now),
+                    Active = interventions.Count(x => x.End >= DateTimeOffset.Now),
                     Expired = interventions.Count(x => x.End < DateTimeOffset.Now)
                 },
                 Billed = new JobCounterDto()
                 {
-                    Active = billedJobs.Count(x => x.ExpirationDate <= DateTimeOffset.Now),
+                    Active = billedJobs.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
                     Expired = billedJobs.Count(x => x.ExpirationDate < DateTimeOffset.Now)
                 }
             };
+
+            return ret;
         }
 
         public async Task<IEnumerable<JobReadModel>> GetJobsBilled()
@@ -280,7 +282,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Customer)
-                .Where(x => x.Status == JobStatus.Working)
+                .Where(x => x.Status == JobStatus.Working || x.Status == JobStatus.Completed)
                 .ToArrayAsync();
             return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
         }
@@ -291,7 +293,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Customer)
-                .Where(x => x.Status == JobStatus.Pending)
+                .Where(x => x.Status == JobStatus.Pending || x.Status == JobStatus.Canceled)
                 .ToArrayAsync();
             return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
         }

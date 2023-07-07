@@ -119,11 +119,11 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<IEnumerable<NoteAttachmentReadModel>> GetNoteAttachments(long noteId)
         {
-            var noteAttachments = await noteRepository
+            var noteAttachments = await noteAttachmentRepository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.Id == noteId)
-                .Select(y => y.Attachments)
+                .Where(x => x.NoteId == noteId)
+                .OrderBy(x=>x.CreatedOn)
                 .ToArrayAsync();
 
             return noteAttachments.MapTo<IEnumerable<NoteAttachmentReadModel>>(mapper);

@@ -122,4 +122,12 @@ public class NotesController : ColliniApiController
         await noteService.CreateNoteAttachment(attachmentDto);
         return Ok(attachmentDto);
     }
+
+    [HttpPost("note-attachment/upload-file")]
+    public async Task<IActionResult> UploadFile()
+    {
+        return Ok();
+    }
+
+
 }

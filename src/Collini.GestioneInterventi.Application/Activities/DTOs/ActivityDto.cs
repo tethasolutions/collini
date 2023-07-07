@@ -9,7 +9,7 @@ namespace Collini.GestioneInterventi.Application.Activities.DTOs
 {
     public class ActivityDto
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public long OperatorId { get; set; }
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
