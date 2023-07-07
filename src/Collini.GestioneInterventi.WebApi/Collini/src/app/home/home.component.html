@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
-                        routerLink="active"
+                        routerLink="/jobs/active"
                         routerLinkActive="active">
                     <div class="title">In Lavorazione</div>
                     <div class="blue-number bage-number">{{jobCounters.actives.active}}</div>
@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
-                        routerLink="quotations"
+                        routerLink="/jobs/quotations"
                         routerLinkActive="active">
                     <div class="title">Preventivi</div>
                     <div class="blue-number bage-number">{{jobCounters.preventives.active}}</div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
-                        routerLink="orders"
+                        routerLink="/jobs/orders"
                         routerLinkActive="active">
                     <div class="title">Ordini fornitori</div>
                     <div class="blue-number bage-number">{{jobCounters.supplierOrders.active}}</div>
@@ -41,7 +41,9 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a class="btn btn-light dashboardBtn">
+                <a class="btn btn-light dashboardBtn"
+                    routerLink="/jobs/ciaociao"
+                    routerLinkActive="active">
                     <div class="title">Calendar</div>
                     <div class="blue-number bage-number">{{jobCounters.interventions.active}}</div>
                     <div class="red-number bage-number">{{jobCounters.interventions.expired}}</div>
@@ -49,7 +51,7 @@
             </div>
             <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
-                        routerLink="billed"
+                        routerLink="/jobs/billed"
                         routerLinkActive="active">
                     <div class="title">Contabilizzati</div>
                     <div class="blue-number bage-number">{{jobCounters.billed.active}}</div>

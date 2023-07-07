@@ -8,7 +8,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
 {
     public class JobOperatorDto
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string? Name { get; set; }
         public string? Surname { get; set; }
     }

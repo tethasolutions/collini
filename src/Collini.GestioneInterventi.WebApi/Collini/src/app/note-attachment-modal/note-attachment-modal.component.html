@@ -16,13 +16,18 @@
                     </kendo-formfield>
                 </div>
             </div>
+            <input hidden type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+
             <div class="row form-group">
                 <div class="col-md-12">
                     <kendo-formfield class="form-group">
-                        <label>Percorso</label>
+                        <label>File</label>
                         <kendo-textbox [(ngModel)]="options.fileName" name="fileName" required></kendo-textbox>
                         <kendo-formerror>Percorso è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
+                    <button class="btn btn-primary btn-sm grid-action-button" (click)="fileUpload.click()">
+                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
             <div *ngIf="options.fileName != null && options.fileName != ''" class="row form-group">

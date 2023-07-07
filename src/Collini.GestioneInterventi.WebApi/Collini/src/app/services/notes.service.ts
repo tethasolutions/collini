@@ -9,6 +9,7 @@ import { NoteModel } from '../shared/models/note.model';
 import { CustomerModel } from '../shared/models/customer.model';
 import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
 import { UserModel } from '../shared/models/user.model';
+import { NoteAttachmentUploadFileModel } from '../shared/models/note-attachment-upload-file.model';
 
 @Injectable()
 export class NotesService {
@@ -157,6 +158,16 @@ export class NotesService {
         return this._http.put<void>(`${this._baseUrl}/note-attachment/${id}`, request)
             .pipe(
                 map(() => { })
+            );
+    }
+
+    uploadNoteAttachmentFile(file: File) {
+        return this._http.post<NoteAttachmentUploadFileModel>(`${this._baseUrl}/note-attachment/upload-file`,file)
+            .pipe(
+                map(e => {
+                    const uploadFile: NoteAttachmentUploadFileModel = Object.assign(new NoteAttachmentUploadFileModel(), e);
+                    return uploadFile;
+                })
             );
     }
 }

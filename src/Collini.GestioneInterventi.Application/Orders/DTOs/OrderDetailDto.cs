@@ -10,7 +10,7 @@ namespace Collini.GestioneInterventi.Application.Orders.DTOs
 {
     public class OrderDetailDto
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string? Code { get; set; }
         public string? Description { get; set; }
         public DateTimeOffset? ExpirationDate { get; set; }

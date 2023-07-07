@@ -15,6 +15,7 @@ import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-note-attachment-modal',
@@ -28,7 +29,8 @@ export class NoteAttachmentModalComponent extends ModalComponent<NoteAttachmentM
   constructor(
       private readonly _messageBox: MessageBoxService,
       private readonly _jobsService: JobsService,
-      private readonly _notesService: NotesService
+      private readonly _notesService: NotesService,
+      private readonly _http: HttpClient
   ) {
       super();
   }
@@ -42,4 +44,22 @@ export class NoteAttachmentModalComponent extends ModalComponent<NoteAttachmentM
 
     return this.form.valid;
   }
+
+  fileName = '';
+
+
+  onFileSelected(event: { target: { files: File[]; }; }) {
+
+      const file:File = event.target.files[0];
+
+      if (file) 
+      {       
+          const formData = new FormData();
+          formData.append("file", file);
+          const upload$ = this._http.post("/api/notes/note-attachment", formData);
+          upload$.subscribe();
+          this.options.fileName = file.name;
+      }
+  }
+
 }

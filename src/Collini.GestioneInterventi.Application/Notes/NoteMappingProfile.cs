@@ -19,8 +19,7 @@ namespace Collini.GestioneInterventi.Application.Notes
                 .Ignore(x=>x.Operator);
             
             CreateMap<Note, NoteDto>()
-                .Ignore(x=>x.OperatorId)
-                .Ignore(x=>x.Operator);
+                .Ignore(x=>x.OperatorId);
 
             CreateMap<NoteDto, Note>()
                 .Ignore(x=>x.Job)

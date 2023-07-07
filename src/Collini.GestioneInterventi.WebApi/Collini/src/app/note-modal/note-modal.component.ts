@@ -23,7 +23,7 @@ import { NoteAttachmentsModalComponent } from '../note-attachments-modal/note-at
 export class NoteModalComponent extends ModalComponent<NoteModel> {
 
     @ViewChild('form') form: NgForm;
-    @ViewChild('notesAtachmentsModal', { static: true }) notesAtachmentsModal: NoteAttachmentsModalComponent;
+    @ViewChild('notesAttachmentsModal', { static: true }) notesAttachmentsModal: NoteAttachmentsModalComponent;
 
     operators: Array<JobOperatorModel> = [];
 
@@ -62,8 +62,8 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
     }
 
     viewAttachments() {
-      this.notesAtachmentsModal.id = this.options.id;
-      this.notesAtachmentsModal.loadData();
-      this.notesAtachmentsModal.open(null);
+      this.notesAttachmentsModal.id = this.options.id;
+      this.notesAttachmentsModal.loadData();
+      this.notesAttachmentsModal.open(null);
     }
 }

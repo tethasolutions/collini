@@ -24,8 +24,7 @@ export class ActivityModel {
         this.statusChangedOn = new Date();
         this.operatorId = null;
         this.operator = new UserModel();
-        this.jobId = null;
-        
+        this.jobId = null;        
         this.notes = [];
     }
 }
