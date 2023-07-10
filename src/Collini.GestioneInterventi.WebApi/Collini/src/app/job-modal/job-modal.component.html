@@ -38,9 +38,11 @@
                 <div class="col-md-6">
                     <kendo-formfield class="form-group">
                         <label>Cliente</label>
-                        <kendo-combobox [data]="customers" [(ngModel)]="options.customerId" name="customerId"
+                        <kendo-combobox [data]="customersFiltered" [(ngModel)]="options.customerId" name="customerId"
                             suggest="true" class="customer-combobox" textField="customerDescription"
-                            [valuePrimitive]="true" valueField="id" (valueChange)="customerChanged($event)" required>
+                            [valuePrimitive]="true" valueField="id" (valueChange)="customerChanged($event)" 
+                            [filterable]="true" (filterChange)="handleFilter($event)"
+                            required>
                         </kendo-combobox>
                         <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button"
                             title="Nuovo cliente">

@@ -10,7 +10,6 @@ export class OrderDetailModel {
     sourceId: number;
     source: JobSourceModel;
     supplierId: number;
-    supplier: ContactModel;
     status: OrderStatusEnum;
     jobId: number;
     customerName: string;
@@ -25,7 +24,6 @@ export class OrderDetailModel {
         this.sourceId = null;
         this.source = new JobSourceModel();
         this.supplierId = null;
-        this.supplier = new ContactModel();
         this.status = OrderStatusEnum.Pending;
     }
 }

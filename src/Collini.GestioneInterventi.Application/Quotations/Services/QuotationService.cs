@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Collini.GestioneInterventi.Application.Jobs.DTOs;
+using Collini.GestioneInterventi.Application.Jobs.Services;
 using Collini.GestioneInterventi.Application.Orders.DTOs;
 using Collini.GestioneInterventi.Application.Quotations.DTOs;
 using Collini.GestioneInterventi.Dal;
@@ -28,16 +30,19 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
     {
         private readonly IMapper mapper;
         private readonly IRepository<Quotation> quotationRepository;
+        private readonly IJobService jobService;
         private readonly IColliniDbContext dbContext;
 
         public QuotationService(
             IMapper mapper,
             IRepository<Quotation> quotationRepository,
-            IColliniDbContext dbContext)
+            IColliniDbContext dbContext, 
+            IJobService jobService)
         {
             this.mapper = mapper;
             this.quotationRepository = quotationRepository;
             this.dbContext = dbContext;
+            this.jobService = jobService;
         }
 
 
@@ -76,7 +81,18 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         {
             var quotation = quotationDto.MapTo<Quotation>(mapper);
             await quotationRepository.Insert(quotation);
+
+            var job = await jobService.GetJobDtoForUpdate(quotationDto.JobId);
+            if (job == null)
+                throw new ApplicationException("Job non trovato");
+            if (job.Status == JobStatus.Pending)
+                job.Status = JobStatus.Working;
+            await jobService.UpdateJob(job.Id.Value, job.MapTo<JobDetailDto>(mapper));
+
             await dbContext.SaveChanges();
+
+            quotation.Job = await jobService.GetJob(quotationDto.JobId);
+
             return quotation.MapTo<QuotationDetailDto>(mapper);
         }
 

@@ -17,11 +17,15 @@ export class CustomerModel {
     telephone: string;
     email: string;
 
+    customerDescriptionLower:string;
+    
+    
+
     get customerDescription(): string {
         var result = '';
         if (this.name !== null) { result +=  `${this.name} `; }
         if (this.surname !== null) { result +=  `${this.surname}`; }
-        if (this.companyName !== null) { result = this.companyName; }
+        if (this.companyName !== null) { result = this.companyName; }        
         return result;
     }
 

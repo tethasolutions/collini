@@ -13,6 +13,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
     {
         public long? Id { get; set; }
         public string? Description { get; set; }
+        public int Number { get; set; }
+        public int Year { get; set; }
         public long OperatorId { get; set; }
         public DateTimeOffset CreatedOn { get; set; }
         public DateTimeOffset? ExpirationDate { get; set; }

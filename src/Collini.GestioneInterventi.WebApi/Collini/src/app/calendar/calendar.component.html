@@ -18,23 +18,40 @@
       </ng-template>
 
       <ng-template
+      kendoSchedulerAllDayEventTemplate
+      let-event="event"
+      let-resources="resources">
+      <div [class.intervento-elaborato]="event.dataItem.status == 1">
+      <div class="operatore-title">
+        <ng-container *ngFor="let resource of resources">
+          <span [style.background]="resource.color" *ngIf="!resource.length; else multipleResource">{{ resource.description }}</span>
+          <ng-template #multipleResource>
+            <span  *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
+          </ng-template>
+        </ng-container>
+      </div>
+      <div>{{event.dataItem.cliente}} -  Commessa: {{event.dataItem.commessa}} - {{event.dataItem.description}}</div>
+      <!-- <button (click)="test(event)">Test</button> -->
+    </div>
+    </ng-template>
+
+      <ng-template
         kendoSchedulerEventTemplate
         let-event="event"
         let-resources="resources">
-        <div [class.intervento-elaborato]="event.dataItem.status == 1"></div>
-        <div class="operatore-title">
+        <div [class.intervento-elaborato]="event.dataItem.status == 1">
+        <div>
           <ng-container *ngFor="let resource of resources">
-            <span *ngIf="!resource.length; else multipleResource">
-              {{ resource.description }}
-            </span>
+            <span *ngIf="!resource.length; else multipleResource">{{resource.description}}</span>
             <ng-template #multipleResource>
-              <span>{{ item.description }}</span>
+              <span *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
             </ng-template>
           </ng-container>
         </div>
-        <div class="cliente-title">{{ event.dataItem.cliente }}</div>
-        <div class="commessa-title">Commessa:<br>{{ event.dataItem.commessa }}</div>
+        <div class="cliente-title">{{event.dataItem.cliente}}</div>
+        <div class="commessa-title">{{event.dataItem.commessa}}-{{event.dataItem.description}}</div>
         <!-- <button (click)="test(event)">Test</button> -->
+      </div>
       </ng-template>
 
       <kendo-scheduler-day-view> </kendo-scheduler-day-view>

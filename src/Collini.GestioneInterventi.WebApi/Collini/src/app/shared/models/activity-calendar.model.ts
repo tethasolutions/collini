@@ -7,8 +7,8 @@ export class ActivityCalendarModel {
     end: Date;
     status: ActivityStatusEnum;
     operatorId: number;
-    customer: string;
-    job: string;
+    customerName: string;
+    jobCode: string;
 
     constructor() {
         this.id = null;
@@ -17,7 +17,7 @@ export class ActivityCalendarModel {
         this.end = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));
         this.status = ActivityStatusEnum.Planned;
         this.operatorId = null;
-        this.job = null;
-        this.customer = null;
+        this.jobCode = null;
+        this.customerName = null;
     }
 }

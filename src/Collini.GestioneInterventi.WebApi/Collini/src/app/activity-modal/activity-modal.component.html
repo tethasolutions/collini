@@ -8,6 +8,18 @@
         </kendo-window-titlebar>
         <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()"
             *ngIf="options">
+            <div class="row">
+                <div class="col-md-12">
+                    {{options.jobCode}} - 
+                    {{options.customerName}}
+                </div>
+                <div class="col-md-12">
+                    {{options.jobDescription}}
+                </div>
+                <div class="col-md-12">
+                    <hr/>
+                </div>
+            </div>
             <div class="row form-group">
                 <div class="col-md-4">
                     <kendo-formfield>
@@ -22,7 +34,7 @@
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Data inizio</label>
-                        <kendo-datetimepicker [disabled]="options.id != null" name="start" [(ngModel)]="options.start"
+                        <kendo-datetimepicker  name="start" [(ngModel)]="options.start"
                             required format="dd/MM/yyyy HH:mm" [max]="options.end"></kendo-datetimepicker>
                         <kendo-formerror>Data inizio è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
@@ -30,18 +42,19 @@
                 <div class="col-md-4">
                     <kendo-formfield>
                         <label>Data fine</label>
-                        <kendo-datetimepicker [disabled]="options.id != null" name="end" [(ngModel)]="options.end"
+                        <kendo-datetimepicker  name="end" [(ngModel)]="options.end"
                             required format="dd/MM/yyyy HH:mm" [min]="options.start"></kendo-datetimepicker>
                         <kendo-formerror>Data fine è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-8">
+                <div *ngIf="options.jobCode == null" class="col-md-8">
                     <kendo-formfield>
                         <label>Richiesta</label>
-                        <kendo-combobox [data]="jobs" [(ngModel)]="options.jobId" name="jobId" suggest="true"
+                        <kendo-combobox [data]="jobsFiltered" [(ngModel)]="options.jobId" name="jobId" suggest="true"
                             [disabled]="options.id != null" textField="fullDescription" [valuePrimitive]="true"
+                            [filterable]="true" (filterChange)="handleFilter($event)"
                             valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Richiesta è un campo obbligatorio</kendo-formerror>
@@ -56,7 +69,13 @@
                     </div>
                 </div>
             </div>
-            <div class="row form-group">
+            <div class="row">
+                <div class="col-md-8">
+                    <kendo-formfield class="form-group">
+                        <label>Descrizione</label>
+                        <kendo-textarea [(ngModel)]="options.description" name="description"></kendo-textarea>
+                    </kendo-formfield>
+                </div>
                 <div *ngIf="options.id != null" class="col-md-4">
                     <kendo-formfield>
                         <label>Stato</label>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Collini.GestioneInterventi.Application.Activities.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
+using Collini.GestioneInterventi.Application.Jobs.Services;
 using Collini.GestioneInterventi.Application.Orders.DTOs;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
@@ -28,16 +29,19 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
     {
         private readonly IMapper mapper;
         private readonly IRepository<Order> orderRepository;
+        private readonly IJobService jobService;
         private readonly IColliniDbContext dbContext;
 
         public OrderService(
             IMapper mapper,
             IRepository<Order> orderRepository,
-            IColliniDbContext dbContext)
+            IColliniDbContext dbContext, 
+            IJobService jobService)
         {
             this.mapper = mapper;
             this.orderRepository = orderRepository;
             this.dbContext = dbContext;
+            this.jobService = jobService;
         }
 
 
@@ -102,7 +106,18 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         {
             var order = orderDto.MapTo<Order>(mapper);
             await orderRepository.Insert(order);
+            
+            var job = await jobService.GetJobDtoForUpdate(orderDto.JobId);
+            if (job == null)
+                throw new ApplicationException("Job non trovato");
+            if (job.Status == JobStatus.Pending)
+                job.Status = JobStatus.Working;
+            await jobService.UpdateJob(job.Id.Value, job.MapTo<JobDetailDto>(mapper));
+            
             await dbContext.SaveChanges();
+
+            order.Job = await jobService.GetJob(orderDto.JobId);
+
             return order.MapTo<OrderDetailDto>(mapper);
         }
        

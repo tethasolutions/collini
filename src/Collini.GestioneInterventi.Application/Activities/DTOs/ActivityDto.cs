@@ -14,5 +14,11 @@ namespace Collini.GestioneInterventi.Application.Activities.DTOs
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
         public ActivityStatus Status { get; set; }
+        public string? Description { get; set; }
+        public long JobId { get; set; }
+        public string? JobCode { get; set; }
+        public string? JobDescription { get; set; }
+        public string? CustomerName { get; set; }
+
     }
 }

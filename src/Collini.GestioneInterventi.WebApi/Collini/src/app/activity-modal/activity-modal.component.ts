@@ -28,6 +28,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
 
     operators: Array<JobOperatorModel> = [];
     jobs: Array<JobModel> = [];
+    jobsFiltered: Array<JobModel> = [];
     states: Array<SimpleLookupModel> = [];
     activityNotes: Array<NoteModel> = [];
 
@@ -117,9 +118,30 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
         ); */
       }
 
+      handleFilter(value:string) 
+      {
+        this._filterJobs(value);
+      }
+
+
     public loadData() {
+      this._readjobs();
+      this._filterJobs(null);
         this._readOperators();
-        this._readjobs();
         this.setStates();
+    }
+
+    private _filterJobs(value:string)
+    {
+      if(value == null || value.length < 3)
+      {
+        this.jobsFiltered = [];
+      }
+      else
+      {        
+        value = value.toLowerCase();
+        //TODO Ottimizzare filtro
+        this.jobsFiltered = this.jobs.filter((s)=> s.fullDescription.toLowerCase().indexOf(value)!== -1);
+      }
     }
 }

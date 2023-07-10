@@ -137,7 +137,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
         request.jobId = job.id;
         request.jobDescription = job.description;
-        request.jobCode = job.code;
+        request.jobCode = job.number + "/" + job.year;
         request.customerName = job.customer.customerDescription;
 
         this.orderModal.loadData();
@@ -159,6 +159,9 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         const request = new ActivityModel();
 
         request.jobId = job.id;
+        request.jobDescription = job.description;
+        request.jobCode = job.number + "/" + job.year;
+        request.customerName = job.customer.customerDescription;
 
         this.activityModal.loadData();
 
@@ -180,7 +183,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
         request.jobId = job.id;
         request.jobDescription = job.description;
-        request.jobCode = job.code;
+        request.jobCode = job.number + "/" + job.year;
         request.customerName = job.customer.customerDescription;
 
         this.quotationModal.loadData();

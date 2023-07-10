@@ -21,7 +21,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
 
   // public selectedDate: Date = displayDate;
   public selectedDate: Date = new Date();
-  public events: SchedulerEvent[] = sampleDataWithResources;
+  // public events: SchedulerEvent[] = sampleDataWithResources;
 
   /* public resources: any[] = [
     {
@@ -275,57 +275,57 @@ const randomInt = (min: any, max: any): number => {
 
 export const displayDate = new Date(currentYear, 5, 24);
 
-export const sampleData = baseData.map(dataItem => (
-    <SchedulerEvent> {
-        id: dataItem.TaskID,
-        start: parseAdjust(dataItem.Start),
-        startTimezone: dataItem.startTimezone,
-        end: parseAdjust(dataItem.End),
-        endTimezone: dataItem.endTimezone,
-        isAllDay: dataItem.IsAllDay,
-        title: dataItem.Title,
-        description: dataItem.Description,
-        recurrenceRule: dataItem.RecurrenceRule,
-        recurrenceId: dataItem.RecurrenceID,
-        recurrenceException: dataItem.RecurrenceException,
+// export const sampleData = baseData.map(dataItem => (
+//     <SchedulerEvent> {
+//         id: dataItem.TaskID,
+//         start: parseAdjust(dataItem.Start),
+//         startTimezone: dataItem.startTimezone,
+//         end: parseAdjust(dataItem.End),
+//         endTimezone: dataItem.endTimezone,
+//         isAllDay: dataItem.IsAllDay,
+//         title: dataItem.Title,
+//         description: dataItem.Description,
+//         recurrenceRule: dataItem.RecurrenceRule,
+//         recurrenceId: dataItem.RecurrenceID,
+//         recurrenceException: dataItem.RecurrenceException,
 
-        roomId: dataItem.RoomID,
-        ownerID: dataItem.OwnerID,
+//         roomId: dataItem.RoomID,
+//         ownerID: dataItem.OwnerID,
         
-        operatore: dataItem.operatore,
-        cliente: dataItem.cliente,
-        commessa: dataItem.commessa,
-        color: dataItem.color
-    }
-));
+//         operatore: dataItem.operatore,
+//         cliente: dataItem.cliente,
+//         commessa: dataItem.commessa,
+//         color: dataItem.color
+//     }
+// ));
 
-export const sampleDataWithResources = baseData.map(dataItem => (
-    <SchedulerEvent> {
-        id: dataItem.TaskID,
-        start: parseAdjust(dataItem.Start),
-        startTimezone: dataItem.startTimezone,
-        end: parseAdjust(dataItem.End),
-        endTimezone: dataItem.endTimezone,
-        isAllDay: dataItem.IsAllDay,
-        title: dataItem.Title,
-        description: dataItem.Description,
-        recurrenceRule: dataItem.RecurrenceRule,
-        recurrenceId: dataItem.RecurrenceID,
-        recurrenceException: dataItem.RecurrenceException,
-        operatore: dataItem.operatore,
-        cliente: dataItem.cliente,
-        commessa: dataItem.commessa,
-        // roomId: randomInt(1, 2),
-        roomId: dataItem.RoomID,
-        attendees: [randomInt(1, 3)],
-        color: dataItem.color
-    }
-));
+// export const sampleDataWithResources = baseData.map(dataItem => (
+//     <SchedulerEvent> {
+//         id: dataItem.TaskID,
+//         start: parseAdjust(dataItem.Start),
+//         startTimezone: dataItem.startTimezone,
+//         end: parseAdjust(dataItem.End),
+//         endTimezone: dataItem.endTimezone,
+//         isAllDay: dataItem.IsAllDay,
+//         title: dataItem.Title,
+//         description: dataItem.Description,
+//         recurrenceRule: dataItem.RecurrenceRule,
+//         recurrenceId: dataItem.RecurrenceID,
+//         recurrenceException: dataItem.RecurrenceException,
+//         operatore: dataItem.operatore,
+//         cliente: dataItem.cliente,
+//         commessa: dataItem.commessa,
+//         // roomId: randomInt(1, 2),
+//         roomId: dataItem.RoomID,
+//         attendees: [randomInt(1, 3)],
+//         color: dataItem.color
+//     }
+// ));
 
-export const sampleDataWithCustomSchema = baseData.map(dataItem => (
-    {
-        ...dataItem,
-        Start: parseAdjust(dataItem.Start),
-        End: parseAdjust(dataItem.End)
-    }
-));
+// export const sampleDataWithCustomSchema = baseData.map(dataItem => (
+//     {
+//         ...dataItem,
+//         Start: parseAdjust(dataItem.Start),
+//         End: parseAdjust(dataItem.End)
+//     }
+// ));

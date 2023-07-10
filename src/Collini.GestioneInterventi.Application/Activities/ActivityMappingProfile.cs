@@ -12,22 +12,27 @@ namespace Collini.GestioneInterventi.Application.Activities
     {
         public ActivityMappingProfile()
         {
-            CreateMap<Activity, ActivityDto>();
+            CreateMap<Activity, ActivityDto>()
+                .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
+                .MapMember(x => x.JobDescription, y => y.Job.Description)
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.Name + " " + y.Job.Customer.Surname);
+
             CreateMap<ActivityDto, Activity>()
-                .Ignore(x=>x.Description)
                 .Ignore(x=>x.StatusChangedOn)
                 .Ignore(x=>x.Operator)
-                .Ignore(x=>x.JobId)
                 .Ignore(x=>x.Job)
                 .Ignore(x=>x.Notes)
                 .IgnoreCommonMembers();
 
             CreateMap<Activity, ActivityViewModel>()
-                .MapMember(x => x.JobId, y => y.Job.Id);
+                .MapMember(x => x.JobId, y => y.Job.Id)
+                .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
+                .MapMember(x => x.JobDescription, y => y.Job.Description)
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.Name + " " + y.Job.Customer.Surname);
                 
 
             CreateMap<User, CalendarResourceViewModel>()
-                .MapMember(x=>x.Description,y=>y.Surname + " " + y.Name)
+                .MapMember(x=>x.Description,y=>y.Name + " " + y.Surname)
                 .MapMember(x=>x.Color,y=>y.ColorHex ?? "");
 
         }

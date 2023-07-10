@@ -31,9 +31,11 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         
         Task<IEnumerable<JobOperatorDto>> GetOperators();
         Task<JobCountersDto> GetJobCounters();
-        Task<IEnumerable<JobReadModel>> GetJobsBilled();
-        Task<IEnumerable<JobReadModel>> GetJobsAcceptance();
-        Task<IEnumerable<JobReadModel>> GetJobsActive();
+        Task<IEnumerable<JobDetailReadModel>> GetJobsBilled();
+        Task<IEnumerable<JobDetailReadModel>> GetJobsAcceptance();
+        Task<IEnumerable<JobDetailReadModel>> GetJobsActive();
+        Task<JobDetailDto> GetJobDtoForUpdate(long id);
+        Task<Job>  GetJob(long id);
     }
 
     public class JobService : IJobService
@@ -129,6 +131,35 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
 
             await jobRepository.Insert(job);
             await dbContext.SaveChanges();
+
+            return job.MapTo<JobDetailDto>(mapper);
+        }
+
+        public async Task<Job> GetJob(long id)
+        {
+            if (id == 0)
+                throw new ApplicationException("Impossibile recuperare un job con id 0");
+
+            var job = await jobRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x=>x.Customer)
+                .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.CustomerAddress)
+                .Include(x=>x.Source)
+                .Include(x=>x.ProductType)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if (job == null)
+                throw new ApplicationException($"Impossibile trovare il job con id {id}");
+
+            return job;
+        }
+
+        public async Task<JobDetailDto> GetJobDtoForUpdate(long id)
+        {
+            var job = await GetJob(id);
 
             return job.MapTo<JobDetailDto>(mapper);
         }
@@ -291,37 +322,43 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             return ret;
         }
 
-        public async Task<IEnumerable<JobReadModel>> GetJobsBilled()
+        public async Task<IEnumerable<JobDetailReadModel>> GetJobsBilled()
         {
             var billedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Customer)
+                .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.ProductType)
                 .Where(x => x.Status == JobStatus.Billed)
                 .ToArrayAsync();
-            return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
+            return  billedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
 
-        public async Task<IEnumerable<JobReadModel>> GetJobsActive()
+        public async Task<IEnumerable<JobDetailReadModel>> GetJobsActive()
         {
             var billedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Customer)
+                .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.ProductType)
                 .Where(x => x.Status == JobStatus.Working || x.Status == JobStatus.Completed)
                 .ToArrayAsync();
-            return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
+            return  billedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
 
-        public async Task<IEnumerable<JobReadModel>> GetJobsAcceptance()
+        public async Task<IEnumerable<JobDetailReadModel>> GetJobsAcceptance()
         {
             var billedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Customer)
+                .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.ProductType)
                 .Where(x => x.Status == JobStatus.Pending || x.Status == JobStatus.Canceled)
                 .ToArrayAsync();
-            return  billedJobs.MapTo<IEnumerable<JobReadModel>>(mapper);
+            return  billedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
 
     }

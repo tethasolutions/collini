@@ -34,9 +34,9 @@ public class QuotationsController : ColliniApiController
 
 
     [HttpGet("quotation-detail/{id}")]
-    public async Task<QuotationDetailDto> GetQuotationDetail(long quotationId)
+    public async Task<QuotationDetailDto> GetQuotationDetail(long id)
     {
-        var quotation = await quotationService.GetQuotationDetail(quotationId);
+        var quotation = await quotationService.GetQuotationDetail(id);
         return quotation;
     }
 

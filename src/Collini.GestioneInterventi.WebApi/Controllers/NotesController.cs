@@ -99,9 +99,9 @@ public class NotesController : ColliniApiController
     }
 
     [HttpGet("note-attachment-detail/{id}")]
-    public async Task<NoteAttachmentReadModel> GetNoteAttachmentDetail(long attachmentId)
+    public async Task<NoteAttachmentReadModel> GetNoteAttachmentDetail(long id)
     {
-        NoteAttachmentReadModel attachment = await noteService.GetNoteAttachmentDetail(attachmentId);
+        NoteAttachmentReadModel attachment = await noteService.GetNoteAttachmentDetail(id);
         
         return attachment;
     }

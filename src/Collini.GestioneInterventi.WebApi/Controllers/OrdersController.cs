@@ -35,9 +35,9 @@ public class OrdersController : ColliniApiController
 
 
     [HttpGet("order-detail/{id}")]
-    public async Task<OrderDetailDto> GetOrderDetail(long orderId)
+    public async Task<OrderDetailDto> GetOrderDetail(long id)
     {
-        var order = await orderService.GetOrderDetail(orderId);
+        var order = await orderService.GetOrderDetail(id);
         return order;
     }
 

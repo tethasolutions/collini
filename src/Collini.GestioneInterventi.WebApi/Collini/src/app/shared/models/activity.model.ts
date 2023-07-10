@@ -14,6 +14,9 @@ export class ActivityModel {
     operator: UserModel;
     jobId: number;
     notes: NoteModel[];
+    customerName: string;
+    jobCode: string;
+    jobDescription: string;
 
     constructor() {
         this.id = null;

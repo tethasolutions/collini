@@ -6,6 +6,8 @@ import { JobStatusEnum } from '../enums/job-status.enum';
 
 export class JobDetailModel {
     id: number;
+    number: number;
+    year: number;
     description: string;
     operatorId: number;
     createdOn: Date;

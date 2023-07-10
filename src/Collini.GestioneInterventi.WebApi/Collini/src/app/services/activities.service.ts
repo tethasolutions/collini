@@ -69,9 +69,11 @@ export class ActivitiesService {
 
                         activities.push(activity);
                     });
+                    
+                    
 
                     const events = activities.map(dataItem => (
-                        <SchedulerEvent> {
+                        <SchedulerEvent> {                            
                             id: dataItem.id,
                             start: new Date(dataItem.start),
                             end: new Date(dataItem.end),
@@ -79,8 +81,8 @@ export class ActivitiesService {
                             title: dataItem.description,
                             description: dataItem.description,
                             operatorId: dataItem.operatorId,
-                            cliente: dataItem.customer,
-                            commessa: dataItem.job,
+                            cliente: dataItem.customerName,
+                            commessa: dataItem.jobCode,
                             status: dataItem.status
                         }
                     ));

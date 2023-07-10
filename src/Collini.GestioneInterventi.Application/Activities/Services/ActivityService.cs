@@ -7,6 +7,7 @@ using AutoMapper;
 using Collini.GestioneInterventi.Application.Activities.DTOs;
 using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
+using Collini.GestioneInterventi.Application.Jobs.Services;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Domain.Registry;
@@ -32,16 +33,18 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
     {
         private readonly IMapper mapper;
         private readonly IRepository<Activity> activityRepository;
+        private readonly IJobService jobService;
         private readonly IColliniDbContext dbContext;
 
         public ActivityService(
             IMapper mapper,
             IRepository<Activity> activityRepository,
-            IColliniDbContext dbContext)
+            IColliniDbContext dbContext, IJobService jobService)
         {
             this.mapper = mapper;
             this.activityRepository = activityRepository;
             this.dbContext = dbContext;
+            this.jobService = jobService;
         }
 
         public async Task<ActivityDto> CreateActivity(ActivityDto activityDto)
@@ -50,8 +53,17 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             await activityRepository.Insert(activity);
 
-            await dbContext.SaveChanges();
+            var job = await jobService.GetJobDtoForUpdate(activityDto.JobId);
+            if (job == null)
+                throw new ApplicationException("Job non trovato");
+            if (job.Status == JobStatus.Pending)
+                job.Status = JobStatus.Working;
+            await jobService.UpdateJob(job.Id.Value, job.MapTo<JobDetailDto>(mapper));
 
+            await dbContext.SaveChanges();
+ 
+            activity.Job = await jobService.GetJob(activityDto.JobId);
+            
             return activity.MapTo<ActivityDto>(mapper);
         }
 
@@ -66,6 +78,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 //.Include(x=>x.Job)
                 //.Include(x=>x.Notes)
                 .AsNoTracking()
+                .Include(x=>x.Job)
+                .ThenInclude(x=>x.Customer)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -75,7 +89,6 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             activityDto.MapTo(activity, mapper);
             activityRepository.Update(activity);
             await dbContext.SaveChanges();
-
             return activity.MapTo<ActivityDto>(mapper);
         }
 
@@ -88,6 +101,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Job)
+                .ThenInclude(y=>y.Customer)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -106,11 +120,15 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Job)
+                
+                .ThenInclude(y=>y.Customer)
+                .Include(x=>x.Operator)
                 .ToArrayAsync();
 
             calendar.Activities = activities.MapTo<IEnumerable<ActivityViewModel>>(mapper).ToList();
-            calendar.Resources = activities.Select(x => x.Operator).Distinct()
-                .MapTo<IEnumerable<CalendarResourceViewModel>>(mapper).ToList();
+            var operators = activities.Select(x => x.Operator).DistinctBy(x=>x.Id);
+                var resources =  operators.MapTo<IEnumerable<CalendarResourceViewModel>>(mapper).ToList();
+            calendar.Resources = resources;
             return calendar;
 
         }

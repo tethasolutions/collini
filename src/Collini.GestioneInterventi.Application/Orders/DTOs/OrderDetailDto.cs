@@ -15,7 +15,6 @@ namespace Collini.GestioneInterventi.Application.Orders.DTOs
         public string? Description { get; set; }
         public DateTimeOffset? ExpirationDate { get; set; }
         public long SupplierId { get; set; }
-        public ContactDto? Supplier { get; set; }
         public long JobId { get; set; }
         public string? JobCode { get; set; }
         public string? JobDescription { get; set; }

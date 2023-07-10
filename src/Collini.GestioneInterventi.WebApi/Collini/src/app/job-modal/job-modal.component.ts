@@ -37,7 +37,10 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   name = '';
 
   operators: Array<JobOperatorModel> = [];
+
   customers: Array<CustomerModel> = [];
+  customersFiltered: Array<CustomerModel> = [];
+
   sources: Array<JobSourceModel> = [];
   productTypes: Array<ProductTypeModel> = [];
   states = listEnum<JobStatusEnum>(JobStatusEnum);
@@ -205,10 +208,32 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     ); */
   }
 
+  handleFilter(value:string) 
+      {
+        this._filterCustomers(value);
+      }
+
   public loadData() {
-    this._readOperators();
     this._readJobCustomers();
+    this._filterCustomers(null);
+    this._readOperators();    
     this._readJobSources();
     this._readJobProductTypes();
   }
+
+  private _filterCustomers(value:string)
+    {
+      this.customersFiltered = this.customers;
+      // if(value == null || value.length < 3)
+      // {
+      //   this.customersFiltered = [];
+      // }
+      // else
+      // {        
+      //   value = value.toLowerCase();
+      //   //TODO Ottimizzare filtro
+      //   this.customersFiltered = this.customers.filter((s)=> s.customerDescription.toLowerCase().indexOf(value)!== -1);
+      // }
+      
+    }
 }
