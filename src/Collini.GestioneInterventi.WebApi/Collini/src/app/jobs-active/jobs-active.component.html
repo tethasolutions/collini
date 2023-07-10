@@ -44,19 +44,19 @@
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
         <ng-template kendoGridCellTemplate let-dataItem>
             <button class="btn btn-primary btn-sm grid-action-button" title="Note" (click)="viewNotes(dataItem)">
-                <i class="fas fa-sticky-note"></i>
+                <i class="fas fa-book"></i>
             </button>
             <button class="btn btn-primary btn-sm grid-action-button" title="Modifica" (click)="editJob(dataItem)">
                 <i class="fas fa-edit"></i>
             </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Genera preventivo" (click)="createQuotation(dataItem)">
-                <i class="fas fa-hand-paper"></i>
+            <button class="btn btn-secondary btn-sm grid-action-button" title="Genera preventivo" (click)="createQuotation(dataItem)">
+                <i class="fas fa-coins"></i>
             </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Ordine fornitore" (click)="createOrder(dataItem)">
-                <i class="fas fa-ticket"></i>
+            <button class="btn btn-secondary btn-sm grid-action-button" title="Ordine fornitore" (click)="createOrder(dataItem)">
+                <i class="fas fa-truck"></i>
             </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Genera intervento" (click)="createActivity(dataItem)">
-                <i class="fas fa-bolt"></i>
+            <button class="btn btn-secondary btn-sm grid-action-button" title="Genera intervento" (click)="createActivity(dataItem)">
+                <i class="fas fa-calendar-days"></i>
             </button>
         </ng-template>
     </kendo-grid-column>
