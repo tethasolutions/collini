@@ -29,7 +29,7 @@ public class OrdersController : ColliniApiController
     [HttpGet("orders")]
     public async Task<DataSourceResult> GetOrders([DataSourceRequest] DataSourceRequest request)
     {
-        var orders = await orderService.GetOrders();
+        var orders = orderService.GetOrders();
         return await orders.ToDataSourceResultAsync(request);
     }
 

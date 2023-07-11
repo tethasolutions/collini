@@ -3,6 +3,7 @@ using Collini.GestioneInterventi.Application.Activities.Services;
 using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.Services;
+using Collini.GestioneInterventi.Application.Quotations.Services;
 using Collini.GestioneInterventi.Application.Security;
 using Collini.GestioneInterventi.Application.Security.DTOs;
 using Collini.GestioneInterventi.Domain.Docs;
@@ -24,6 +25,13 @@ public class ActivitiesController : ColliniApiController
     public ActivitiesController(IActivityService activityService)
     {
         this.activityService = activityService;
+    }
+
+    [HttpGet("activities")]
+    public async Task<DataSourceResult> GetActivities([DataSourceRequest] DataSourceRequest request)
+    {
+        var quotations = activityService.GetActivities();
+        return await quotations.ToDataSourceResultAsync(request);
     }
 
     [HttpGet("activity/{id}")]

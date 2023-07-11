@@ -19,7 +19,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
     public interface IQuotationService
     {
 
-        Task<IEnumerable<QuotationDetailDto>> GetQuotations();
+        IQueryable<QuotationDetailDto> GetQuotations();
         Task<QuotationDetailDto> GetQuotationDetail(long id);
         Task<QuotationDetailDto> CreateQuotation(QuotationDetailDto quotation);
         Task<QuotationDetailDto> UpdateQuotation(long id, QuotationDetailDto quotation);
@@ -46,16 +46,15 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         }
 
 
-        public async Task<IEnumerable<QuotationDetailDto>> GetQuotations()
+        public IQueryable<QuotationDetailDto> GetQuotations()
         {
-            var quotations = await quotationRepository
+            var quotations = quotationRepository
                 .Query()
-                .Include(x=>x.Job)
-                .Include(x=>x.Notes)
                 .AsNoTracking()
-                .ToArrayAsync();
+                .Project<QuotationDetailDto>(mapper);
 
-            return quotations.MapTo<IEnumerable<QuotationDetailDto>>(mapper);
+            //return quotations.MapTo<IEnumerable<QuotationDetailDto>>(mapper);
+            return quotations;
         }
 
         public async Task<QuotationDetailDto> GetQuotationDetail(long id)

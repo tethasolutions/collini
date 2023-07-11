@@ -8,17 +8,21 @@ using Collini.GestioneInterventi.Application.Activities.DTOs;
 using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.Services;
+using Collini.GestioneInterventi.Application.Quotations.DTOs;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Domain.Registry;
 using Collini.GestioneInterventi.Framework.Exceptions;
 using Collini.GestioneInterventi.Framework.Extensions;
+using Collini.GestioneInterventi.Framework.Session;
 using Microsoft.EntityFrameworkCore;
 
 namespace Collini.GestioneInterventi.Application.Activities.Services
 {
     public interface IActivityService
     {
+        IQueryable<ActivityDto> GetActivities();
+
         Task<ActivityDto> CreateActivity(ActivityDto activityDto);
 
         Task<ActivityDto> UpdateActivity(long id, ActivityDto activityDto);
@@ -35,16 +39,18 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         private readonly IRepository<Activity> activityRepository;
         private readonly IJobService jobService;
         private readonly IColliniDbContext dbContext;
+        private readonly IColliniSession session;
 
         public ActivityService(
             IMapper mapper,
             IRepository<Activity> activityRepository,
-            IColliniDbContext dbContext, IJobService jobService)
+            IColliniDbContext dbContext, IJobService jobService, IColliniSession session)
         {
             this.mapper = mapper;
             this.activityRepository = activityRepository;
             this.dbContext = dbContext;
             this.jobService = jobService;
+            this.session = session;
         }
 
         public async Task<ActivityDto> CreateActivity(ActivityDto activityDto)
@@ -115,14 +121,22 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         public async Task<CalendarViewModel> GetCalendar()
         {
             CalendarViewModel calendar = new CalendarViewModel();
+            var user = session.CurrentUser;
 
-            var activities = await activityRepository
+            var activitiesQuery = activityRepository
                 .Query()
-                .AsNoTracking()
-                .Include(x=>x.Job)
-                
-                .ThenInclude(y=>y.Customer)
-                .Include(x=>x.Operator)
+                .AsNoTracking();
+
+            if (session.CurrentUser.Role == Domain.Security.Role.Operator)
+            {
+                activitiesQuery = activitiesQuery
+                    .Where(x => x.OperatorId == session.CurrentUser.UserId);
+            }
+
+            var activities = await activitiesQuery
+                .Include(x => x.Job)
+                .ThenInclude(y => y.Customer)
+                .Include(x => x.Operator)
                 .ToArrayAsync();
 
             calendar.Activities = activities.MapTo<IEnumerable<ActivityViewModel>>(mapper).ToList();
@@ -131,6 +145,17 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             calendar.Resources = resources;
             return calendar;
 
+        }
+
+        public IQueryable<ActivityDto> GetActivities()
+        {
+            var activities = activityRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.Status == ActivityStatus.Planned)
+                .Project<ActivityDto>(mapper);
+
+            return activities;
         }
     }
 }

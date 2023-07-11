@@ -223,17 +223,17 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
 
   private _filterCustomers(value:string)
     {
-      this.customersFiltered = this.customers;
-      // if(value == null || value.length < 3)
-      // {
-      //   this.customersFiltered = [];
-      // }
-      // else
-      // {        
-      //   value = value.toLowerCase();
-      //   //TODO Ottimizzare filtro
-      //   this.customersFiltered = this.customers.filter((s)=> s.customerDescription.toLowerCase().indexOf(value)!== -1);
-      // }
+      // this.customersFiltered = this.customers;
+      if(value == null || value.length < 3)
+      {
+        this.customersFiltered = [];
+      }
+      else
+      {        
+        value = value.toLowerCase();
+        //TODO Ottimizzare filtro
+        this.customersFiltered = this.customers.filter((s)=> s.customerDescription.toLowerCase().indexOf(value)!== -1);
+      }
       
     }
 }

@@ -15,7 +15,8 @@ namespace Collini.GestioneInterventi.Application.Activities
             CreateMap<Activity, ActivityDto>()
                 .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.Name + " " + y.Job.Customer.Surname);
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Name + " " + y.Job.Customer.Surname)
+                .MapMember(x => x.Operator, y => y.Operator.UserName);
 
             CreateMap<ActivityDto, Activity>()
                 .Ignore(x=>x.StatusChangedOn)
@@ -28,8 +29,7 @@ namespace Collini.GestioneInterventi.Application.Activities
                 .MapMember(x => x.JobId, y => y.Job.Id)
                 .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.Name + " " + y.Job.Customer.Surname);
-                
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Name + " " + y.Job.Customer.Surname);
 
             CreateMap<User, CalendarResourceViewModel>()
                 .MapMember(x=>x.Description,y=>y.Name + " " + y.Surname)

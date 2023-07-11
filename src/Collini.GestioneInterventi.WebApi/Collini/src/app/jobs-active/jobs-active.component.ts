@@ -52,7 +52,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
             logic: 'and'
         },
         group: [],
-        sort: []
+        sort: [{field:"createdOn", dir:"asc"}]
     };
 
     constructor(

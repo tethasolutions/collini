@@ -8,6 +8,7 @@ using Collini.GestioneInterventi.Application.Activities.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.Services;
 using Collini.GestioneInterventi.Application.Orders.DTOs;
+using Collini.GestioneInterventi.Application.Quotations.DTOs;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Framework.Exceptions;
@@ -18,7 +19,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderDetailDto>> GetOrders();
+        IQueryable<OrderDetailDto> GetOrders();
         Task<OrderDetailDto> GetOrderDetail(long id);
         Task<OrderDetailDto> CreateOrder(OrderDetailDto order);
         Task<OrderDetailDto> UpdateOrder(long id, OrderDetailDto order);
@@ -70,16 +71,14 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             
         }
 
-        public async Task<IEnumerable<OrderDetailDto>> GetOrders()
+        public IQueryable<OrderDetailDto> GetOrders()
         {
-            var orders = await orderRepository
+            var orders = orderRepository
                 .Query()
-                .Include(x=>x.Supplier)
-                .Include(x=>x.Job)
                 .AsNoTracking()
-                .ToArrayAsync();
+                .Project<OrderDetailDto>(mapper);
 
-            return orders.MapTo<IEnumerable<OrderDetailDto>>(mapper);
+            return orders;
         }
 
         public async Task<OrderDetailDto> GetOrderDetail(long id)

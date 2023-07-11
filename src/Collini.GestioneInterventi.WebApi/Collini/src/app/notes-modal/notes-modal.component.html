@@ -1,7 +1,7 @@
 <div class="k-overlay" *ngIf="opened"></div>
 
 <div class="k-window-wrapper" *ngIf="opened">
-    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="700" [top]="110">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [top]="110" class="redimensionModal">
         <kendo-window-titlebar>
             <div class="k-window-title">
                 Note
@@ -20,8 +20,8 @@
             <div class="col-md-12">
                 <kendo-grid [data]="note">
                     <kendo-grid-column field="createdOn" title="Data Nota" filter="date" format="{0:d}"> </kendo-grid-column>
-                    <kendo-grid-column field="operator.customerDescription" title="Operatore"> </kendo-grid-column>
-                    <!-- <kendo-grid-column field="type" title="Tipo"></kendo-grid-column> -->
+                    <!-- <kendo-grid-column field="operator.customerDescription" title="Operatore"> </kendo-grid-column>
+                    <kendo-grid-column field="type" title="Tipo"></kendo-grid-column> -->
                     <kendo-grid-column field="value" title="Note"></kendo-grid-column>
                     <kendo-grid-column title="Allegati">
                         <ng-template kendoGridCellTemplate let-dataItem>

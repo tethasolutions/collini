@@ -19,6 +19,7 @@ public class ColliniDbContextFactory : IDesignTimeDbContextFactory<ColliniDbCont
 
         builder.UseSqlServer(connectionString, e => {
             e.CommandTimeout(3600);
+            e.EnableRetryOnFailure();
         });
 
         return builder.Options;

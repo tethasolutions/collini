@@ -28,7 +28,7 @@ public class QuotationsController : ColliniApiController
     [HttpGet("quotations")]
     public async Task<DataSourceResult> GetQuotations([DataSourceRequest] DataSourceRequest request)
     {
-        var quotations = (await quotationService.GetQuotations()).ToList();
+        var quotations = (quotationService.GetQuotations());
         return await quotations.ToDataSourceResultAsync(request);
     }
 

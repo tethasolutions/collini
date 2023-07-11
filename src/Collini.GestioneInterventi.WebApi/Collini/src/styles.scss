@@ -185,6 +185,19 @@ textarea {
 
 @media (min-width: 1400px) {
     .container {
-        max-width:1650px !important;
+        max-width:1750px !important;
+    }
+}
+
+.k-table-md {
+    font-size:0.9rem !important;
+}
+
+.redimensionModal {
+    width: 850px !important;
+}
+@media (max-width: 800px) {
+    .redimensionModal {
+        width:100% !important;
     }
 }

@@ -11,7 +11,6 @@ export class ActivityModel {
     status: ActivityStatusEnum;
     statusChangedOn: Date;
     operatorId: number;
-    operator: UserModel;
     jobId: number;
     notes: NoteModel[];
     customerName: string;
@@ -26,7 +25,6 @@ export class ActivityModel {
         this.status = ActivityStatusEnum.Planned;
         this.statusChangedOn = new Date();
         this.operatorId = null;
-        this.operator = new UserModel();
         this.jobId = null;
         this.notes = [];
     }

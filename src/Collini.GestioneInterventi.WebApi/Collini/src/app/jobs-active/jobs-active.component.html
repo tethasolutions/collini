@@ -41,23 +41,25 @@
             {{dataItem.status | jobStatus}}
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
+    <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" " [width]="120">
         <ng-template kendoGridCellTemplate let-dataItem>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Note" (click)="viewNotes(dataItem)">
-                <i class="fas fa-book"></i>
-            </button>
-            <button class="btn btn-primary btn-sm grid-action-button" title="Modifica" (click)="editJob(dataItem)">
-                <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn btn-secondary btn-sm grid-action-button" title="Genera preventivo" (click)="createQuotation(dataItem)">
-                <i class="fas fa-coins"></i>
-            </button>
-            <button class="btn btn-secondary btn-sm grid-action-button" title="Ordine fornitore" (click)="createOrder(dataItem)">
-                <i class="fas fa-truck"></i>
-            </button>
-            <button class="btn btn-secondary btn-sm grid-action-button" title="Genera intervento" (click)="createActivity(dataItem)">
-                <i class="fas fa-calendar-days"></i>
-            </button>
+            <div class="d-flex flex-wrap gap-1 justify-content-center">
+                <button class="btn btn-secondary btn-sm" title="Genera preventivo" (click)="createQuotation(dataItem)">
+                    <i class="fas fa-coins"></i>
+                </button>
+                <button class="btn btn-secondary btn-sm" title="Ordine fornitore" (click)="createOrder(dataItem)">
+                    <i class="fas fa-box"></i>
+                </button>
+                <button class="btn btn-secondary btn-sm" title="Genera intervento" (click)="createActivity(dataItem)">
+                    <i class="fas fa-calendar-days"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" title="Note" (click)="viewNotes(dataItem)">
+                    <i class="fas fa-book"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" title="Modifica" (click)="editJob(dataItem)">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
         </ng-template>
     </kendo-grid-column>
 </kendo-grid>

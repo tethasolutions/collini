@@ -1,12 +1,12 @@
 <div class="k-overlay" *ngIf="opened"></div>
 
 <div class="k-window-wrapper" *ngIf="opened">
-    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="850" [top]="30">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [top]="30">
         <kendo-window-titlebar>
             <div class="k-window-title">Intervento</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
-        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()"
+        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" class="calendarModal"
             *ngIf="options">
             <div class="row">
                 <div class="col-md-12">
@@ -79,9 +79,15 @@
                 <div *ngIf="options.id != null" class="col-md-4">
                     <kendo-formfield>
                         <label>Stato</label>
-                        <kendo-combobox [data]="states" [(ngModel)]="options.status" name="status" suggest="true"
-                            textField="name" [valuePrimitive]="true" valueField="id" required>
-                        </kendo-combobox>
+                        <kendo-dropdownlist [data]="states" [(ngModel)]="options.status" name="status"
+                            [valuePrimitive]="true" required>
+                            <ng-template kendoDropDownListItemTemplate let-dataItem>
+                                {{dataItem | activityStatus}}
+                            </ng-template>
+                            <ng-template kendoDropDownListValueTemplate let-dataItem>
+                                {{dataItem | activityStatus}}
+                            </ng-template>
+                        </kendo-dropdownlist>
                         <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>

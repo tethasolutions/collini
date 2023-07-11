@@ -11,6 +11,7 @@ namespace Collini.GestioneInterventi.Application.Activities.DTOs
     {
         public long? Id { get; set; }
         public long OperatorId { get; set; }
+        public string? Operator { get; set; }
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; }
         public ActivityStatus Status { get; set; }

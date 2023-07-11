@@ -4,7 +4,7 @@ import { ModalComponent } from '../shared/modal.component';
 import { NgForm } from '@angular/forms';
 import { Role } from '../services/security/models';
 import { MessageBoxService } from '../services/common/message-box.service';
-import { markAsDirty } from '../services/common/functions';
+import { listEnum, markAsDirty } from '../services/common/functions';
 import { JobOperatorModel } from '../shared/models/job-operator.model';
 import { JobsService } from '../services/jobs.service';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     operators: Array<JobOperatorModel> = [];
     jobs: Array<JobModel> = [];
     jobsFiltered: Array<JobModel> = [];
-    states: Array<SimpleLookupModel> = [];
+    states= listEnum<ActivityStatusEnum>(ActivityStatusEnum);
     activityNotes: Array<NoteModel> = [];
 
     constructor(
@@ -60,27 +60,6 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
             )
             .subscribe()
         );
-    }
-
-    protected _readjobs() {
-        this._subscriptions.push(
-          this._jobsService.getAllJobs()
-            .pipe(
-                tap(e => {
-                  this.jobs = e;
-                })
-            )
-            .subscribe()
-        );
-    }
-
-    setStates() {
-        this.states = [];
-        for(var n in ActivityStatusEnum) {
-            if (typeof ActivityStatusEnum[n] === 'number') {
-              this.states.push({id: <any>ActivityStatusEnum[n], name: n});
-            }
-        }
     }
 
     viewNotes() {
@@ -125,10 +104,8 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
 
 
     public loadData() {
-      this._readjobs();
       this._filterJobs(null);
         this._readOperators();
-        this.setStates();
     }
 
     private _filterJobs(value:string)
