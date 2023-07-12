@@ -241,7 +241,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var customers = await userRepository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.Role == Role.Operator)
+                .Where(x => x.UserName != "Administrator")
                 .OrderBy(x => x.Surname)
                 .ToArrayAsync();
 

@@ -108,6 +108,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .AsNoTracking()
                 .Include(x=>x.Job)
                 .ThenInclude(y=>y.Customer)
+                .Include(x => x.Job)
+                .ThenInclude(y=>y.CustomerAddress)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
