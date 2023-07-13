@@ -42,7 +42,7 @@
         <div [class.intervento-elaborato]="event.dataItem.status == 1">
         <div>
           <ng-container *ngFor="let resource of resources">
-            <span *ngIf="!resource.length; else multipleResource">{{resource.description}}</span>
+            <span *ngIf="!resource.length; else multipleResource"></span>
             <ng-template #multipleResource>
               <span *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
             </ng-template>

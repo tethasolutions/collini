@@ -22,7 +22,7 @@ namespace Collini.GestioneInterventi.Application.Orders
             CreateMap<Order, OrderDetailDto>()
                 .MapMember(x => x.JobCode, y => y.Job.Number)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Name + " " + y.Job.Customer.Surname);
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 
             CreateMap<OrderDetailDto,Order >()
                 .Ignore(x=>x.Supplier)
@@ -34,7 +34,7 @@ namespace Collini.GestioneInterventi.Application.Orders
             CreateMap<Order, OrderReadModel>()
                 .MapMember(x => x.JobCode, y => y.Job.Number)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Name + " " + y.Job.Customer.Surname);
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
         }
 
     }

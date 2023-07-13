@@ -17,7 +17,7 @@ namespace Collini.GestioneInterventi.Application.Quotations
             CreateMap<Quotation, QuotationDetailDto>()
                 .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Name + " " + y.Job.Customer.Surname);
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 
             CreateMap<QuotationDetailDto, Quotation>()
                 .Ignore(x=>x.StatusChangedOn)
@@ -28,7 +28,7 @@ namespace Collini.GestioneInterventi.Application.Quotations
             CreateMap<Quotation, QuotationReadModel>()
                 .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Name + " " + y.Job.Customer.Surname);
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 
 
         }

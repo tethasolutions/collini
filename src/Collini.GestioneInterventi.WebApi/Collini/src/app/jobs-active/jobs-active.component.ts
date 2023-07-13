@@ -71,6 +71,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         console.log(this._router.url);
         if (this._router.url === '/jobs/acceptance') { this.jobType = 'acceptance'; }
         if (this._router.url === '/jobs/active') { this.jobType = 'active'; }
+        if (this._router.url === '/jobs/completed') { this.jobType = 'completed'; }
         if (this._router.url === '/jobs/billed') { this.jobType = 'billed'; }
         this._readJobs();
     }

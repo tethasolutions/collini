@@ -6,6 +6,7 @@ export class JobCountersModel {
     preventives: JobCounterModel;
     supplierOrders: JobCounterModel;
     interventions: JobCounterModel;
+    completed: JobCounterModel;
     billed: JobCounterModel;
 
     constructor() {
@@ -14,6 +15,7 @@ export class JobCountersModel {
         this.preventives = new JobCounterModel();
         this.supplierOrders = new JobCounterModel();
         this.interventions = new JobCounterModel();
+        this.completed = new JobCounterModel();
         this.billed = new JobCounterModel();
     }
 }

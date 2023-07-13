@@ -12,6 +12,8 @@ export class OrderStatusPipe extends BaseComponent implements PipeTransform {
         switch (value) {
             case OrderStatusEnum.Pending:
                 return 'In Attesa';
+            case OrderStatusEnum.Sent:
+                return 'Ordinato';
             case OrderStatusEnum.Completed:
                 return 'Completato';
             case OrderStatusEnum.Canceled:

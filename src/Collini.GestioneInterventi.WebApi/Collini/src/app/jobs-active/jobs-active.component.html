@@ -2,7 +2,8 @@
     <div class="col">
         <h3 *ngIf="jobType == 'acceptance'">Richieste</h3>
         <h3 *ngIf="jobType == 'active'">In lavorazione</h3>
-        <h3 *ngIf="jobType == 'billed'">Contabilizzati</h3>
+        <h3 *ngIf="jobType == 'billed'">Contabilizzazione</h3>
+        <h3 *ngIf="jobType == 'completed'">Completate</h3>
     </div>
     <div class="col-auto">
         <button (click)="createJob()" class="btn btn-primary btn-sm">

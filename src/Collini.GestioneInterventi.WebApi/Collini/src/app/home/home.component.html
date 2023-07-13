@@ -15,7 +15,7 @@
         </div>
         <hr/>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/acceptance"
                         routerLinkActive="active">
@@ -24,7 +24,7 @@
                     <div class="red-number bage-number">{{jobCounters.acceptance.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/active"
                         routerLinkActive="active">
@@ -33,7 +33,7 @@
                     <div class="red-number bage-number">{{jobCounters.actives.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/quotations"
                         routerLinkActive="active">
@@ -42,7 +42,7 @@
                     <div class="red-number bage-number">{{jobCounters.preventives.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/orders"
                         routerLinkActive="active">
@@ -51,7 +51,7 @@
                     <div class="red-number bage-number">{{jobCounters.supplierOrders.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
                     routerLink="/jobs/activities"
                     routerLinkActive="active">
@@ -60,11 +60,20 @@
                     <div class="red-number bage-number">{{jobCounters.interventions.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <a class="btn btn-light dashboardBtn"
+                    routerLink="/jobs/activities"
+                    routerLinkActive="active">
+                    <div class="title">Completate</div>
+                    <div class="blue-number bage-number">{{jobCounters.completed.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.completed.expired}}</div>
+                </a>
+            </div>
+            <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/billed"
                         routerLinkActive="active">
-                    <div class="title">Contabilizzati</div>
+                    <div class="title">Contabilizzazione</div>
                     <div class="blue-number bage-number">{{jobCounters.billed.active}}</div>
                     <div class="red-number bage-number">{{jobCounters.billed.expired}}</div>
                 </a>

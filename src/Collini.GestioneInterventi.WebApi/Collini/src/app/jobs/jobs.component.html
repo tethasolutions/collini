@@ -49,9 +49,18 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link job-menu-link"
+                        routerLink="completed"
+                        routerLinkActive="active">
+                    <div class="job-menu-title">Completate</div>
+                    <div class="blue-number bage-number">{{jobCounters.completed.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.completed.expired}}</div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link job-menu-link"
                         routerLink="billed"
                         routerLinkActive="active">
-                    <div class="job-menu-title">Contabilizzati</div>
+                    <div class="job-menu-title">Contabilizzazione</div>
                     <div class="blue-number bage-number">{{jobCounters.billed.active}}</div>
                     <div class="red-number bage-number">{{jobCounters.billed.expired}}</div>
                 </a>

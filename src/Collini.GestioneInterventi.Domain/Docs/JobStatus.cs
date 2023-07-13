@@ -5,6 +5,7 @@ public enum JobStatus
     Pending,
     Working,
     Completed,
+    Billing,
     Billed,
     Canceled
 }

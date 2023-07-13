@@ -41,18 +41,18 @@
             </div>
             <div *ngIf="options.type == type.Customer" class="row">
                 <div class="col-md-4">
-                    <label>Nome</label>
+                    <label>Cognome</label>
                     <div class="form-group">
-                        <input class="form-control" name="name" [(ngModel)]="options.name"
+                        <input class="form-control" name="surname" [(ngModel)]="options.surname"
                             [disabled]="options.fiscalType != fiscalType.PrivatePerson"
                             [required]="options.fiscalType == fiscalType.PrivatePerson" maxlength="255" novalidate
                             autocomplete="off" />
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label>Cognome</label>
+                    <label>Nome</label>
                     <div class="form-group">
-                        <input class="form-control" name="surname" [(ngModel)]="options.surname"
+                        <input class="form-control" name="name" [(ngModel)]="options.name"
                             [disabled]="options.fiscalType != fiscalType.PrivatePerson"
                             [required]="options.fiscalType == fiscalType.PrivatePerson" maxlength="255" novalidate
                             autocomplete="off" />

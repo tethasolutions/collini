@@ -3,6 +3,7 @@
 public enum QuotationStatus
 {
     Pending,
+    Sent,
     Accepted,
     Refused,
     Canceled

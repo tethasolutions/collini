@@ -12,6 +12,8 @@ export class QuotationStatusPipe extends BaseComponent implements PipeTransform 
         switch (value) {
             case QuotationStatusEnum.Pending:
                 return 'In Attesa';
+            case QuotationStatusEnum.Sent:
+                return 'Consegnato';
             case QuotationStatusEnum.Accepted:
                 return 'Accettato';
             case QuotationStatusEnum.Refused:
