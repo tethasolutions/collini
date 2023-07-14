@@ -14,6 +14,7 @@ import { JobModel } from '../shared/models/job.model';
 import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-activity-modal',
@@ -40,6 +41,14 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
         super();
     }
 
+    override open(options: ActivityModel): Observable<boolean> 
+    {
+      const result = super.open(options);  
+      this.loadData()  
+      return result;
+    }
+    
+
     protected _canClose() {
         markAsDirty(this.form);
 
@@ -61,6 +70,21 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
             .subscribe()
         );
     }
+
+    protected _readjobs() {
+      this._subscriptions.push(
+        this._jobsService.getAllJobs()
+          .pipe(
+              tap(e => {
+                this.jobs = e;
+              }),
+              tap(()=> this._filterJobs(null))
+          )
+          .subscribe()
+      );
+  }
+
+  
 
     viewNotes() {
         this.notesModal.id = this.options.id;
@@ -103,22 +127,33 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
       }
 
 
-    public loadData() {
-      this._filterJobs(null);
-        this._readOperators();
+    public loadData() 
+    {
+      this._readjobs();
+      
+      this._readOperators();
     }
 
     private _filterJobs(value:string)
-    {
+    {    
+
       if(value == null || value.length < 3)
       {
-        this.jobsFiltered = [];
+        if(this.options != null && this.options.jobId != null)
+        {
+          this.jobsFiltered = this.jobs.filter((s)=> s.id == this.options.jobId)        
+        }
+        else
+        {        
+          this.jobsFiltered = [];
+        }        
       }
       else
       {        
         value = value.toLowerCase();
         //TODO Ottimizzare filtro
-        this.jobsFiltered = this.jobs.filter((s)=> s.fullDescription.toLowerCase().indexOf(value)!== -1);
+        this.jobsFiltered =this.jobs.filter((s)=> s.fullDescription.toLowerCase().indexOf(value)!== -1);
       }
+
     }
 }

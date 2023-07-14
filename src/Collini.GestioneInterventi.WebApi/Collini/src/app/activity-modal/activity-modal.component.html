@@ -49,11 +49,11 @@
                 </div>
             </div>
             <div class="row form-group">
-                <div *ngIf="options.jobCode == null" class="col-md-8">
+                <div class="col-md-8">
                     <kendo-formfield>
                         <label>Richiesta</label>
                         <kendo-combobox [data]="jobsFiltered" [(ngModel)]="options.jobId" name="jobId" suggest="true"
-                            [disabled]="options.id != null" textField="fullDescription" [valuePrimitive]="true"
+                            [disabled]="options.jobCode != null" textField="fullDescription" [valuePrimitive]="true"
                             [filterable]="true" (filterChange)="handleFilter($event)"
                             valueField="id" required>
                         </kendo-combobox>
