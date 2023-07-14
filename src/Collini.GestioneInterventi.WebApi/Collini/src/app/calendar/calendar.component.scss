@@ -13,7 +13,7 @@
 
 .cliente-title {
     padding-left: 5px;
-    margin-top: 10px;
+    margin-top: 2px;
 }
 
 ::ng-deep .k-event.k-selected {
@@ -51,4 +51,30 @@
     margin-right: 15px;
     height: 35px;
     background-color: #0257d5;
+}
+
+.calendar-icon-Ok
+{
+    color: #1def01;
+}
+
+.calendar-icon-Ko
+{
+    color: #f60404;
+}
+
+.calendar-icon
+{
+    position: relative;
+    text-align: right;
+    margin-right: 4px;
+    font-size: 18px;
+}
+.calendar-icon-absolute
+{
+    position: absolute;
+    right: 4px;
+    font-size: 18px;
+    top:-2px;
+    z-index: 1;
 }

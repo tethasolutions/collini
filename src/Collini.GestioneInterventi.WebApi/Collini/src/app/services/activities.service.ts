@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ApiUrls } from './common/api-urls';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
@@ -12,6 +12,7 @@ import { CalendarResourceModel } from '../shared/models/calendar-resource.model'
 import { CalendarResourcesSettingsModel } from '../shared/models/calendar-resources-settings.model';
 import { SchedulerEvent } from '@progress/kendo-angular-scheduler';
 import { JobModel } from '../shared/models/job.model';
+import { JobBusService } from './job-bus.service';
 
 @Injectable()
 export class ActivitiesService {
@@ -19,7 +20,8 @@ export class ActivitiesService {
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/activities`;
 
     constructor(
-        private readonly _http: HttpClient
+        private readonly _http: HttpClient,
+        private readonly _bus: JobBusService
     ) {}
 
     readActivities(state: State) {
@@ -112,16 +114,15 @@ export class ActivitiesService {
     createActivity(request: ActivityModel) {
         return this._http.post<number>(`${this._baseUrl}/activity`, request)
             .pipe(
-                map(e => {
-                    return e;
-                })
+                tap(() => this._bus.jobUpdated())
             );
     }
 
     updateActivity(request: ActivityModel, id: number) {
         return this._http.put<void>(`${this._baseUrl}/activity/${id}`, request)
             .pipe(
-                map(() => { })
+                map(() => { }),
+                tap(() => this._bus.jobUpdated())
             );
     }
 }

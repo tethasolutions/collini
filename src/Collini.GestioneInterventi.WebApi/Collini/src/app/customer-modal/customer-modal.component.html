@@ -59,6 +59,20 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Telefono</label>
+                    <div >
+                        <input class="form-control" type="text" [(value)]="options.telephone" disabled/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label>Indirizzo Mail</label>
+                    <div >
+                        <input class="form-control" type="text" [(value)]="options.email" disabled/>
+                    </div>
+                </div>
+            </div>
             <div *ngIf="options.type == type.Customer" class="row">
                 <div class="col-md-4">
                     <label>Alert</label>
@@ -69,11 +83,12 @@
                     </div>
                 </div>
             </div>
+           
             <div class="row">
                 <div class="col-md-8">
                     <label>Indirizzo</label>
                     <div class="form-group">
-                        <kendo-combobox class="address-combobox"
+                        <kendo-combobox class="address-combobox" #mainAddressComboBox
                             [class.address-validation-error-combobox]="isAddressInValidationError"
                             [data]="options.addresses" [(value)]="options.mainAddress" textField="fullAddress"
                             suggest="true" valueField="tempId" (valueChange)="mainAddressChanged($event)">

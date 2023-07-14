@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ApiUrls } from './common/api-urls';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
@@ -16,6 +16,7 @@ import { JobSourceModel } from '../shared/models/job-source.model';
 import { ProductTypeModel } from '../shared/models/product-type.model';
 import { JobDetailModel } from '../shared/models/job-detail.model';
 import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
+import { JobBusService } from './job-bus.service';
 
 @Injectable()
 export class QuotationsService {
@@ -23,7 +24,8 @@ export class QuotationsService {
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/quotations`;
 
     constructor(
-        private readonly _http: HttpClient
+        private readonly _http: HttpClient,
+        private readonly _bus: JobBusService
     ) {}
 
     readQuotations(state: State) {
@@ -66,16 +68,15 @@ export class QuotationsService {
     createQuotation(request: QuotationDetailModel) {
         return this._http.post<QuotationDetailModel>(`${this._baseUrl}/create-quotation`, request)
             .pipe(
-                map(e => {
-                    return e;
-                })
+                tap(() => this._bus.jobUpdated())
             );
     }
 
     updateQuotation(request: QuotationDetailModel, id: number) {
         return this._http.put<void>(`${this._baseUrl}/update-quotation/${id}`, request)
             .pipe(
-                map(() => { })
+                map(() => { }),
+                tap(() => this._bus.jobUpdated())
             );
     }
 

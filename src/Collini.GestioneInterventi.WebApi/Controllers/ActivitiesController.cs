@@ -61,7 +61,7 @@ public class ActivitiesController : ColliniApiController
             return BadRequest(ModelState);
         }
         await activityService.UpdateActivity(id, activityDto);
-        return Ok(activityDto);
+        return Ok();
     }
 
     [HttpGet("calendar")]

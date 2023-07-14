@@ -102,7 +102,6 @@ public class NotesController : ColliniApiController
     public async Task<NoteAttachmentReadModel> GetNoteAttachmentDetail(long id)
     {
         NoteAttachmentReadModel attachment = await noteService.GetNoteAttachmentDetail(id);
-        
         return attachment;
     }
 
@@ -132,14 +131,11 @@ public class NotesController : ColliniApiController
     public async Task<IActionResult> UploadFile()
     {
         var file = Request.Form.Files.FirstOrDefault();
-
         if (file == null)
         {
             return BadRequest();
         }
-
         var fileName = await SaveFile(file);
-
         return Ok(new
         {
             fileName,
@@ -152,11 +148,8 @@ public class NotesController : ColliniApiController
         var extension = Path.GetExtension(file.FileName);
         var fileName = Guid.NewGuid() + extension;
         var folder = configuration.AttachmentsPath;
-
         Directory.CreateDirectory(folder);
-
         var path = Path.Combine(folder, fileName);
-
         await using (var stream = file.OpenReadStream())
         {
             await using (var fileStream = System.IO.File.OpenWrite(path))
@@ -164,7 +157,6 @@ public class NotesController : ColliniApiController
                 await stream.CopyToAsync(fileStream);
             }
         }
-
         return fileName;
     }
 

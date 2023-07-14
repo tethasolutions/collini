@@ -20,7 +20,7 @@ namespace Collini.GestioneInterventi.Application.Orders
         public OrderMappingProfile()
         {
             CreateMap<Order, OrderDetailDto>()
-                .MapMember(x => x.JobCode, y => y.Job.Number)
+                .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 
@@ -32,7 +32,7 @@ namespace Collini.GestioneInterventi.Application.Orders
                 .IgnoreCommonMembers();
 
             CreateMap<Order, OrderReadModel>()
-                .MapMember(x => x.JobCode, y => y.Job.Number)
+                .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
         }

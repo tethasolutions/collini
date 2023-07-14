@@ -59,7 +59,7 @@ public class QuotationsController : ColliniApiController
             return BadRequest(ModelState);
         }
         await quotationService.UpdateQuotation(id, quotationDto);
-        return Ok(quotationDto);
+        return Ok();
     }
 
     [HttpGet("all-quotations")]

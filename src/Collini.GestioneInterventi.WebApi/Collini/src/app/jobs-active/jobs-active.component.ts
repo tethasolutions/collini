@@ -25,6 +25,7 @@ import { ActivitiesService } from '../services/activities.service';
 import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
 import { OrderDetailModel } from '../shared/models/order-detail.model';
 import { ActivityModel } from '../shared/models/activity.model';
+import { ActivityStatusEnum } from '../shared/enums/activity-status.enum';
 
 @Component({
     selector: 'app-jobs-active',
@@ -40,6 +41,8 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     @ViewChild('activityModal', { static: true }) activityModal: ActivityModalComponent;
 
     jobType: string;
+
+    statusList: Array<string> = [];
 
     jobNotes: Array<NoteModel> = [];
 
@@ -73,6 +76,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         if (this._router.url === '/jobs/active') { this.jobType = 'active'; }
         if (this._router.url === '/jobs/completed') { this.jobType = 'completed'; }
         if (this._router.url === '/jobs/billed') { this.jobType = 'billed'; }
+        this.statusList = Object.keys(ActivityStatusEnum);
         this._readJobs();
     }
 
@@ -98,7 +102,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
     createJob() {
         const request = new JobDetailModel();
-        this.jobModal.loadData();
+        
         this._subscriptions.push(
             this.jobModal.open(request)
                 .pipe(
@@ -114,7 +118,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     }
 
     editJob(job: JobModel) {
-        this.jobModal.loadData();
+        
         this._subscriptions.push(
             this._jobsService.getJobDetail(job.id)
                 .pipe(
@@ -138,7 +142,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
         request.jobId = job.id;
         request.jobDescription = job.description;
-        request.jobCode = job.number + "/" + job.year;
+        request.jobCode = job.code;
         request.customerName = job.customer.customerDescription;
 
         this.orderModal.loadData();
@@ -161,7 +165,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
         request.jobId = job.id;
         request.jobDescription = job.description;
-        request.jobCode = job.number + "/" + job.year;
+        request.jobCode = job.code;
         request.customerName = job.customer.customerDescription;
 
         this.activityModal.loadData();
@@ -184,7 +188,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
         request.jobId = job.id;
         request.jobDescription = job.description;
-        request.jobCode = job.number + "/" + job.year;
+        request.jobCode = job.code;
         request.customerName = job.customer.customerDescription;
 
         this.quotationModal.loadData();
@@ -217,4 +221,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
           .subscribe()
         ); */
     }
+
+
+    
 }

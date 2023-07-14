@@ -42,6 +42,27 @@
             {{dataItem.status | jobStatus}}
         </ng-template>
     </kendo-grid-column>
+    <!-- <kendo-grid-column field="status" title="Stato">
+        <ng-template
+          kendoGridFilterMenuTemplate
+          let-column="column"
+          let-filter="filter"
+          let-filterService="filterService"
+        >
+
+        <multicheck-filter
+            [isPrimitive]="true"
+            [field]="column.field"
+            [filterService]="filterService"
+            [currentFilter]="filter"
+            [data]="statusList"
+          ></multicheck-filter>
+        </ng-template>
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.status | jobStatus}}
+        </ng-template>
+    </kendo-grid-column> -->
+
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" " [width]="120">
         <ng-template kendoGridCellTemplate let-dataItem>
             <div class="d-flex flex-wrap gap-1 justify-content-center">

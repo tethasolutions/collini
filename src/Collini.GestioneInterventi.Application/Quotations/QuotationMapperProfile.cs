@@ -15,7 +15,7 @@ namespace Collini.GestioneInterventi.Application.Quotations
         public QuotationMapperProfile()
         {
             CreateMap<Quotation, QuotationDetailDto>()
-                .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
+                .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 
@@ -26,7 +26,7 @@ namespace Collini.GestioneInterventi.Application.Quotations
                 .IgnoreCommonMembers();
 
             CreateMap<Quotation, QuotationReadModel>()
-                .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
+                .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 

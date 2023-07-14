@@ -13,6 +13,8 @@ import { CustomerService } from '../services/customer.service';
 import { AddressesService } from '../services/addresses.service';
 import { ContactFiscalTypeEnum } from '../shared/enums/contact-fiscal-type.enum';
 import { ContactTypeEnum } from '../shared/enums/contact-type.enum';
+import { Observable } from 'rxjs';
+import {ComboBoxComponent} from '@progress/kendo-angular-dropdowns';
 
 @Component({
   selector: 'app-customer-modal',
@@ -23,6 +25,7 @@ import { ContactTypeEnum } from '../shared/enums/contact-type.enum';
 export class CustomerModalComponent extends ModalComponent<CustomerModel> {
 
     @ViewChild('form') form: NgForm;
+    @ViewChild('mainAddressCombobox') mainAddressComboBox:ComboBoxComponent;
     @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
     @ViewChild('addressesModal', { static: true }) addressesModal: AddressesModalComponent;
 
@@ -64,6 +67,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
         this.options.addresses.forEach((item: AddressModel) => {
             item.isMainAddress = item.tempId === address.tempId;
         });
+        this.reloadTelephoneEmail();
     }
 
     addNewAddress(address: AddressModel) {
@@ -75,6 +79,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                     item.isMainAddress = item.tempId === address.tempId;
                 });
             }
+            
         } else {
             this._subscriptions.push(
                 this._addressesService.createAddress(address)
@@ -86,6 +91,8 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                     .subscribe()
             );
         }
+        this.reloadMainAddressComboText();
+        this.reloadTelephoneEmail()
     }
 
     readAddresses() {
@@ -96,6 +103,7 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                   const result = Object.assign(new CustomerModel(), e);
                   this.options.addresses = result.addresses;
                 }),
+                tap(()=>this.reloadTelephoneEmail()),
                 tap(() => {})
             )
           .subscribe()
@@ -110,8 +118,9 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                 .pipe(
                     filter(e => e),
                     tap(() => {
-                        this.addNewAddress(request);
-                    })
+                        this.addNewAddress(request)
+                    }),
+                    tap(() =>this.reloadTelephoneEmail())
                 )
                 .subscribe()
         );
@@ -120,13 +129,43 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
     editAddresses() {
         this._subscriptions.push(
             this.addressesModal.open()
-                .pipe(
-                    filter(e => e),
+                .pipe(         
+                    tap(()=>this.reloadMainAddressValue()),
+                    tap(()=>this.reloadTelephoneEmail()),
+                    tap(()=>this.reloadMainAddressComboText()),
                     tap(() => {
                         console.log('closed edit addresses')
+                        
                     })
+                    
                 )
                 .subscribe()
         );
+    }
+    private reloadMainAddressValue()
+    {
+        if(this.options != null)
+        this.options.addresses.forEach((item: AddressModel) => 
+        {
+            if(item.isMainAddress)
+                this.options.mainAddress = item;
+        });
+    }
+    private reloadMainAddressComboText()
+    {
+        
+        if(this.options != null && this.options.mainAddress != null)
+        {
+        this.mainAddressComboBox.value = this.options.mainAddress.fullAddress;
+        }
+    }
+
+    private reloadTelephoneEmail()
+    {
+        if(this.options != null && this.options.mainAddress != null)
+        {
+        this.options.telephone = this.options.mainAddress.telephone;
+        this.options.email = this.options.mainAddress.email;   
+        }
     }
 }

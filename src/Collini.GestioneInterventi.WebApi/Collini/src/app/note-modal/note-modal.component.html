@@ -8,7 +8,7 @@
         </kendo-window-titlebar>
         <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options"  class="redimensionModal">
             <div class="row form-group">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <kendo-formfield>
                         <label>Operatore inserimento</label>
                         <kendo-combobox [data]="operators" 
@@ -24,12 +24,42 @@
                         <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
-                <div *ngIf="options.id != null" class="col-md-4">
+                <!-- <div *ngIf="options.id != null" class="col-md-4">
                     <label>&nbsp;</label>
                     <div class="form-group">
                         <button type="button" class="btn btn-primary" title="Note" (click)="viewAttachments()">
                             <i class="fa fa-edit"></i> Allegati
                         </button>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row form-group" *ngIf="options.id != null">               
+                <div class="row">
+                    <div class="col-md-12 text-right allegati-grid-header-buttons">
+                        <button type="button" (click)="aggiungiAllegato()" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i>
+                            NUOVO ALLEGATO
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <kendo-grid [data]="allegati">
+                            <kendo-grid-column field="displayName" title="Nome file" [width]="200">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <a [href]="baseUrl + dataItem.fileName" target="_blank">
+                                        {{dataItem.displayName}}
+                                    </a>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="id" [sortable]="false" [filterable]="false" title=" " [width]="60">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <button type="button" (click)="modificaAllegato(dataItem)" class="btn btn-primary btn-sm grid-action-button" title="Modifica allegato">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </ng-template>
+                            </kendo-grid-column>
+                        </kendo-grid>
                     </div>
                 </div>
             </div>
@@ -53,4 +83,4 @@
         </form>
     </kendo-window>
 </div>
-<app-note-attachments-modal #notesAttachmentsModal></app-note-attachments-modal>
+<app-note-attachment-modal #noteAttachmentModal></app-note-attachment-modal>

@@ -25,7 +25,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
         Task<ActivityDto> CreateActivity(ActivityDto activityDto);
 
-        Task<ActivityDto> UpdateActivity(long id, ActivityDto activityDto);
+        Task UpdateActivity(long id, ActivityDto activityDto);
 
         Task<ActivityViewModel> GetActivity(long id);
 
@@ -59,12 +59,15 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             await activityRepository.Insert(activity);
 
-            var job = await jobService.GetJobDtoForUpdate(activityDto.JobId);
+            var job = await jobService.GetJob(activityDto.JobId);
             if (job == null)
                 throw new ApplicationException("Job non trovato");
             if (job.Status == JobStatus.Pending)
                 job.Status = JobStatus.Working;
-            await jobService.UpdateJob(job.Id.Value, job.MapTo<JobDetailDto>(mapper));
+
+            if (activity.Status != ActivityStatus.Planned)
+                job.Status = JobStatus.Completed;
+            await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
 
             await dbContext.SaveChanges();
  
@@ -73,19 +76,14 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             return activity.MapTo<ActivityDto>(mapper);
         }
 
-        public async Task<ActivityDto> UpdateActivity(long id, ActivityDto activityDto)        
+        public async Task UpdateActivity(long id, ActivityDto activityDto)        
         {
             if (id == 0)
                 throw new ApplicationException("Impossibile aggiornare una attività con id 0");
 
             var activity= await activityRepository
                 .Query()
-                //.Include(x=>x.Operator)
-                //.Include(x=>x.Job)
-                //.Include(x=>x.Notes)
-                .AsNoTracking()
                 .Include(x=>x.Job)
-                .ThenInclude(x=>x.Customer)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -93,9 +91,13 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 throw new ApplicationException($"Impossibile trovare attività con id {id}");
 
             activityDto.MapTo(activity, mapper);
+
+            if (activity.Status != ActivityStatus.Planned)
+                activity.Job.Status = JobStatus.Completed;
+
             activityRepository.Update(activity);
+            
             await dbContext.SaveChanges();
-            return activity.MapTo<ActivityDto>(mapper);
         }
 
         public async Task<ActivityViewModel> GetActivity(long id)
@@ -138,13 +140,36 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             var activities = await activitiesQuery
                 .Include(x => x.Job)
                 .ThenInclude(y => y.Customer)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.CustomerAddress)
                 .Include(x => x.Operator)
                 .ToArrayAsync();
 
-            calendar.Activities = activities.MapTo<IEnumerable<ActivityViewModel>>(mapper).ToList();
-            var operators = activities.Select(x => x.Operator).DistinctBy(x=>x.Id);
+            try
+            {
+                calendar.Activities = activities.MapTo<IEnumerable<ActivityViewModel>>(mapper).ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+
+            try
+            {
+                var operators = activities.Select(x => x.Operator).DistinctBy(x=>x.Id);
                 var resources =  operators.MapTo<IEnumerable<CalendarResourceViewModel>>(mapper).ToList();
-            calendar.Resources = resources;
+                calendar.Resources = resources;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+
+            
             return calendar;
 
         }

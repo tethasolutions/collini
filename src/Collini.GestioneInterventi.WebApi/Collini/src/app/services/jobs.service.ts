@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { ApiUrls } from './common/api-urls';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
@@ -14,6 +14,7 @@ import { CustomerModel } from '../shared/models/customer.model';
 import { JobSourceModel } from '../shared/models/job-source.model';
 import { ProductTypeModel } from '../shared/models/product-type.model';
 import { JobDetailModel } from '../shared/models/job-detail.model';
+import { JobBusService } from './job-bus.service';
 
 @Injectable()
 export class JobsService {
@@ -21,7 +22,9 @@ export class JobsService {
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/jobs`;
 
     constructor(
-        private readonly _http: HttpClient
+        private readonly _http: HttpClient,
+        private readonly _bus: JobBusService
+        
     ) {}
 
     readJobs(state: State, jobType: string) {
@@ -32,9 +35,9 @@ export class JobsService {
             .pipe(
                 map(e =>
                     {
-                        const jobs: Array<JobModel> = [];
+                        const jobs: Array<JobDetailModel> = [];
                         e.data.forEach(item => {
-                            const job: JobModel = Object.assign(new JobModel(), item);
+                            const job: JobDetailModel = Object.assign(new JobDetailModel(), item);
                             job.expirationDate = new Date(job.expirationDate);
                             job.createdOn = new Date(job.createdOn);
                             job.customer = Object.assign(new CustomerModel(), job.customer);
@@ -211,16 +214,15 @@ export class JobsService {
     createJob(request: JobDetailModel) {
         return this._http.post<CustomerModel>(`${this._baseUrl}/create-job`, request)
             .pipe(
-                map(e => {
-                    return e;
-                })
+                tap(() => this._bus.jobUpdated())
             );
     }
 
     updateJob(request: JobDetailModel, id: number) {
         return this._http.put<void>(`${this._baseUrl}/update-job/${id}`, request)
             .pipe(
-                map(() => { })
+                map(() => { }),
+                tap(() => this._bus.jobUpdated())
             );
     }
 

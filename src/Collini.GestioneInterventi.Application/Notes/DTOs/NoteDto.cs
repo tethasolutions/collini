@@ -14,6 +14,6 @@ namespace Collini.GestioneInterventi.Application.Notes.DTOs
         public long? OrderId { get; set; }
         public long? QuotationId { get; set; }
         public long? ActivityId { get; set; }
-        public ICollection<NoteAttachmentReadModel> Attachments { get; set; }
+
     }
 }

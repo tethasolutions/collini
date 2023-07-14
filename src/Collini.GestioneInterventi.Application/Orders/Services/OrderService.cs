@@ -22,7 +22,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         IQueryable<OrderDetailDto> GetOrders();
         Task<OrderDetailDto> GetOrderDetail(long id);
         Task<OrderDetailDto> CreateOrder(OrderDetailDto order);
-        Task<OrderDetailDto> UpdateOrder(long id, OrderDetailDto order);
+        Task UpdateOrder(long id, OrderDetailDto order);
         Task<IEnumerable<OrderReadModel>> getAllOrders();
     }
 
@@ -46,7 +46,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         }
 
 
-        public async Task<OrderDetailDto> UpdateOrder(long id,OrderDetailDto orderdtDto)
+        public async Task UpdateOrder(long id,OrderDetailDto orderdtDto)
         {
             if (id == 0)
                 throw new ApplicationException("Impossibile aggiornare una nota con id 0");
@@ -54,9 +54,6 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             var order= await orderRepository
                 .Query()
                 .AsNoTracking()
-                //.Include(x=>x.Supplier)
-                //.Include(x=>x.Job)
-                //.Include(x=>x.Notes)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();;
 
@@ -66,8 +63,6 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             orderdtDto.MapTo(order, mapper);
             orderRepository.Update(order);
             await dbContext.SaveChanges();
-
-            return order.MapTo<OrderDetailDto>(mapper);
             
         }
 
@@ -91,7 +86,10 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
                 .Query()
                 .AsNoTracking()
                 .Include(x=>x.Supplier)
-                .Include(x=>x.Job)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.Customer)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.CustomerAddress)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -106,12 +104,12 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             var order = orderDto.MapTo<Order>(mapper);
             await orderRepository.Insert(order);
             
-            var job = await jobService.GetJobDtoForUpdate(orderDto.JobId);
+            var job = await jobService.GetJob(orderDto.JobId);
             if (job == null)
                 throw new ApplicationException("Job non trovato");
             if (job.Status == JobStatus.Pending)
                 job.Status = JobStatus.Working;
-            await jobService.UpdateJob(job.Id.Value, job.MapTo<JobDetailDto>(mapper));
+            await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
             
             await dbContext.SaveChanges();
 

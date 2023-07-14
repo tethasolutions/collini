@@ -26,6 +26,7 @@ namespace Collini.GestioneInterventi.Application.Notes
                 .Ignore(x=>x.Order)
                 .Ignore(x=>x.Quotation)
                 .Ignore(x=>x.Activity)
+                .Ignore(x=>x.Attachments)
                 .IgnoreCommonMembersWithoutCreatedOn();
 
             CreateMap<NoteAttachment, NoteAttachmentReadModel>();

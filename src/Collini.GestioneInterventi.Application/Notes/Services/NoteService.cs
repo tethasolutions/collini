@@ -87,11 +87,6 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
             var note= await noteRepository
                 .Query()
                 .AsNoTracking()
-                //.Include(x=>x.Attachments)
-                //.Include(x=>x.Job)
-                //.Include(x=>x.Quotation)
-                //.Include(x=>x.Activity)
-                //.Include(x=>x.Order)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();;
 
@@ -149,6 +144,8 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
                 throw new NotFoundException(typeof(Note), id);
             }
             attachmentDto.MapTo(attachment, mapper);
+
+            noteAttachmentRepository.Update(attachment);
 
             await dbContext.SaveChanges();
 

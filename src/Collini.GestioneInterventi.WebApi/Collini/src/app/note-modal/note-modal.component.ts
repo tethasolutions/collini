@@ -14,6 +14,9 @@ import { JobModel } from '../shared/models/job.model';
 import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
 import { NoteAttachmentsModalComponent } from '../note-attachments-modal/note-attachments-modal.component';
+import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
+import { NoteAttachmentModalComponent } from '../note-attachment-modal/note-attachment-modal.component';
+import { ApiUrls } from '../services/common/api-urls';
 
 @Component({
   selector: 'app-note-modal',
@@ -23,8 +26,11 @@ import { NoteAttachmentsModalComponent } from '../note-attachments-modal/note-at
 export class NoteModalComponent extends ModalComponent<NoteModel> {
 
     @ViewChild('form') form: NgForm;
-    @ViewChild('notesAttachmentsModal', { static: true }) notesAttachmentsModal: NoteAttachmentsModalComponent;
+    
+    @ViewChild('noteAttachmentModal', { static: true }) noteAttachmentModal: NoteAttachmentModalComponent;
 
+    allegati: Array<NoteAttachmentModel> = [];
+    readonly baseUrl = `${ApiUrls.baseUrl}/attachments/`;
     operators: Array<JobOperatorModel> = [];
 
     constructor(
@@ -49,6 +55,10 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
 
     public loadData() {
         this._readOperators();
+        if(this.options != null)
+        {
+        this._readNoteAttachments()
+        }
     }
 
     protected _canClose() {
@@ -61,9 +71,61 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
       return this.form.valid;
     }
 
-    viewAttachments() {
-      this.notesAttachmentsModal.id = this.options.id;
-      this.notesAttachmentsModal.loadData();
-      this.notesAttachmentsModal.open(null);
+    // viewAttachments() {
+    //   this.notesAttachmentsModal.id = this.options.id;
+    //   this.notesAttachmentsModal.loadData();
+    //   this.notesAttachmentsModal.open(null);
+    // }
+
+    aggiungiAllegato() {
+      const request = new NoteAttachmentModel();
+      request.noteId = this.options.id;
+      this._subscriptions.push(
+          this.noteAttachmentModal.open(request)
+              .pipe(
+                  filter(e => e),
+                  switchMap(() => this._notesService.createNoteAttachment(request)),
+                  tap(e => {
+                    this._messageBox.success(`Allegato creato`);
+                  }),
+                  tap(() => {
+                    this.loadData();
+                  })
+              )
+              .subscribe()
+      );
     }
+  
+    modificaAllegato(allegato: NoteAttachmentModel) {
+      this._subscriptions.push(
+        this._notesService.getNoteAttachmentDetail(allegato.id)
+          .pipe(
+              map(e => {
+                return e;
+              }),
+              switchMap(e => this.noteAttachmentModal.open(e)),
+              filter(e => e),
+              map(() => this.noteAttachmentModal.options),
+              switchMap(e => this._notesService.updateNoteAttachment(e, e.id)),
+              map(() => this.noteAttachmentModal.options),
+              tap(e => this._messageBox.success(`Allegato aggiornato`)),
+              tap(() => this.loadData())
+          )
+        .subscribe()
+      );
+    }
+  
+    protected _readNoteAttachments() {
+      this._subscriptions.push(
+        this._notesService.getNoteAttachments(this.options.id)
+          .pipe(
+              tap(e => {
+                this.allegati = e;
+              })
+          )
+          .subscribe()
+      );
+    }
+  
+
 }

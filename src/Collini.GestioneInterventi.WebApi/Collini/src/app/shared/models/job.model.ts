@@ -41,7 +41,7 @@ export class JobModel {
     customerAddress: AddressModel;
 
     get fullDescription(): string {
-        return `${this.number}/${this.year} - ${this.customer.customerDescription} - ${this.description}`;
+        return `${this.code} - ${this.customer.customerDescription} - ${this.description}`;
     }
 
     get expired(): boolean {

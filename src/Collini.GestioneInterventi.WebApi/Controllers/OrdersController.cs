@@ -60,7 +60,7 @@ public class OrdersController : ColliniApiController
             return BadRequest(ModelState);
         }
         await orderService.UpdateOrder(id, orderDto);
-        return Ok(orderDto);
+        return Ok();
     }
 
     [HttpGet("all-orders")]

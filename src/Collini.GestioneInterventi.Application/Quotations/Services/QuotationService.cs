@@ -22,7 +22,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         IQueryable<QuotationDetailDto> GetQuotations();
         Task<QuotationDetailDto> GetQuotationDetail(long id);
         Task<QuotationDetailDto> CreateQuotation(QuotationDetailDto quotation);
-        Task<QuotationDetailDto> UpdateQuotation(long id, QuotationDetailDto quotation);
+        Task UpdateQuotation(long id, QuotationDetailDto quotation);
         Task<IEnumerable<QuotationReadModel>> getAllQuotations();
     }
 
@@ -65,7 +65,10 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             var quotation = await quotationRepository
                 .Query()
                 .AsNoTracking()
-                .Include(x=>x.Job)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.Customer)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.CustomerAddress)
                 .Include(x=>x.Notes)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
@@ -81,12 +84,12 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             var quotation = quotationDto.MapTo<Quotation>(mapper);
             await quotationRepository.Insert(quotation);
 
-            var job = await jobService.GetJobDtoForUpdate(quotationDto.JobId);
+            var job = await jobService.GetJob(quotationDto.JobId);
             if (job == null)
                 throw new ApplicationException("Job non trovato");
             if (job.Status == JobStatus.Pending)
                 job.Status = JobStatus.Working;
-            await jobService.UpdateJob(job.Id.Value, job.MapTo<JobDetailDto>(mapper));
+            await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
 
             await dbContext.SaveChanges();
 
@@ -95,7 +98,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             return quotation.MapTo<QuotationDetailDto>(mapper);
         }
 
-        public async Task<QuotationDetailDto> UpdateQuotation(long id, QuotationDetailDto quotationDto)
+        public async Task UpdateQuotation(long id, QuotationDetailDto quotationDto)
         {
 
 
@@ -105,10 +108,8 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             var quotation= await quotationRepository
                 .Query()
                 .AsNoTracking()
-                //.Include(x=>x.Job)
-                //.Include(x=>x.Notes)
                 .Where(x => x.Id == id)
-                .SingleOrDefaultAsync();;
+                .SingleOrDefaultAsync();
 
             if (quotation == null)
                 throw new ApplicationException($"Impossibile trovare una quotation con id {id}");
@@ -116,10 +117,6 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             quotationDto.MapTo(quotation, mapper);
             quotationRepository.Update(quotation);
             await dbContext.SaveChanges();
-
-            return quotation.MapTo<QuotationDetailDto>(mapper);
-
-            
         }
 
         public async Task<IEnumerable<QuotationReadModel>> getAllQuotations()

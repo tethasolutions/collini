@@ -1,9 +1,8 @@
-<kendo-scheduler
+<kendo-scheduler      
       [kendoSchedulerBinding]="calendar.activities"
       [selectedDate]="selectedDate"
       [resources]="calendar.resourcesSettings"
-      startTime="09:00"
-      endTime="19:30"
+      
       (eventClick)="modificaIntervento($event)"
       class="calendar-interventi"
       [selectedViewIndex]="1"
@@ -21,10 +20,16 @@
       kendoSchedulerAllDayEventTemplate
       let-event="event"
       let-resources="resources">
-      <div [class.intervento-elaborato]="event.dataItem.status == 1">
-      <div class="operatore-title">
+      
+      <div>
+        <div class="calendar-icon-absolute calendar-icon-Ok" *ngIf="event.dataItem.status == 1" >
+          <i class="fas fa-circle-check"></i>
+        </div>
+        <div class="calendar-icon-absolute calendar-icon-Ko" *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3" >
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
         <ng-container *ngFor="let resource of resources">
-          <span [style.background]="resource.color" *ngIf="!resource.length; else multipleResource">{{ resource.description }}</span>
+          <!-- <span [style.background]="resource.color" *ngIf="!resource.length; else multipleResource">{{ resource.description }}</span> -->
           <ng-template #multipleResource>
             <span  *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
           </ng-template>
@@ -32,17 +37,24 @@
       </div>
       <div>{{event.dataItem.cliente}} -  Commessa: {{event.dataItem.commessa}} - {{event.dataItem.description}}</div>
       <!-- <button (click)="test(event)">Test</button> -->
-    </div>
+    
     </ng-template>
 
       <ng-template
         kendoSchedulerEventTemplate
         let-event="event"
         let-resources="resources">
-        <div [class.intervento-elaborato]="event.dataItem.status == 1">
+        
         <div>
+          <div class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 1" >
+              <i class="fas fa-circle-check"></i>
+
+          </div>
+          <div class="calendar-icon calendar-icon-Ko" *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3" >
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
           <ng-container *ngFor="let resource of resources">
-            <span *ngIf="!resource.length; else multipleResource"></span>
+            <!-- <span *ngIf="!resource.length; else multipleResource"></span> -->
             <ng-template #multipleResource>
               <span *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
             </ng-template>
@@ -51,12 +63,14 @@
         <div class="cliente-title">{{event.dataItem.cliente}}</div>
         <div class="commessa-title">{{event.dataItem.commessa}}-{{event.dataItem.description}}</div>
         <!-- <button (click)="test(event)">Test</button> -->
-      </div>
+      
       </ng-template>
 
-      <kendo-scheduler-day-view> </kendo-scheduler-day-view>
-      <kendo-scheduler-week-view> </kendo-scheduler-week-view>
+      <kendo-scheduler-day-view startTime="00:00" endTime="24:00"></kendo-scheduler-day-view>
+      <kendo-scheduler-week-view  startTime="00:00" endTime="24:00"> </kendo-scheduler-week-view>
       <kendo-scheduler-month-view> </kendo-scheduler-month-view>
+      <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
+      
 </kendo-scheduler>
 
 <app-activity-modal #activityModal></app-activity-modal>

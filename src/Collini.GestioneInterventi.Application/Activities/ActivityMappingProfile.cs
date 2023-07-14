@@ -13,7 +13,7 @@ namespace Collini.GestioneInterventi.Application.Activities
         public ActivityMappingProfile()
         {
             CreateMap<Activity, ActivityDto>()
-                .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
+                .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name + " - " + y.Job.CustomerAddress.StreetAddress + " " + y.Job.CustomerAddress.City)
                 .MapMember(x => x.Operator, y => y.Operator.UserName);
@@ -27,7 +27,7 @@ namespace Collini.GestioneInterventi.Application.Activities
 
             CreateMap<Activity, ActivityViewModel>()
                 .MapMember(x => x.JobId, y => y.Job.Id)
-                .MapMember(x => x.JobCode, y => y.Job.Number + "/" + y.Job.Year)
+                .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name + " - " + y.Job.CustomerAddress.StreetAddress + " " + y.Job.CustomerAddress.City);
 

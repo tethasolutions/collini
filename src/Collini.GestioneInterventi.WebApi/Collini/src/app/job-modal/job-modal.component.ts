@@ -21,6 +21,8 @@ import { AddressesService } from '../services/addresses.service';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 import { NoteModel } from '../shared/models/note.model';
 import { NotesService } from '../services/notes.service';
+import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-job-modal',
@@ -55,6 +57,14 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this.options = new JobDetailModel();
   }
 
+  override open(options: JobDetailModel): Observable<boolean> 
+  {
+    const result = super.open(options);
+
+    this.loadData()  
+    return result;
+  }
+
   protected _canClose() {
       markAsDirty(this.form);
 
@@ -86,7 +96,12 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
               if (creatoNuovoCustomer) {
                 this.customerChanged(this.options.customerId);
               }
+              else
+              {
+              this._filterCustomers(null);
+              }
             })
+
         )
         .subscribe()
     );
@@ -214,8 +229,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
       }
 
   public loadData() {
-    this._readJobCustomers();
-    this._filterCustomers(null);
+    this._readJobCustomers();   
     this._readOperators();    
     this._readJobSources();
     this._readJobProductTypes();
@@ -226,7 +240,14 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
       // this.customersFiltered = this.customers;
       if(value == null || value.length < 3)
       {
-        this.customersFiltered = [];
+        if(this.options.customerId != null)
+        {
+          this.customersFiltered = this.customers.filter((s)=> s.id == this.options.customerId)        
+        }
+        else
+        {        
+          this.customersFiltered = [];
+        }        
       }
       else
       {        
