@@ -71,5 +71,15 @@ public class ActivitiesController : ColliniApiController
         return calendar;
     }
 
-   
+    [HttpPut("copyactivity")]
+    public async Task<IActionResult> CopyActivity([FromBody] CopyActivityDto copyActivityDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await activityService.CopyActivity(copyActivityDto);
+        return Ok();
+    }
+
 }

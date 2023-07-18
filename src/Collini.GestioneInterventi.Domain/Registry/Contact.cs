@@ -6,10 +6,12 @@ public class Contact : FullAuditedEntity
 {
     public ContactType Type { get; set; }
     public string? CompanyName { get; set; }
-    public string? Name { get; set; }
+    public string Name { get; set; }
     public string? Surname { get; set; }
     public ContactFiscalType FiscalType { get; set; }
     public string? ErpCode { get; set; }
+    public string? Telephone { get; set; }
+    public string? Email { get; set; }
     public bool Alert { get; set; }
 
     public ICollection<ContactAddress> Addresses { get; set; }

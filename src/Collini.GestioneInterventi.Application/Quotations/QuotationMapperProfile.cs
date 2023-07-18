@@ -17,6 +17,7 @@ namespace Collini.GestioneInterventi.Application.Quotations
             CreateMap<Quotation, QuotationDetailDto>()
                 .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
+                .MapMember(x => x.JobDate, y => y.Job.CreatedOn)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
 
             CreateMap<QuotationDetailDto, Quotation>()

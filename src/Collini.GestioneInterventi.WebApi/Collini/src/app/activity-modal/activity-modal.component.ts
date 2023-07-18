@@ -15,6 +15,7 @@ import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 import { Observable } from 'rxjs';
+import { CopyActivityModalComponent } from '../copy-activity-modal/copy-activity-modal.component';
 
 @Component({
   selector: 'app-activity-modal',
@@ -25,6 +26,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
 
     @ViewChild('form') form: NgForm;
     @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+    @ViewChild('copyActivityModal', { static: true }) copyActivityModal: CopyActivityModalComponent;
     readonly role = Role;
 
     operators: Array<JobOperatorModel> = [];
@@ -84,7 +86,14 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
       );
   }
 
-  
+  copyActivity() {
+    this.copyActivityModal.open(this.options.id)
+    .pipe(
+      filter (x=>x), 
+      tap(()=> this.dismiss())
+    )
+    .subscribe()
+  }
 
     viewNotes() {
         this.notesModal.id = this.options.id;

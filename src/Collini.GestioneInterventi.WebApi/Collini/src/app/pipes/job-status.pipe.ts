@@ -18,6 +18,8 @@ export class JobStatusPipe extends BaseComponent implements PipeTransform {
                 return 'Da Fatturare';
             case JobStatusEnum.Billed:
                 return 'Fatturato';
+            case JobStatusEnum.Paid:
+                return 'Ok Pagato';
             case JobStatusEnum.Canceled:
                 return "Annullato";
             case JobStatusEnum.Completed:

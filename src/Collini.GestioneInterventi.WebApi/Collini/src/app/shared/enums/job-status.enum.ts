@@ -4,5 +4,6 @@ export enum JobStatusEnum {
     Completed,
     Billing,
     Billed,
+    Paid,
     Canceled
 }

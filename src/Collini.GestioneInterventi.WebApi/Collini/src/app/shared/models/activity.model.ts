@@ -17,6 +17,16 @@ export class ActivityModel {
     jobCode: string;
     jobDescription: string;
 
+    get expired(): boolean {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const expiration = new Date(this.end);
+        expiration.setHours(0, 0, 0, 0);
+
+        return today > expiration;
+    }
+
     constructor() {
         this.id = null;
         this.description = null;

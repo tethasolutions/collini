@@ -7,5 +7,6 @@ public enum JobStatus
     Completed,
     Billing,
     Billed,
+    Paid,
     Canceled
 }

@@ -72,6 +72,7 @@ import { OrderModalComponent } from './order-modal/order-modal.component';
 import { RolePipe } from './pipes/role.pipe';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityStatusPipe } from './pipes/activity-status.pipe';
+import { CopyActivityModalComponent } from './copy-activity-modal/copy-activity-modal.component';
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -101,6 +102,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         CalendarComponent,
         ActivityModalComponent,
         ActivitiesComponent,
+        CopyActivityModalComponent,
         NotesModalComponent,
         NoteModalComponent,
         NoteAttachmentsModalComponent,

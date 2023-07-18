@@ -12,11 +12,13 @@ namespace Collini.GestioneInterventi.Application.Quotations.DTOs
     {
         public long? Id { get; set; }
         public decimal Amount { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
         public DateTimeOffset? ExpirationDate { get; set; }
         public QuotationStatus Status { get; set; }
         public long JobId { get; set; }
         public string? CustomerName { get; set; }
         public string? JobCode { get; set; }
         public string? JobDescription { get; set; }
+        public DateTimeOffset? JobDate { get; set; }
     }
 }

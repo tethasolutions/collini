@@ -15,7 +15,7 @@ export class UserModalComponent extends ModalComponent<UpdateUserRequest> {
     form: NgForm;
 
     readonly role = Role;
-    readonly roles = listEnum<Role>(Role).filter(e=> e!= Role.Administrator);
+    readonly roles = listEnum<Role>(Role);//.filter(e=> e!= Role.Administrator);
 
 
     constructor(

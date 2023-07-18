@@ -4,6 +4,7 @@ import { QuotationStatusEnum } from '../enums/quotation-status.enum';
 export class QuotationDetailModel {
     id: number;
     amount: number;
+    createdOn: Date;
     expirationDate: Date;
     sourceId: number;
     source: JobSourceModel;

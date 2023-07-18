@@ -21,6 +21,16 @@ export class JobDetailModel {
     productType: ProductTypeModel;
     status: JobStatusEnum;
 
+    get expired(): boolean {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const expiration = new Date(this.expirationDate);
+        expiration.setHours(0, 0, 0, 0);
+
+        return today > expiration;
+    }
+    
     constructor() {
         this.id = null;
         this.description = null;

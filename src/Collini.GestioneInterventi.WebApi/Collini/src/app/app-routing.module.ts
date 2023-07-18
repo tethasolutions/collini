@@ -40,7 +40,11 @@ const routes: Routes = [
                 component: JobsActiveComponent
             },
             {
-                path: 'billed',
+                path: 'billing',
+                component: JobsActiveComponent
+            },
+            {
+                path: 'paid',
                 component: JobsActiveComponent
             },
             { 

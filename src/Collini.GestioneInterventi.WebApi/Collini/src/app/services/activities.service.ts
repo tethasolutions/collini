@@ -13,6 +13,7 @@ import { CalendarResourcesSettingsModel } from '../shared/models/calendar-resour
 import { SchedulerEvent } from '@progress/kendo-angular-scheduler';
 import { JobModel } from '../shared/models/job.model';
 import { JobBusService } from './job-bus.service';
+import { CopyActivityModel } from '../shared/models/copy-activity.model';
 
 @Injectable()
 export class ActivitiesService {
@@ -122,6 +123,13 @@ export class ActivitiesService {
         return this._http.put<void>(`${this._baseUrl}/activity/${id}`, request)
             .pipe(
                 map(() => { }),
+                tap(() => this._bus.jobUpdated())
+            );
+    }
+    
+    copyActivity(request: CopyActivityModel) {
+        return this._http.put<void>(`${this._baseUrl}/copyactivity/`, request)
+            .pipe(
                 tap(() => this._bus.jobUpdated())
             );
     }

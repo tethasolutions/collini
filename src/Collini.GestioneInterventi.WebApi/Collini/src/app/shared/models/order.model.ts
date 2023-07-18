@@ -7,6 +7,7 @@ export class OrderModel {
     id: number;
     code: string;
     description: string;
+    createdOn: Date;
     expirationDate: Date;
     status: OrderStatusEnum;
     jobId: number;
@@ -15,4 +16,15 @@ export class OrderModel {
     jobDescription: string;
     supplierId: number;
     supplier: ContactModel;
+    
+    get expired(): boolean {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const expiration = new Date(this.expirationDate);
+        expiration.setHours(0, 0, 0, 0);
+
+        return today > expiration;
+    }
+    
 }

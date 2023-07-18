@@ -57,13 +57,13 @@
                         <kendo-combobox [data]="options.customer.addresses" class="address-combobox"
                             [(ngModel)]="options.customerAddressId" name="customerAddressId" suggest="true"
                             class="customer-combobox" textField="fullAddress" [valuePrimitive]="true"
-                            [disabled]="options.customerId == null" valueField="id" required>
+                            [disabled]="options.customerId == null" valueField="id">
                         </kendo-combobox>
                         <button [disabled]="options.customerId == null" (click)="createAddress()" type="button"
                             class="btn btn-primary add-address-button" title="Nuovo indirizzo">
                             <i class="fa fa-plus"></i>
                         </button>
-                        <kendo-formerror>Indirizzo è un campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Errore campo Indirizzo</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>

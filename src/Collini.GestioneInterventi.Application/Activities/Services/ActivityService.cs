@@ -26,6 +26,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         Task<ActivityDto> CreateActivity(ActivityDto activityDto);
 
         Task UpdateActivity(long id, ActivityDto activityDto);
+        Task CopyActivity(CopyActivityDto copyActivityDto);
 
         Task<ActivityViewModel> GetActivity(long id);
 
@@ -97,6 +98,24 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             activityRepository.Update(activity);
             
+            await dbContext.SaveChanges();
+        }
+
+        public async Task CopyActivity(CopyActivityDto copyActivityDto)
+        {
+            var activity = await activityRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.Id == copyActivityDto.Id)
+                .SingleOrDefaultAsync();
+
+            if (activity == null)
+                throw new ApplicationException($"Impossibile trovare attività con id {copyActivityDto.Id}");
+
+            activity.Id = 0;
+            activity.OperatorId = copyActivityDto.NewOperatorId;
+            await activityRepository.Insert(activity);
+
             await dbContext.SaveChanges();
         }
 

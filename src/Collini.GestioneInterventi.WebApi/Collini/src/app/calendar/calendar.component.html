@@ -34,8 +34,9 @@
             <span  *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
           </ng-template>
         </ng-container>
-      </div>
-      <div>{{event.dataItem.cliente}} -  Commessa: {{event.dataItem.commessa}} - {{event.dataItem.description}}</div>
+      </div>      
+      <div *ngIf="event.dataItem.status == 0" >{{event.dataItem.cliente}}</div>
+      <div *ngIf="event.dataItem.status != 0" ><strong>{{event.dataItem.cliente}}</strong></div>
       <!-- <button (click)="test(event)">Test</button> -->
     
     </ng-template>
@@ -60,14 +61,15 @@
             </ng-template>
           </ng-container>
         </div>
-        <div class="cliente-title">{{event.dataItem.cliente}}</div>
-        <div class="commessa-title">{{event.dataItem.commessa}}-{{event.dataItem.description}}</div>
-        <!-- <button (click)="test(event)">Test</button> -->
+        <div class="cliente-title" *ngIf="event.dataItem.status == 0">{{event.dataItem.cliente}}</div>
+        <div class="cliente-title-status" *ngIf="event.dataItem.status != 0"><strong>{{event.dataItem.cliente}}</strong></div>
+        <!-- <div class="commessa-title">{{event.dataItem.commessa}}-{{event.dataItem.description}}</div>
+         <button (click)="test(event)">Test</button> -->
       
       </ng-template>
 
       <kendo-scheduler-day-view startTime="00:00" endTime="24:00"></kendo-scheduler-day-view>
-      <kendo-scheduler-week-view  startTime="00:00" endTime="24:00"> </kendo-scheduler-week-view>
+      <kendo-scheduler-week-view  startTime="00:00" endTime="24:00"></kendo-scheduler-week-view>
       <kendo-scheduler-month-view> </kendo-scheduler-month-view>
       <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
       

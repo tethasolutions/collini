@@ -36,6 +36,7 @@ public class SecurityController : ColliniApiController
     public async Task<DataSourceResult> GetUsers([DataSourceRequest] DataSourceRequest request)
     {
         var result = await service.Query()
+            .Where(x => x.UserName != "Administrator")
             .ToDataSourceResultAsync(request);
 
         return result;

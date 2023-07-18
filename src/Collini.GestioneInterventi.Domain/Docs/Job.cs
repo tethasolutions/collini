@@ -6,7 +6,8 @@ public class Job : FullAuditedEntity
 {
     public int Number { get; set; }
     public int Year { get; set; }
-    public DateTimeOffset? ExpirationDate { get; set; }
+    public DateTimeOffset JobDate { get; set; }
+    public DateTimeOffset ExpirationDate { get; set; }
     public string? Description { get; set; }
     public JobStatus Status { get; set; }
     public DateTimeOffset? StatusChangedOn { get; set; }
@@ -14,7 +15,7 @@ public class Job : FullAuditedEntity
     public long CustomerId { get; set; }
     public Contact? Customer { get; set; }
 
-    public long CustomerAddressId { get; set; }
+    public long? CustomerAddressId { get; set; }
     public ContactAddress? CustomerAddress { get; set; }
 
     public long SourceId { get; set; }

@@ -42,7 +42,7 @@
                 <a class="nav-link job-menu-link"
                 routerLink="activities"
                 routerLinkActive="active">
-                    <div class="job-menu-title">Calendar</div>
+                    <div class="job-menu-title">Calendario</div>
                     <div class="blue-number bage-number">{{jobCounters.interventions.active}}</div>
                     <div class="red-number bage-number">{{jobCounters.interventions.expired}}</div>
                 </a>
@@ -51,18 +51,25 @@
                 <a class="nav-link job-menu-link"
                         routerLink="completed"
                         routerLinkActive="active">
-                    <div class="job-menu-title">Completate</div>
+                    <div class="job-menu-title">Conti da fare</div>
                     <div class="blue-number bage-number">{{jobCounters.completed.active}}</div>
                     <div class="red-number bage-number">{{jobCounters.completed.expired}}</div>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link job-menu-link"
-                        routerLink="billed"
+                        routerLink="billing"
                         routerLinkActive="active">
-                    <div class="job-menu-title">Contabilizzazione</div>
-                    <div class="blue-number bage-number">{{jobCounters.billed.active}}</div>
-                    <div class="red-number bage-number">{{jobCounters.billed.expired}}</div>
+                    <div class="job-menu-title">Conti pronti</div>
+                    <div class="blue-number bage-number">{{jobCounters.billing.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.billing.expired}}</div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link job-menu-link"
+                        routerLink="paid"
+                        routerLinkActive="active">
+                    <div class="job-menu-title">Pagati</div>
                 </a>
             </li>
         </ul>

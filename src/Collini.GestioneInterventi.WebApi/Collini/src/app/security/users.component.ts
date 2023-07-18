@@ -10,7 +10,8 @@ import { UserModalComponent } from './user-modal.component';
 
 @Component({
     selector: 'collini-users',
-    templateUrl: 'users.component.html'
+    templateUrl: 'users.component.html',
+    styleUrls: ['./users.component.scss']
 })
 export class UsersComponent extends BaseComponent implements OnInit {
 
@@ -21,14 +22,6 @@ export class UsersComponent extends BaseComponent implements OnInit {
     state: State = {
         skip: 0,
         take: 10,
-        filter: {
-            filters: [{
-                field: 'role',
-                operator: 'neq',
-                value: Role.Administrator
-            }],
-            logic: 'and'
-        },
         group: [],
         sort: []
     };

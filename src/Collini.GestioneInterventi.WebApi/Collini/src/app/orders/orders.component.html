@@ -17,11 +17,13 @@
             (dataStateChange)="dataStateChange($event)">
     <kendo-grid-column field="expired" [sortable]="false" [filterable]="false" title=" " width="25px">
         <ng-template kendoGridCellTemplate let-dataItem>
-            <div *ngIf="!dataItem.expired" class="job-active">&nbsp;</div>
-            <div *ngIf="dataItem.expired" class="job-expired">&nbsp;</div>
+            <div *ngIf="!dataItem.expired && dataItem.status != 1" class="job-active">&nbsp;</div>
+            <div *ngIf="dataItem.expired && dataItem.status != 1" class="job-expired">&nbsp;</div>
+            <div *ngIf="dataItem.status == 1" class="job-success">&nbsp;</div>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-column field="code" title="Num Ord."></kendo-grid-column>
+    <kendo-grid-column field="createdOn" title="Data" filter="date" format="{0:d}"></kendo-grid-column>
     <kendo-grid-column field="customerName" title="Fornitore"></kendo-grid-column>
     <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">

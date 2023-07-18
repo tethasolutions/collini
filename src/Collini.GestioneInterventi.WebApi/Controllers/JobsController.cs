@@ -49,10 +49,17 @@ public class JobsController : ColliniApiController
         return await jobs.ToDataSourceResultAsync(request);
     }
 
-    [HttpGet("jobs-billed")]
-    public async Task<DataSourceResult> GetJobsBilled([DataSourceRequest] DataSourceRequest request)
+    [HttpGet("jobs-billing")]
+    public async Task<DataSourceResult> GetJobsBilling([DataSourceRequest] DataSourceRequest request)
     {
-        var jobs = await jobsService.GetJobsBilled();
+        var jobs = await jobsService.GetJobsBilling();
+        return await jobs.ToDataSourceResultAsync(request);
+    }
+
+    [HttpGet("jobs-paid")]
+    public async Task<DataSourceResult> GetJobsPaid([DataSourceRequest] DataSourceRequest request)
+    {
+        var jobs = await jobsService.GetJobsPaid();
         return await jobs.ToDataSourceResultAsync(request);
     }
 

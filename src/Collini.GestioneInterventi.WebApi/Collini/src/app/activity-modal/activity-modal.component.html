@@ -23,9 +23,9 @@
             <div class="row form-group">
                 <div class="col-md-4">
                     <kendo-formfield>
-                        <label>Operatore inserimento</label>
+                        <label>Operatore</label>
                         <kendo-combobox [data]="operators" [(ngModel)]="options.operatorId" name="operatorId"
-                            suggest="true" [disabled]="options.id != null" textField="description"
+                            suggest="true" textField="description"
                             [valuePrimitive]="true" valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
@@ -35,7 +35,7 @@
                     <kendo-formfield>
                         <label>Data inizio</label>
                         <kendo-datetimepicker  name="start" [(ngModel)]="options.start"
-                            required format="dd/MM/yyyy HH:mm" [max]="options.end"></kendo-datetimepicker>
+                            required format="dd/MM/yyyy HH:mm"></kendo-datetimepicker>
                         <kendo-formerror>Data inizio è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
@@ -44,7 +44,7 @@
                         <label>Data fine</label>
                         <kendo-datetimepicker  name="end" [(ngModel)]="options.end"
                             required format="dd/MM/yyyy HH:mm" [min]="options.start"></kendo-datetimepicker>
-                        <kendo-formerror>Data fine è un campo obbligatorio</kendo-formerror>
+                        <kendo-formerror>Data fine non valido</kendo-formerror>
                     </kendo-formfield>
                 </div>
             </div>
@@ -96,6 +96,9 @@
                 <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
                     ANNULLA
                 </button>
+                <button *ngIf="options.id != null" type="button" class="btn btn-primary me-2" title="Copia" (click)="copyActivity()">
+                    <i class="fa fa-copy"></i> Duplica
+                </button>
                 <button type="submit" class="btn btn-primary">
                     SALVA
                 </button>
@@ -105,3 +108,4 @@
 </div>
 
 <app-notes-modal notesType="activity" #notesModal></app-notes-modal>
+<app-copy-activity-modal #copyActivityModal></app-copy-activity-modal>

@@ -71,6 +71,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             var orders = orderRepository
                 .Query()
                 .AsNoTracking()
+                .Where (x => x.Status == OrderStatus.Pending || x.Status == OrderStatus.Sent)
                 .Project<OrderDetailDto>(mapper);
 
             return orders;

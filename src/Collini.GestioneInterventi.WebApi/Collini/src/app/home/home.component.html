@@ -64,18 +64,27 @@
                 <a class="btn btn-light dashboardBtn"
                     routerLink="/jobs/activities"
                     routerLinkActive="active">
-                    <div class="title">Completate</div>
+                    <div class="title">Conti da fare</div>
                     <div class="blue-number bage-number">{{jobCounters.completed.active}}</div>
                     <div class="red-number bage-number">{{jobCounters.completed.expired}}</div>
                 </a>
             </div>
             <div class="col-md-3">
                 <a class="btn btn-light dashboardBtn"
-                        routerLink="/jobs/billed"
+                        routerLink="/jobs/billing"
                         routerLinkActive="active">
-                    <div class="title">Contabilizzazione</div>
-                    <div class="blue-number bage-number">{{jobCounters.billed.active}}</div>
-                    <div class="red-number bage-number">{{jobCounters.billed.expired}}</div>
+                    <div class="title">Conti pronti</div>
+                    <div class="blue-number bage-number">{{jobCounters.billing.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.billing.expired}}</div>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-light dashboardBtn"
+                        routerLink="/jobs/paid"
+                        routerLinkActive="active">
+                    <div class="title">Pagati</div>
+                    <div class="blue-number bage-number">{{jobCounters.billing.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.billing.expired}}</div>
                 </a>
             </div>
         </div>

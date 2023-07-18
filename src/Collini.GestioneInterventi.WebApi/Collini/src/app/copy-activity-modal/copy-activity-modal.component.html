@@ -1,0 +1,32 @@
+<div class="k-overlay" *ngIf="opened"></div>
+
+<div class="k-window-wrapper" *ngIf="opened">
+    <kendo-window (close)="dismiss()" [resizable]="false" [draggable]="false" [width]="500" [top]="30">
+        <kendo-window-titlebar>
+            <div class="k-window-title">Duplica Intervento</div>
+            <button kendoWindowCloseAction></button>
+        </kendo-window-titlebar>
+        <form name="copyActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()">
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <kendo-formfield>
+                        <label>Operatore</label>
+                        <kendo-combobox [data]="operators" [(ngModel)]="operatorId" name="OperatorId"
+                            suggest="true" textField="description"
+                            [valuePrimitive]="true" valueField="id" required>
+                        </kendo-combobox>
+                        <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+            </div>
+            <div class="text-right mt-5">
+                <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
+                    ANNULLA
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    COPIA
+                </button>
+            </div>
+        </form>
+    </kendo-window>
+</div>
