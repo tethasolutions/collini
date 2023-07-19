@@ -13,7 +13,7 @@ import { CustomerModel } from './customer.model';
 export class JobModel {
 
     id: number;
-    createdOn: Date;
+    jobDate: Date;
 
     number: number;
     year: number;
@@ -60,7 +60,7 @@ export class JobModel {
 
     constructor() {
         this.id = null;
-        this.createdOn = null;
+        this.jobDate = null;
         this.number = null;
         this.year = null;
         this.expirationDate = null;

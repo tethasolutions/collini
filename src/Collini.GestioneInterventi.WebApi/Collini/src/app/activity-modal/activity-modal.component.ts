@@ -141,6 +141,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
       this._readjobs();
       
       this._readOperators();
+
     }
 
     private _filterJobs(value:string)

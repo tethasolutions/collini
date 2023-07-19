@@ -53,8 +53,7 @@
                     <label>Nome</label>
                     <div class="form-group">
                         <input class="form-control" name="name" [(ngModel)]="options.name"
-                            [disabled]="options.fiscalType != fiscalType.PrivatePerson"
-                            [required]="options.fiscalType == fiscalType.PrivatePerson" maxlength="255" novalidate
+                            [disabled]="options.fiscalType != fiscalType.PrivatePerson" maxlength="255" novalidate
                             autocomplete="off" />
                     </div>
                 </div>
@@ -63,13 +62,13 @@
                 <div class="col-md-6">
                     <label>Telefono</label>
                     <div >
-                        <input class="form-control" type="text" [(value)]="options.telephone" disabled/>
+                        <input class="form-control" type="text" name="telephone" [(value)]="options.telephone"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <label>Indirizzo Mail</label>
                     <div >
-                        <input class="form-control" type="text" [(value)]="options.email" disabled/>
+                        <input class="form-control" type="text" name="email" [(value)]="options.email"/>
                     </div>
                 </div>
             </div>
@@ -98,7 +97,7 @@
                             <i class="fa fa-plus"></i>
                         </button>
                         <input [hidden]="true" class="form-control" name="address" [(ngModel)]="options.mainAddress"
-                            required novalidate autocomplete="off" />
+                            novalidate autocomplete="off" />
                         <div class="validation-message" [control]="form.controls['address']"></div>
                     </div>
                 </div>

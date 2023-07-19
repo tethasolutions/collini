@@ -11,6 +11,8 @@ export class ContactModel {
     surname: string;
     fiscalType: ContactFiscalTypeEnum;
     erpCode: string;
+    telephone: string;
+    email: string;
     alert: boolean;
     addresses: ContactAddressModel[];
     jobs: JobModel[];

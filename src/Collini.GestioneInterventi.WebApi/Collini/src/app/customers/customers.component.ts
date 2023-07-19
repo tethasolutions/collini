@@ -39,7 +39,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   customerSelezionato = new CustomerModel();
 
   anagraficaType: string;
-
+  
   constructor(
     private readonly _customerService: CustomerService,
     private readonly _addressesService: AddressesService,
@@ -91,10 +91,10 @@ export class CustomersComponent extends BaseComponent implements OnInit {
           switchMap(() => this._customerService.createCustomer(request)),
           tap(e => {
             if (this.anagraficaType == 'customers') {
-              this._messageBox.success(`Cliente ${request.name} creato`);
+              this._messageBox.success(`Cliente creato`);
             }
             if (this.anagraficaType == 'providers') {
-              this._messageBox.success(`Fornitore ${request.name} creato`);
+              this._messageBox.success(`Fornitore creato`);
             }
           }),
           tap(() => this._readCustomers())
@@ -115,7 +115,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
           map(() => this.customerModal.options),
           switchMap(e => this._customerService.updateCustomer(e, customer.id)),
           map(() => this.customerModal.options),
-          tap(e => this._messageBox.success(`Cliente ${e.name} aggiornato`)),
+          tap(e => this._messageBox.success(`Cliente ${e.customerDescription} aggiornato`)),
           tap(() => this._readCustomers())
         )
         .subscribe()
@@ -123,12 +123,12 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   }
 
   deleteCustomer(customer: CustomerModel) {
-    this._messageBox.confirm(`Sei sicuro di voler cancellare il cliente ${customer.name} ${customer.surname}?`, 'Conferma l\'azione').subscribe(result => {
+    this._messageBox.confirm(`Sei sicuro di voler cancellare il cliente ${customer.customerDescription}?`, 'Conferma l\'azione').subscribe(result => {
       if (result == true) {
         this._subscriptions.push(
           this._customerService.deleteCustomer(customer.id)
             .pipe(
-              tap(e => this._messageBox.success(`Cliente ${customer.name} ${customer.surname} cancellato con successo`)),
+              tap(e => this._messageBox.success(`Cliente ${customer.customerDescription} cancellato con successo`)),
               tap(() => this._readCustomers())
             )
             .subscribe()

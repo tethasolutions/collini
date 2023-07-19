@@ -22,25 +22,22 @@ namespace Collini.GestioneInterventi.Application.Jobs
             CreateMap<Job, JobReadModel>();
             CreateMap<Contact, ContactReadModel>();
 
-
-
             CreateMap<JobDetailDto, Job>()
-                .Ignore(x=>x.Number)
-                .Ignore(x=>x.Year)
-                .Ignore(x=>x.StatusChangedOn)
-                .Ignore(x=>x.CustomerAddress)
-                .Ignore(x=>x.Source)
-                .Ignore(x=>x.ProductType)
-                .Ignore(x=>x.Notes)
-                .Ignore(x=>x.Quotations)
-                .Ignore(x=>x.Orders)
-                .Ignore(x=>x.Activities)
-                .Ignore(x=>x.Customer)
-                .IgnoreCommonMembersWithoutCreatedOn();
+                .Ignore(x => x.Number)
+                .Ignore(x => x.Year)
+                .Ignore(x => x.StatusChangedOn)
+                .Ignore(x => x.CustomerAddress)
+                .Ignore(x => x.Source)
+                .Ignore(x => x.ProductType)
+                .Ignore(x => x.Notes)
+                .Ignore(x => x.Quotations)
+                .Ignore(x => x.Orders)
+                .Ignore(x => x.Activities)
+                .Ignore(x => x.Customer)
+                .IgnoreCommonMembers();
            
             CreateMap<Job, JobDetailDto>()
                 .Ignore(x=>x.OperatorId);
-
 
             CreateMap<Job, JobDetailReadModel>()
                 .MapMember(x=>x.Code,y=>y.Number+"/"+ y.Year)

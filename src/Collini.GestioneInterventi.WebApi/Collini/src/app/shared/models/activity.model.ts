@@ -29,7 +29,7 @@ export class ActivityModel {
 
     constructor() {
         this.id = null;
-        this.description = null;
+        this.description = " ";
         this.start = new Date();
         this.end = new Date(this.start.getTime() + (1000 * 60 * 60));
         this.status = ActivityStatusEnum.Planned;

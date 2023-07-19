@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collini.GestioneInterventi.Dal.Migrations
 {
     [DbContext(typeof(ColliniDbContext))]
-    [Migration("20230710102803_test")]
-    partial class test
+    [Migration("20230718123251_release1")]
+    partial class release1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,7 +118,7 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasPrecision(3)
                         .HasColumnType("datetimeoffset(3)");
 
-                    b.Property<long>("CustomerAddressId")
+                    b.Property<long?>("CustomerAddressId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("CustomerId")
@@ -148,12 +148,16 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasPrecision(3)
                         .HasColumnType("datetimeoffset(3)");
 
-                    b.Property<DateTimeOffset?>("ExpirationDate")
+                    b.Property<DateTimeOffset>("ExpirationDate")
                         .HasPrecision(3)
                         .HasColumnType("datetimeoffset(3)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("JobDate")
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
 
                     b.Property<int>("Number")
                         .HasColumnType("int");
@@ -503,6 +507,10 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                         .HasPrecision(3)
                         .HasColumnType("datetimeoffset(3)");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<string>("ErpCode")
                         .HasMaxLength(16)
                         .HasColumnType("nvarchar(16)");
@@ -520,6 +528,10 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     b.Property<string>("Surname")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("Telephone")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -743,8 +755,7 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     b.HasOne("Collini.GestioneInterventi.Domain.Registry.ContactAddress", "CustomerAddress")
                         .WithMany("Jobs")
                         .HasForeignKey("CustomerAddressId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Collini.GestioneInterventi.Domain.Registry.Contact", "Customer")
                         .WithMany("Jobs")

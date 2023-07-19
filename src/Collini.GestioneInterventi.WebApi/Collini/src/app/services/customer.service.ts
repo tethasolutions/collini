@@ -89,9 +89,6 @@ export class CustomerService {
                     if (mainAddress == undefined) { mainAddress = new AddressModel(); }
                     customer.mainAddress = mainAddress;
 
-                    customer.telephone = mainAddress.telephone;
-                    customer.email = mainAddress.email;
-
                     return customer;
                 })
             );

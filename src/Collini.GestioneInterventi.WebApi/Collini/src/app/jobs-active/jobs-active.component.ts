@@ -55,7 +55,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
             logic: 'and'
         },
         group: [],
-        sort: [{field:"createdOn", dir:"asc"}]
+        sort: [{field:"jobDate", dir:"asc"}]
     };
 
     constructor(
@@ -136,6 +136,13 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
                 )
                 .subscribe()
         );
+    }
+
+    deleteJob(job: JobModel) {
+        this._messageBox.confirm(`Sei sicuro di voler cancellare la richiesta ${job.code}?`, 'Conferma l\'azione').subscribe(result => {
+          if (result == true) {
+          }
+        });        
     }
 
     createOrder(job: JobModel) {

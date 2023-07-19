@@ -24,6 +24,12 @@ public class ContactMap : BaseEntityMapping<Contact>
         builder.Property(e => e.ErpCode)
             .HasMaxLength(16);
 
+        builder.Property(e => e.Telephone)
+            .HasMaxLength(32);
+
+        builder.Property(e => e.Email)
+            .HasMaxLength(128);
+
         builder.HasMany(e => e.Addresses)
             .WithOne(e => e.Contact)
             .HasForeignKey(e => e.ContactId)

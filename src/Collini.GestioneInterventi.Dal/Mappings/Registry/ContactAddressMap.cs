@@ -40,7 +40,6 @@ public class ContactAddressMap : BaseEntityMapping<ContactAddress>
         builder.HasMany(e => e.Jobs)
             .WithOne(e => e.CustomerAddress)
             .HasForeignKey(e => e.CustomerAddressId)
-            .OnDelete(DeleteBehavior.ClientCascade)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.ClientCascade);
     }
 }

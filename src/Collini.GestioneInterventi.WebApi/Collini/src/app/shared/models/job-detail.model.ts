@@ -9,7 +9,7 @@ export class JobDetailModel {
     code:string;
     description: string;
     operatorId: number;
-    createdOn: Date;
+    jobDate: Date;
     expirationDate: Date;
     customerId: number;
     customer: CustomerModel;
@@ -35,7 +35,7 @@ export class JobDetailModel {
         this.id = null;
         this.description = null;
         this.operatorId = null;
-        this.createdOn = new Date();
+        this.jobDate = new Date((new Date()).getTime());
         this.expirationDate = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));
         this.customerId = null;
         this.customer = new CustomerModel();

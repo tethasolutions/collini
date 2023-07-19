@@ -26,7 +26,7 @@
             <div *ngIf="dataItem.status >= 4 " class="job-success">&nbsp;</div>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="createdOn" title="Data richiesta" filter="date" format="{0:d}"></kendo-grid-column>
+    <kendo-grid-column field="jobDate" title="Data richiesta" filter="date" format="{0:d}"></kendo-grid-column>
     <kendo-grid-column field="code" title="Progr."></kendo-grid-column>
     <kendo-grid-column field="customer.name" title="Cliente">
         <ng-template kendoGridCellTemplate let-dataItem>
@@ -82,6 +82,9 @@
                 </button>
                 <button class="btn btn-primary btn-sm" title="Modifica" (click)="editJob(dataItem)">
                     <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" title="Elimina" (click)="deleteJob(dataItem)">
+                    <i class="fas fa-trash"></i>
                 </button>
             </div>
         </ng-template>

@@ -39,7 +39,7 @@ export class JobsService {
                         e.data.forEach(item => {
                             const job: JobDetailModel = Object.assign(new JobDetailModel(), item);
                             job.expirationDate = new Date(job.expirationDate);
-                            job.createdOn = new Date(job.createdOn);
+                            job.jobDate = new Date(job.jobDate);
                             job.customer = Object.assign(new CustomerModel(), job.customer);
 
                             const addresses: Array<AddressModel> = [];
@@ -179,7 +179,7 @@ export class JobsService {
                 map(response => {
                     const job: JobDetailModel = Object.assign(new JobDetailModel(), response);
 
-                    job.createdOn = new Date(job.createdOn);
+                    job.jobDate = new Date(job.jobDate);
                     job.expirationDate = new Date(job.expirationDate);
 
                     const customer: CustomerModel = Object.assign(new CustomerModel(), job.customer);
@@ -235,7 +235,7 @@ export class JobsService {
                         result.forEach(item => {
                             const job: JobModel = Object.assign(new JobModel(), item);
                             job.expirationDate = new Date(job.expirationDate);
-                            job.createdOn = new Date(job.createdOn);
+                            job.jobDate = new Date(job.jobDate);
                             job.customer = Object.assign(new CustomerModel(), job.customer);
 
                             const addresses: Array<AddressModel> = [];

@@ -15,11 +15,11 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public string? Description { get; set; }
         public string? Code { get; set; }
         public long OperatorId { get; set; }
-        public DateTimeOffset CreatedOn { get; set; }
-        public DateTimeOffset? ExpirationDate { get; set; }
+        public DateTimeOffset JobDate { get; set; }
+        public DateTimeOffset ExpirationDate { get; set; }
         public long CustomerId { get; set; }
         public ContactReadModel? Customer { get; set; }
-        public long CustomerAddressId { get; set; }
+        public long? CustomerAddressId { get; set; }
         public AddressDto? CustomerAddress { get; set; }
         public long SourceId { get; set; }
         public JobSourceDto? Source { get; set; }

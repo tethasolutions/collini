@@ -128,7 +128,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var job = jobDto.MapTo<Job>(mapper);
             
             // TODO MB Introdurre un campo "Data commessa" in Job, non usare il campo CreatedOn
-            var year = DateTimeOffset.UtcNow.Year;
+            var year = job.JobDate.Year;
             var currentNumber = await jobRepository.Query()
                 .Where(e => e.Year == year)
                 .MaxAsync(e => (int?) e.Number);

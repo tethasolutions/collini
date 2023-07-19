@@ -67,7 +67,6 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
         this.options.addresses.forEach((item: AddressModel) => {
             item.isMainAddress = item.tempId === address.tempId;
         });
-        this.reloadTelephoneEmail();
     }
 
     addNewAddress(address: AddressModel) {
@@ -92,7 +91,6 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
             );
         }
         this.reloadMainAddressComboText();
-        this.reloadTelephoneEmail()
     }
 
     readAddresses() {
@@ -103,7 +101,6 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                   const result = Object.assign(new CustomerModel(), e);
                   this.options.addresses = result.addresses;
                 }),
-                tap(()=>this.reloadTelephoneEmail()),
                 tap(() => {})
             )
           .subscribe()
@@ -120,7 +117,6 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
                     tap(() => {
                         this.addNewAddress(request)
                     }),
-                    tap(() =>this.reloadTelephoneEmail())
                 )
                 .subscribe()
         );
@@ -131,7 +127,6 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
             this.addressesModal.open()
                 .pipe(         
                     tap(()=>this.reloadMainAddressValue()),
-                    tap(()=>this.reloadTelephoneEmail()),
                     tap(()=>this.reloadMainAddressComboText()),
                     tap(() => {
                         console.log('closed edit addresses')
@@ -160,12 +155,4 @@ export class CustomerModalComponent extends ModalComponent<CustomerModel> {
         }
     }
 
-    private reloadTelephoneEmail()
-    {
-        if(this.options != null && this.options.mainAddress != null)
-        {
-        this.options.telephone = this.options.mainAddress.telephone;
-        this.options.email = this.options.mainAddress.email;   
-        }
-    }
 }

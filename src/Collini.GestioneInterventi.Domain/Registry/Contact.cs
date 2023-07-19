@@ -6,7 +6,7 @@ public class Contact : FullAuditedEntity
 {
     public ContactType Type { get; set; }
     public string? CompanyName { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public string? Surname { get; set; }
     public ContactFiscalType FiscalType { get; set; }
     public string? ErpCode { get; set; }
