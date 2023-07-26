@@ -44,6 +44,10 @@
                             [filterable]="true" (filterChange)="handleFilter($event)"
                             required>
                         </kendo-combobox>
+                        <button [disabled]="options.customerId == null" (click)="editCustomer()" type="button"
+                            class="btn btn-primary add-address-button" title="Modifica cliente">
+                            <i class="fa fa-edit"></i>
+                        </button>
                         <button (click)="createCustomer()" type="button" class="btn btn-primary add-customer-button"
                             title="Nuovo cliente">
                             <i class="fa fa-plus"></i>
@@ -56,9 +60,13 @@
                         <label>Indirizzo</label>
                         <kendo-combobox [data]="options.customer.addresses" class="address-combobox"
                             [(ngModel)]="options.customerAddressId" name="customerAddressId" suggest="true"
-                            class="customer-combobox" textField="fullAddress" [valuePrimitive]="true"
+                            class="address-combobox" textField="fullAddress" [valuePrimitive]="true"
                             [disabled]="options.customerId == null" valueField="id">
                         </kendo-combobox>
+                        <button [disabled]="options.customerAddressId == null" (click)="editAddress()" type="button"
+                            class="btn btn-primary add-address-button" title="Modifica indirizzo">
+                            <i class="fa fa-edit"></i>
+                        </button>
                         <button [disabled]="options.customerId == null" (click)="createAddress()" type="button"
                             class="btn btn-primary add-address-button" title="Nuovo indirizzo">
                             <i class="fa fa-plus"></i>

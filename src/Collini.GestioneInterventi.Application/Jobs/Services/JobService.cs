@@ -23,12 +23,12 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         Task<IEnumerable<JobReadModel>> GetAllJobs();
         Task<JobDetailDto> UpdateJob(long id, JobDetailDto jobDto);
         Task<JobDetailDto> CreateJob(JobDetailDto jobDto);
+        Task DeleteJob(long id);
         Task<JobDetailReadModel> GetJobDetail(long id);
         Task<IEnumerable<ProductTypeDto>> GetJobProductTypes();
         Task<IEnumerable<JobSourceDto>> GetJobSources();
         Task<IEnumerable<ContactReadModel>> GetJobCustomers();
-        Task<IEnumerable<ContactReadModel>> GetJobSuppliers();
-        
+        Task<IEnumerable<ContactReadModel>> GetJobSuppliers();        
         Task<IEnumerable<JobOperatorDto>> GetOperators();
         Task<JobCountersDto> GetJobCounters();
         Task<IEnumerable<JobDetailReadModel>> GetJobsAcceptance();
@@ -349,7 +349,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x=>x.Customer)
                 .ThenInclude(x=>x.Addresses)
                 .Include(x=>x.ProductType)
-                .Where(x => x.Status == JobStatus.Billing)
+                .Where(x => x.Status == JobStatus.Billing && x.Number != 0)
                 .ToArrayAsync();
             return  billingJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
@@ -362,7 +362,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x => x.Customer)
                 .ThenInclude(x => x.Addresses)
                 .Include(x => x.ProductType)
-                .Where(x => x.Status == JobStatus.Billed || x.Status == JobStatus.Paid)
+                .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid) && x.Number != 0)
                 .ToArrayAsync();
             return paidJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
@@ -399,7 +399,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x=>x.Customer)
                 .ThenInclude(x=>x.Addresses)
                 .Include(x=>x.ProductType)
-                .Where(x => x.Status == JobStatus.Working && (!idJobQuotation.Contains(x.Id) && !idJobActivities.Contains(x.Id) && !idJobOrders.Contains(x.Id)))
+                .Where(x => x.Status == JobStatus.Working && (!idJobQuotation.Contains(x.Id) && !idJobActivities.Contains(x.Id) && !idJobOrders.Contains(x.Id)) && x.Number != 0)
                 .ToArrayAsync();
             return activesJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
@@ -412,7 +412,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x => x.Customer)
                 .ThenInclude(x => x.Addresses)
                 .Include(x => x.ProductType)
-                .Where(x => x.Status == JobStatus.Completed || x.Status == JobStatus.Canceled)
+                .Where(x => (x.Status == JobStatus.Completed || x.Status == JobStatus.Canceled) && x.Number != 0)
                 .ToArrayAsync();
             return completedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
@@ -425,9 +425,26 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x=>x.Customer)
                 .ThenInclude(x=>x.Addresses)
                 .Include(x=>x.ProductType)
-                .Where(x => x.Status == JobStatus.Pending )
+                .Where(x => x.Status == JobStatus.Pending && x.Number != 0)
                 .ToArrayAsync();
             return acceptancedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
+        }
+        
+        public async Task DeleteJob(long id)
+        {
+            if (id == 0)
+                throw new ApplicationException("Impossible eliminare la richiesta con id 0");
+
+            var job = await jobRepository
+                .Query()
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if (job == null)
+                throw new ApplicationException($"Impossibile trovare la richiesta con id {id}");
+
+            jobRepository.Delete(job);
+            await dbContext.SaveChanges();
         }
 
     }

@@ -226,6 +226,13 @@ export class JobsService {
             );
     }
 
+    deleteJob(id: number) {
+        return this._http.delete<void>(`${this._baseUrl}/job/${id}`)
+            .pipe(
+                map(() => { })
+            );
+    }
+
     getAllJobs() {
         return this._http.get<Array<JobModel>>(`${this._baseUrl}/all-jobs`)
             .pipe(

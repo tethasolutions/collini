@@ -55,7 +55,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
             logic: 'and'
         },
         group: [],
-        sort: [{field:"jobDate", dir:"asc"}]
+        sort: [{ field: "jobDate", dir: "asc" }]
     };
 
     constructor(
@@ -103,7 +103,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
     createJob() {
         const request = new JobDetailModel();
-        
+
         this._subscriptions.push(
             this.jobModal.open(request)
                 .pipe(
@@ -119,7 +119,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     }
 
     editJob(job: JobModel) {
-        
+
         this._subscriptions.push(
             this._jobsService.getJobDetail(job.id)
                 .pipe(
@@ -140,9 +140,21 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
     deleteJob(job: JobModel) {
         this._messageBox.confirm(`Sei sicuro di voler cancellare la richiesta ${job.code}?`, 'Conferma l\'azione').subscribe(result => {
-          if (result == true) {
-          }
-        });        
+            if (result == true) {
+                this._messageBox.confirm(`Cancellando la richiesta ${job.code} verranno rimossi anche i relativi preventivi, ordini e interventi. Continuare?`, 'Conferma l\'azione').subscribe(result => {
+                    if (result == true) {
+                        this._subscriptions.push(
+                            this._jobsService.deleteJob(job.id)
+                                .pipe(
+                                    tap(e => this._messageBox.success(`Richiesta ${job.code} cancellato con successo`)),
+                                    tap(() => this._readJobs())
+                                )
+                                .subscribe()
+                        );
+                    }
+                });
+            }
+        });
     }
 
     createOrder(job: JobModel) {
@@ -175,6 +187,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         request.jobDescription = job.description;
         request.jobCode = job.code;
         request.customerName = job.customer.customerDescription;
+        request.description = job.description;
 
         this.activityModal.loadData();
 
@@ -231,5 +244,5 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     }
 
 
-    
+
 }

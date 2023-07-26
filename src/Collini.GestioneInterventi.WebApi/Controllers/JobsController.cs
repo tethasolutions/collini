@@ -142,4 +142,11 @@ public class JobsController : ColliniApiController
         var jobs = await jobsService.GetAllJobs();
         return jobs.ToList();
     }
+
+    [HttpDelete("job/{id}")]
+    public async Task<IActionResult> DeleteCustomer(long id)
+    {
+        await jobsService.DeleteJob(id);
+        return Ok();
+    }
 }

@@ -48,40 +48,41 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   states = listEnum<JobStatusEnum>(JobStatusEnum);
   jobNotes: Array<NoteModel> = [];
 
+  customerSelezionato = new CustomerModel();
+
   constructor(private readonly _messageBox: MessageBoxService,
-              private readonly _jobsService: JobsService,
-              private readonly _addressesService: AddressesService,
-              private readonly _customerService: CustomerService,
-              private readonly _notesService: NotesService) {
+    private readonly _jobsService: JobsService,
+    private readonly _addressesService: AddressesService,
+    private readonly _customerService: CustomerService,
+    private readonly _notesService: NotesService) {
     super();
     this.options = new JobDetailModel();
   }
 
-  override open(options: JobDetailModel): Observable<boolean> 
-  {
+  override open(options: JobDetailModel): Observable<boolean> {
     const result = super.open(options);
 
-    this.loadData()  
+    this.loadData()
     return result;
   }
 
   protected _canClose() {
-      markAsDirty(this.form);
+    markAsDirty(this.form);
 
-      if (this.form.invalid) {
-          this._messageBox.error('Compilare correttamente tutti i campi');
-      }
+    if (this.form.invalid) {
+      this._messageBox.error('Compilare correttamente tutti i campi');
+    }
 
-      return this.form.valid;
+    return this.form.valid;
   }
 
   protected _readOperators() {
     this._subscriptions.push(
       this._jobsService.getOperators()
         .pipe(
-            tap(e => {
-              this.operators = e;
-            })
+          tap(e => {
+            this.operators = e;
+          })
         )
         .subscribe()
     );
@@ -91,16 +92,15 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this._subscriptions.push(
       this._jobsService.getJobCustomers()
         .pipe(
-            tap(e => {
-              this.customers = e;
-              if (creatoNuovoCustomer) {
-                this.customerChanged(this.options.customerId);
-              }
-              else
-              {
+          tap(e => {
+            this.customers = e;
+            if (creatoNuovoCustomer) {
+              this.customerChanged(this.options.customerId);
+            }
+            else {
               this._filterCustomers(null);
-              }
-            })
+            }
+          })
 
         )
         .subscribe()
@@ -111,9 +111,9 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this._subscriptions.push(
       this._jobsService.getJobSources()
         .pipe(
-            tap(e => {
-              this.sources = e;
-            })
+          tap(e => {
+            this.sources = e;
+          })
         )
         .subscribe()
     );
@@ -123,9 +123,9 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this._subscriptions.push(
       this._jobsService.getJobProductTypes()
         .pipe(
-            tap(e => {
-              this.productTypes = e;
-            })
+          tap(e => {
+            this.productTypes = e;
+          })
         )
         .subscribe()
     );
@@ -142,40 +142,84 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this.options.customer = nuovoCustomerSelezionato;
   }
 
+  editCustomer() {
+    const request: CustomerModel = Object.assign(new CustomerModel(), JSON.parse(JSON.stringify(this.options.customer)));
+    this._subscriptions.push(
+      this._customerService.getCustomer(this.options.customerId)
+        .pipe(
+          map(e => {
+            return Object.assign(new CustomerModel(), e);
+          }),
+          switchMap(e => this.customerModal.open(e)),
+          filter(e => e),
+          map(() => this.customerModal.options),
+          switchMap(e => this._customerService.updateCustomer(e, this.options.customerId)),
+          map(() => this.customerModal.options),
+          tap(e => this._messageBox.success(`Cliente ${e.customerDescription} aggiornato`)),
+          tap(() => {
+            // this._readJobCustomers(true);
+          })
+        )
+        .subscribe()
+    );
+  }
+
   createAddress() {
-      const request = new AddressModel();
-      request.contactId = this.options.id;
-      this._subscriptions.push(
-          this.addressModal.open(request)
-              .pipe(
-                  filter(e => e),
-                  tap(() => {
-                      this.addNewAddress(request);
-                  })
-              )
-              .subscribe()
-      );
+    const request = new AddressModel();
+    request.contactId = this.options.id;
+    this._subscriptions.push(
+      this.addressModal.open(request)
+        .pipe(
+          filter(e => e),
+          tap(() => {
+            this.addNewAddress(request);
+          })
+        )
+        .subscribe()
+    );
+  }
+
+  editAddress() {
+    const request: AddressModel = Object.assign(new AddressModel(), JSON.parse(JSON.stringify(this.options.customerAddress)));
+    this._subscriptions.push(
+      this._addressesService.getAddress(this.options.customerAddressId)
+        .pipe(
+          map(e => {
+            return Object.assign(new AddressModel(), e);
+          }),
+          switchMap(e => this.addressModal.open(e)),
+          filter(e => e),
+          map(() => this.addressModal.options),
+          switchMap(e => this._addressesService.updateAddress(e, this.options.customerAddressId)),
+          map(() => this.addressModal.options),
+          tap(e => this._messageBox.success(`Indirizzo aggiornato con successo`)),
+          tap(() => {
+            //this.readAddresses()
+          })
+        )
+        .subscribe()
+    );
   }
 
   addNewAddress(address: AddressModel) {
     this._subscriptions.push(
       this._addressesService.createAddress(address)
-          .pipe(
-              map(e => e),
-              tap(e => {
-                this.options.customerAddressId = e;
-                address.id = e;
-                const customerSelezionato: CustomerModel = this.customers.find(x => x.id === this.options.customerId);
-                if (customerSelezionato != undefined) {
-                  customerSelezionato.addresses.push(address);
-                }
-                this._messageBox.success(`Indirizzo creato con successo`)
-              }),
-              tap(() => {
-                // this._readJobCustomers(true);
-              })
-          )
-          .subscribe()
+        .pipe(
+          map(e => e),
+          tap(e => {
+            this.options.customerAddressId = e;
+            address.id = e;
+            const customerSelezionato: CustomerModel = this.customers.find(x => x.id === this.options.customerId);
+            if (customerSelezionato != undefined) {
+              customerSelezionato.addresses.push(address);
+            }
+            this._messageBox.success(`Indirizzo creato con successo`)
+          }),
+          tap(() => {
+            // this._readJobCustomers(true);
+          })
+        )
+        .subscribe()
     );
 
     /* this.options.customer.addresses.push(address);
@@ -193,17 +237,17 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     request.type = 0;
 
     this._subscriptions.push(
-        this.customerModal.open(request)
-            .pipe(
-                filter(e => e),
-                switchMap(() => this._customerService.createCustomer(request)),
-                tap(e => {
-                  this.options.customerId = e;
-                  this._messageBox.success(`Cliente ${request.name} creato`);
-                }),
-                tap(() => this._readJobCustomers(true))
-            )
-            .subscribe()
+      this.customerModal.open(request)
+        .pipe(
+          filter(e => e),
+          switchMap(() => this._customerService.createCustomer(request)),
+          tap(e => {
+            this.options.customerId = e;
+            this._messageBox.success(`Cliente ${request.name} creato`);
+          }),
+          tap(() => this._readJobCustomers(true))
+        )
+        .subscribe()
     );
   }
 
@@ -223,38 +267,32 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     ); */
   }
 
-  handleFilter(value:string) 
-      {
-        this._filterCustomers(value);
-      }
+  handleFilter(value: string) {
+    this._filterCustomers(value);
+  }
 
   public loadData() {
-    this._readJobCustomers();   
-    this._readOperators();    
+    this._readJobCustomers();
+    this._readOperators();
     this._readJobSources();
     this._readJobProductTypes();
   }
 
-  private _filterCustomers(value:string)
-    {
-      // this.customersFiltered = this.customers;
-      if(value == null || value.length < 3)
-      {
-        if(this.options.customerId != null)
-        {
-          this.customersFiltered = this.customers.filter((s)=> s.id == this.options.customerId)        
-        }
-        else
-        {        
-          this.customersFiltered = [];
-        }        
+  private _filterCustomers(value: string) {
+    // this.customersFiltered = this.customers;
+    if (value == null || value.length < 3) {
+      if (this.options.customerId != null) {
+        this.customersFiltered = this.customers.filter((s) => s.id == this.options.customerId)
       }
-      else
-      {        
-        value = value.toLowerCase();
-        //TODO Ottimizzare filtro
-        this.customersFiltered = this.customers.filter((s)=> s.customerDescription.toLowerCase().indexOf(value)!== -1);
+      else {
+        this.customersFiltered = [];
       }
-      
     }
+    else {
+      value = value.toLowerCase();
+      //TODO Ottimizzare filtro
+      this.customersFiltered = this.customers.filter((s) => s.customerDescription.toLowerCase().indexOf(value) !== -1);
+    }
+
+  }
 }
