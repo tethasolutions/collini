@@ -63,8 +63,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             var job = await jobService.GetJob(activityDto.JobId);
             if (job == null)
                 throw new ApplicationException("Job non trovato");
-            if (job.Status == JobStatus.Pending)
-                job.Status = JobStatus.Working;
+            //if (job.Status == JobStatus.Pending)
+            job.Status = JobStatus.Working;
 
             if (activity.Status != ActivityStatus.Planned)
                 job.Status = JobStatus.Completed;

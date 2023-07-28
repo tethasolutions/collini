@@ -19,6 +19,7 @@ export class JobModel {
     year: number;
     expirationDate: Date;
     description: string;
+    resultNote: string;
     status: JobStatusEnum;
     // statusChangedOn: Date;
 

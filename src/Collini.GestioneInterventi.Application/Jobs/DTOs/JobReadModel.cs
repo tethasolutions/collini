@@ -17,6 +17,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public int Year { get; set; }
         public DateTimeOffset ExpirationDate { get; set; }
         public string? Description { get; set; }
+        public string? ResultNote { get; set; }
         public JobStatus Status { get; set; }
         public ContactReadModel? Customer { get; set; }
     }

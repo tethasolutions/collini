@@ -156,9 +156,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
           switchMap(e => this._customerService.updateCustomer(e, this.options.customerId)),
           map(() => this.customerModal.options),
           tap(e => this._messageBox.success(`Cliente ${e.customerDescription} aggiornato`)),
-          tap(() => {
-            // this._readJobCustomers(true);
-          })
+          tap(() => { this.loadData(); })
         )
         .subscribe()
     );

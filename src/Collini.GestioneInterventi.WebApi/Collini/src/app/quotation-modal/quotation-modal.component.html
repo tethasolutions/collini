@@ -46,15 +46,6 @@
                         <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <kendo-formfield class="form-group">
-                        <label>Importo</label>
-                        <kendo-numerictextbox [(ngModel)]="options.amount" name="amount" required [spinners]="false" [decimals]="2" format="€ 0.00" [autoCorrect]="true" [min]="0"></kendo-numerictextbox>
-                        <kendo-formerror>Importo è un campo obbligatorio</kendo-formerror>
-                    </kendo-formfield>
-                </div>
                 <div *ngIf="options.id != null" class="col-md-4">
                     <label>&nbsp;</label>
                     <div class="form-group">

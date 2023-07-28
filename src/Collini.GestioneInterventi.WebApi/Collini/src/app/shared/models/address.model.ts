@@ -16,8 +16,7 @@ export class AddressModel {
         let result = '';
         if (this.streetAddress !== null) { result += `${this.streetAddress}, `; }
         if (this.city !== null) { result += `${this.city}, `; }
-        if (this.province !== null) { result += `${this.province}, `; }
-        if (this.zipCode !== null) { result += `${this.zipCode}`; }
+        if (this.province !== null) { result += `${this.province} `; }
         return result;
     }
 

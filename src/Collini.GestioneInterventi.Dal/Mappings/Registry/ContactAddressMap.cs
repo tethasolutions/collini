@@ -28,8 +28,7 @@ public class ContactAddressMap : BaseEntityMapping<ContactAddress>
             .IsRequired();
 
         builder.Property(e => e.ZipCode)
-            .HasMaxLength(16)
-            .IsRequired();
+            .HasMaxLength(16);
 
         builder.Property(e => e.Telephone)
             .HasMaxLength(32);

@@ -16,20 +16,15 @@
             <div *ngIf="dataItem.status == 1" class="job-success">&nbsp;</div>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="jobCode" title="Richiesta"></kendo-grid-column>
-    <kendo-grid-column field="customerName" title="Cliente"></kendo-grid-column>
-    <kendo-grid-column field="operator" title="Operatore"></kendo-grid-column>
-    <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
     <kendo-grid-column field="start" title="Inizio" filter="date">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.start | date: 'dd/MM/yyyy HH:mm'}}
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="end" title="Inizio" filter="date">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            {{dataItem.end | date: 'dd/MM/yyyy HH:mm'}}
-        </ng-template>
-    </kendo-grid-column>
+    <kendo-grid-column field="jobCode" title="Richiesta"></kendo-grid-column>
+    <kendo-grid-column field="customerName" title="Cliente"></kendo-grid-column>
+    <kendo-grid-column field="operator" title="Operatore"></kendo-grid-column>
+    <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.status | activityStatus}}

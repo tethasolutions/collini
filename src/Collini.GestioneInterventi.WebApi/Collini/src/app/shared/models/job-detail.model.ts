@@ -8,6 +8,7 @@ export class JobDetailModel {
     id: number;
     code:string;
     description: string;
+    resultNote: string;
     operatorId: number;
     jobDate: Date;
     expirationDate: Date;

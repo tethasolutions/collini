@@ -16,6 +16,7 @@ import { NoteModel } from '../shared/models/note.model';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 import { Observable } from 'rxjs';
 import { CopyActivityModalComponent } from '../copy-activity-modal/copy-activity-modal.component';
+import { JobModalComponent } from '../job-modal/job-modal.component';
 
 @Component({
   selector: 'app-activity-modal',
@@ -27,6 +28,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     @ViewChild('form') form: NgForm;
     @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
     @ViewChild('copyActivityModal', { static: true }) copyActivityModal: CopyActivityModalComponent;
+    @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
     readonly role = Role;
 
     operators: Array<JobOperatorModel> = [];
@@ -166,4 +168,24 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
       }
 
     }
+    
+    editJob() {
+
+      this._subscriptions.push(
+          this._jobsService.getJobDetail(this.options.jobId)
+              .pipe(
+                  map(e => {
+                      return e;
+                  }),
+                  switchMap(e => this.jobModal.open(e)),
+                  filter(e => e),
+                  map(() => this.jobModal.options),
+                  switchMap(e => this._jobsService.updateJob(e, e.id)),
+                  map(() => this.jobModal.options),
+                  tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
+                  tap(() => this.loadData())
+              )
+              .subscribe()
+      );
+  }
 }

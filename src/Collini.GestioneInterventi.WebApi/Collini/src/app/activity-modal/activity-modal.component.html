@@ -9,10 +9,17 @@
         <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" class="calendarModal"
             *ngIf="options">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10">
                     {{options.jobCode}} - 
                     {{options.customerName}}
                 </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" title="Modifica Richiesta" (click)="editJob()">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     {{options.jobDescription}}
                 </div>
@@ -109,3 +116,4 @@
 
 <app-notes-modal notesType="activity" #notesModal></app-notes-modal>
 <app-copy-activity-modal #copyActivityModal></app-copy-activity-modal>
+<app-job-modal #jobModal></app-job-modal>

@@ -46,14 +46,6 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label>Zip Code</label>
-                    <div class="form-group">
-                        <input class="form-control" name="zipCode" [(ngModel)]="options.zipCode" required
-                            maxlength="255" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['zipCode']"></div>
-                    </div>
-                </div>
-                <div class="col-md-3">
                     <label>Indirizzo principale</label>
                     <div class="form-group">
                         <kendo-switch name="isMainAddress" [(ngModel)]="options.isMainAddress" onLabel="Si" offLabel="No">
