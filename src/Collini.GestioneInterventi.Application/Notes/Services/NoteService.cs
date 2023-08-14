@@ -88,12 +88,16 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
                 .Query()
                 .AsNoTracking()
                 .Where(x => x.Id == id)
+                .Include(x=>x.Attachments)
                 .SingleOrDefaultAsync();;
 
             if (note == null)
                 throw new ApplicationException($"Impossibile trovare una nota con id {id}");
-
+            
+           
             noteDto.MapTo(note, mapper);
+            
+           
             noteRepository.Update(note);
             await dbContext.SaveChanges();
 
@@ -103,10 +107,17 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         public async Task<NoteDto> CreateNote(NoteDto noteDto)
         {
-            var note = noteDto.MapTo<Note>(mapper);
-
+            var note = noteDto.MapTo<Note>(mapper); 
+            
             await noteRepository.Insert(note);
 
+            
+            foreach (var file in note.Attachments)
+            {
+                var noteAttachment = file.MapTo<NoteAttachment>(mapper);
+                noteAttachment.NoteId = note.Id;
+                await noteAttachmentRepository.Insert(noteAttachment);
+            }
             await dbContext.SaveChanges();
 
             return note.MapTo<NoteDto>(mapper);

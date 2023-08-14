@@ -847,6 +847,501 @@
         <note priority="1" from="description">The text of the Cancel button in the action sheet</note>
         <note priority="1" from="meaning">kendo.multiselecttree.cancelButton</note>
       </trans-unit>
+      <trans-unit id="4529292660735098393" datatype="html">
+        <source>Center text</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3606</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that aligns text in the center.</note>
+        <note priority="1" from="meaning">kendo.editor.alignCenter</note>
+      </trans-unit>
+      <trans-unit id="4684700365643535728" datatype="html">
+        <source>Justify</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3609,3608</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that justifies text both left and right.</note>
+        <note priority="1" from="meaning">kendo.editor.alignJustify</note>
+      </trans-unit>
+      <trans-unit id="154382826604788564" datatype="html">
+        <source>Align text left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3610</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that aligns text on the left.</note>
+        <note priority="1" from="meaning">kendo.editor.alignLeft</note>
+      </trans-unit>
+      <trans-unit id="947503876024297122" datatype="html">
+        <source>Align text right</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3612</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that aligns text on the right.</note>
+        <note priority="1" from="meaning">kendo.editor.alignRight</note>
+      </trans-unit>
+      <trans-unit id="6855434377775366481" datatype="html">
+        <source>Background color</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3614</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that changes the text background color.</note>
+        <note priority="1" from="meaning">kendo.editor.backColor</note>
+      </trans-unit>
+      <trans-unit id="4674681465990637874" datatype="html">
+        <source>Quotation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3616</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that wraps an element in a blockquote</note>
+        <note priority="1" from="meaning">kendo.editor.blockquote</note>
+      </trans-unit>
+      <trans-unit id="2189266817166266173" datatype="html">
+        <source>Bold</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3619,3618</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that makes text bold.</note>
+        <note priority="1" from="meaning">kendo.editor.bold</note>
+      </trans-unit>
+      <trans-unit id="6409775087646476318" datatype="html">
+        <source>Clean formatting</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3620</context>
+        </context-group>
+        <note priority="1" from="description">The title of the Clean Formatting tool.</note>
+        <note priority="1" from="meaning">kendo.editor.cleanFormatting</note>
+      </trans-unit>
+      <trans-unit id="2895696791468415067" datatype="html">
+        <source>Insert link</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3622</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that creates hyperlinks.</note>
+        <note priority="1" from="meaning">kendo.editor.createLink</note>
+      </trans-unit>
+      <trans-unit id="3478270206890847719" datatype="html">
+        <source>Apply</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3625,3624</context>
+        </context-group>
+        <note priority="1" from="description">The label of the **Apply** button in all editor dialogs.</note>
+        <note priority="1" from="meaning">kendo.editor.dialogApply</note>
+      </trans-unit>
+      <trans-unit id="1436637880389464255" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3627,3626</context>
+        </context-group>
+        <note priority="1" from="description">The label of the **Cancel** button in all editor dialogs.</note>
+        <note priority="1" from="meaning">kendo.editor.dialogCancel</note>
+      </trans-unit>
+      <trans-unit id="1902538342017591848" datatype="html">
+        <source>Insert</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3629,3628</context>
+        </context-group>
+        <note priority="1" from="description">The label of the **Insert** button in all editor dialogs.</note>
+        <note priority="1" from="meaning">kendo.editor.dialogInsert</note>
+      </trans-unit>
+      <trans-unit id="3131813297607973618" datatype="html">
+        <source>Update</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3631,3630</context>
+        </context-group>
+        <note priority="1" from="description">The label of the **Update** button in all editor dialogs.</note>
+        <note priority="1" from="meaning">kendo.editor.dialogUpdate</note>
+      </trans-unit>
+      <trans-unit id="2994440335095238335" datatype="html">
+        <source>Text</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3633,3632</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the file text in the insertFile dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.fileText</note>
+      </trans-unit>
+      <trans-unit id="2270852727137392864" datatype="html">
+        <source>Title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3635,3634</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the file Title in the insertFile dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.fileTitle</note>
+      </trans-unit>
+      <trans-unit id="272090133902355251" datatype="html">
+        <source>Web address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3636</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the file URL in the insertFile dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.fileWebAddress</note>
+      </trans-unit>
+      <trans-unit id="2242101754750506857" datatype="html">
+        <source>Select font family</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3638</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that changes the text font.</note>
+        <note priority="1" from="meaning">kendo.editor.fontFamily</note>
+      </trans-unit>
+      <trans-unit id="3134383620280891369" datatype="html">
+        <source>Select font size</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3640</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that changes the text size.</note>
+        <note priority="1" from="meaning">kendo.editor.fontSize</note>
+      </trans-unit>
+      <trans-unit id="5478978124365341523" datatype="html">
+        <source>Color</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3643,3642</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that changes the text color.</note>
+        <note priority="1" from="meaning">kendo.editor.foreColor</note>
+      </trans-unit>
+      <trans-unit id="7573626268088286043" datatype="html">
+        <source>Format</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3645,3644</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that lets users choose block formats.</note>
+        <note priority="1" from="meaning">kendo.editor.format</note>
+      </trans-unit>
+      <trans-unit id="2605419586703055723" datatype="html">
+        <source>Alternate text</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3646</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the image alternate text in the insertImage dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.imageAltText</note>
+      </trans-unit>
+      <trans-unit id="7389256657313538937" datatype="html">
+        <source>Height (px)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3648</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the image height in the insertImage dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.imageHeight</note>
+      </trans-unit>
+      <trans-unit id="6975958345731927150" datatype="html">
+        <source>Web address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3650</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the image URL in the insertImage dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.imageWebAddress</note>
+      </trans-unit>
+      <trans-unit id="8309100232203036921" datatype="html">
+        <source>Width (px)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3652</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the image width in the insertImage dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.imageWidth</note>
+      </trans-unit>
+      <trans-unit id="5647108364628468094" datatype="html">
+        <source>Indent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3655,3654</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that indents the content.</note>
+        <note priority="1" from="meaning">kendo.editor.indent</note>
+      </trans-unit>
+      <trans-unit id="539957110154874519" datatype="html">
+        <source>Insert file</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3656</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that inserts links to files.</note>
+        <note priority="1" from="meaning">kendo.editor.insertFile</note>
+      </trans-unit>
+      <trans-unit id="3091202802113261385" datatype="html">
+        <source>Insert image</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3658</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that inserts images.</note>
+        <note priority="1" from="meaning">kendo.editor.insertImage</note>
+      </trans-unit>
+      <trans-unit id="4334727692818265844" datatype="html">
+        <source>Insert ordered list</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3660</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that inserts an ordered list.</note>
+        <note priority="1" from="meaning">kendo.editor.insertOrderedList</note>
+      </trans-unit>
+      <trans-unit id="6391583758449842507" datatype="html">
+        <source>Insert unordered list</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3662</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that inserts an unordered list.</note>
+        <note priority="1" from="meaning">kendo.editor.insertUnorderedList</note>
+      </trans-unit>
+      <trans-unit id="7054357458452689543" datatype="html">
+        <source>Italic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3665,3664</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that makes text italicized.</note>
+        <note priority="1" from="meaning">kendo.editor.italic</note>
+      </trans-unit>
+      <trans-unit id="6304412528521452300" datatype="html">
+        <source>Open link in new window</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3666</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the checkbox for opening the link in a new window in the createLink dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.linkOpenInNewWindow</note>
+      </trans-unit>
+      <trans-unit id="8060045722754477150" datatype="html">
+        <source>Text</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3669,3668</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the link text in the createLink dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.linkText</note>
+      </trans-unit>
+      <trans-unit id="330780229810449102" datatype="html">
+        <source>Title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3671,3670</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the link title in the createLink dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.linkTitle</note>
+      </trans-unit>
+      <trans-unit id="6362180643798508446" datatype="html">
+        <source>Web address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3672</context>
+        </context-group>
+        <note priority="1" from="description">The caption for the URL in the createLink dialog.</note>
+        <note priority="1" from="meaning">kendo.editor.linkWebAddress</note>
+      </trans-unit>
+      <trans-unit id="8474960686200350213" datatype="html">
+        <source>Outdent</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3675,3674</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that outdents the content.</note>
+        <note priority="1" from="meaning">kendo.editor.outdent</note>
+      </trans-unit>
+      <trans-unit id="80847516738809405" datatype="html">
+        <source>Print</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3677,3676</context>
+        </context-group>
+        <note priority="1" from="description">The title of the print tool.</note>
+        <note priority="1" from="meaning">kendo.editor.print</note>
+      </trans-unit>
+      <trans-unit id="6526989398460728046" datatype="html">
+        <source>Redo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3679,3678</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that undos the last action.</note>
+        <note priority="1" from="meaning">kendo.editor.redo</note>
+      </trans-unit>
+      <trans-unit id="7460989834038782177" datatype="html">
+        <source>Select All</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3680</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that selects all content.</note>
+        <note priority="1" from="meaning">kendo.editor.selectAll</note>
+      </trans-unit>
+      <trans-unit id="2488604920377820272" datatype="html">
+        <source>Strikethrough</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3682</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that strikes through text.</note>
+        <note priority="1" from="meaning">kendo.editor.strikethrough</note>
+      </trans-unit>
+      <trans-unit id="7270994954007735302" datatype="html">
+        <source>Subscript</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3684</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that makes text subscript.</note>
+        <note priority="1" from="meaning">kendo.editor.subscript</note>
+      </trans-unit>
+      <trans-unit id="7596297815131300603" datatype="html">
+        <source>Superscript</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3686</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that makes text superscript.</note>
+        <note priority="1" from="meaning">kendo.editor.superscript</note>
+      </trans-unit>
+      <trans-unit id="8473045911658532041" datatype="html">
+        <source>Underline</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3688</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that underlines text.</note>
+        <note priority="1" from="meaning">kendo.editor.underline</note>
+      </trans-unit>
+      <trans-unit id="1024469129593792947" datatype="html">
+        <source>Remove Link</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3690</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that removes hyperlinks.</note>
+        <note priority="1" from="meaning">kendo.editor.unlink</note>
+      </trans-unit>
+      <trans-unit id="3987002812814489417" datatype="html">
+        <source>Undo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3693,3692</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that undos the last action.</note>
+        <note priority="1" from="meaning">kendo.editor.undo</note>
+      </trans-unit>
+      <trans-unit id="3825180996241734650" datatype="html">
+        <source>View source</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3694</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that shows the editor value as HTML.</note>
+        <note priority="1" from="meaning">kendo.editor.viewSource</note>
+      </trans-unit>
+      <trans-unit id="5261534950694067764" datatype="html">
+        <source>Insert Table</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3696</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that inserts table.</note>
+        <note priority="1" from="meaning">kendo.editor.insertTable</note>
+      </trans-unit>
+      <trans-unit id="2967496815045471366" datatype="html">
+        <source>Add column before</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3698</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that adds new column before currently selected column.</note>
+        <note priority="1" from="meaning">kendo.editor.addColumnBefore</note>
+      </trans-unit>
+      <trans-unit id="1046762424668985150" datatype="html">
+        <source>Add column after</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3700</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that adds new column after currently selected column.</note>
+        <note priority="1" from="meaning">kendo.editor.addColumnAfter</note>
+      </trans-unit>
+      <trans-unit id="5531388093960518917" datatype="html">
+        <source>Add row before</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3702</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that adds new row before currently selected row.</note>
+        <note priority="1" from="meaning">kendo.editor.addRowBefore</note>
+      </trans-unit>
+      <trans-unit id="6647582145372406524" datatype="html">
+        <source>Add row after</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3704</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that adds new row after currently selected row.</note>
+        <note priority="1" from="meaning">kendo.editor.addRowAfter</note>
+      </trans-unit>
+      <trans-unit id="8592542605168524391" datatype="html">
+        <source>Merge cells</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3706</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that merges the currently selected cells.</note>
+        <note priority="1" from="meaning">kendo.editor.mergeCells</note>
+      </trans-unit>
+      <trans-unit id="2810052316339758076" datatype="html">
+        <source>Split cell</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3708</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that splits the currently selected cell.</note>
+        <note priority="1" from="meaning">kendo.editor.splitCell</note>
+      </trans-unit>
+      <trans-unit id="7009319757848972360" datatype="html">
+        <source>Delete column</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3710</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that deletes a table column.</note>
+        <note priority="1" from="meaning">kendo.editor.deleteColumn</note>
+      </trans-unit>
+      <trans-unit id="8410650025259601548" datatype="html">
+        <source>Delete row</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3712</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that deletes a table row.</note>
+        <note priority="1" from="meaning">kendo.editor.deleteRow</note>
+      </trans-unit>
+      <trans-unit id="3609415533235721295" datatype="html">
+        <source>Delete table</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-editor/fesm2020/progress-kendo-angular-editor.mjs</context>
+          <context context-type="linenumber">3714</context>
+        </context-group>
+        <note priority="1" from="description">The title of the tool that deletes a table.</note>
+        <note priority="1" from="meaning">kendo.editor.deleteTable</note>
+      </trans-unit>
       <trans-unit id="1430663748859427158" datatype="html">
         <source>Drag a column header and drop it here to group by that column</source>
         <context-group purpose="location">
@@ -857,7 +1352,7 @@
         <note priority="1" from="meaning">kendo.grid.groupPanelEmpty</note>
       </trans-unit>
       <trans-unit id="1243399825085142134" datatype="html">
-        <source>Nessun elemento disponibile</source>
+        <source>No records available.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@progress/kendo-angular-grid/fesm2020/progress-kendo-angular-grid.mjs</context>
           <context context-type="linenumber">21061</context>
@@ -2279,6 +2774,33 @@
         <note priority="1" from="description">The title of the close button</note>
         <note priority="1" from="meaning">kendo.notification.closeTitle</note>
       </trans-unit>
+      <trans-unit id="7208319070428579409" datatype="html">
+        <source>Progressbar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-progressbar/fesm2020/progress-kendo-angular-progressbar.mjs</context>
+          <context context-type="linenumber">609</context>
+        </context-group>
+        <note priority="1" from="description">The aria-label attribute for the ProgressBar component.</note>
+        <note priority="1" from="meaning">kendo.progressbar.progressBarLabel</note>
+      </trans-unit>
+      <trans-unit id="5183069470372771806" datatype="html">
+        <source>Chunk progressbar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-progressbar/fesm2020/progress-kendo-angular-progressbar.mjs</context>
+          <context context-type="linenumber">793</context>
+        </context-group>
+        <note priority="1" from="description">The aria-label attribute for the ChunkProgressBar component.</note>
+        <note priority="1" from="meaning">kendo.chunkprogressbar.progressBarLabel</note>
+      </trans-unit>
+      <trans-unit id="4040499043091065893" datatype="html">
+        <source>Circular progressbar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-progressbar/fesm2020/progress-kendo-angular-progressbar.mjs</context>
+          <context context-type="linenumber">1247</context>
+        </context-group>
+        <note priority="1" from="description">The aria-label attribute for the Circular ProgressBar component.</note>
+        <note priority="1" from="meaning">kendo.circularprogressbar.progressBarLabel</note>
+      </trans-unit>
       <trans-unit id="8788943645292671161" datatype="html">
         <source>Repeat</source>
         <context-group purpose="location">
@@ -3260,6 +3782,15 @@
         <note priority="1" from="description">The value of the aria-label attribute of the &lt;select&gt; element used for switching the Scheduler views.</note>
         <note priority="1" from="meaning">kendo.scheduler.selectView</note>
       </trans-unit>
+      <trans-unit id="6762596725712096287" datatype="html">
+        <source>More tools</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-toolbar/fesm2020/progress-kendo-angular-toolbar.mjs</context>
+          <context context-type="linenumber">1258</context>
+        </context-group>
+        <note priority="1" from="description">The title of the **more tools** button in a responsive ToolBar</note>
+        <note priority="1" from="meaning">kendo.toolbar.moreToolsTitle</note>
+      </trans-unit>
       <trans-unit id="1245147641110884896" datatype="html">
         <source>Close</source>
         <context-group purpose="location">
@@ -3268,6 +3799,249 @@
         </context-group>
         <note priority="1" from="description">The title of the close button</note>
         <note priority="1" from="meaning">kendo.tooltip.closeTitle</note>
+      </trans-unit>
+      <trans-unit id="660278350824582724" datatype="html">
+        <source>Drop files here to select</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">3168</context>
+        </context-group>
+        <note priority="1" from="description">The drop zone hint</note>
+        <note priority="1" from="meaning">kendo.fileselect.dropFilesHere</note>
+      </trans-unit>
+      <trans-unit id="4664331691591215211" datatype="html">
+        <source>File type not allowed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">3171</context>
+        </context-group>
+        <note priority="1" from="description">The text for the invalid allowed extensions restriction message</note>
+        <note priority="1" from="meaning">kendo.fileselect.invalidFileExtension</note>
+      </trans-unit>
+      <trans-unit id="7793317101233274017" datatype="html">
+        <source>File size too large.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">3174</context>
+        </context-group>
+        <note priority="1" from="description">The text for the invalid max file size restriction message</note>
+        <note priority="1" from="meaning">kendo.fileselect.invalidMaxFileSize</note>
+      </trans-unit>
+      <trans-unit id="6852116465202092102" datatype="html">
+        <source>File size too small.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">3177</context>
+        </context-group>
+        <note priority="1" from="description">The text for the invalid min file size restriction message</note>
+        <note priority="1" from="meaning">kendo.fileselect.invalidMinFileSize</note>
+      </trans-unit>
+      <trans-unit id="8968399983135301359" datatype="html">
+        <source>Remove</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">3182,3180</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Remove button</note>
+        <note priority="1" from="meaning">kendo.fileselect.remove</note>
+      </trans-unit>
+      <trans-unit id="3297892120691863975" datatype="html">
+        <source>Select files...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">3183</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Select button</note>
+        <note priority="1" from="meaning">kendo.fileselect.select</note>
+      </trans-unit>
+      <trans-unit id="1628868291685658590" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4254,4252</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Cancel button</note>
+        <note priority="1" from="meaning">kendo.upload.cancel</note>
+      </trans-unit>
+      <trans-unit id="3149650400352762187" datatype="html">
+        <source>Clear</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4257,4255</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Clear button</note>
+        <note priority="1" from="meaning">kendo.upload.clearSelectedFiles</note>
+      </trans-unit>
+      <trans-unit id="6841325639465061593" datatype="html">
+        <source>Drop files here to upload</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4258</context>
+        </context-group>
+        <note priority="1" from="description">The drop zone hint</note>
+        <note priority="1" from="meaning">kendo.upload.dropFilesHere</note>
+      </trans-unit>
+      <trans-unit id="1052757211842837603" datatype="html">
+        <source>files</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4263,4261</context>
+        </context-group>
+        <note priority="1" from="description">The status message for a batch of files</note>
+        <note priority="1" from="meaning">kendo.upload.filesBatchStatus</note>
+      </trans-unit>
+      <trans-unit id="5934737755327152932" datatype="html">
+        <source>files failed to upload.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4264</context>
+        </context-group>
+        <note priority="1" from="description">The status message for a batch of files after failed upload</note>
+        <note priority="1" from="meaning">kendo.upload.filesBatchStatusFailed</note>
+      </trans-unit>
+      <trans-unit id="4678582374156884660" datatype="html">
+        <source>files successfully uploaded.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4267</context>
+        </context-group>
+        <note priority="1" from="description">The status message for a batch of files after successful upload</note>
+        <note priority="1" from="meaning">kendo.upload.filesBatchStatusUploaded</note>
+      </trans-unit>
+      <trans-unit id="372927175642445287" datatype="html">
+        <source>File failed to upload.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4270</context>
+        </context-group>
+        <note priority="1" from="description">The file status message after failed upload</note>
+        <note priority="1" from="meaning">kendo.upload.fileStatusFailed</note>
+      </trans-unit>
+      <trans-unit id="6873833183057253097" datatype="html">
+        <source>File successfully uploaded.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4273</context>
+        </context-group>
+        <note priority="1" from="description">The file status message after successful upload</note>
+        <note priority="1" from="meaning">kendo.upload.fileStatusUploaded</note>
+      </trans-unit>
+      <trans-unit id="3443987862990095035" datatype="html">
+        <source>Paused</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4278,4276</context>
+        </context-group>
+        <note priority="1" from="description">The header status message when the file upload is paused</note>
+        <note priority="1" from="meaning">kendo.upload.headerStatusPaused</note>
+      </trans-unit>
+      <trans-unit id="9210921126598204924" datatype="html">
+        <source>Done</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4281,4279</context>
+        </context-group>
+        <note priority="1" from="description">The header status message after file upload completion</note>
+        <note priority="1" from="meaning">kendo.upload.headerStatusUploaded</note>
+      </trans-unit>
+      <trans-unit id="6336385612571616916" datatype="html">
+        <source>Uploading...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4282</context>
+        </context-group>
+        <note priority="1" from="description">The header status message during file upload</note>
+        <note priority="1" from="meaning">kendo.upload.headerStatusUploading</note>
+      </trans-unit>
+      <trans-unit id="2924979995055776233" datatype="html">
+        <source>File type not allowed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4285</context>
+        </context-group>
+        <note priority="1" from="description">The text for the invalid allowed extensions restriction message</note>
+        <note priority="1" from="meaning">kendo.upload.invalidFileExtension</note>
+      </trans-unit>
+      <trans-unit id="6669611501469754964" datatype="html">
+        <source>File size too large.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4288</context>
+        </context-group>
+        <note priority="1" from="description">The text for the invalid max file size restriction message</note>
+        <note priority="1" from="meaning">kendo.upload.invalidMaxFileSize</note>
+      </trans-unit>
+      <trans-unit id="4319370666600195324" datatype="html">
+        <source>File size too small.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4291</context>
+        </context-group>
+        <note priority="1" from="description">The text for the invalid min file size restriction message</note>
+        <note priority="1" from="meaning">kendo.upload.invalidMinFileSize</note>
+      </trans-unit>
+      <trans-unit id="2303075305806756763" datatype="html">
+        <source>Pause</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4296,4294</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Pause button</note>
+        <note priority="1" from="meaning">kendo.upload.pause</note>
+      </trans-unit>
+      <trans-unit id="8941644637700654622" datatype="html">
+        <source>Remove</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4299,4297</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Remove button</note>
+        <note priority="1" from="meaning">kendo.upload.remove</note>
+      </trans-unit>
+      <trans-unit id="4056147860620862675" datatype="html">
+        <source>Resume</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4302,4300</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Resume button</note>
+        <note priority="1" from="meaning">kendo.upload.resume</note>
+      </trans-unit>
+      <trans-unit id="8567960350691997515" datatype="html">
+        <source>Retry</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4305,4303</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Retry button</note>
+        <note priority="1" from="meaning">kendo.upload.retry</note>
+      </trans-unit>
+      <trans-unit id="2943392613806104166" datatype="html">
+        <source>Select files...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4306</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Select button</note>
+        <note priority="1" from="meaning">kendo.upload.select</note>
+      </trans-unit>
+      <trans-unit id="4936937427147701307" datatype="html">
+        <source>Upload</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4310,4309</context>
+        </context-group>
+        <note priority="1" from="description">The text for the Upload files button</note>
+        <note priority="1" from="meaning">kendo.upload.uploadSelectedFiles</note>
+      </trans-unit>
+      <trans-unit id="4908353240416682626" datatype="html">
+        <source>Drag and drop files here to upload</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/@progress/kendo-angular-upload/fesm2020/progress-kendo-angular-upload.mjs</context>
+          <context context-type="linenumber">4740</context>
+        </context-group>
+        <note priority="1" from="description">Sets the external drop-zone hint</note>
+        <note priority="1" from="meaning">kendo.uploaddropzone.externalDropFilesHere</note>
       </trans-unit>
     </body>
   </file>

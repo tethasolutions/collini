@@ -14,8 +14,10 @@ export class JobDetailModel {
     expirationDate: Date;
     customerId: number;
     customer: CustomerModel;
+    customerName: string;
     customerAddressId: number;
     customerAddress: AddressModel;
+    customerFullAddress: string;
     sourceId: number;
     source: JobSourceModel;
     productTypeId: number;
@@ -40,8 +42,10 @@ export class JobDetailModel {
         this.expirationDate = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));
         this.customerId = null;
         this.customer = new CustomerModel();
+        this.customerName = null;
         this.customerAddressId = null;
         this.customerAddress = null;
+        this.customerFullAddress = null;
         this.sourceId = null;
         this.source = new JobSourceModel();
         this.productTypeId = null;

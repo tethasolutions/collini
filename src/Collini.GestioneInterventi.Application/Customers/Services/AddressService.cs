@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Collini.GestioneInterventi.Application.Customers.DTOs;
+using Collini.GestioneInterventi.Application.Quotations.DTOs;
 using Collini.GestioneInterventi.Dal;
+using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Domain.Registry;
 using Collini.GestioneInterventi.Framework.Exceptions;
 using Collini.GestioneInterventi.Framework.Extensions;
@@ -12,6 +14,8 @@ public interface IAddressService
 {
     Task<AddressDto> GetAddress(
         long id);
+
+    Task<IEnumerable<AddressDto>> GetCustomerAddresses(long customerId);
 
     Task<AddressDto> CreateAddress(
         AddressDto addressDto);
@@ -31,16 +35,18 @@ public class AddressService : IAddressService
 {
     private readonly IMapper mapper;
     private readonly IRepository<ContactAddress> contactAddressRepository;
+    private readonly IRepository<Job> jobRepository;
     private readonly IColliniDbContext dbContext;
 
     public AddressService(
         IMapper mapper,
         IRepository<ContactAddress> contactAddressRepository,
-        IColliniDbContext dbContext)
+        IColliniDbContext dbContext, IRepository<Job> jobRepository)
     {
         this.mapper = mapper;
         this.contactAddressRepository = contactAddressRepository;
         this.dbContext = dbContext;
+        this.jobRepository = jobRepository;
     }
 
     public async Task<AddressDto> GetAddress(
@@ -54,6 +60,23 @@ public class AddressService : IAddressService
         }
 
         return address.MapTo<AddressDto>(mapper);
+    }
+
+    public async Task<IEnumerable<AddressDto>> GetCustomerAddresses(
+        long contactId)
+    {
+
+        var addresses = contactAddressRepository
+            .Query()
+            .Where(x => x.ContactId == contactId)
+            .ToArray(); 
+      
+        if (addresses == null)
+        {
+            throw new NotFoundException(typeof(ContactAddress), contactId);
+        }
+
+        return addresses.MapTo<IEnumerable<AddressDto>>(mapper);
     }
 
     public async Task<AddressDto> CreateAddress(
@@ -127,7 +150,17 @@ public class AddressService : IAddressService
         {
             throw new ColliniException("Non puoi eliminare l'indirizzo principale");
         }
-        
+        var jobs= await jobRepository
+            .Query()
+            .AsNoTracking()
+            .Where(x => x.CustomerAddressId == id)
+            .ToListAsync();
+
+        if (jobs.Any())
+        {
+            throw new ColliniException("Non puoi eliminare questo indirizzo perchè ha richieste collegate");
+        }
+
         contactAddressRepository.Delete(address);
 
         await dbContext.SaveChanges();

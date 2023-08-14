@@ -12,7 +12,9 @@ export class QuotationDetailModel {
     jobId: number;
     customerName: string;
     jobCode: string;
-    jobDescription: string;
+    jobDescription: string;    
+    attachmentDisplayName: string;
+    attachmentFileName: string;
 
     constructor() {
         this.id = null;

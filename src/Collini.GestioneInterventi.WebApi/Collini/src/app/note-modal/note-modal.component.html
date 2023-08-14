@@ -33,7 +33,7 @@
                     </div>
                 </div> -->
             </div>
-            <div class="row form-group" *ngIf="options.id != null">               
+            <!-- <div class="row form-group" *ngIf="options.id != null">               
                 <div class="row">
                     <div class="col-md-12 text-right allegati-grid-header-buttons">
                         <button type="button" (click)="aggiungiAllegato()" class="btn btn-primary btn-sm">
@@ -62,9 +62,24 @@
                         </kendo-grid>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
             <div class="row form-group">
-                <div class="col-md-8">
+                <div class="col-md-12">
+                    <kendo-formfield class="form-group">                            
+                        <label>Allegati</label>
+                        <kendo-upload [(ngModel)]="this.attachmentsFileInfo" (select)="AttachmentSelect($event)" (success)="AttachmentExecutionSuccess($event)" [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" name="myUpload">
+                            <ng-template kendoUploadFileInfoTemplate let-files>
+                                <span *ngIf="!isUploaded">{{ files[0].name }}</span>
+                                <a [href]="CreateUrl(files[0].name)" target="_blank" *ngIf="isUploaded">{{ files[0].name }}</a>
+                            </ng-template>
+                        </kendo-upload>
+                    </kendo-formfield>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-12">
                     <kendo-formfield class="form-group">
                         <label>Nota</label>
                         <kendo-textarea [(ngModel)]="options.value" name="description" required></kendo-textarea>

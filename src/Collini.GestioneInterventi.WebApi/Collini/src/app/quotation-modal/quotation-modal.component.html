@@ -6,36 +6,35 @@
             <div class="k-window-title">Preventivo</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
-        <form class="k-form" name="updateQuotationForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options" class="redimensionModal">
+        <form class="k-form" name="updateQuotationForm" #form="ngForm" novalidate autocomplete="off"
+            (ngSubmit)="close()" *ngIf="options" class="redimensionModal">
             <div class="row">
                 <div class="col-md-12">
-                    {{options.jobCode}} - 
+                    {{options.jobCode}} -
                     {{options.customerName}}
                 </div>
                 <div class="col-md-12">
                     {{options.jobDescription}}
                 </div>
                 <div class="col-md-12">
-                    <hr/>
+                    <hr />
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Data scadenza</label>
-                        <kendo-datepicker name="expirationDate" [(ngModel)]="options.expirationDate" required></kendo-datepicker>
+                        <kendo-datepicker name="expirationDate" [(ngModel)]="options.expirationDate"
+                            required></kendo-datepicker>
                         <kendo-formerror>Data scadenza è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Stato</label>
-                        <kendo-dropdownlist [data]="states"
-                            [(ngModel)]="options.status"
-                            name="status"
-                            [valuePrimitive]="true"
-                            required>
+                        <kendo-dropdownlist [data]="states" [(ngModel)]="options.status" name="status"
+                            [valuePrimitive]="true" required>
                             <ng-template kendoDropDownListValueTemplate let-dataItem>
                                 {{dataItem | quotationStatus}}
                             </ng-template>
@@ -46,6 +45,20 @@
                         <kendo-formerror>Stato è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <kendo-formfield class="form-group">                            
+                            <label>Allegato</label>
+                            <kendo-upload [(ngModel)]="this.attachments" (success)="AttachmentExecutionSuccess($event)" [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" [multiple]="false" name="myUpload">
+                                <ng-template kendoUploadFileInfoTemplate let-files>
+                                    <span *ngIf="!isUploaded">{{ files[0].name }}</span>
+                                    <a [href]="CreateUrl()" target="_blank" *ngIf="isUploaded">{{ files[0].name }}</a>
+                                </ng-template>
+                            </kendo-upload>
+                        </kendo-formfield>
+                    </div>
+                </div>
+
                 <div *ngIf="options.id != null" class="col-md-4">
                     <label>&nbsp;</label>
                     <div class="form-group">

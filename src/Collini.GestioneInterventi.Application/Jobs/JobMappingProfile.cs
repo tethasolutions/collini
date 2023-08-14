@@ -41,6 +41,8 @@ namespace Collini.GestioneInterventi.Application.Jobs
 
             CreateMap<Job, JobDetailReadModel>()
                 .MapMember(x=>x.Code,y=>y.Number+"/"+ y.Year)
+                .MapMember(x=>x.CustomerName,y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
+                .MapMember(x=>x.CustomerFullAddress,y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City + " - " + y.CustomerAddress.Province)
                 .Ignore(x => x.OperatorId);
 
             CreateMap<ProductType, ProductTypeDto>();

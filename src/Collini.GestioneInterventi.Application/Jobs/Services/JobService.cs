@@ -101,7 +101,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 //.Include(x=>x.ProductType)
                 //.Include(x=>x.Activities)
                 .Where(x => x.Id == id)
-                .SingleOrDefaultAsync();;
+                .SingleOrDefaultAsync();
 
             if (job == null)
                 throw new ApplicationException($"Impossibile trovare job con id {id}");
@@ -283,76 +283,88 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Query()
                 .AsNoTracking();
 
-            var preventives = quotationRepository
+          
+            var Acceptance = jobs.Where(x => x.Status == JobStatus.Pending && x.Number != 0);
+            var AcceptanceActive = Acceptance.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var AcceptanceExpired = Acceptance.Count(x => x.ExpirationDate < DateTimeOffset.Now);
+
+            var Actives = jobs.Where(x => x.Status == JobStatus.Working && (!idJobQuotation.Contains(x.Id) && !idJobActivities.Contains(x.Id) && !idJobOrders.Contains(x.Id)) && x.Number != 0);
+            var ActivesActive = Actives.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var ActivesExpired = Actives.Count(x => x.ExpirationDate < DateTimeOffset.Now);
+
+            var Preventives = quotationRepository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.Status == QuotationStatus.Pending);
+                .Where(x => x.Status == QuotationStatus.Pending ).ToList();
+            var PreventivesActive = Preventives.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var PreventivesExpired = Preventives.Count(x => x.ExpirationDate < DateTimeOffset.Now);
 
-            var supplierorders = orderRepository
+            var SupplierOrders = orderRepository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.Status == OrderStatus.Pending);
+                .Where(x => x.Status == OrderStatus.Pending).ToList();
+            var SupplierOrdersActive = SupplierOrders.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var SupplierOrdersExpired = SupplierOrders.Count(x => x.ExpirationDate < DateTimeOffset.Now);
 
-            var interventions = activityRepository
+            var Interventions = activityRepository
                 .Query()
-                .Where(x => x.Status == ActivityStatus.Planned)
-                .AsNoTracking();
+                .AsNoTracking()
+                .Where(x => x.Status == ActivityStatus.Planned).ToList();
+            var InterventionsActive = Interventions.Count(x => x.End >= DateTimeOffset.Now);
+            var InterventionsExpired = Interventions.Count(x => x.End < DateTimeOffset.Now);
 
+            var Completed = jobs.Where(x =>
+                (x.Status == JobStatus.Completed || x.Status == JobStatus.Canceled) && x.Number != 0);
+            var CompletedActive = Completed.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var CompletedExpired = Completed.Count(x => x.ExpirationDate < DateTimeOffset.Now);
+
+            var Billing = jobs.Where(x => x.Status == JobStatus.Billing && x.Number != 0);
+            var BillingActive = Billing.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var BillingExpired = Billing.Count(x => x.ExpirationDate < DateTimeOffset.Now);
 
             var ret = new JobCountersDto
             {
                 Acceptance = new JobCounterDto()
                 {
-                    Active = jobs.Where(x => x.Status == JobStatus.Pending).Count(x => x.ExpirationDate >= DateTimeOffset.Now),
-                    Expired = jobs.Where(x => x.Status == JobStatus.Pending).Count(x => x.ExpirationDate < DateTimeOffset.Now)
+                    Active = AcceptanceActive,
+                    Expired = AcceptanceExpired
                 },
                 Actives = new JobCounterDto()
                 {
-                    Active = jobs.Where(x => x.Status == JobStatus.Working && (!idJobQuotation.Contains(x.Id) && !idJobActivities.Contains(x.Id) && !idJobOrders.Contains(x.Id))).Count(x => x.ExpirationDate >= DateTimeOffset.Now),
-                    Expired = jobs.Where(x => x.Status == JobStatus.Working && (!idJobQuotation.Contains(x.Id) && !idJobActivities.Contains(x.Id) && !idJobOrders.Contains(x.Id))).Count(x => x.ExpirationDate < DateTimeOffset.Now)
+                    Active = ActivesActive,
+                    Expired = ActivesExpired
                 },
                 Preventives = new JobCounterDto()
                 {
-                    Active = preventives.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
-                    Expired = preventives.Count(x => x.ExpirationDate < DateTimeOffset.Now)
+                    Active = PreventivesActive,
+                    Expired = PreventivesExpired
                 },
                 SupplierOrders = new JobCounterDto()
                 {
-                    Active = supplierorders.Count(x => x.ExpirationDate >= DateTimeOffset.Now),
-                    Expired = supplierorders.Count(x => x.ExpirationDate < DateTimeOffset.Now)
+                    Active = SupplierOrdersActive,
+                    Expired = SupplierOrdersExpired
                 },
                 Interventions = new JobCounterDto()
                 {
-                    Active = interventions.Count(x => x.End >= DateTimeOffset.Now),
-                    Expired = interventions.Count(x => x.End < DateTimeOffset.Now)
+                    Active = InterventionsActive,
+                    Expired = InterventionsExpired
                 },
                 Completed = new JobCounterDto()
                 {
-                    Active = jobs.Where(x => x.Status == JobStatus.Completed || x.Status==JobStatus.Canceled).Count(x => x.ExpirationDate >= DateTimeOffset.Now),
-                    Expired = jobs.Where(x => x.Status == JobStatus.Completed  || x.Status==JobStatus.Canceled).Count(x => x.ExpirationDate < DateTimeOffset.Now)
+                    Active = CompletedActive,
+                    Expired = CompletedExpired
                 },
                 Billing = new JobCounterDto()
                 {
-                    Active = jobs.Where(x => x.Status == JobStatus.Billing).Count(x => x.ExpirationDate >= DateTimeOffset.Now),
-                    Expired = jobs.Where(x => x.Status == JobStatus.Billing).Count(x => x.ExpirationDate < DateTimeOffset.Now)
+                    Active = BillingActive,
+                    Expired = BillingExpired
                 }
             };
 
             return ret;
         }
 
-        public async Task<IEnumerable<JobDetailReadModel>> GetJobsBilling()
-        {
-            var billingJobs = await jobRepository
-                .Query()
-                .AsNoTracking()
-                .Include(x=>x.Customer)
-                .ThenInclude(x=>x.Addresses)
-                .Include(x=>x.ProductType)
-                .Where(x => x.Status == JobStatus.Billing && x.Number != 0)
-                .ToArrayAsync();
-            return  billingJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
-        }
+       
 
         public async Task<IEnumerable<JobDetailReadModel>> GetJobsPaid()
         {
@@ -361,6 +373,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .AsNoTracking()
                 .Include(x => x.Customer)
                 .ThenInclude(x => x.Addresses)
+                .Include(x=>x.CustomerAddress)
                 .Include(x => x.ProductType)
                 .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid) && x.Number != 0)
                 .ToArrayAsync();
@@ -398,6 +411,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .AsNoTracking()
                 .Include(x=>x.Customer)
                 .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.CustomerAddress)
                 .Include(x=>x.ProductType)
                 .Where(x => x.Status == JobStatus.Working && (!idJobQuotation.Contains(x.Id) && !idJobActivities.Contains(x.Id) && !idJobOrders.Contains(x.Id)) && x.Number != 0)
                 .ToArrayAsync();
@@ -411,10 +425,25 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .AsNoTracking()
                 .Include(x => x.Customer)
                 .ThenInclude(x => x.Addresses)
+                .Include(x=>x.CustomerAddress)
                 .Include(x => x.ProductType)
                 .Where(x => (x.Status == JobStatus.Completed || x.Status == JobStatus.Canceled) && x.Number != 0)
                 .ToArrayAsync();
             return completedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
+        }
+
+        public async Task<IEnumerable<JobDetailReadModel>> GetJobsBilling()
+        {
+            var billingJobs = await jobRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x=>x.Customer)
+                .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.CustomerAddress)
+                .Include(x=>x.ProductType)
+                .Where(x => x.Status == JobStatus.Billing && x.Number != 0)
+                .ToArrayAsync();
+            return  billingJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
 
         public async Task<IEnumerable<JobDetailReadModel>> GetJobsAcceptance()
@@ -424,6 +453,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .AsNoTracking()
                 .Include(x=>x.Customer)
                 .ThenInclude(x=>x.Addresses)
+                .Include(x=>x.CustomerAddress)
                 .Include(x=>x.ProductType)
                 .Where(x => x.Status == JobStatus.Pending && x.Number != 0)
                 .ToArrayAsync();

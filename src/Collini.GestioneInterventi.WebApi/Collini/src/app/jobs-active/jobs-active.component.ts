@@ -226,6 +226,12 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         );
     }
 
+    isVisibleNew(): boolean 
+    {
+        return this.jobType == "acceptance" ||
+                this.jobType == "active";
+    }  
+
     viewNotes(job: JobDetailModel) {
         this.notesModal.id = job.id;
         this.notesModal.loadData();

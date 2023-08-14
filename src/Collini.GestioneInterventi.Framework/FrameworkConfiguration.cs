@@ -1,5 +1,6 @@
 ﻿using Collini.GestioneInterventi.Framework.Common;
 using Collini.GestioneInterventi.Framework.Configuration;
+using Collini.GestioneInterventi.Framework.IO;
 using Collini.GestioneInterventi.Framework.Security;
 using Collini.GestioneInterventi.Framework.Session;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,8 @@ public static class FrameworkConfiguration
             .AddSingleton<IPasswordGenerator, PasswordGenerator>()
             .AddScoped<IColliniSession, TSession>()
             .AddSingleton<IGuidGenerator, GuidGenerator>()
-            .AddSingleton(configuration);
+            .AddSingleton(configuration)
+            .AddSingleton<IMimeTypeProvider, MimeTypeProvider>();
 
         return services;
     }

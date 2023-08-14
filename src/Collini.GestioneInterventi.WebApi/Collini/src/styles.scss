@@ -212,3 +212,14 @@ kendo-scheduler .k-event, .k-event
 {
     padding-right: 0px !important;
 }
+
+.k-file-size
+{
+    visibility: hidden;
+    display: none;
+}
+
+.k-dialog-wrapper
+{
+    z-index: 100000;
+}

@@ -20,5 +20,8 @@ namespace Collini.GestioneInterventi.Application.Quotations.DTOs
         public string? JobCode { get; set; }
         public string? JobDescription { get; set; }
         public DateTimeOffset? JobDate { get; set; }
+        public string? AttachmentFileName { get; set; }
+        public string? AttachmentDisplayName { get; set; }
+
     }
 }

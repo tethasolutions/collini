@@ -18,6 +18,11 @@ import { NoteAttachmentModel } from '../shared/models/note-attachment.model';
 import { NoteAttachmentModalComponent } from '../note-attachment-modal/note-attachment-modal.component';
 import { ApiUrls } from '../services/common/api-urls';
 
+import { RemoveEvent, SuccessEvent, FileInfo,FileState,SelectEvent} from "@progress/kendo-angular-upload";
+import { QuotationAttachmentUploadFileModel } from '../shared/models/quotation-attachment-upload-file.model';
+import { Observable } from 'rxjs';
+import { NoteAttachmentUploadFileModel } from '../shared/models/note-attachment-upload-file.model';
+
 @Component({
   selector: 'app-note-modal',
   templateUrl: './note-modal.component.html',
@@ -30,8 +35,17 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
     @ViewChild('noteAttachmentModal', { static: true }) noteAttachmentModal: NoteAttachmentModalComponent;
 
     allegati: Array<NoteAttachmentModel> = [];
-    readonly baseUrl = `${ApiUrls.baseUrl}/attachments/`;
+    
     operators: Array<JobOperatorModel> = [];
+
+    isUploaded:Array<boolean>= [];
+    attachmentsFileInfo:Array<FileInfo>= [];
+    attachmentsUploads: Array<NoteAttachmentUploadFileModel> =[];
+    private readonly _baseUrl = `${ApiUrls.baseApiUrl}/notes`;
+    uploadSaveUrl = `${this._baseUrl}/note-attachment/upload-file`;
+    uploadRemoveUrl = `${this._baseUrl}/note-attachment/remove-file`; 
+
+    
 
     constructor(
         private readonly _messageBox: MessageBoxService,
@@ -39,6 +53,26 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
         private readonly _notesService: NotesService
     ) {
         super();
+    }
+
+    override open(options: NoteModel): Observable<boolean> 
+    {
+      const result = super.open(options);
+      this.attachmentsFileInfo = [];
+      this.isUploaded = [];
+      this.attachmentsUploads = [];
+      this.allegati = this.options.attachments;
+      
+      this.options.attachments.forEach(element => {
+        if(element.displayName !=null && element.fileName != null)
+        {
+          const noteAttachment = new NoteAttachmentUploadFileModel(element.fileName,element.displayName);
+          this.attachmentsUploads.push(noteAttachment);
+          this.attachmentsFileInfo.push({name: element.displayName});  
+          this.isUploaded.push(true);
+        }
+      });    
+      return result;
     }
 
     protected _readOperators() {
@@ -51,6 +85,62 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
           )
           .subscribe()
       );
+    }
+
+    public CreateUrl(fileName:string) : string
+    {
+      let ret = "";
+      this.attachmentsUploads.forEach(element => {
+        if(element.originalFileName == fileName)
+        ret = `${this._baseUrl}/note-attachment/download-file/${element.fileName}`;
+       });       
+       return ret;
+    }
+   
+    public AttachmentExecutionSuccess(e: SuccessEvent): void
+    {
+      const body = e.response.body;
+      if(body != null)
+      {
+
+        const uploadedFile = body as QuotationAttachmentUploadFileModel;
+        const noteAttachment = new NoteAttachmentUploadFileModel(uploadedFile.fileName,uploadedFile.originalFileName);
+        this.attachmentsUploads.push(noteAttachment);        
+        let noteAttachmentModal = new NoteAttachmentModel();
+        noteAttachmentModal.fileName = uploadedFile.fileName;
+        noteAttachmentModal.displayName = uploadedFile.originalFileName;
+        this.options.attachments.push(noteAttachmentModal);        
+        this.isUploaded.push(true);
+      }
+      else
+      {
+        const deletedFile = e.files[0].name;
+        const index = this.attachmentsUploads.findIndex(x=>x.originalFileName == deletedFile);
+        if(index>-1)
+        {
+        this.attachmentsUploads.splice(index,1);
+        this.options.attachments.splice(index,1);        
+        this.isUploaded.pop();
+        }
+      }
+    }
+
+    public AttachmentSelect(e: SelectEvent): void
+    {
+      const files = e.files;
+      let popup = false;
+      files.forEach(element => {
+        var index = this.attachmentsUploads.findIndex(x=>x.originalFileName == element.name);
+        if(index > -1)
+        {
+          files.splice(index,1);
+        popup = true;
+        }
+      });     
+      if(popup)
+      {
+        this._messageBox.alert(`Sono presenti tra i file caricati alcuni file con lo stesso nome di quelli che si vogliono caricare`);
+      }
     }
 
     public loadData() {

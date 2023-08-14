@@ -17,6 +17,7 @@ using Collini.GestioneInterventi.Application.Activities.Services;
 using Collini.GestioneInterventi.Domain.Docs;
 using System.IO;
 using Collini.GestioneInterventi.Framework.Configuration;
+using Collini.GestioneInterventi.Application.Notes;
 
 namespace Collini.GestioneInterventi.WebApi.Controllers;
 
@@ -127,6 +128,7 @@ public class NotesController : ColliniApiController
         return Ok(attachmentDto);
     }
 
+
     [HttpPost("note-attachment/upload-file")]
     public async Task<IActionResult> UploadFile()
     {
@@ -141,6 +143,12 @@ public class NotesController : ColliniApiController
             fileName,
             originalFileName = Path.GetFileName(file.FileName)
         });
+    }
+
+    [HttpPost("note-attachment/remove-file")]
+    public async Task<IActionResult> DeleteFile()
+    {
+        return Ok();
     }
 
     private async Task<string> SaveFile(IFormFile file)
@@ -159,5 +167,4 @@ public class NotesController : ColliniApiController
         }
         return fileName;
     }
-
 }

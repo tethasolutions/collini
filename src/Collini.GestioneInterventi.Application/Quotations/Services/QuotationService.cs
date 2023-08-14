@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.Services;
+using Collini.GestioneInterventi.Application.Notes.DTOs;
 using Collini.GestioneInterventi.Application.Orders.DTOs;
 using Collini.GestioneInterventi.Application.Quotations.DTOs;
 using Collini.GestioneInterventi.Dal;
@@ -24,12 +25,20 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         Task<QuotationDetailDto> CreateQuotation(QuotationDetailDto quotation);
         Task UpdateQuotation(long id, QuotationDetailDto quotation);
         Task<IEnumerable<QuotationReadModel>> getAllQuotations();
+
+
+        Task<IEnumerable<QuotationAttachmentReadModel>> GetQuotationAttachments(long quotationId);
+        Task<QuotationAttachmentReadModel> GetQuotationAttachmentDetail(long attachmentId);
+        Task<QuotationAttachmentDto> UpdateQuotationAttachment(long id, QuotationAttachmentDto attachmentDto);
+        Task<QuotationAttachmentDto> CreateQuotationAttachment(QuotationAttachmentDto attachmentDto);
+        Task<QuotationAttachmentReadModel> DownloadQuotationAttachment(string filename);
     }
 
     public class QuotationService : IQuotationService
     {
         private readonly IMapper mapper;
         private readonly IRepository<Quotation> quotationRepository;
+        private readonly IRepository<QuotationAttachment> quotationAttachmentRepository;
         private readonly IJobService jobService;
         private readonly IColliniDbContext dbContext;
 
@@ -37,14 +46,14 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             IMapper mapper,
             IRepository<Quotation> quotationRepository,
             IColliniDbContext dbContext, 
-            IJobService jobService)
+            IJobService jobService, IRepository<QuotationAttachment> quotationAttachmentRepository)
         {
             this.mapper = mapper;
             this.quotationRepository = quotationRepository;
             this.dbContext = dbContext;
             this.jobService = jobService;
+            this.quotationAttachmentRepository = quotationAttachmentRepository;
         }
-
 
         public IQueryable<QuotationDetailDto> GetQuotations()
         {
@@ -71,6 +80,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
                 .Include(x => x.Job)
                 .ThenInclude(y => y.CustomerAddress)
                 .Include(x=>x.Notes)
+                .Include(x=>x.Attachment)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -84,6 +94,13 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         {
             var quotation = quotationDto.MapTo<Quotation>(mapper);
             await quotationRepository.Insert(quotation);
+
+            if (quotationDto.AttachmentFileName != null && quotationDto.AttachmentDisplayName != null)
+            {
+                var quotationAttachment = quotationDto.MapTo<QuotationAttachment>(mapper);
+                quotationAttachment.QuotationId = quotation.Id;
+                await quotationAttachmentRepository.Insert(quotationAttachment);
+            }
 
             var job = await jobService.GetJob(quotationDto.JobId);
             if (job == null)
@@ -108,16 +125,46 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
 
             var quotation= await quotationRepository
                 .Query()
-                .AsNoTracking()
                 .Where(x => x.Id == id)
+                .Include(x=>x.Attachment)
                 .SingleOrDefaultAsync();
 
             if (quotation == null)
                 throw new ApplicationException($"Impossibile trovare una quotation con id {id}");
-
+            
             quotationDto.MapTo(quotation, mapper);
-            quotationRepository.Update(quotation);
-            await dbContext.SaveChanges();
+           
+            if (!string.IsNullOrEmpty(quotationDto.AttachmentFileName) && !string.IsNullOrEmpty(quotationDto.AttachmentDisplayName))
+            {
+                var quotationAttachment = quotation.Attachment;
+                if (quotationAttachment == null)
+                {
+                    quotationAttachment = quotationDto.MapTo<QuotationAttachment>(mapper);
+                    quotationAttachment.QuotationId = quotation.Id;
+                    await quotationAttachmentRepository.Insert(quotationAttachment);
+                    
+                }
+                else
+                {
+                    quotationAttachment.DisplayName = quotationDto.AttachmentDisplayName;
+                    quotationAttachment.FileName = quotationDto.AttachmentFileName;
+                }
+            }
+            
+            if (quotation.Attachment != null && string.IsNullOrEmpty(quotationDto.AttachmentFileName) && string.IsNullOrEmpty(quotationDto.AttachmentDisplayName))
+            {
+                quotation.Attachment = null;
+            }
+
+            try
+            {
+                await dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public async Task<IEnumerable<QuotationReadModel>> getAllQuotations()
@@ -126,10 +173,77 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
                 .Query()
                 .Include(x=>x.Job)
                 .Include(x=>x.Notes)
+                .Include(x=>x.Attachment)
                 .AsNoTracking()
                 .ToArrayAsync();
 
             return quotations.MapTo<IEnumerable<QuotationReadModel>>(mapper);
         }
+
+       // --------------------------------------------------------------------------------------------------------------
+        public async Task<IEnumerable<QuotationAttachmentReadModel>> GetQuotationAttachments(long quotationId)
+        {
+            var quotationAttachments = await quotationAttachmentRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.QuotationId == quotationId)
+                .OrderBy(x => x.CreatedOn)
+                .ToArrayAsync();
+
+            return quotationAttachments.MapTo<IEnumerable<QuotationAttachmentReadModel>>(mapper);
+        }
+
+        public async Task<QuotationAttachmentReadModel> GetQuotationAttachmentDetail(long attachmentId)
+        {
+            var quotationAttachment = await quotationAttachmentRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.Id == attachmentId)
+                .SingleOrDefaultAsync();
+
+            return quotationAttachment.MapTo<QuotationAttachmentReadModel>(mapper);
+        }
+
+        public async Task<QuotationAttachmentReadModel> DownloadQuotationAttachment(string filename)
+        {
+            var quotationAttachment = await quotationAttachmentRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.FileName == filename)
+                .SingleOrDefaultAsync();
+
+            return quotationAttachment.MapTo<QuotationAttachmentReadModel>(mapper);
+        }
+
+        public async Task<QuotationAttachmentDto> UpdateQuotationAttachment(long id, QuotationAttachmentDto attachmentDto)
+        {
+            var attachment = await quotationAttachmentRepository.Get(id);
+
+            if (attachment == null)
+            {
+                throw new NotFoundException(typeof(Note), id);
+            }
+            attachmentDto.MapTo(attachment, mapper);
+
+            quotationAttachmentRepository.Update(attachment);
+
+            await dbContext.SaveChanges();
+
+            return attachment.MapTo<QuotationAttachmentDto>(mapper);
+        }
+
+        public async Task<QuotationAttachmentDto> CreateQuotationAttachment(QuotationAttachmentDto attachmentDto)
+        {
+            var attachment = attachmentDto.MapTo<QuotationAttachment>(mapper);
+
+            await quotationAttachmentRepository.Insert(attachment);
+
+            await dbContext.SaveChanges();
+
+            return attachment.MapTo<QuotationAttachmentDto>(mapper);
+        }
+
+
+
     }
 }

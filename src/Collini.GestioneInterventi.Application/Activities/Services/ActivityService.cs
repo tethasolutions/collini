@@ -93,8 +93,18 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             activityDto.MapTo(activity, mapper);
 
-            if (activity.Status != ActivityStatus.Planned)
+            if (activity.Status is ActivityStatus.CompletedSuccessfully 
+                                or ActivityStatus.CompletedUnsuccessfully)
+            {
                 activity.Job.Status = JobStatus.Completed;
+                activity.Job.ResultNote += (activity.Job.ResultNote is {Length: > 0} ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
+            }
+
+            if (activity.Status is ActivityStatus.Canceled)
+            {
+                activity.Job.Status = JobStatus.Working;
+                activity.Job.ResultNote += (activity.Job.ResultNote is {Length: > 0} ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
+            }
 
             activityRepository.Update(activity);
             

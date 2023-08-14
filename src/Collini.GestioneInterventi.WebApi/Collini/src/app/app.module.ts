@@ -2,7 +2,7 @@ import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent} from './app.component';
 import { LoaderComponent } from './shared/loader.component';
 import { ValidationMessageComponent } from './shared/validation-message.component';
 import { UsersComponent } from './security/users.component';
@@ -18,14 +18,14 @@ import '@angular/common/locales/global/it';
 import { ExcelModule, GridModule, PDFModule } from '@progress/kendo-angular-grid';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { InputsModule, NumericTextBoxModule, SwitchModule } from '@progress/kendo-angular-inputs';
-import { DropDownButtonModule } from '@progress/kendo-angular-buttons';
+import { ButtonsModule, DropDownButtonModule } from '@progress/kendo-angular-buttons';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { SchedulerModule } from '@progress/kendo-angular-scheduler';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { IntlModule } from '@progress/kendo-angular-intl';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TooltipsModule } from "@progress/kendo-angular-tooltip";
 import { StorageService } from './services/common/storage.service';
@@ -67,12 +67,19 @@ import { OrderStatusEnum } from './shared/enums/order-status.enum';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderStatusPipe } from './pipes/order-status.pipe';
 import { OrdersService } from './services/orders.service';
-import { QuotationModalComponent } from './quotation-modal/quotation-modal.component';
+import { QuotationModalComponent} from './quotation-modal/quotation-modal.component';
 import { OrderModalComponent } from './order-modal/order-modal.component';
 import { RolePipe } from './pipes/role.pipe';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityStatusPipe } from './pipes/activity-status.pipe';
 import { CopyActivityModalComponent } from './copy-activity-modal/copy-activity-modal.component';
+import { UploadsModule } from "@progress/kendo-angular-upload";
+
+
+import { UploadInterceptor } from './services/interceptors/upload.iterceptor';
+import { EditorModule } from '@progress/kendo-angular-editor';
+
+
 
 registerLocaleData(localeIt, 'it', localeExtraIt);
 
@@ -80,6 +87,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
     declarations: [
         BooleanPipe,
         AppComponent,
+        
         LoaderComponent,
         ValidationMessageComponent,
         HomeComponent,
@@ -113,11 +121,14 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         ActivityStatusPipe,
         RolePipe
     ],
-    imports: [
-        BrowserModule,
+    imports: [ 
+        ButtonsModule,
+        BrowserModule,        
         BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
+         UploadsModule,
         IntlModule,
         AppRoutingModule,
         NotificationModule,
@@ -133,7 +144,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         ExcelModule,
         InputsModule,
         PDFModule,
-        SchedulerModule
+        SchedulerModule,
+        EditorModule
     ],
     providers: [
         {
@@ -148,6 +160,9 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true, deps: [Router, UserService, MessageBoxService] },
         LoaderService,
         { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true, deps: [LoaderService] },
+
+        { provide: HTTP_INTERCEPTORS, useClass: UploadInterceptor, multi: true },
+
         Clipboard,
         AuthGuard,
         CustomerService,

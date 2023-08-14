@@ -19,10 +19,10 @@ public interface IContactService
         long id,
         ContactDto dto);
 
-    Task<ContactDto> GetContact(
+    Task<ContactReadModel> GetContact(
         long id);
 
-    Task<IEnumerable<ContactDto>> GetContacts(
+    Task<IEnumerable<ContactReadModel>> GetContacts(
         ContactType type);
 }
 
@@ -99,7 +99,7 @@ public class ContactService : IContactService
         return contact.MapTo<ContactDto>(mapper);
     }
 
-    public async Task<ContactDto> GetContact(
+    public async Task<ContactReadModel> GetContact(
         long id)
     {
         if (id == 0)
@@ -115,10 +115,10 @@ public class ContactService : IContactService
         if (contact == null)
             throw new ApplicationException($"Impossibile trovare il contatto con id {id}");
 
-        return contact.MapTo<ContactDto>(mapper);
+        return contact.MapTo<ContactReadModel>(mapper);
     }
 
-    public async Task<IEnumerable<ContactDto>> GetContacts(
+    public async Task<IEnumerable<ContactReadModel>> GetContacts(
         ContactType type)
     {
         var contacts = await contactRepository
@@ -129,6 +129,6 @@ public class ContactService : IContactService
             .OrderBy(x => x.CompanyName ?? x.Surname)
             .ToArrayAsync();
 
-        return contacts.MapTo<IEnumerable<ContactDto>>(mapper);
+        return contacts.MapTo<IEnumerable<ContactReadModel>>(mapper);
     }
 }

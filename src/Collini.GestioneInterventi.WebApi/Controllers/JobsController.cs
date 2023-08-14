@@ -32,13 +32,15 @@ public class JobsController : ColliniApiController
     public async Task<DataSourceResult> GetJobsAcceptance([DataSourceRequest] DataSourceRequest request)
     {
         var jobs = await jobsService.GetJobsAcceptance();
-        return await jobs.ToDataSourceResultAsync(request);
+        DataSourceResult dsr = await jobs.ToDataSourceResultAsync(request);
+        return dsr;
     }
 
     [HttpGet("jobs-active")]
     public async Task<DataSourceResult> GetJobsActive([DataSourceRequest] DataSourceRequest request)
     {
         var jobs = await jobsService.GetJobsActive();
+        //DataSourceResult dsr = await jobs.ToDataSourceResultAsync(request);
         return await jobs.ToDataSourceResultAsync(request);
     }
 
@@ -46,21 +48,24 @@ public class JobsController : ColliniApiController
     public async Task<DataSourceResult> GetJobsCompleted([DataSourceRequest] DataSourceRequest request)
     {
         var jobs = await jobsService.GetJobsCompleted();
-        return await jobs.ToDataSourceResultAsync(request);
+        DataSourceResult dsr = await jobs.ToDataSourceResultAsync(request);
+        return dsr;
     }
 
     [HttpGet("jobs-billing")]
     public async Task<DataSourceResult> GetJobsBilling([DataSourceRequest] DataSourceRequest request)
     {
         var jobs = await jobsService.GetJobsBilling();
-        return await jobs.ToDataSourceResultAsync(request);
+        DataSourceResult dsr = await jobs.ToDataSourceResultAsync(request);
+        return dsr;
     }
 
     [HttpGet("jobs-paid")]
     public async Task<DataSourceResult> GetJobsPaid([DataSourceRequest] DataSourceRequest request)
     {
         var jobs = await jobsService.GetJobsPaid();
-        return await jobs.ToDataSourceResultAsync(request);
+        DataSourceResult dsr = await jobs.ToDataSourceResultAsync(request);
+        return dsr;
     }
 
 

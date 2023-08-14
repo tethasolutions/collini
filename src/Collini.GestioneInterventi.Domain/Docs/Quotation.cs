@@ -11,6 +11,7 @@ public class Quotation : FullAuditedEntity
     public Job? Job { get; set; }
 
     public ICollection<Note> Notes { get; set; }
+    public QuotationAttachment? Attachment { get; set; }
 
     public Quotation()
     {

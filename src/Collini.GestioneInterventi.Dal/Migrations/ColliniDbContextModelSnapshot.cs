@@ -462,6 +462,68 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     b.ToTable("Quotations", "Docs");
                 });
 
+            modelBuilder.Entity("Collini.GestioneInterventi.Domain.Docs.QuotationAttachment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CreatedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DeletedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset?>("DeletedOn")
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("EditedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("EditedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTimeOffset?>("EditedOn")
+                        .HasPrecision(3)
+                        .HasColumnType("datetimeoffset(3)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("QuotationId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuotationId")
+                        .IsUnique();
+
+                    b.ToTable("QuotationAttachments", "Docs");
+                });
+
             modelBuilder.Entity("Collini.GestioneInterventi.Domain.Registry.Contact", b =>
                 {
                     b.Property<long>("Id")
@@ -855,6 +917,17 @@ namespace Collini.GestioneInterventi.Dal.Migrations
                     b.Navigation("Job");
                 });
 
+            modelBuilder.Entity("Collini.GestioneInterventi.Domain.Docs.QuotationAttachment", b =>
+                {
+                    b.HasOne("Collini.GestioneInterventi.Domain.Docs.Quotation", "Quotation")
+                        .WithOne("Attachment")
+                        .HasForeignKey("Collini.GestioneInterventi.Domain.Docs.QuotationAttachment", "QuotationId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Quotation");
+                });
+
             modelBuilder.Entity("Collini.GestioneInterventi.Domain.Registry.ContactAddress", b =>
                 {
                     b.HasOne("Collini.GestioneInterventi.Domain.Registry.Contact", "Contact")
@@ -894,6 +967,8 @@ namespace Collini.GestioneInterventi.Dal.Migrations
 
             modelBuilder.Entity("Collini.GestioneInterventi.Domain.Docs.Quotation", b =>
                 {
+                    b.Navigation("Attachment");
+
                     b.Navigation("Notes");
                 });
 

@@ -20,5 +20,6 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public string? ResultNote { get; set; }
         public JobStatus Status { get; set; }
         public ContactReadModel? Customer { get; set; }
+       
     }
 }

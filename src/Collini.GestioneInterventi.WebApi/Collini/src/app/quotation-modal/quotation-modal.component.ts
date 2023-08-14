@@ -4,14 +4,16 @@ import { NgForm } from '@angular/forms';
 import { Role } from '../services/security/models';
 import { listEnum, markAsDirty } from '../services/common/functions';
 import { MessageBoxService } from '../services/common/message-box.service';
-import { SimpleLookupModel } from '../shared/models/simple-lookup.model';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 import { NoteModel } from '../shared/models/note.model';
 import { NotesService } from '../services/notes.service';
 import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
 import { QuotationsService } from '../services/quotations.service';
 import { QuotationStatusEnum } from '../shared/enums/quotation-status.enum';
+import { ApiUrls } from '../services/common/api-urls';
+import { RemoveEvent, SuccessEvent, FileInfo,FileState } from "@progress/kendo-angular-upload";
+import { QuotationAttachmentUploadFileModel } from '../shared/models/quotation-attachment-upload-file.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-quotation-modal',
@@ -24,6 +26,14 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
   readonly role = Role;
   name = '';
+ 
+  isUploaded:boolean;
+  
+  attachments:Array<FileInfo>= [];
+
+  private readonly _baseUrl = `${ApiUrls.baseApiUrl}/quotations`;
+  uploadSaveUrl = `${this._baseUrl}/quotation-attachment/upload-file`;
+  uploadRemoveUrl = `${this._baseUrl}/quotation-attachment/remove-file`; 
 
   states = listEnum<QuotationStatusEnum>(QuotationStatusEnum);
   quotationNotes: Array<NoteModel> = [];
@@ -32,9 +42,26 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
               private readonly _quotationsService: QuotationsService,
               private readonly _notesService: NotesService) {
     super();
-    this.options = new QuotationDetailModel();
+  this.options = new QuotationDetailModel();
+   
+
   }
 
+   override open(options: QuotationDetailModel): Observable<boolean> {
+    
+    const result = super.open(options);
+    
+    this.attachments = [];
+    this.isUploaded = false;
+    if(this.options.attachmentDisplayName != null && this.options.attachmentDisplayName != "")   
+    {
+      this.attachments = [{name: this.options.attachmentDisplayName}];
+      this.isUploaded = true;
+    }
+    return result;
+  }
+
+ 
   protected _canClose() {
       markAsDirty(this.form);
 
@@ -45,6 +72,29 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
       return this.form.valid;
   }
 
+  public CreateUrl () : string
+  {
+     return `${this._baseUrl}/quotation-attachment/download-file/${this.options.attachmentFileName}`;
+  }
+ 
+  public AttachmentExecutionSuccess(e: SuccessEvent): void
+  {
+    const body = e.response.body;
+    if(body != null)
+    {
+      const uploadedFile = body as QuotationAttachmentUploadFileModel
+      this.options.attachmentDisplayName = uploadedFile.originalFileName;
+      this.options.attachmentFileName = uploadedFile.fileName;
+      this.isUploaded = true;
+    }
+    else
+    {
+      this.options.attachmentDisplayName = "";
+      this.options.attachmentFileName = "";
+      this.isUploaded = false;
+    }
+
+  }
   viewNotes() {
     this.notesModal.id = this.options.id;
     this.notesModal.loadData();
@@ -64,3 +114,5 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
   public loadData() {
   }
 }
+
+

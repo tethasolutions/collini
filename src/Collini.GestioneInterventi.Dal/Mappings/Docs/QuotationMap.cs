@@ -20,5 +20,11 @@ public class QuotationMap : BaseEntityMapping<Quotation>
             .HasForeignKey(e => e.QuotationId)
             .OnDelete(DeleteBehavior.ClientCascade)
             .IsRequired(false);
+
+        builder.HasOne(e => e.Attachment)
+            .WithOne(e => e.Quotation)
+            .HasForeignKey<QuotationAttachment>(x=>x.QuotationId)
+            .OnDelete(DeleteBehavior.ClientCascade)
+            .IsRequired();
     }
 }

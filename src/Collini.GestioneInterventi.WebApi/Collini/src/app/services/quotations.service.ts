@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
+import { filter, map, tap } from 'rxjs/operators';
 import { ApiUrls } from './common/api-urls';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { State, toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
@@ -17,6 +17,8 @@ import { ProductTypeModel } from '../shared/models/product-type.model';
 import { JobDetailModel } from '../shared/models/job-detail.model';
 import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
 import { JobBusService } from './job-bus.service';
+import { QuotationAttachmentModel } from '../shared/models/quotation-attachment.model';
+import { QuotationAttachmentUploadFileModel } from '../shared/models/quotation-attachment-upload-file.model';
 
 @Injectable()
 export class QuotationsService {
@@ -98,4 +100,63 @@ export class QuotationsService {
                 )
             );
     }
+
+    createQuotationAttachment(request: QuotationAttachmentModel) {
+        return this._http.post<QuotationAttachmentModel>(`${this._baseUrl}/create-attachment`, request)
+            .pipe(               
+            );
+    }
+
+    updateQuotationAttachment(request: QuotationAttachmentModel, id: number) {
+        return this._http.put<void>(`${this._baseUrl}/update-attachment/${id}`, request)
+            .pipe(              
+            );
+            }
+
+    getQuotationAttachments( id: number) {
+        return this._http.get<Array<QuotationAttachmentModel>>(`${this._baseUrl}/${id}/all-attachments`)
+            .pipe(
+                map(result =>
+                    {
+                        const quotationAttachments: Array<QuotationAttachmentModel> = [];
+                        result.forEach(item => {
+                            const quotation: QuotationAttachmentModel = Object.assign(new QuotationAttachmentModel(), item);
+                            quotationAttachments.push(quotation);
+                        });
+                        return quotationAttachments;
+                    }
+                )
+            );
+    }
+
+    getQuotationAttachmentDetail(id: number) {
+        return this._http.get<QuotationDetailModel>(`${this._baseUrl}/attachment-detail/${id}`)
+            .pipe(
+                map(response => {
+                   const quotationAttachment: QuotationDetailModel = Object.assign(new QuotationDetailModel(), response);
+                    return quotationAttachment;
+                })
+            );
+    }
+
+    uploadQuotationAttachmentFile(file: File) {
+        const formData = new FormData();
+
+        formData.append(file.name, file);
+
+        const uploadReq = new HttpRequest("POST",
+            `${this._baseUrl}/quotation-attachment/upload-file`,
+            formData,
+            {
+                reportProgress: false
+            });
+
+        return this._http.request(uploadReq)
+            .pipe(
+                filter(e => e.type === HttpEventType.Response),
+                map(e => (e as HttpResponse<QuotationAttachmentUploadFileModel>).body),
+                map(e => new QuotationAttachmentUploadFileModel(e.fileName, e.originalFileName))
+            );
+    }
+    
 }

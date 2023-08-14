@@ -21,6 +21,13 @@ public class AddressesController : ColliniApiController
     {
         this.addressService = addressService;
     }
+    [HttpGet("address/customer/{id}")]
+    public async Task<ActionResult<AddressDto>> GetCustomerAddresses(long id)
+    {
+        var addresses = await addressService.GetCustomerAddresses(id);
+
+        return Ok(addresses);
+    }
 
     [HttpGet("address/{id}")]
     public async Task<ActionResult<AddressDto>> GetAddress(long id)

@@ -20,6 +20,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public DateTimeOffset ExpirationDate { get; set; }
         public long CustomerId { get; set; }
         public ContactReadModel? Customer { get; set; }
+        public string? CustomerName { get; set; }
+        public string? CustomerFullAddress { get; set; }
         public long? CustomerAddressId { get; set; }
         public AddressDto? CustomerAddress { get; set; }
         public long SourceId { get; set; }
