@@ -36,6 +36,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         Task<IEnumerable<JobDetailReadModel>> GetJobsCompleted();
         Task<IEnumerable<JobDetailReadModel>> GetJobsBilling();
         Task<IEnumerable<JobDetailReadModel>> GetJobsPaid();
+        Task<IEnumerable<JobSearchReadModel>> GetJobsSearch();
         Task<Job>  GetJob(long id);
     }
 
@@ -459,7 +460,21 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ToArrayAsync();
             return acceptancedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
-        
+
+        public async Task<IEnumerable<JobSearchReadModel>> GetJobsSearch()
+        {
+            var searchedJobs = await jobRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x => x.Customer)
+                .ThenInclude(x => x.Addresses)
+                .Include(x => x.CustomerAddress)
+                .Include(x => x.ProductType)
+                .Where(x => (x.Number != 0))
+                .ToArrayAsync();
+            return searchedJobs.MapTo<IEnumerable<JobSearchReadModel>>(mapper);
+        }
+
         public async Task DeleteJob(long id)
         {
             if (id == 0)

@@ -12,6 +12,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { QuotationsComponent } from './quotations/quotations.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ActivitiesComponent } from './activities/activities.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -62,7 +63,8 @@ const routes: Routes = [
         ]
     },
     { path: 'orders', component: OrdersComponent },
-    { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard.asInjectableGuard] }
+    { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard.asInjectableGuard] },
+    { path: 'search', component: SearchComponent }
 ];
 
 @NgModule({

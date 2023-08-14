@@ -24,6 +24,10 @@ export class MenuComponent extends BaseComponent implements OnInit {
                 e => e.startsWith('/calendar'),
                 e => e.isAuthenticated()
             ),
+            new MenuEntry(['/search'], 'Ricerca',
+                e => e.startsWith('/search'),
+                e => e.isAuthenticated()
+            ),
             new DropDownMenuEntry('Anagrafiche', [
                 new MenuEntry(['/users'], 'Utenti',
                     e => e.startsWith('/users'),

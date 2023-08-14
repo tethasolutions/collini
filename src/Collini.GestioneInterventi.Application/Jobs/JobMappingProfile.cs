@@ -48,6 +48,14 @@ namespace Collini.GestioneInterventi.Application.Jobs
             CreateMap<ProductType, ProductTypeDto>();
             CreateMap<JobSource, JobSourceDto>();
             CreateMap<User, JobOperatorDto>();
+
+            CreateMap<Job, JobSearchReadModel>()
+                .MapMember(x => x.Code, y => y.Number + "/" + y.Year)
+                .MapMember(x => x.CustomerName, y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
+                .MapMember(x => x.CustomerFullAddress, y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City + " - " + y.CustomerAddress.Province)
+                .MapMember(x => x.LastDocument, y => y.Orders.Where(z=> z.JobId == y.Id).OrderByDescending(z => z.CreatedOn).Take(1).FirstOrDefault().Status)
+                .MapMember(x => x.LastDocumentDate, y => y.Activities.Where(z => z.JobId == y.Id).OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn.ToUniversalTime())
+                .Ignore(x => x.OperatorId);
         }
     }
 }
