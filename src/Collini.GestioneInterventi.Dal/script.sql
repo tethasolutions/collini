@@ -535,3 +535,45 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230814072650_release3')
+BEGIN
+    CREATE TABLE [Docs].[QuotationAttachments] (
+        [Id] bigint NOT NULL IDENTITY,
+        [DisplayName] nvarchar(256) NOT NULL,
+        [FileName] nvarchar(64) NOT NULL,
+        [QuotationId] bigint NOT NULL,
+        [CreatedOn] datetimeoffset(3) NOT NULL,
+        [CreatedBy] nvarchar(max) NULL,
+        [CreatedById] bigint NULL,
+        [EditedOn] datetimeoffset(3) NULL,
+        [EditedBy] nvarchar(max) NULL,
+        [EditedById] bigint NULL,
+        [DeletedOn] datetimeoffset(3) NULL,
+        [DeletedBy] nvarchar(max) NULL,
+        [DeletedById] bigint NULL,
+        [IsDeleted] bit NOT NULL,
+        CONSTRAINT [PK_QuotationAttachments] PRIMARY KEY ([Id]),
+        CONSTRAINT [FK_QuotationAttachments_Quotations_QuotationId] FOREIGN KEY ([QuotationId]) REFERENCES [Docs].[Quotations] ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230814072650_release3')
+BEGIN
+    CREATE UNIQUE INDEX [IX_QuotationAttachments_QuotationId] ON [Docs].[QuotationAttachments] ([QuotationId]);
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230814072650_release3')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20230814072650_release3', N'7.0.5');
+END;
+GO
+
+COMMIT;
+GO
+

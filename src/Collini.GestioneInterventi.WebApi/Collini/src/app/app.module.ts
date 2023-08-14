@@ -74,10 +74,12 @@ import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityStatusPipe } from './pipes/activity-status.pipe';
 import { CopyActivityModalComponent } from './copy-activity-modal/copy-activity-modal.component';
 import { UploadsModule } from "@progress/kendo-angular-upload";
+import { SearchService } from './services/search.service';
 
 
 import { UploadInterceptor } from './services/interceptors/upload.iterceptor';
 import { EditorModule } from '@progress/kendo-angular-editor';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -115,6 +117,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         NoteModalComponent,
         NoteAttachmentsModalComponent,
         NoteAttachmentModalComponent,
+        SearchComponent,
         JobStatusPipe,
         QuotationStatusPipe,
         OrderStatusPipe,
@@ -128,7 +131,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-         UploadsModule,
+        UploadsModule,
         IntlModule,
         AppRoutingModule,
         NotificationModule,
@@ -171,7 +174,8 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         QuotationsService,
         OrdersService,
         ActivitiesService,
-        NotesService
+        NotesService,
+        SearchService
     ],
     bootstrap: [AppComponent]
 })

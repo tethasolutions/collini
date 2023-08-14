@@ -28,6 +28,13 @@ public class JobsController : ColliniApiController
         this.jobsService = jobsService;
     }
 
+    [HttpGet("jobs-search")]
+    public async Task<DataSourceResult> GetJobsSearch([DataSourceRequest] DataSourceRequest request)
+    {
+        var jobs = await jobsService.GetJobsSearch();
+        return await jobs.ToDataSourceResultAsync(request);
+    }
+
     [HttpGet("jobs-acceptance")]
     public async Task<DataSourceResult> GetJobsAcceptance([DataSourceRequest] DataSourceRequest request)
     {
