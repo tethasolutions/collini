@@ -6,6 +6,7 @@ using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Framework.Exceptions;
 using Collini.GestioneInterventi.Framework.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Collini.GestioneInterventi.Application.Notes.Services
 {
@@ -24,6 +25,8 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
         Task<IEnumerable<NoteReadModel>> GetQuotationNotes(long quotationId);
 
         Task<IEnumerable<NoteReadModel>> GetOrderNotes(long orderId);
+
+        Task<NoteReadModel> GetLastJobNote(long jobId);
     }
 
     public class NoteService:INotesService
@@ -53,6 +56,18 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
                 .Where(x => x.JobId == jobId)
                 .ToArrayAsync();
             return notes.MapTo<IEnumerable<NoteReadModel>>(mapper);
+        }
+
+        public async Task<NoteReadModel> GetLastJobNote(long jobId)
+        {
+            var note = await noteRepository
+                .Query()
+                .AsNoTracking()
+                .OrderByDescending(x=>x.CreatedOn)
+                .Include(x=>x.Attachments)
+                .Where(x => x.JobId == jobId)
+                .FirstOrDefaultAsync();
+            return note.MapTo<NoteReadModel>(mapper);
         }
 
         public async Task<IEnumerable<NoteReadModel>> GetActivityNotes(long activityId)
@@ -86,18 +101,52 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
             var note= await noteRepository
                 .Query()
-                .AsNoTracking()
                 .Where(x => x.Id == id)
                 .Include(x=>x.Attachments)
-                .SingleOrDefaultAsync();;
-
+               .SingleOrDefaultAsync();;
+            
             if (note == null)
                 throw new ApplicationException($"Impossibile trovare una nota con id {id}");
             
+            foreach (var noteAttachment in note.Attachments.Reverse<NoteAttachment>())
+            {
+                if (noteDto.Attachments.All(x => x.FileName != noteAttachment.FileName))
+                {
+                    note.Attachments.Remove(noteAttachment);
+                }
+            }
+            noteRepository.Update(note);
+            await dbContext.SaveChanges();
+
            
+
+            foreach (var noteDtoAttachment in noteDto.Attachments.Reverse<NoteAttachmentDto>())
+            {
+                if (note.Attachments.All(x => x.FileName != noteDtoAttachment.FileName))
+                {
+                    noteDto.Attachments.ToList().Remove(noteDtoAttachment);
+                }
+            }
             noteDto.MapTo(note, mapper);
+
+
+
+            //note.Attachments.Clear();
+            //noteRepository.Update(note);
+            //await dbContext.SaveChanges();
             
-           
+
+            //foreach (var noteDtoAttachment in noteDto.Attachments)
+            //{
+            //    if (attachments.All(x => x.FileName != noteDtoAttachment.FileName))
+            //    {
+            //        var noteAttachment = noteDtoAttachment.MapTo<NoteAttachment>(mapper);
+            //        noteAttachment.NoteId = note.Id;
+            //        await noteAttachmentRepository.Insert(noteAttachment);
+            //    }
+            //}
+
+
             noteRepository.Update(note);
             await dbContext.SaveChanges();
 

@@ -84,7 +84,7 @@
                 <button class="btn btn-secondary btn-sm" title="Genera intervento" (click)="createActivity(dataItem)">
                     <i class="fas fa-calendar-days"></i>
                 </button>
-                <button class="btn btn-primary btn-sm" title="Note" (click)="viewNotes(dataItem)">
+                <button class="btn btn-primary btn-sm" title="Note" (click)="viewLastNote(dataItem)">
                     <i class="fas fa-book"></i>
                 </button>
                 <button class="btn btn-primary btn-sm" title="Modifica" (click)="editJob(dataItem)">
@@ -103,3 +103,4 @@
 <app-quotation-modal #quotationModal></app-quotation-modal>
 <app-order-modal #orderModal></app-order-modal>
 <app-activity-modal #activityModal></app-activity-modal>
+<app-note-modal #noteModal></app-note-modal>

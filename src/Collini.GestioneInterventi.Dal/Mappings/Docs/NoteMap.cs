@@ -17,6 +17,7 @@ public class NoteMap : BaseEntityMapping<Note>
 
         builder.HasMany(e => e.Attachments)
             .WithOne(e => e.Note)
+           // .HasForeignKey<NoteAttachment>(x=>x.NoteId)
             .OnDelete(DeleteBehavior.ClientCascade)
             .IsRequired();
     }

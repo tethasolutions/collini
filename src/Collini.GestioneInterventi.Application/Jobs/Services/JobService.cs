@@ -50,6 +50,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         private readonly IRepository<Order> orderRepository;
         private readonly IRepository<Activity> activityRepository;
         private readonly IRepository<User> userRepository;
+        private readonly IRepository<Note> noteRepository;
+
         private readonly IColliniDbContext dbContext;
 
         public JobService(
@@ -58,7 +60,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             IRepository<ProductType> productTypeRepository,
             IColliniDbContext dbContext, IRepository<JobSource> jobSourceRepository, IRepository<User> userRepository,
             IRepository<Quotation> quotationRepository, IRepository<Order> orderRepository,
-            IRepository<Activity> activityRepository, IRepository<Contact> contactRepository)
+            IRepository<Activity> activityRepository, IRepository<Contact> contactRepository, IRepository<Note> noteRepository)
         {
             this.productTypeRepository = productTypeRepository;
             this.mapper = mapper;
@@ -70,6 +72,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             this.orderRepository = orderRepository;
             this.activityRepository = activityRepository;
             this.contactRepository = contactRepository;
+            this.noteRepository = noteRepository;
         }
 
         public async Task<IEnumerable<JobReadModel>> GetAllJobs()
@@ -135,9 +138,26 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
 
             job.Year = year;
             job.Number = (currentNumber ?? 0) + 1;
-
+            
+            Note note = new Note();
+            note.JobId = job.Id;
+            note.Value = "Nota Richiesta";
+            job.Notes.Add(note);
             await jobRepository.Insert(job);
-            await dbContext.SaveChanges();
+            
+
+           
+
+            try
+            {
+                await dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
 
             return job.MapTo<JobDetailDto>(mapper);
         }

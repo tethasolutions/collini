@@ -26,6 +26,7 @@ import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
 import { OrderDetailModel } from '../shared/models/order-detail.model';
 import { ActivityModel } from '../shared/models/activity.model';
 import { ActivityStatusEnum } from '../shared/enums/activity-status.enum';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
     selector: 'app-jobs-active',
@@ -39,7 +40,8 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     @ViewChild('quotationModal', { static: true }) quotationModal: QuotationModalComponent;
     @ViewChild('orderModal', { static: true }) orderModal: OrderModalComponent;
     @ViewChild('activityModal', { static: true }) activityModal: ActivityModalComponent;
-
+    @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+    
     jobType: string;
 
     statusList: Array<string> = [];
@@ -248,6 +250,23 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         ); */
     }
 
+    viewLastNote(job: JobDetailModel) {     
+        this.notesModal.id = job.id;
+        this._subscriptions.push(
+                this._notesService.getLastJobNote(job.id)
+                .pipe(
+            
+                    switchMap(e => this.noteModal.open(e)),
+                    filter(e => e),
+                    map(() => this.noteModal.options),
+                    switchMap(e => this._notesService.updateNote(e, e.id)),
+                    map(() => this.noteModal.options),
+                    tap(e => this._messageBox.success(`Nota aggiornata`)),           
+                )
+        .subscribe()
+        );
+    }
 
+    
 
 }

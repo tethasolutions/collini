@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Collini.GestioneInterventi.Dal.Mappings.Docs;
 
-public class NoteAttachmentMap : BaseEntityMapping<NoteAttachment>
+public class QuotationAttachmentMap : BaseEntityMapping<QuotationAttachment>
 {
-    public override void Configure(EntityTypeBuilder<NoteAttachment> builder)
+    public override void Configure(EntityTypeBuilder<QuotationAttachment> builder)
     {
         base.Configure(builder);
 
-        builder.ToTable("NoteAttachments", "Docs");
+        builder.ToTable("QuotationAttachments", "Docs");
 
         builder.Property(e => e.DisplayName)
             .HasMaxLength(256)

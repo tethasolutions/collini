@@ -40,6 +40,13 @@ public class NotesController : ColliniApiController
         return jobNotes;
     }
 
+    [HttpGet("last-job-note/{jobId}")]
+    public async Task<NoteReadModel> GetLastJobNote(long jobId)
+    {
+        NoteReadModel jobNote = (await noteService.GetLastJobNote(jobId));
+        return jobNote;
+    }
+
     [HttpGet("quotation-notes/{quotationId}")]
     public async Task<List<NoteReadModel>> GetQuotationNotes(long quotationId)
     {

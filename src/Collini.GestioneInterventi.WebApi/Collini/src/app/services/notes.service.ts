@@ -82,6 +82,29 @@ export class NotesService {
         return notes;
     }
 
+    getLastJobNote(jobId: number) {
+        return this._http.get<NoteModel>(`${this._baseUrl}/last-job-note/${jobId}`)
+            .pipe(
+                map(e => {
+                    const nota = Object.assign(new NoteModel(), e);
+
+                    const operator: UserModel = Object.assign(new UserModel(), nota.operator);
+                    nota.operator = operator;
+
+                    nota.createdOn = new Date(nota.createdOn);
+
+                    const attachments: Array<NoteAttachmentModel> = [];
+                    nota.attachments.forEach((attachmentItem: any) => {
+                        const attachment: NoteAttachmentModel = Object.assign(new NoteAttachmentModel(), attachmentItem);
+                        attachments.push(attachment);
+                    });
+                    nota.attachments = attachments;
+
+                    return nota;
+                })
+            );
+    }
+
     getNoteDetail(id: number) {
         return this._http.get<NoteModel>(`${this._baseUrl}/note-detail/${id}`)
             .pipe(
