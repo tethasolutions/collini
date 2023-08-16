@@ -487,6 +487,9 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Query()
                 .AsNoTracking()
                 .Where(x => (x.Number != 0))
+                .OrderByDescending(x => x.JobDate)
+                .ThenBy(x => x.Customer.CompanyName)
+                .ThenBy(x => x.Customer.Surname)
                 .Project<JobSearchReadModel>(mapper)
                 .ToArrayAsync();
             return searchedJobs;
