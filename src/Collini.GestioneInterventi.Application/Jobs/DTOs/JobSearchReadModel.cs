@@ -29,7 +29,11 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public long ProductTypeId { get; set; }
         public ProductTypeDto? ProductType { get; set; }
         public JobStatus Status { get; set; }
-        public string? LastDocument { get; set; }
-        public DateTimeOffset? LastDocumentDate { get; set; }
+        public QuotationStatus? LastQuotation { get; set; }
+        public DateTimeOffset? LastQuotationDate { get; set; }
+        public OrderStatus? LastOrder { get; set; }
+        public DateTimeOffset? LastOrderDate { get; set; }
+        public ActivityStatus? LastActivity { get; set; }
+        public DateTimeOffset? LastActivityDate { get; set; }
     }
 }

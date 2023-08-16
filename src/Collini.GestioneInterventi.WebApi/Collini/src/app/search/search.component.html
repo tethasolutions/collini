@@ -27,8 +27,24 @@
             {{dataItem.status | jobStatus}}
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="lastDocument" title="Ultimo Elem."></kendo-grid-column>
-    <kendo-grid-column field="lastDocumentDate" title="Data Ult. Elem." filter="date" format="{0:d}"></kendo-grid-column>
+    <kendo-grid-column field="lastQuotation" title="Ultimo Prev." [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div>{{dataItem.lastQuotation | quotationStatus}}<br/>
+            {{dataItem.lastQuotationDate | date : "dd/MM/yyyy"}}</div>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="lastOrder" title="Ultimo Ordine" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div>{{dataItem.lastOrder | orderStatus}}<br/>
+            {{dataItem.lastOrderDate | date : "dd/MM/yyyy"}}</div>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="lastActivity" title="Ultimo Interv." [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div>{{dataItem.lastActivity | activityStatus}}<br/>
+            {{dataItem.lastActivityDate | date : "dd/MM/yyyy"}}</div>
+        </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
         <ng-template kendoGridCellTemplate let-dataItem>
             <div class="d-flex flex-wrap gap-1 justify-content-center">

@@ -26,7 +26,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
 
         Task<IEnumerable<NoteReadModel>> GetOrderNotes(long orderId);
 
-        Task<NoteReadModel> GetLastJobNote(long jobId);
+        Task<NoteDto> GetLastJobNote(long jobId);
     }
 
     public class NoteService:INotesService
@@ -58,7 +58,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
             return notes.MapTo<IEnumerable<NoteReadModel>>(mapper);
         }
 
-        public async Task<NoteReadModel> GetLastJobNote(long jobId)
+        public async Task<NoteDto> GetLastJobNote(long jobId)
         {
             var note = await noteRepository
                 .Query()
@@ -67,7 +67,17 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
                 .Include(x=>x.Attachments)
                 .Where(x => x.JobId == jobId)
                 .FirstOrDefaultAsync();
-            return note.MapTo<NoteReadModel>(mapper);
+
+            if (note == null)
+            {
+                Note newNote = new Note();
+                newNote.JobId = jobId;
+                newNote.Value = "Nota Richiesta";
+                await noteRepository.Insert(newNote);
+                await dbContext.SaveChanges();
+                note = newNote;
+            }
+            return note.MapTo<NoteDto>(mapper);
         }
 
         public async Task<IEnumerable<NoteReadModel>> GetActivityNotes(long activityId)
