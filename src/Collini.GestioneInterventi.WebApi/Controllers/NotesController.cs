@@ -41,9 +41,9 @@ public class NotesController : ColliniApiController
     }
 
     [HttpGet("last-job-note/{jobId}")]
-    public async Task<NoteReadModel> GetLastJobNote(long jobId)
+    public async Task<NoteDto> GetLastJobNote(long jobId)
     {
-        NoteReadModel jobNote = (await noteService.GetLastJobNote(jobId));
+        NoteDto jobNote = (await noteService.GetLastJobNote(jobId));
         return jobNote;
     }
 
