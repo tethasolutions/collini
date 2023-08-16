@@ -118,6 +118,7 @@ public class QuotationsController : ColliniApiController
     [HttpGet("quotation-attachment/download-file/{fileName}")]
     public async Task<FileResult> DownloadAttachment(string fileName)
     {
+        fileName = Uri.UnescapeDataString(fileName);
         QuotationAttachmentReadModel quotationAttachment = (await quotationService.DownloadQuotationAttachment(fileName));
         
         var folder = configuration.AttachmentsPath;
