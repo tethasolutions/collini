@@ -53,8 +53,12 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .MapMember(x => x.Code, y => y.Number + "/" + y.Year)
                 .MapMember(x => x.CustomerName, y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
                 .MapMember(x => x.CustomerFullAddress, y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City + " - " + y.CustomerAddress.Province)
-                .MapMember(x => x.LastDocument, y => y.Orders.Where(z=> z.JobId == y.Id).OrderByDescending(z => z.CreatedOn).Take(1).FirstOrDefault().Status)
-                .MapMember(x => x.LastDocumentDate, y => y.Activities.Where(z => z.JobId == y.Id).OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn.ToUniversalTime())
+                .MapMember(x => x.LastQuotation, y => y.Quotations.OrderByDescending(z => z.CreatedOn).FirstOrDefault().Status)
+                .MapMember(x => x.LastQuotationDate, y => y.Quotations.OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn)
+                .MapMember(x => x.LastOrder, y => y.Orders.OrderByDescending(z => z.CreatedOn).FirstOrDefault().Status)
+                .MapMember(x => x.LastOrderDate, y => y.Orders.OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn)
+                .MapMember(x => x.LastActivity, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Status)
+                .MapMember(x => x.LastActivityDate, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Start)
                 .Ignore(x => x.OperatorId);
         }
     }

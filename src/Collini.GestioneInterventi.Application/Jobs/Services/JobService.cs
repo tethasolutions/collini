@@ -486,13 +486,13 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var searchedJobs = await jobRepository
                 .Query()
                 .AsNoTracking()
-                .Include(x => x.Customer)
-                .ThenInclude(x => x.Addresses)
-                .Include(x => x.CustomerAddress)
-                .Include(x => x.ProductType)
                 .Where(x => (x.Number != 0))
+                .OrderByDescending(x => x.JobDate)
+                .ThenBy(x => x.Customer.CompanyName)
+                .ThenBy(x => x.Customer.Surname)
+                .Project<JobSearchReadModel>(mapper)
                 .ToArrayAsync();
-            return searchedJobs.MapTo<IEnumerable<JobSearchReadModel>>(mapper);
+            return searchedJobs;
         }
 
         public async Task DeleteJob(long id)

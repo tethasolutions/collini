@@ -8,7 +8,7 @@
         </kendo-window-titlebar>
         <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options"  class="redimensionModal">
             <div class="row form-group">
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                     <kendo-formfield>
                         <label>Operatore inserimento</label>
                         <kendo-combobox [data]="operators" 
@@ -24,7 +24,7 @@
                         <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
-                <!-- <div *ngIf="options.id != null" class="col-md-4">
+                <div *ngIf="options.id != null" class="col-md-4">
                     <label>&nbsp;</label>
                     <div class="form-group">
                         <button type="button" class="btn btn-primary" title="Note" (click)="viewAttachments()">

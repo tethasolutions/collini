@@ -67,6 +67,16 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
                 .Include(x=>x.Attachments)
                 .Where(x => x.JobId == jobId)
                 .FirstOrDefaultAsync();
+
+            if (note == null)
+            {
+                Note newNote = new Note();
+                newNote.JobId = jobId;
+                newNote.Value = "Nota Richiesta";
+                await noteRepository.Insert(newNote);
+                await dbContext.SaveChanges();
+                note = newNote;
+            }
             return note.MapTo<NoteDto>(mapper);
         }
 
