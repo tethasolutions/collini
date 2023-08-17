@@ -18,6 +18,7 @@ using Collini.GestioneInterventi.Domain.Docs;
 using System.IO;
 using Collini.GestioneInterventi.Framework.Configuration;
 using Collini.GestioneInterventi.Application.Notes;
+using Collini.GestioneInterventi.Framework.IO;
 
 namespace Collini.GestioneInterventi.WebApi.Controllers;
 
@@ -26,11 +27,13 @@ public class NotesController : ColliniApiController
 {
     private readonly INotesService noteService;
     private readonly IColliniConfiguration configuration;
+    private readonly IMimeTypeProvider mimeTypeProvider;
 
-    public NotesController(INotesService noteService, IColliniConfiguration configuration)
+    public NotesController(INotesService noteService, IColliniConfiguration configuration, IMimeTypeProvider mimeTypeProvider)
     {
         this.noteService = noteService;
         this.configuration = configuration;
+        this.mimeTypeProvider = mimeTypeProvider;
     }
 
     [HttpGet("job-notes/{jobId}")]
@@ -135,6 +138,20 @@ public class NotesController : ColliniApiController
         return Ok(attachmentDto);
     }
 
+    [AllowAnonymous]
+    [HttpGet("note-attachment/download-file/{fileName}")]
+    public async Task<FileResult> DownloadAttachment(string fileName)
+    {
+        fileName = Uri.UnescapeDataString(fileName);
+        NoteAttachmentReadModel noteAttachment = (await noteService.DownloadNoteAttachment(fileName));
+        
+        var folder = configuration.AttachmentsPath;
+        Directory.CreateDirectory(folder);
+        var path = Path.Combine(folder, fileName);
+
+        Stream stream = System.IO.File.OpenRead(path);
+        return File(stream, mimeTypeProvider.Provide(fileName), noteAttachment.DisplayName);
+    }
 
     [HttpPost("note-attachment/upload-file")]
     public async Task<IActionResult> UploadFile()

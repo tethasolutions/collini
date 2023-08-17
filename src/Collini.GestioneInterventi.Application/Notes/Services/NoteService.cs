@@ -23,7 +23,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
         Task<NoteAttachmentDto> UpdateNoteAttachment(long id, NoteAttachmentDto attachmentDto); 
         Task<NoteAttachmentDto> CreateNoteAttachment(NoteAttachmentDto attachmentDto);
         Task<IEnumerable<NoteReadModel>> GetQuotationNotes(long quotationId);
-
+        Task<NoteAttachmentReadModel> DownloadNoteAttachment(string filename);
         Task<IEnumerable<NoteReadModel>> GetOrderNotes(long orderId);
 
         Task<NoteDto> GetLastJobNote(long jobId);
@@ -221,6 +221,17 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
             await dbContext.SaveChanges();
 
             return attachment.MapTo<NoteAttachmentDto>(mapper);
+        }
+
+        public async Task<NoteAttachmentReadModel> DownloadNoteAttachment(string filename)
+        {
+            var noteAttachment = await noteAttachmentRepository
+                .Query()
+                .AsNoTracking()
+                .Where(x => x.FileName == filename)
+                .SingleOrDefaultAsync();
+
+            return noteAttachment.MapTo<NoteAttachmentReadModel>(mapper);
         }
 
         public async Task<IEnumerable<NoteReadModel>> GetQuotationNotes(long quotationId)
