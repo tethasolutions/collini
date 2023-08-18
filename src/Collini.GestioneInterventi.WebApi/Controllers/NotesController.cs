@@ -139,18 +139,21 @@ public class NotesController : ColliniApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("note-attachment/download-file/{fileName}")]
-    public async Task<FileResult> DownloadAttachment(string fileName)
+    [HttpGet("note-attachment/download-file/{fileName}/{orginalFileName}")]
+    public async Task<FileResult> DownloadAttachment(string fileName,string originalFileName)
     {
         fileName = Uri.UnescapeDataString(fileName);
         NoteAttachmentReadModel noteAttachment = (await noteService.DownloadNoteAttachment(fileName));
-        
+
+        string downloadFileName = noteAttachment == null ? originalFileName : noteAttachment.FileName;
+
+
         var folder = configuration.AttachmentsPath;
         Directory.CreateDirectory(folder);
         var path = Path.Combine(folder, fileName);
 
         Stream stream = System.IO.File.OpenRead(path);
-        return File(stream, mimeTypeProvider.Provide(fileName), noteAttachment.DisplayName);
+        return File(stream, mimeTypeProvider.Provide(fileName), downloadFileName);
     }
 
     [HttpPost("note-attachment/upload-file")]

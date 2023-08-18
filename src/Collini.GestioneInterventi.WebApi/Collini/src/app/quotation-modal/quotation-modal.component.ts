@@ -74,7 +74,7 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
 
   public CreateUrl () : string
   {
-     return `${this._baseUrl}/quotation-attachment/download-file/${this.options.attachmentFileName}`;
+     return `${this._baseUrl}/quotation-attachment/download-file/${this.options.attachmentFileName}/${this.options.attachmentDisplayName}`;
   }
  
   public AttachmentExecutionSuccess(e: SuccessEvent): void

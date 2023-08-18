@@ -92,7 +92,7 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
       let ret = "";
       this.attachmentsUploads.forEach(element => {
         if(element.originalFileName == fileName)
-        ret = `${this._baseUrl}/note-attachment/download-file/${element.fileName}`;
+        ret = `${this._baseUrl}/note-attachment/download-file/${element.fileName}/${element.originalFileName}`;
        });       
        return ret;
     }
