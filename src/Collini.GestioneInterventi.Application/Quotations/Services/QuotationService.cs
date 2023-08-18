@@ -70,7 +70,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         public async Task<QuotationDetailDto> GetQuotationDetail(long id)
         {
             if (id == 0)
-                throw new ApplicationException("Impossibile recuperare una quotation con id 0");
+                throw new ColliniException("Impossibile recuperare una quotation con id 0");
 
             var quotation = await quotationRepository
                 .Query()
@@ -85,7 +85,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
                 .SingleOrDefaultAsync();
 
             if (quotation == null)
-                throw new ApplicationException($"Impossibile trovare la quotation con id {id}");
+                throw new ColliniException($"Impossibile trovare la quotation con id {id}");
 
             return quotation.MapTo<QuotationDetailDto>(mapper);
         }
@@ -104,7 +104,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
 
             var job = await jobService.GetJob(quotationDto.JobId);
             if (job == null)
-                throw new ApplicationException("Job non trovato");
+                throw new ColliniException("Job non trovato");
             if (job.Status == JobStatus.Pending)
                 job.Status = JobStatus.Working;
             await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
@@ -121,7 +121,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
 
 
             if (id == 0)
-                throw new ApplicationException("Impossibile aggiornare una quotation con id 0");
+                throw new ColliniException("Impossibile aggiornare una quotation con id 0");
 
             var quotation= await quotationRepository
                 .Query()
@@ -130,7 +130,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
                 .SingleOrDefaultAsync();
 
             if (quotation == null)
-                throw new ApplicationException($"Impossibile trovare una quotation con id {id}");
+                throw new ColliniException($"Impossibile trovare una quotation con id {id}");
             
             quotationDto.MapTo(quotation, mapper);
            

@@ -107,7 +107,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
         {
 
             if (id == 0)
-                throw new ApplicationException("Impossibile aggiornare una nota con id 0");
+                throw new ColliniException("Impossibile aggiornare una nota con id 0");
 
             var note= await noteRepository
                 .Query()
@@ -116,7 +116,7 @@ namespace Collini.GestioneInterventi.Application.Notes.Services
                .SingleOrDefaultAsync();;
             
             if (note == null)
-                throw new ApplicationException($"Impossibile trovare una nota con id {id}");
+                throw new ColliniException($"Impossibile trovare una nota con id {id}");
             
             foreach (var noteAttachment in note.Attachments.Reverse<NoteAttachment>())
             {

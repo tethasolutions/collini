@@ -49,7 +49,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         public async Task UpdateOrder(long id,OrderDetailDto orderdtDto)
         {
             if (id == 0)
-                throw new ApplicationException("Impossibile aggiornare una nota con id 0");
+                throw new ColliniException("Impossibile aggiornare una nota con id 0");
 
             var order= await orderRepository
                 .Query()
@@ -58,7 +58,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
                 .SingleOrDefaultAsync();;
 
             if (order == null)
-                throw new ApplicationException($"Impossibile trovare una nota con id {id}");
+                throw new ColliniException($"Impossibile trovare una nota con id {id}");
 
             orderdtDto.MapTo(order, mapper);
             orderRepository.Update(order);
@@ -81,7 +81,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         {
 
             if (id == 0)
-                throw new ApplicationException("Impossibile recuperare un order con id 0");
+                throw new ColliniException("Impossibile recuperare un order con id 0");
 
             var order = await orderRepository
                 .Query()
@@ -95,7 +95,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
                 .SingleOrDefaultAsync();
 
             if (order == null)
-                throw new ApplicationException($"Impossibile trovare l'order con id {id}");
+                throw new ColliniException($"Impossibile trovare l'order con id {id}");
 
             return order.MapTo<OrderDetailDto>(mapper);
         }
@@ -107,7 +107,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             
             var job = await jobService.GetJob(orderDto.JobId);
             if (job == null)
-                throw new ApplicationException("Job non trovato");
+                throw new ColliniException("Job non trovato");
             if (job.Status == JobStatus.Pending)
                 job.Status = JobStatus.Working;
             await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));

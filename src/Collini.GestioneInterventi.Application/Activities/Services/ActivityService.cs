@@ -62,7 +62,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             var job = await jobService.GetJob(activityDto.JobId);
             if (job == null)
-                throw new ApplicationException("Job non trovato");
+                throw new ColliniException("Job non trovato");
             //if (job.Status == JobStatus.Pending)
             job.Status = JobStatus.Working;
 
@@ -80,7 +80,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         public async Task UpdateActivity(long id, ActivityDto activityDto)        
         {
             if (id == 0)
-                throw new ApplicationException("Impossibile aggiornare una attività con id 0");
+                throw new ColliniException("Impossibile aggiornare una attività con id 0");
 
             var activity= await activityRepository
                 .Query()
@@ -89,7 +89,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .SingleOrDefaultAsync();
 
             if (activity == null)
-                throw new ApplicationException($"Impossibile trovare attività con id {id}");
+                throw new ColliniException($"Impossibile trovare attività con id {id}");
 
             activityDto.MapTo(activity, mapper);
 
@@ -120,7 +120,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .SingleOrDefaultAsync();
 
             if (activity == null)
-                throw new ApplicationException($"Impossibile trovare attività con id {copyActivityDto.Id}");
+                throw new ColliniException($"Impossibile trovare attività con id {copyActivityDto.Id}");
 
             activity.Id = 0;
             activity.OperatorId = copyActivityDto.NewOperatorId;
@@ -132,7 +132,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         public async Task<ActivityViewModel> GetActivity(long id)
         {
             if (id == 0)
-                throw new ApplicationException("Impossibile recuperare un activity con id 0");
+                throw new ColliniException("Impossibile recuperare un activity con id 0");
 
             var activity = await activityRepository
                 .Query()
@@ -145,7 +145,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .SingleOrDefaultAsync();
 
             if (activity == null)
-                throw new ApplicationException($"Impossibile trovare l'activity con id {id}");
+                throw new ColliniException($"Impossibile trovare l'activity con id {id}");
 
             return activity.MapTo<ActivityViewModel>(mapper);
            

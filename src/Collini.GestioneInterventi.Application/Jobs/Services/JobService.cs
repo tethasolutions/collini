@@ -91,7 +91,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         {
 
             if (id == 0)
-                throw new ApplicationException("Impossibile aggiornare un job con id 0");
+                throw new ColliniException("Impossibile aggiornare un job con id 0");
 
             var job= await jobRepository
                 .Query()
@@ -108,7 +108,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .SingleOrDefaultAsync();
 
             if (job == null)
-                throw new ApplicationException($"Impossibile trovare job con id {id}");
+                throw new ColliniException($"Impossibile trovare job con id {id}");
 
             //se sto cambiando stato e il nuovo stato è "in fatturazione" allora sposto la data di scadenza avanti di 30 gg
             if (job.Status != jobDto.Status && jobDto.Status == JobStatus.Billing)
@@ -127,7 +127,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         public async Task<JobDetailDto> CreateJob(JobDetailDto jobDto)
         {
             if (jobDto.Id > 0)
-                throw new ApplicationException("Impossibile creare un nuovo job con un id già esistente");
+                throw new ColliniException("Impossibile creare un nuovo job con un id già esistente");
 
             var job = jobDto.MapTo<Job>(mapper);
             
@@ -166,7 +166,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         public async Task<Job> GetJob(long id)
         {
             if (id == 0)
-                throw new ApplicationException("Impossibile recuperare un job con id 0");
+                throw new ColliniException("Impossibile recuperare un job con id 0");
 
             var job = await jobRepository
                 .Query()
@@ -180,7 +180,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .SingleOrDefaultAsync();
 
             if (job == null)
-                throw new ApplicationException($"Impossibile trovare il job con id {id}");
+                throw new ColliniException($"Impossibile trovare il job con id {id}");
 
             return job;
         }
@@ -190,7 +190,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         public async Task<JobDetailReadModel> GetJobDetail(long id)
         {
             if (id == 0)
-                throw new ApplicationException("Impossibile recuperare un job con id 0");
+                throw new ColliniException("Impossibile recuperare un job con id 0");
 
             var job = await jobRepository
                 .Query()
@@ -204,7 +204,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .SingleOrDefaultAsync();
 
             if (job == null)
-                throw new ApplicationException($"Impossibile trovare il job con id {id}");
+                throw new ColliniException($"Impossibile trovare il job con id {id}");
 
             return job.MapTo<JobDetailReadModel>(mapper);
         }
@@ -498,7 +498,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         public async Task DeleteJob(long id)
         {
             if (id == 0)
-                throw new ApplicationException("Impossible eliminare la richiesta con id 0");
+                throw new ColliniException("Impossible eliminare la richiesta con id 0");
 
             var job = await jobRepository
                 .Query()
@@ -506,7 +506,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .SingleOrDefaultAsync();
 
             if (job == null)
-                throw new ApplicationException($"Impossibile trovare la richiesta con id {id}");
+                throw new ColliniException($"Impossibile trovare la richiesta con id {id}");
 
             jobRepository.Delete(job);
             await dbContext.SaveChanges();

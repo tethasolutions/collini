@@ -46,7 +46,7 @@ public class ContactService : IContactService
         ContactDto dto)
     {
         if (dto.Id > 0)
-            throw new ApplicationException("Impossibile creare un nuovo contatto con un id già esistente");
+            throw new ColliniException("Impossibile creare un nuovo contatto con un id già esistente");
 
         var contact = dto.MapTo<Contact>(mapper);
         await contactRepository.Insert(contact);
@@ -59,7 +59,7 @@ public class ContactService : IContactService
         long id)
     {
         if (id == 0)
-            throw new ApplicationException("Impossible eliminare un contatto con id 0");
+            throw new ColliniException("Impossible eliminare un contatto con id 0");
 
         var contact = await contactRepository
             .Query()
@@ -68,7 +68,7 @@ public class ContactService : IContactService
             .SingleOrDefaultAsync();
 
         if (contact == null)
-            throw new ApplicationException($"Impossibile trovare il contatto con id {id}");
+            throw new ColliniException($"Impossibile trovare il contatto con id {id}");
 
         contactRepository.Delete(contact);
         await dbContext.SaveChanges();
@@ -79,7 +79,7 @@ public class ContactService : IContactService
         ContactDto dto)
     {
         if (id == 0)
-            throw new ApplicationException("Impossibile aggiornare un contatto con id 0");
+            throw new ColliniException("Impossibile aggiornare un contatto con id 0");
 
         var contact = await contactRepository
             .Query()
@@ -90,7 +90,7 @@ public class ContactService : IContactService
             .SingleOrDefaultAsync();
 
         if (contact == null)
-            throw new ApplicationException($"Impossibile trovare il contatto con id {id}");
+            throw new ColliniException($"Impossibile trovare il contatto con id {id}");
 
         dto.MapTo(contact, mapper);
         contactRepository.Update(contact);
@@ -103,7 +103,7 @@ public class ContactService : IContactService
         long id)
     {
         if (id == 0)
-            throw new ApplicationException("Impossibile recuperare un contatto con id 0");
+            throw new ColliniException("Impossibile recuperare un contatto con id 0");
 
         var contact = await contactRepository
             .Query()
@@ -113,7 +113,7 @@ public class ContactService : IContactService
             .SingleOrDefaultAsync();
 
         if (contact == null)
-            throw new ApplicationException($"Impossibile trovare il contatto con id {id}");
+            throw new ColliniException($"Impossibile trovare il contatto con id {id}");
 
         return contact.MapTo<ContactReadModel>(mapper);
     }
