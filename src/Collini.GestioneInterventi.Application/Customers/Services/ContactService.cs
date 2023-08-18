@@ -2,6 +2,7 @@
 using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Registry;
+using Collini.GestioneInterventi.Framework.Exceptions;
 using Collini.GestioneInterventi.Framework.Extensions;
 using Microsoft.EntityFrameworkCore;
 
