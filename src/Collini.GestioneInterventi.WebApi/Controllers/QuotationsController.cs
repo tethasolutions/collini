@@ -115,18 +115,21 @@ public class QuotationsController : ColliniApiController
     }
 
     [AllowAnonymous]
-    [HttpGet("quotation-attachment/download-file/{fileName}")]
-    public async Task<FileResult> DownloadAttachment(string fileName)
+    [HttpGet("quotation-attachment/download-file/{fileName}/{orginalFileName}")]
+    public async Task<FileResult> DownloadAttachment(string fileName,string originalFileName)
     {
         fileName = Uri.UnescapeDataString(fileName);
         QuotationAttachmentReadModel quotationAttachment = (await quotationService.DownloadQuotationAttachment(fileName));
         
+        string downloadFileName = quotationAttachment == null ? originalFileName : quotationAttachment.FileName;
+
+
         var folder = configuration.AttachmentsPath;
         Directory.CreateDirectory(folder);
         var path = Path.Combine(folder, fileName);
 
         Stream stream = System.IO.File.OpenRead(path);
-        return File(stream, mimeTypeProvider.Provide(fileName), quotationAttachment.DisplayName);
+        return File(stream, mimeTypeProvider.Provide(fileName),downloadFileName);
     }
 
     [HttpPost("quotation-attachment/upload-file")]
