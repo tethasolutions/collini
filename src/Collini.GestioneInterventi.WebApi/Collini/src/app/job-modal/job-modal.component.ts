@@ -24,6 +24,7 @@ import { NotesService } from '../services/notes.service';
 import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 import { Observable } from 'rxjs';
 import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
   selector: 'app-job-modal',
@@ -36,6 +37,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   @ViewChild('customerModal', { static: true }) customerModal: CustomerModalComponent;
   @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+  @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
   readonly role = Role;
   name = '';
 
@@ -285,6 +287,22 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
         )
       .subscribe()
     ); */
+  }
+
+  viewLastNote() {     
+    this.notesModal.id = this.options.id;
+    this._subscriptions.push(
+            this._notesService.getLastJobNote(this.options.id)
+            .pipe(        
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
   }
 
   isVisibleResultNote(): boolean {
