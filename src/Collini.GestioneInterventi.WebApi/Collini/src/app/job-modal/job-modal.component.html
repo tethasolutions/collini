@@ -39,7 +39,7 @@
                     <kendo-formfield class="form-group">
                         <label>Cliente</label>
                         <kendo-combobox [data]="customersFiltered" [(ngModel)]="options.customerId" name="customerId"
-                            suggest="true" class="customer-combobox" textField="customerDescription"
+                            suggest="true" class="customer-combobox" textField="customerDescriptionWithAddress"
                             [valuePrimitive]="true" valueField="id" (valueChange)="customerChanged($event)" 
                             [filterable]="true" (filterChange)="handleFilter($event)"
                             required>

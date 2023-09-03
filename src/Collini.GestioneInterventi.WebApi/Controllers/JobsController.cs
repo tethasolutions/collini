@@ -156,7 +156,7 @@ public class JobsController : ColliniApiController
     }
 
     [HttpDelete("job/{id}")]
-    public async Task<IActionResult> DeleteCustomer(long id)
+    public async Task<IActionResult> DeleteJob(long id)
     {
         await jobsService.DeleteJob(id);
         return Ok();

@@ -6,9 +6,9 @@
             <div class="k-window-title">Intervento</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
-        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" class="calendarModal"
+        <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" class="redimensionModal"
             *ngIf="options">
-            <div class="row">
+            <div class="row" *ngIf="options.jobId != null">
                 <div class="col-md-10">
                     {{options.jobCode}} - 
                     {{options.customerName}}
@@ -19,9 +19,8 @@
                     </button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{options.jobDescription}}
+            <div class="row" *ngIf="options.jobId != null">
+                <div class="col-md-12" [innerHTML]="options.jobDescription">
                 </div>
                 <div class="col-md-12">
                     <hr/>
@@ -67,10 +66,10 @@
                         <kendo-formerror>Richiesta è un campo obbligatorio</kendo-formerror>
                     </kendo-formfield>
                 </div>
-                <div *ngIf="options.id != null" class="col-md-4">
+                <div class="col-md-4">
                     <label>&nbsp;</label>
                     <div>
-                        <button type="button" class="btn btn-primary" title="Note" (click)="viewNotes()">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="viewLastNote()">
                             <i class="fa fa-edit"></i> Note
                         </button>
                     </div>
@@ -99,9 +98,17 @@
                     </kendo-formfield>
                 </div>
             </div>
+            <div class="row d-lg-none">
+                <div class="col-12">
+                    <div style="min-height: 80px;">&nbsp;</div>
+                </div>
+            </div>
             <div class="text-right mt-5">
                 <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
                     ANNULLA
+                </button>
+                <button *ngIf="options.id != null" type="button" class="btn btn-danger me-2" title="Elimina" (click)="deleteActivity()">
+                    <i class="fas fa-trash"></i>
                 </button>
                 <button *ngIf="options.id != null" type="button" class="btn btn-primary me-2" title="Copia" (click)="copyActivity()">
                     <i class="fa fa-copy"></i> Duplica
@@ -116,4 +123,5 @@
 
 <app-notes-modal notesType="activity" #notesModal></app-notes-modal>
 <app-copy-activity-modal #copyActivityModal></app-copy-activity-modal>
+<app-note-modal #noteModal></app-note-modal>
 <app-job-modal #jobModal></app-job-modal>

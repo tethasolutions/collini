@@ -31,6 +31,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         Task<ActivityViewModel> GetActivity(long id);
 
         Task<CalendarViewModel> GetCalendar();
+        Task DeleteActivity(long id);
 
     }
 
@@ -212,6 +213,23 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .Project<ActivityDto>(mapper);
 
             return activities;
+        }
+
+        public async Task DeleteActivity(long id)
+        {
+            if (id == 0)
+                throw new ColliniException("Impossible eliminare l'intervento con id 0");
+
+            var activity = await activityRepository
+                .Query()
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if (activity == null)
+                throw new ColliniException($"Impossibile trovare l'intervento con id {id}");
+
+            activityRepository.Delete(activity);
+            await dbContext.SaveChanges();
         }
     }
 }

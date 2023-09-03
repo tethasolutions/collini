@@ -30,31 +30,12 @@
                 <div class="col-md-4">
                     <label>Indirizzo</label>
                     <div class="form-group">
-                        <input class="form-control" name="streetAddress" [(ngModel)]="options.streetAddress" required
+                        <input class="form-control" name="streetAddress" [(ngModel)]="options.streetAddress"
                             maxlength="255" novalidate autocomplete="off" />
                         <div class="validation-message" [control]="form.controls['streetAddress']"></div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Provincia</label>
-                    <div class="form-group">
-                        <input class="form-control" name="province" [(ngModel)]="options.province" required
-                            maxlength="255" novalidate autocomplete="off" />
-                        <div class="validation-message" [control]="form.controls['province']"></div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label>Indirizzo principale</label>
-                    <div class="form-group">
-                        <kendo-switch name="isMainAddress" [(ngModel)]="options.isMainAddress" onLabel="Si" offLabel="No">
-                        </kendo-switch>
-                        <div class="validation-message" [control]="form.controls['isMainAddress']"></div>
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-md-4">
                     <label>Telefono</label>
@@ -68,6 +49,14 @@
                     <div class="form-group">
                         <input type="email" class="form-control" name="email" [(ngModel)]="options.email"
                             maxlength="255" novalidate autocomplete="off" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label>Indirizzo principale</label>
+                    <div class="form-group">
+                        <kendo-switch name="isMainAddress" [(ngModel)]="options.isMainAddress" onLabel="Si" offLabel="No">
+                        </kendo-switch>
+                        <div class="validation-message" [control]="form.controls['isMainAddress']"></div>
                     </div>
                 </div>
             </div>

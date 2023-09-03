@@ -42,7 +42,7 @@ export class JobModel {
     customerAddress: AddressModel;
 
     get fullDescription(): string {
-        return `${this.code} - ${this.customer.customerDescription} - ${this.description}`;
+        return `${this.code} - ${this.customer.customerDescription}`;
     }
 
     get expired(): boolean {

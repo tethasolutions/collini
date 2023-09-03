@@ -13,8 +13,7 @@
                     {{options.jobCode}} - 
                     {{options.customerName}}
                 </div>
-                <div class="col-md-12">
-                    {{options.jobDescription}}
+                <div class="col-md-12" [innerHTML]="options.jobDescription">
                 </div>
                 <div class="col-md-12">
                     <hr/>
@@ -75,10 +74,10 @@
                         <kendo-textarea [(ngModel)]="options.description" name="description"></kendo-textarea>
                     </kendo-formfield>
                 </div>
-                <div *ngIf="options.id != null" class="col-md-4">
+                <div class="col-md-4">
                     <label>&nbsp;</label>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" title="Note" (click)="viewNotes()">
+                        <button type="button" class="btn btn-primary" title="Note" (click)="viewLastNote()">
                             <i class="fa fa-edit"></i> Note
                         </button>
                     </div>
@@ -97,3 +96,4 @@
 </div>
 
 <app-notes-modal notesType="order" #notesModal></app-notes-modal>
+<app-note-modal #noteModal></app-note-modal>

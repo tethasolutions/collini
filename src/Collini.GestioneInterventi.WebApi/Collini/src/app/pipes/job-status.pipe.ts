@@ -24,6 +24,8 @@ export class JobStatusPipe extends BaseComponent implements PipeTransform {
                 return "Annullato";
             case JobStatusEnum.Completed:
                 return "Completato";
+            case JobStatusEnum.Warranty:
+                return "In Garanzia";
             default:
                 return value;
         }

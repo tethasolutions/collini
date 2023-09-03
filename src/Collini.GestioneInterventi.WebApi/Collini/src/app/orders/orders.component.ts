@@ -13,6 +13,7 @@ import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
 import { OrderModalComponent } from '../order-modal/order-modal.component';
 import { OrderDetailModel } from '../shared/models/order-detail.model';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
   selector: 'app-orders',
@@ -23,6 +24,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
 
   @ViewChild('orderModal', { static: true }) orderModal: OrderModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+  @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
 
   orderNotes: Array<NoteModel> = [];
   
@@ -121,5 +123,22 @@ export class OrdersComponent extends BaseComponent implements OnInit {
         )
       .subscribe()
     ); */
+  }
+
+  viewLastNote(order: OrderDetailModel) {     
+    this.notesModal.id = order.jobId;
+    this._subscriptions.push(
+            this._notesService.getLastJobNote(order.jobId)
+            .pipe(
+        
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
   }
 }

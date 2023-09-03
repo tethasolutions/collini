@@ -133,4 +133,11 @@ export class ActivitiesService {
                 tap(() => this._bus.jobUpdated())
             );
     }
+    
+    deleteActivity(id: number) {
+        return this._http.delete<void>(`${this._baseUrl}/activity/${id}`)
+            .pipe(
+                map(() => { })
+            );
+    }
 }

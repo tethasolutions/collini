@@ -14,6 +14,7 @@ import { ActivityCalendarModel } from '../shared/models/activity-calendar.model'
 import { ActivityModalComponent } from '../activity-modal/activity-modal.component';
 import { ActivitiesService } from '../services/activities.service';
 import { ActivityModel } from '../shared/models/activity.model';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
   selector: 'app-activities',
@@ -24,6 +25,7 @@ export class ActivitiesComponent extends BaseComponent implements OnInit {
 
   @ViewChild('activityModal', { static: true }) activityModal: ActivityModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+  @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
 
   activityNotes: Array<NoteModel> = [];
   
@@ -122,5 +124,21 @@ export class ActivitiesComponent extends BaseComponent implements OnInit {
         )
       .subscribe()
     ); */
+  }
+  
+  viewLastNote(activity: ActivityModel) {     
+    this.notesModal.id = activity.jobId;
+    this._subscriptions.push(
+            this._notesService.getLastJobNote(activity.jobId)
+            .pipe(        
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
   }
 }

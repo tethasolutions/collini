@@ -20,12 +20,10 @@ public class ContactAddressMap : BaseEntityMapping<ContactAddress>
             .IsRequired();
 
         builder.Property(e => e.StreetAddress)
-            .HasMaxLength(256)
-            .IsRequired();
+            .HasMaxLength(256);
 
         builder.Property(e => e.Province)
-            .HasMaxLength(128)
-            .IsRequired();
+            .HasMaxLength(128);
 
         builder.Property(e => e.ZipCode)
             .HasMaxLength(16);

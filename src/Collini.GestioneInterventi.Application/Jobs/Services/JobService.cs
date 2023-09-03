@@ -396,7 +396,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ThenInclude(x => x.Addresses)
                 .Include(x=>x.CustomerAddress)
                 .Include(x => x.ProductType)
-                .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid) && x.Number != 0)
+                .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid || x.Status == JobStatus.Warranty) && x.Number != 0)
                 .ToArrayAsync();
             return paidJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }

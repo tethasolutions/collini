@@ -29,6 +29,15 @@ export class CustomerModel {
         return result;
     }
 
+    get customerDescriptionWithAddress(): string {
+        let result = '';
+        if (this.companyName !== null) { result += `${this.companyName} `; }        
+        if (this.surname !== null) { result +=  `${this.surname} `; }
+        if (this.name !== null) { result +=  `${this.name}`; }
+        if (this.mainAddress !== null) { result += `${this.mainAddress.fullAddress}`}
+        return result;
+    }
+
     get typeDescription(): string {
         if (this.type >= 0) { return ContactTypeEnum[this.type]; }
         else { return ''; }

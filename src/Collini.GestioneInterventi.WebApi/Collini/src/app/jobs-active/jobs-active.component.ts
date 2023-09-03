@@ -112,7 +112,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
                     filter(e => e),
                     switchMap(() => this._jobsService.createJob(request)),
                     tap(e => {
-                        this._messageBox.success(`Job ${request.description} creato`);
+                        this._messageBox.success(`Job ${request.code} creato`);
                     }),
                     tap(() => this._readJobs())
                 )
@@ -133,7 +133,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
                     map(() => this.jobModal.options),
                     switchMap(e => this._jobsService.updateJob(e, e.id)),
                     map(() => this.jobModal.options),
-                    tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
+                    tap(e => this._messageBox.success(`Job '${e.code}' aggiornato`)),
                     tap(() => this._readJobs())
                 )
                 .subscribe()

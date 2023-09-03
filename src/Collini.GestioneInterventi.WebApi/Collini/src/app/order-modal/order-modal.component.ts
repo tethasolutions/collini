@@ -14,6 +14,7 @@ import { OrdersService } from '../services/orders.service';
 import { OrderStatusEnum } from '../shared/enums/order-status.enum';
 import { JobsService } from '../services/jobs.service';
 import { CustomerModel } from '../shared/models/customer.model';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
     selector: 'app-order-modal',
@@ -24,6 +25,7 @@ export class OrderModalComponent extends ModalComponent<OrderDetailModel> {
 
     @ViewChild('form') form: NgForm;
     @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+    @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
     readonly role = Role;
     name = '';
 
@@ -65,11 +67,27 @@ export class OrderModalComponent extends ModalComponent<OrderDetailModel> {
         ); */
     }
 
-    customerChanged(event: any){
+    viewLastNote() {
+        this.notesModal.id = this.options.jobId;
+        this._subscriptions.push(
+            this._notesService.getLastJobNote(this.options.jobId)
+                .pipe(
+                    switchMap(e => this.noteModal.open(e)),
+                    filter(e => e),
+                    map(() => this.noteModal.options),
+                    switchMap(e => this._notesService.updateNote(e, e.id)),
+                    map(() => this.noteModal.options),
+                    tap(e => this._messageBox.success(`Nota aggiornata`)),
+                )
+                .subscribe()
+        );
+    }
+
+    customerChanged(event: any) {
 
     }
 
-    createCustomer(){
+    createCustomer() {
 
     }
 

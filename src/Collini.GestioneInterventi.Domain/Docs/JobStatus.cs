@@ -8,5 +8,6 @@ public enum JobStatus
     Billing,
     Billed,
     Paid,
-    Canceled
+    Canceled,
+    Warranty
 }

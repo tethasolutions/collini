@@ -13,6 +13,7 @@ using Collini.GestioneInterventi.WebApi.Models.Security;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -82,4 +83,10 @@ public class ActivitiesController : ColliniApiController
         return Ok();
     }
 
+    [HttpDelete("activity/{id}")]
+    public async Task<IActionResult> DeleteActivity(long id)
+    {
+        await activityService.DeleteActivity(id);
+        return Ok();
+    }
 }

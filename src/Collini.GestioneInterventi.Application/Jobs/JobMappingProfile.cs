@@ -42,7 +42,7 @@ namespace Collini.GestioneInterventi.Application.Jobs
             CreateMap<Job, JobDetailReadModel>()
                 .MapMember(x=>x.Code,y=>y.Number+"/"+ y.Year)
                 .MapMember(x=>x.CustomerName,y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
-                .MapMember(x=>x.CustomerFullAddress,y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City + " - " + y.CustomerAddress.Province)
+                .MapMember(x=>x.CustomerFullAddress,y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City)
                 .Ignore(x => x.OperatorId);
 
             CreateMap<ProductType, ProductTypeDto>();
@@ -52,7 +52,7 @@ namespace Collini.GestioneInterventi.Application.Jobs
             CreateMap<Job, JobSearchReadModel>()
                 .MapMember(x => x.Code, y => y.Number + "/" + y.Year)
                 .MapMember(x => x.CustomerName, y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
-                .MapMember(x => x.CustomerFullAddress, y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City + " - " + y.CustomerAddress.Province)
+                .MapMember(x => x.CustomerFullAddress, y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City)
                 .MapMember(x => x.LastQuotation, y => y.Quotations.OrderByDescending(z => z.CreatedOn).FirstOrDefault().Status)
                 .MapMember(x => x.LastQuotationDate, y => y.Quotations.OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn)
                 .MapMember(x => x.LastOrder, y => y.Orders.OrderByDescending(z => z.CreatedOn).FirstOrDefault().Status)

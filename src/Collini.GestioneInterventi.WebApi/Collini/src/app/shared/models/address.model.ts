@@ -14,9 +14,8 @@ export class AddressModel {
 
     get fullAddress(): string {
         let result = '';
-        if (this.streetAddress !== null) { result += `${this.streetAddress}, `; }
-        if (this.city !== null) { result += `${this.city}, `; }
-        if (this.province !== null) { result += `${this.province} `; }
+        if (this.streetAddress !== null) { result += `${this.streetAddress} - `; }
+        if (this.city !== null) { result += `${this.city} `; }
         return result;
     }
 

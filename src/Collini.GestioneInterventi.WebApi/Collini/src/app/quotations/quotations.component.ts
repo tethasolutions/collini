@@ -13,6 +13,7 @@ import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
 import { QuotationModalComponent } from '../quotation-modal/quotation-modal.component';
 import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
   selector: 'app-quotations',
@@ -23,6 +24,7 @@ export class QuotationsComponent extends BaseComponent implements OnInit {
 
   @ViewChild('quotationModal', { static: true }) quotationModal: QuotationModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+  @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
 
   quotationNotes: Array<NoteModel> = [];
   
@@ -121,5 +123,22 @@ export class QuotationsComponent extends BaseComponent implements OnInit {
         )
       .subscribe()
     ); */
+  }
+  
+  viewLastNote(quotation: QuotationDetailModel) {     
+    this.notesModal.id = quotation.jobId;
+    this._subscriptions.push(
+            this._notesService.getLastJobNote(quotation.jobId)
+            .pipe(
+        
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
   }
 }

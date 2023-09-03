@@ -13,7 +13,8 @@ import { QuotationStatusEnum } from '../shared/enums/quotation-status.enum';
 import { ApiUrls } from '../services/common/api-urls';
 import { RemoveEvent, SuccessEvent, FileInfo,FileState } from "@progress/kendo-angular-upload";
 import { QuotationAttachmentUploadFileModel } from '../shared/models/quotation-attachment-upload-file.model';
-import { Observable } from 'rxjs';
+import { Observable, filter, map, switchMap, tap } from 'rxjs';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
 
 @Component({
   selector: 'app-quotation-modal',
@@ -24,6 +25,8 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
 
   @ViewChild('form') form: NgForm;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+  @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+  
   readonly role = Role;
   name = '';
  
@@ -109,6 +112,22 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
         )
       .subscribe()
     ); */
+  }
+
+  viewLastNote() {     
+    this.notesModal.id = this.options.jobId;
+    this._subscriptions.push(
+            this._notesService.getLastJobNote(this.options.jobId)
+            .pipe(        
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
   }
 
   public loadData() {

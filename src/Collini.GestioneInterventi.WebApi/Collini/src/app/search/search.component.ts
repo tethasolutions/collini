@@ -12,6 +12,10 @@ import { NoteModel } from '../shared/models/note.model';
 import { SearchService } from '../services/search.service';
 import { JobDetailModel } from '../shared/models/job-detail.model';
 import { JobSearchModel } from '../shared/models/job-search.model';
+import { NoteModalComponent } from '../note-modal/note-modal.component';
+import { JobModel } from '../shared/models/job.model';
+import { JobsService } from '../services/jobs.service';
+import { JobModalComponent } from '../job-modal/job-modal.component';
 
 @Component({
   selector: 'app-search',
@@ -20,7 +24,9 @@ import { JobSearchModel } from '../shared/models/job-search.model';
 })
 export class SearchComponent extends BaseComponent implements OnInit {
 
+  @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
+  @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
 
   searchNotes: Array<NoteModel> = [];
   
@@ -38,6 +44,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
 
   constructor(
       private readonly _searchService: SearchService,
+      private readonly _jobsService: JobsService,
       private readonly _notesService: NotesService,
       private readonly _messageBox: MessageBoxService,
       private readonly _router: Router
@@ -68,9 +75,45 @@ export class SearchComponent extends BaseComponent implements OnInit {
     );
   }
 
+  editJob(job: JobModel) {
+
+    this._subscriptions.push(
+        this._jobsService.getJobDetail(job.id)
+            .pipe(
+                map(e => {
+                    return e;
+                }),
+                switchMap(e => this.jobModal.open(e)),
+                filter(e => e),
+                map(() => this.jobModal.options),
+                switchMap(e => this._jobsService.updateJob(e, e.id)),
+                map(() => this.jobModal.options),
+                tap(e => this._messageBox.success(`Job '${e.code}' aggiornato`)),
+                tap(() => this._readJobs())
+            )
+            .subscribe()
+    );
+}
+
   viewNotes(job: JobSearchModel) {
     this.notesModal.id = job.id;
     this.notesModal.loadData();
     this.notesModal.open(null);
+  }
+  
+  viewLastNote(job: JobSearchModel) {     
+    this.notesModal.id = job.id;
+    this._subscriptions.push(
+            this._notesService.getLastJobNote(job.id)
+            .pipe(        
+                switchMap(e => this.noteModal.open(e)),
+                filter(e => e),
+                map(() => this.noteModal.options),
+                switchMap(e => this._notesService.updateNote(e, e.id)),
+                map(() => this.noteModal.options),
+                tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
   }
 }
