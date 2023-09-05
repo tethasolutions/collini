@@ -37,13 +37,13 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .IgnoreCommonMembers();
            
             CreateMap<Job, JobDetailDto>()
-                .Ignore(x=>x.OperatorId);
+                .MapMember(x => x.OperatorId, y => y.CreatedById);
 
             CreateMap<Job, JobDetailReadModel>()
                 .MapMember(x=>x.Code,y=>y.Number+"/"+ y.Year)
                 .MapMember(x=>x.CustomerName,y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
                 .MapMember(x=>x.CustomerFullAddress,y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City)
-                .Ignore(x => x.OperatorId);
+                .MapMember(x => x.OperatorId, y => y.CreatedById);
 
             CreateMap<ProductType, ProductTypeDto>();
             CreateMap<JobSource, JobSourceDto>();

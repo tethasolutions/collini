@@ -103,11 +103,8 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
             this.customers = e;
             if (creatoNuovoCustomer) {
               this.customerChanged(this.options.customerId);
-              
             }
-            else {
-              this._filterCustomers(null);
-            }
+            this._filterCustomers(null);
           })
 
         )
@@ -127,7 +124,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     );
   }
 
-    protected _readJobSources() {
+  protected _readJobSources() {
     this._subscriptions.push(
       this._jobsService.getJobSources()
         .pipe(
@@ -160,6 +157,10 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     const nuovoCustomerSelezionato: CustomerModel = this.customers.find(x => x.id === customerId);
     if (nuovoCustomerSelezionato == undefined) { return; }
     this.options.customer = nuovoCustomerSelezionato;
+    const nuovoAddressSelezionato: AddressModel = nuovoCustomerSelezionato.addresses.find(x => x.isMainAddress == true);
+    if (nuovoAddressSelezionato != undefined) {
+      this.options.customerAddressId = nuovoAddressSelezionato.id;
+    }
   }
 
   editCustomer() {
@@ -196,7 +197,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
           map(() => this.addressModal.options),
           tap(e => this._messageBox.success(`Indirizzo aggiornato con successo`)),
           tap(() => {
-           this.customerSelezionato.addresses
+            this.customerSelezionato.addresses
           }),
           tap(() => {
             this.loadData();
@@ -264,10 +265,12 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
           filter(e => e),
           switchMap(() => this._customerService.createCustomer(request)),
           tap(e => {
-            this.options.customerId = e;
+            this.options.customerId = e.id;
+            this.console.log(e.id);
             this._messageBox.success(`Cliente ${request.name} creato`);
           }),
-          tap(() => this._readJobCustomers(true))
+          tap(() => this._readJobCustomers(true)),
+          tap(() => this._readCustomerAddresses())
         )
         .subscribe()
     );
@@ -289,28 +292,28 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     ); */
   }
 
-  viewLastNote() {     
+  viewLastNote() {
     this.notesModal.id = this.options.id;
     this._subscriptions.push(
-            this._notesService.getLastJobNote(this.options.id)
-            .pipe(        
-                switchMap(e => this.noteModal.open(e)),
-                filter(e => e),
-                map(() => this.noteModal.options),
-                switchMap(e => this._notesService.updateNote(e, e.id)),
-                map(() => this.noteModal.options),
-                tap(e => this._messageBox.success(`Nota aggiornata`)),           
-            )
-    .subscribe()
+      this._notesService.getLastJobNote(this.options.id)
+        .pipe(
+          switchMap(e => this.noteModal.open(e)),
+          filter(e => e),
+          map(() => this.noteModal.options),
+          switchMap(e => this._notesService.updateNote(e, e.id)),
+          map(() => this.noteModal.options),
+          tap(e => this._messageBox.success(`Nota aggiornata`)),
+        )
+        .subscribe()
     );
   }
 
   isVisibleResultNote(): boolean {
     return this.options.status == this.jobStatusEnum.Completed ||
-           this.options.status == this.jobStatusEnum.Billing ||
-           this.options.status == this.jobStatusEnum.Billed ||
-           this.options.status == this.jobStatusEnum.Paid;
-  }  
+      this.options.status == this.jobStatusEnum.Billing ||
+      this.options.status == this.jobStatusEnum.Billed ||
+      this.options.status == this.jobStatusEnum.Paid;
+  }
 
   handleFilter(value: string) {
     this._filterCustomers(value);

@@ -108,8 +108,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             var job = await jobService.GetJob(orderDto.JobId);
             if (job == null)
                 throw new ColliniException("Job non trovato");
-            if (job.Status == JobStatus.Pending)
-                job.Status = JobStatus.Working;
+            job.Status = JobStatus.Working;
             await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
             
             await dbContext.SaveChanges();

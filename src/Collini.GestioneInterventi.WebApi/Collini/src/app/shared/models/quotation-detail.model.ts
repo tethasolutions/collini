@@ -11,8 +11,9 @@ export class QuotationDetailModel {
     status: QuotationStatusEnum;
     jobId: number;
     customerName: string;
+    customerContacts: string;
     jobCode: string;
-    jobDescription: string;    
+    jobDescription: string;
     attachmentDisplayName: string;
     attachmentFileName: string;
 

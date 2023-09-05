@@ -10,6 +10,7 @@ export class QuotationModel {
     status: QuotationStatusEnum;
     jobId: number;
     customerName: string;
+    customerContacts: string;
     jobCode: string;
     jobDescription: string;
     

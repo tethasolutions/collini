@@ -20,7 +20,6 @@ namespace Collini.GestioneInterventi.Application.Customers
             CreateMap<ContactDto, Contact>()
                 .Ignore(x=>x.Jobs)
                 .Ignore(x=>x.Orders)
-                .Ignore(x=>x.Addresses)
                 .IgnoreCommonMembers();
 
             CreateMap<ContactAddress, AddressDto>();

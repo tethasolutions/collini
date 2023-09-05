@@ -19,6 +19,7 @@ namespace Collini.GestioneInterventi.Application.Customers.DTOs
         public string? Telephone { get; set; }
         public string? Email { get; set; }
         public bool Alert { get; set; }
-        
+
+        public ICollection<AddressDto>? Addresses { get; set; }
     }
 }

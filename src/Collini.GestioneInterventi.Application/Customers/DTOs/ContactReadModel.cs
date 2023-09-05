@@ -17,6 +17,7 @@ namespace Collini.GestioneInterventi.Application.Customers.DTOs
         public ContactFiscalType FiscalType { get; set; }
         public string ErpCode { get; set; }
         public string Telephone { get; set; }
+        public string Email { get; set; }
         public bool Alert { get; set; }
         public List<AddressDto> Addresses { get; set; }
     }
