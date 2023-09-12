@@ -43,6 +43,7 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .MapMember(x=>x.Code,y=>y.Number+"/"+ y.Year)
                 .MapMember(x=>x.CustomerName,y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
                 .MapMember(x=>x.CustomerFullAddress,y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City)
+                .MapMember(x => x.HasNotes, y => y.Notes.Count>0 ? y.Notes.FirstOrDefault().Attachments.Count > 0 : false)
                 .MapMember(x => x.OperatorId, y => y.CreatedById);
 
             CreateMap<ProductType, ProductTypeDto>();

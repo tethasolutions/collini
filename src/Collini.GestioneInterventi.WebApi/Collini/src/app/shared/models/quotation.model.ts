@@ -12,6 +12,7 @@ export class QuotationModel {
     customerName: string;
     customerContacts: string;
     jobCode: string;
+    jobDate: Date;
     jobDescription: string;
     
     get expired(): boolean {

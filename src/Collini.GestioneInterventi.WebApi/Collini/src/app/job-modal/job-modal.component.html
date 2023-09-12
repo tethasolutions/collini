@@ -120,7 +120,7 @@
                 <div class="col-md-12">
                     <!-- <kendo-formfield class="form-group"> -->
                         <label>Descrizione richiesta</label>
-                        <kendo-editor name="description" [(ngModel)]="options.description" required>
+                        <kendo-editor name="description" [(ngModel)]="options.description" required [pasteCleanupSettings]="pasteCleanupSettings">
                             <kendo-toolbar>  
                                     <kendo-toolbar-button kendoEditorSelectAllButton></kendo-toolbar-button>
                                     <kendo-toolbar-buttongroup>
@@ -185,7 +185,7 @@
                     <div class="form-group">
                         <button type="button" class="btn btn-primary" title="Note" (click)="viewLastNote()">
                             <i class="fa fa-edit"></i> Note
-                        </button>
+                        </button> <i class="fa fa-paperclip ms-2" *ngIf="options.hasNotes"></i>
                     </div>
                 </div>
             </div>

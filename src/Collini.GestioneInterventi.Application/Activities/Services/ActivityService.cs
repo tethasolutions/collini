@@ -125,6 +125,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             activity.Id = 0;
             activity.OperatorId = copyActivityDto.NewOperatorId;
+            activity.Start = copyActivityDto.Start;
+            activity.End = copyActivityDto.End;
             await activityRepository.Insert(activity);
 
             await dbContext.SaveChanges();
@@ -142,6 +144,9 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .ThenInclude(y=>y.Customer)
                 .Include(x => x.Job)
                 .ThenInclude(y=>y.CustomerAddress)
+                .Include(x=>x.Job)
+                .ThenInclude(y=>y.Notes)
+                .ThenInclude(y=>y.Attachments)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 

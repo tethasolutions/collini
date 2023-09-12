@@ -23,6 +23,7 @@ export class JobDetailModel {
     productTypeId: number;
     productType: ProductTypeModel;
     status: JobStatusEnum;
+    hasNotes: boolean;
 
     get expired(): boolean {
         const today = new Date();
@@ -51,5 +52,6 @@ export class JobDetailModel {
         this.productTypeId = null;
         this.productType = new ProductTypeModel();
         this.status = JobStatusEnum.Pending;
+        this.hasNotes = false;
     }
 }

@@ -16,6 +16,7 @@ export class ActivityModel {
     customerName: string;
     jobCode: string;
     jobDescription: string;
+    hasNotes: boolean;
 
     get expired(): boolean {
         const today = new Date();

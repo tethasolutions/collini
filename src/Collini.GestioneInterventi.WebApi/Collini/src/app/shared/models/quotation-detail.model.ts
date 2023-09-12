@@ -13,9 +13,11 @@ export class QuotationDetailModel {
     customerName: string;
     customerContacts: string;
     jobCode: string;
+    jobDate: Date;
     jobDescription: string;
     attachmentDisplayName: string;
     attachmentFileName: string;
+    hasNotes: boolean;
 
     constructor() {
         this.id = null;

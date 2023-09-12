@@ -13,6 +13,7 @@ export class OrderModel {
     jobId: number;
     customerName: string;
     jobCode: string;
+    jobDate: Date;
     jobDescription: string;
     supplierId: number;
     supplier: ContactModel;

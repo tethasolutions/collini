@@ -66,8 +66,7 @@
                     <div class="form-group">
                         <button type="button" class="btn btn-primary" title="Note" (click)="viewLastNote()">
                             <i class="fa fa-edit"></i> Note
-                        </button>
-                        <!--<i class="fa fa-paperclip ms-2"></i>-->
+                        </button> <i class="fa fa-paperclip ms-2" *ngIf="options.hasNotes"></i>
                     </div>
                 </div>
             </div>

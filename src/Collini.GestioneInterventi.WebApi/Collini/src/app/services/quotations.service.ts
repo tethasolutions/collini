@@ -42,6 +42,7 @@ export class QuotationsService {
                         e.data.forEach(item => {
                             const quotation: QuotationModel = Object.assign(new QuotationModel(), item);
                             quotation.createdOn = new Date(quotation.createdOn);
+                            quotation.jobDate = new Date(quotation.jobDate);
                             quotation.expirationDate = new Date(quotation.expirationDate);
 
                             quotations.push(quotation);

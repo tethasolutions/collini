@@ -81,6 +81,9 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
                 .ThenInclude(y => y.CustomerAddress)
                 .Include(x=>x.Notes)
                 .Include(x=>x.Attachment)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.Notes)
+                .ThenInclude(y => y.Attachments)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 

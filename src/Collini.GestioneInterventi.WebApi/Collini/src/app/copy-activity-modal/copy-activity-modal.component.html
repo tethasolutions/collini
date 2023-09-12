@@ -19,6 +19,24 @@
                     </kendo-formfield>
                 </div>
             </div>
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <kendo-formfield>
+                        <label>Data inizio</label>
+                        <kendo-datetimepicker  name="start" [(ngModel)]="start"
+                            required format="dd/MM/yyyy HH:mm" [steps]="{minute:15}"></kendo-datetimepicker>
+                        <kendo-formerror>Data inizio è un campo obbligatorio</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+                <div class="col-md-6">
+                    <kendo-formfield>
+                        <label>Data fine</label>
+                        <kendo-datetimepicker  name="end" [(ngModel)]="end"
+                            required format="dd/MM/yyyy HH:mm" [steps]="{minute:15}" [min]="options.start"></kendo-datetimepicker>
+                        <kendo-formerror>Data fine non valido</kendo-formerror>
+                    </kendo-formfield>
+                </div>
+            </div>
             <div class="text-right mt-5">
                 <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
                     ANNULLA

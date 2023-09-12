@@ -33,7 +33,8 @@ namespace Collini.GestioneInterventi.Application.Activities
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
                 .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name +
                     ((y.Job.Customer.Telephone != null) ? " - Tel: " + y.Job.Customer.Telephone : "") +
-                    ((y.Job.CustomerAddress != null) ? " - " + y.Job.CustomerAddress.StreetAddress + " " + y.Job.CustomerAddress.City : ""));
+                    ((y.Job.CustomerAddress != null) ? " - " + y.Job.CustomerAddress.StreetAddress + " " + y.Job.CustomerAddress.City : ""))
+                .MapMember(x => x.HasNotes, y => y.Job.Notes.Count > 0 ? y.Job.Notes.FirstOrDefault().Attachments.Count > 0 : false);
 
             CreateMap<User, CalendarResourceViewModel>()
                 .MapMember(x=>x.Description,y=>y.Name + " " + y.Surname)

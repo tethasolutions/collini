@@ -35,6 +35,7 @@ export class OrdersService {
                         e.data.forEach(item => {
                             const order: OrderModel = Object.assign(new OrderModel(), item);
                             order.createdOn = new Date(order.createdOn);
+                            order.jobDate = new Date(order.jobDate);
                             order.expirationDate = new Date(order.expirationDate);
 
                             orders.push(order);

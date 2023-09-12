@@ -14,6 +14,7 @@ export class OrderDetailModel {
     jobId: number;
     customerName: string;
     jobCode: string;
+    jobDate: Date;
     jobDescription: string;
 
     constructor() {

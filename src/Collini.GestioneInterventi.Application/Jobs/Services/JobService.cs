@@ -200,6 +200,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x=>x.CustomerAddress)
                 .Include(x=>x.Source)
                 .Include(x=>x.ProductType)
+                .Include(x=>x.Notes)
+                .ThenInclude(x=>x.Attachments)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 

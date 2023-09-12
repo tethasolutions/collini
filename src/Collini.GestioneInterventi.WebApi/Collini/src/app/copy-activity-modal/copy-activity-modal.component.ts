@@ -26,6 +26,8 @@ export class CopyActivityModalComponent extends ModalComponent<number> {
 
     operators: Array<JobOperatorModel> = [];
     operatorId: number;
+    start: Date;
+    end: Date;
 
     constructor(
         private readonly _messageBox: MessageBoxService,
@@ -40,6 +42,8 @@ export class CopyActivityModalComponent extends ModalComponent<number> {
       const result = super.open(options);  
       this.loadData()  
       this.operatorId = null;
+      this.start = new Date()
+      this.end = new Date(this.start.getTime() + (1000 * 60 * 60));
       return result;
     }
     
@@ -51,6 +55,8 @@ export class CopyActivityModalComponent extends ModalComponent<number> {
       const request = new CopyActivityModel();
       request.id = this.options;
       request.newOperatorId = this.operatorId;
+      request.start = this.start;
+      request.end = this.end;
       this._subscriptions.push(
         this._activityService.copyActivity(request)
         .pipe(

@@ -56,6 +56,16 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
 
   addressCombo: ComboBoxComponent;
   customerSelezionato = new CustomerModel();
+  
+  pasteCleanupSettings = {
+    convertMsLists: true,
+    removeHtmlComments: true,
+    // stripTags: ['span', 'h1'],
+    // removeAttributes: ['lang'],
+    removeMsClasses: true,
+    removeMsStyles: true,
+    removeInvalidHTML: true,
+  };
 
   constructor(private readonly _messageBox: MessageBoxService,
     private readonly _jobsService: JobsService,

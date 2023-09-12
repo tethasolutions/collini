@@ -20,5 +20,6 @@ namespace Collini.GestioneInterventi.Application.Activities.DTOs
         public string? JobCode { get; set; }
         public string? JobDescription { get; set; }
         public string? CustomerName { get; set; }
+        public bool HasNotes { get; set; }
     }
 }

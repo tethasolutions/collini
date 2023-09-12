@@ -19,6 +19,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.DTOs
         public string CustomerName { get; set; }
         public string CustomerContacts { get; set; }
         public string JobCode { get; set; }
+        public DateTimeOffset? JobDate { get; set; }
         public string? JobDescription { get; set; }
         public QuotationAttachmentReadModel? Attachment { get; set; }
 

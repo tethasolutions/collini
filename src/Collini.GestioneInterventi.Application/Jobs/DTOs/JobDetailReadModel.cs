@@ -29,5 +29,6 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public long ProductTypeId { get; set; }
         public ProductTypeDto? ProductType { get; set; }
         public JobStatus Status { get; set; }
+        public bool HasNotes { get; set; }
     }
 }
