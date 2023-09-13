@@ -67,7 +67,7 @@
         <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
             <div class="d-flex gap-2 align-items-start">
                 {{event.dataItem.cliente}}
-                <span class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 0">
+                <span class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 1">
                     <i class="fas fa-circle-check"></i>
                 </span>
                 <span class="calendar-icon calendar-icon-Ko"
