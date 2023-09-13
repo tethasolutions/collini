@@ -76,7 +76,6 @@ import { CopyActivityModalComponent } from './copy-activity-modal/copy-activity-
 import { UploadsModule } from "@progress/kendo-angular-upload";
 import { SearchService } from './services/search.service';
 
-
 import { UploadInterceptor } from './services/interceptors/upload.iterceptor';
 import { EditorModule } from '@progress/kendo-angular-editor';
 import { SearchComponent } from './search/search.component';
@@ -89,7 +88,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
     declarations: [
         BooleanPipe,
         AppComponent,
-        
+
         LoaderComponent,
         ValidationMessageComponent,
         HomeComponent,
@@ -124,9 +123,9 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         ActivityStatusPipe,
         RolePipe
     ],
-    imports: [ 
+    imports: [
         ButtonsModule,
-        BrowserModule,        
+        BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
@@ -166,7 +165,6 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
 
         { provide: HTTP_INTERCEPTORS, useClass: UploadInterceptor, multi: true },
 
-        Clipboard,
         AuthGuard,
         CustomerService,
         AddressesService,
