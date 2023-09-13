@@ -73,7 +73,7 @@ import { RolePipe } from './pipes/role.pipe';
 import { ActivitiesComponent } from './activities/activities.component';
 import { ActivityStatusPipe } from './pipes/activity-status.pipe';
 import { CopyActivityModalComponent } from './copy-activity-modal/copy-activity-modal.component';
-import { UploadsModule } from "@progress/kendo-angular-upload";
+import { UploadModule } from "@progress/kendo-angular-upload";
 import { SearchService } from './services/search.service';
 
 import { UploadInterceptor } from './services/interceptors/upload.iterceptor';
@@ -124,13 +124,13 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         RolePipe
     ],
     imports: [
-        ButtonsModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        UploadsModule,
+        ButtonsModule,
+        UploadModule,
         IntlModule,
         AppRoutingModule,
         NotificationModule,
