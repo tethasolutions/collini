@@ -1,81 +1,71 @@
-<kendo-scheduler      
-      [kendoSchedulerBinding]="calendar.activities"
-      [selectedDate]="selectedDate"
-      [resources]="calendar.resourcesSettings"
-      workDayStart="9:00"
-      workDayEnd="19:00"
-      [workWeekStart]="2"
-      [workWeekEnd]="6"
-      (eventClick)="modificaIntervento($event)"
-      class="calendar-interventi"
-      [selectedViewIndex]="1"
-      style="height: calc(100vh - 110px);">
+<kendo-scheduler [kendoSchedulerBinding]="calendar.activities" [selectedDate]="selectedDate"
+    [resources]="calendar.resourcesSettings" workDayStart="9:00" workDayEnd="19:00" [workWeekStart]="2"
+    [workWeekEnd]="6" (eventClick)="modificaIntervento($event)" class="calendar-interventi" [selectedViewIndex]="1"
+    style="height: calc(100vh - 110px);">
 
-      <ng-template kendoSchedulerToolbarTemplate>
-          <div class="scheduler-navigazione" kendoSchedulerToolbarNavigation></div>
-          <div class="scheduler-selettore-view" kendoSchedulerToolbarViewSelector></div>
-          <button class="nuovo-intervento-button btn btn-primary btn-sm" (click)="aggiungiNuovoIntervento()" themeColor="primary">
+    <ng-template kendoSchedulerToolbarTemplate>
+        <div class="scheduler-navigazione" kendoSchedulerToolbarNavigation></div>
+        <div class="scheduler-selettore-view" kendoSchedulerToolbarViewSelector></div>
+        <button class="nuovo-intervento-button btn btn-primary btn-sm" (click)="aggiungiNuovoIntervento()"
+            themeColor="primary">
             <i class="fas fa-plus"></i> NUOVO INTERVENTO
-          </button>
-      </ng-template>
-
-      <ng-template
-      kendoSchedulerAllDayEventTemplate
-      let-event="event"
-      let-resources="resources">
-      
-      <div>
-        <div class="calendar-icon-absolute calendar-icon-Ok" *ngIf="event.dataItem.status == 1" >
-          <i class="fas fa-circle-check"></i>
-        </div>
-        <div class="calendar-icon-absolute calendar-icon-Ko" *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3" >
-          <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <ng-container *ngFor="let resource of resources">
-          <!-- <span [style.background]="resource.color" *ngIf="!resource.length; else multipleResource">{{ resource.description }}</span> -->
-          <ng-template #multipleResource>
-            <span  *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
-          </ng-template>
-        </ng-container>
-      </div>      
-      <div *ngIf="event.dataItem.status == 0" >{{event.dataItem.cliente}}</div>
-      <div *ngIf="event.dataItem.status != 0" ><strong>{{event.dataItem.cliente}}</strong></div>
-      <!-- <button (click)="test(event)">Test</button> -->
-    
+        </button>
     </ng-template>
 
-      <ng-template
-        kendoSchedulerEventTemplate
-        let-event="event"
-        let-resources="resources">
-        
-        <div>
-          <div class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 1" >
-              <i class="fas fa-circle-check"></i>
+    <ng-template kendoSchedulerAllDayEventTemplate let-event="event" let-resources="resources">
 
-          </div>
-          <div class="calendar-icon calendar-icon-Ko" *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3" >
-            <i class="fas fa-exclamation-triangle"></i>
-          </div>
-          <ng-container *ngFor="let resource of resources">
-            <!-- <span *ngIf="!resource.length; else multipleResource"></span> -->
-            <ng-template #multipleResource>
-              <span *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
-            </ng-template>
-          </ng-container>
+        <div>
+            <div class="calendar-icon-absolute calendar-icon-Ok" *ngIf="event.dataItem.status == 1">
+                <i class="fas fa-circle-check"></i>
+            </div>
+            <div class="calendar-icon-absolute calendar-icon-Ko"
+                *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <ng-container *ngFor="let resource of resources">
+                <!-- <span [style.background]="resource.color" *ngIf="!resource.length; else multipleResource">{{ resource.description }}</span> -->
+                <ng-template #multipleResource>
+                    <span *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
+                </ng-template>
+            </ng-container>
+        </div>
+        <div *ngIf="event.dataItem.status == 0">{{event.dataItem.cliente}}</div>
+        <div *ngIf="event.dataItem.status != 0"><strong>{{event.dataItem.cliente}}</strong></div>
+        <!-- <button (click)="test(event)">Test</button> -->
+
+    </ng-template>
+
+    <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
+
+        <div>
+            <div class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 1">
+                <i class="fas fa-circle-check"></i>
+
+            </div>
+            <div class="calendar-icon calendar-icon-Ko"
+                *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <ng-container *ngFor="let resource of resources">
+                <!-- <span *ngIf="!resource.length; else multipleResource"></span> -->
+                <ng-template #multipleResource>
+                    <span *ngFor="let item of resource" [style.background]="item.color">{{ item.description }}</span>
+                </ng-template>
+            </ng-container>
         </div>
         <div class="cliente-title" *ngIf="event.dataItem.status == 0">{{event.dataItem.cliente}}</div>
-        <div class="cliente-title-status" *ngIf="event.dataItem.status != 0"><strong>{{event.dataItem.cliente}}</strong></div>
+        <div class="cliente-title-status" *ngIf="event.dataItem.status != 0"><strong>{{event.dataItem.cliente}}</strong>
+        </div>
         <!-- <div class="commessa-title">{{event.dataItem.commessa}}-{{event.dataItem.description}}</div>
          <button (click)="test(event)">Test</button> -->
-      
-      </ng-template>
 
-      <kendo-scheduler-day-view startTime="00:00" endTime="24:00"></kendo-scheduler-day-view>
-      <kendo-scheduler-week-view  startTime="00:00" endTime="24:00"></kendo-scheduler-week-view>
-      <kendo-scheduler-month-view> </kendo-scheduler-month-view>
-      <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
-      
+    </ng-template>
+
+    <kendo-scheduler-day-view startTime="00:00" endTime="24:00"></kendo-scheduler-day-view>
+    <kendo-scheduler-week-view startTime="00:00" endTime="24:00"></kendo-scheduler-week-view>
+    <kendo-scheduler-month-view> </kendo-scheduler-month-view>
+    <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
+
 </kendo-scheduler>
 
 <app-activity-modal #activityModal></app-activity-modal>

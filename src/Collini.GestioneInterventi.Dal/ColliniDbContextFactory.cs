@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -28,6 +29,13 @@ public class ColliniDbContextFactory : IDesignTimeDbContextFactory<ColliniDbCont
     private static string GetConnectionString()
     {
         var basePath = AppContext.BaseDirectory;
+        basePath= Path.GetDirectoryName(basePath);
+        basePath = Path.GetDirectoryName(basePath);
+        basePath = Path.GetDirectoryName(basePath);
+        basePath = Path.GetDirectoryName(basePath);
+        basePath = Path.GetDirectoryName(basePath);
+        basePath = Path.Combine(basePath, "Collini.GestioneInterventi.WebApi");
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(basePath)
             .AddJsonFile("appsettings.json");
