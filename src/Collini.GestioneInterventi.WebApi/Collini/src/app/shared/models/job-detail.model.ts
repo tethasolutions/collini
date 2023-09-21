@@ -24,6 +24,9 @@ export class JobDetailModel {
     productType: ProductTypeModel;
     status: JobStatusEnum;
     hasNotes: boolean;
+    activityStart: Date;
+    activityEnd: Date;
+    activityOperator: string;
 
     get expired(): boolean {
         const today = new Date();

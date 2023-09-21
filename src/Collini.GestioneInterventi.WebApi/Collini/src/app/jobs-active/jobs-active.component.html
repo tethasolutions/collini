@@ -2,6 +2,7 @@
     <div class="col">
         <h3 *ngIf="jobType == 'acceptance'">Richieste</h3>
         <h3 *ngIf="jobType == 'active'">In lavorazione</h3>
+        <h3 *ngIf="jobType == 'desk'">Banco</h3>
         <h3 *ngIf="jobType == 'completed'">Conti da fare</h3>
         <h3 *ngIf="jobType == 'billing'">Conti pronti</h3>
         <h3 *ngIf="jobType == 'paid'">Pagati</h3>
@@ -23,12 +24,12 @@
             
     <kendo-grid-column field="expired" [sortable]="false" [filterable]="false" title=" ">
         <ng-template kendoGridCellTemplate let-dataItem>
-            <div *ngIf="!dataItem.expired && dataItem.status < 4" class="job-active">&nbsp;</div>
-            <div *ngIf="dataItem.expired && dataItem.status < 4" class="job-expired">&nbsp;</div>
-            <div *ngIf="dataItem.status >= 4 " class="job-success">&nbsp;</div>
+            <div *ngIf="!dataItem.expired && (dataItem.status < 4 || dataItem.status == 8)" class="job-active">&nbsp;</div>
+            <div *ngIf="dataItem.expired && (dataItem.status < 4 || dataItem.status == 8)" class="job-expired">&nbsp;</div>
+            <div *ngIf="dataItem.status >= 4 && dataItem.status != 8" class="job-success">&nbsp;</div>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="jobDate" title="Data richiesta" filter="date" format="{0:d}"></kendo-grid-column>
+    <kendo-grid-column field="jobDate" title="Data ric." filter="date" format="{0:d}"></kendo-grid-column>
     <kendo-grid-column field="code" title="Progr."></kendo-grid-column>
     <kendo-grid-column field="customerName" title="Cliente">
         <ng-template kendoGridCellTemplate let-dataItem>
@@ -45,6 +46,13 @@
             <ng-template kendoGridCellTemplate let-dataItem>
                 <div [innerHTML]="dataItem.description"></div>
             </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="lastActivity" title="Intervento" *ngIf="jobType == 'completed'">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.activityStart | date : "dd/MM/yyyy"}}<br/>
+            {{dataItem.activityStart | date : "HH:mm"}} - {{dataItem.activityEnd | date : "HH:mm"}}<br/>
+            {{dataItem.activityOperator}}
+        </ng-template>
     </kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">
         <ng-template kendoGridCellTemplate let-dataItem>

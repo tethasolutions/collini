@@ -10,6 +10,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
     {
         public JobCounterDto Acceptance { get; set; }
         public JobCounterDto Actives { get; set; }
+        public JobCounterDto Desks { get; set; }
         public JobCounterDto Preventives { get; set; }
         public JobCounterDto SupplierOrders { get; set; }
         public JobCounterDto Interventions { get; set; }

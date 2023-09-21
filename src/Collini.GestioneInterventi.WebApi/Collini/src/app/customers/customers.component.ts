@@ -27,7 +27,7 @@ export class CustomersComponent extends BaseComponent implements OnInit {
   dataCustomers: GridDataResult;
   stateGridCustomers: State = {
     skip: 0,
-    take: 10,
+    take: 15,
     filter: {
       filters: [],
       logic: 'and'

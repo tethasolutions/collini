@@ -33,6 +33,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         Task<JobCountersDto> GetJobCounters();
         Task<IEnumerable<JobDetailReadModel>> GetJobsAcceptance();
         Task<IEnumerable<JobDetailReadModel>> GetJobsActive();
+        Task<IEnumerable<JobDetailReadModel>> GetJobsDesk();
         Task<IEnumerable<JobDetailReadModel>> GetJobsCompleted();
         Task<IEnumerable<JobDetailReadModel>> GetJobsBilling();
         Task<IEnumerable<JobDetailReadModel>> GetJobsPaid();
@@ -202,6 +203,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x=>x.ProductType)
                 .Include(x=>x.Notes)
                 .ThenInclude(x=>x.Attachments)
+                .Include(x=>x.Activities)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 
@@ -315,6 +317,10 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var ActivesActive = Actives.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
             var ActivesExpired = Actives.Count(x => x.ExpirationDate < DateTimeOffset.Now);
 
+            var Desks = jobs.Where(x => x.Status == JobStatus.Desk && x.Number != 0);
+            var DesksActive = Desks.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
+            var DesksExpired = Desks.Count(x => x.ExpirationDate < DateTimeOffset.Now);
+
             var Preventives = quotationRepository
                 .Query()
                 .AsNoTracking()
@@ -356,6 +362,11 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 {
                     Active = ActivesActive,
                     Expired = ActivesExpired
+                },
+                Desks = new JobCounterDto()
+                {
+                    Active = DesksActive,
+                    Expired = DesksExpired
                 },
                 Preventives = new JobCounterDto()
                 {
@@ -441,6 +452,21 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             return activesJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
 
+        public async Task<IEnumerable<JobDetailReadModel>> GetJobsDesk()
+        {
+            var completedJobs = await jobRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x => x.Customer)
+                .ThenInclude(x => x.Addresses)
+                .Include(x => x.CustomerAddress)
+                .Include(x => x.ProductType)
+                .Include(x => x.Activities)
+                .Where(x => x.Status == JobStatus.Desk && x.Number != 0)
+                .ToArrayAsync();
+            return completedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
+        }
+
         public async Task<IEnumerable<JobDetailReadModel>> GetJobsCompleted()
         {
             var completedJobs = await jobRepository
@@ -450,6 +476,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ThenInclude(x => x.Addresses)
                 .Include(x=>x.CustomerAddress)
                 .Include(x => x.ProductType)
+                .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
                 .Where(x => (x.Status == JobStatus.Completed || x.Status == JobStatus.Canceled) && x.Number != 0)
                 .ToArrayAsync();
             return completedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);

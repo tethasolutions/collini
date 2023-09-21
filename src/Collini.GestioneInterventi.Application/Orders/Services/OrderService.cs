@@ -46,7 +46,7 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
         }
 
 
-        public async Task UpdateOrder(long id,OrderDetailDto orderdtDto)
+        public async Task UpdateOrder(long id,OrderDetailDto orderDto)
         {
             if (id == 0)
                 throw new ColliniException("Impossibile aggiornare una nota con id 0");
@@ -60,7 +60,17 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             if (order == null)
                 throw new ColliniException($"Impossibile trovare una nota con id {id}");
 
-            orderdtDto.MapTo(order, mapper);
+            if (orderDto.Status == OrderStatus.CompletedDesk)
+            {
+                var job = await jobService.GetJob(orderDto.JobId);
+                if (job == null)
+                    throw new ColliniException("Job non trovato");
+                job.Status = JobStatus.Desk;
+                job.ExpirationDate = DateTimeOffset.Now.AddDays(7);
+                await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
+            }
+
+            orderDto.MapTo(order, mapper);
             orderRepository.Update(order);
             await dbContext.SaveChanges();
             
@@ -91,6 +101,9 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
                 .ThenInclude(y => y.Customer)
                 .Include(x => x.Job)
                 .ThenInclude(y => y.CustomerAddress)
+                .Include(x => x.Job)
+                .ThenInclude(y => y.Notes)
+                .ThenInclude(y => y.Attachments)
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
 

@@ -44,6 +44,9 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .MapMember(x=>x.CustomerName,y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
                 .MapMember(x=>x.CustomerFullAddress,y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City)
                 .MapMember(x => x.HasNotes, y => y.Notes.Count>0 ? y.Notes.FirstOrDefault().Attachments.Count > 0 : false)
+                .MapMember(x => x.ActivityStart, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Start)
+                .MapMember(x => x.ActivityEnd, y => y.Activities.OrderByDescending(z => z.End).FirstOrDefault().End)
+                .MapMember(x => x.ActivityOperator, y => y.Activities.OrderByDescending(z => z.End).FirstOrDefault().Operator.Name + " " + y.Activities.OrderByDescending(z => z.End).FirstOrDefault().Operator.Surname)
                 .MapMember(x => x.OperatorId, y => y.CreatedById);
 
             CreateMap<ProductType, ProductTypeDto>();

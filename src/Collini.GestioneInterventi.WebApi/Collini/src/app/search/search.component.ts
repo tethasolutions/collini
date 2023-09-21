@@ -33,7 +33,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
   dataSearch: GridDataResult;
   stateGridSearch: State = {
       skip: 0,
-      take: 10,
+      take: 15,
       filter: {
           filters: [],
           logic: 'and'

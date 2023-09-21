@@ -22,5 +22,6 @@ namespace Collini.GestioneInterventi.Application.Orders.DTOs
         public string? JobDescription { get; set; }
         public string? CustomerName { get; set; }
         public OrderStatus Status { get; set; }
+        public bool? HasNotes { get; set; }
     }
 }

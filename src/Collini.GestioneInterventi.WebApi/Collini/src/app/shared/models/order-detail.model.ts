@@ -16,6 +16,7 @@ export class OrderDetailModel {
     jobCode: string;
     jobDate: Date;
     jobDescription: string;
+    hasNotes: boolean;
 
     constructor() {
         this.id = null;

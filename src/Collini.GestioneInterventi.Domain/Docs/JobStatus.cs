@@ -9,5 +9,6 @@ public enum JobStatus
     Billed,
     Paid,
     Canceled,
-    Warranty
+    Warranty,
+    Desk
 }

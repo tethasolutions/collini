@@ -31,7 +31,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   dataOrders: GridDataResult;
   stateGridOrders: State = {
       skip: 0,
-      take: 10,
+      take: 15,
       filter: {
           filters: [],
           logic: 'and'

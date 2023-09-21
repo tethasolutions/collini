@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-9">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/calendar"
                         routerLinkActive="active">
@@ -12,7 +12,7 @@
                     <span><i class="fa fa-3x fa-calendar-days"></i></span>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/search"
                         routerLinkActive="active">
@@ -23,7 +23,7 @@
         </div>
         <hr/>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/acceptance"
                         routerLinkActive="active">
@@ -32,7 +32,7 @@
                     <div class="red-number bage-number">{{jobCounters.acceptance.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/active"
                         routerLinkActive="active">
@@ -41,7 +41,16 @@
                     <div class="red-number bage-number">{{jobCounters.actives.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <a class="btn btn-light dashboardBtn"
+                        routerLink="/jobs/desk"
+                        routerLinkActive="active">
+                    <div class="title">Banco</div>
+                    <div class="blue-number bage-number">{{jobCounters.desks.active}}</div>
+                    <div class="red-number bage-number">{{jobCounters.desks.expired}}</div>
+                </a>
+            </div>
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/quotations"
                         routerLinkActive="active">
@@ -50,7 +59,7 @@
                     <div class="red-number bage-number">{{jobCounters.preventives.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/orders"
                         routerLinkActive="active">
@@ -59,7 +68,7 @@
                     <div class="red-number bage-number">{{jobCounters.supplierOrders.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                     routerLink="/jobs/activities"
                     routerLinkActive="active">
@@ -68,7 +77,7 @@
                     <div class="red-number bage-number">{{jobCounters.interventions.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                     routerLink="/jobs/activities"
                     routerLinkActive="active">
@@ -77,7 +86,7 @@
                     <div class="red-number bage-number">{{jobCounters.completed.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/billing"
                         routerLinkActive="active">
@@ -86,7 +95,7 @@
                     <div class="red-number bage-number">{{jobCounters.billing.expired}}</div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a class="btn btn-light dashboardBtn"
                         routerLink="/jobs/paid"
                         routerLinkActive="active">

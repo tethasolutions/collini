@@ -5,5 +5,6 @@ public enum OrderStatus
     Pending,
     Sent,
     Completed,
-    Canceled
+    Canceled,
+    CompletedDesk
 }

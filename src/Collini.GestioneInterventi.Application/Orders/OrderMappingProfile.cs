@@ -23,7 +23,8 @@ namespace Collini.GestioneInterventi.Application.Orders
                 .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDate, y => y.Job.JobDate)
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name);
+                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name)
+                .MapMember(x => x.HasNotes, y => y.Job.Notes.Count > 0 ? y.Job.Notes.FirstOrDefault().Attachments.Count > 0 : false);
 
             CreateMap<OrderDetailDto,Order >()
                 .Ignore(x=>x.Supplier)

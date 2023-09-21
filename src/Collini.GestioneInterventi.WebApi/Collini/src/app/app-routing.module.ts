@@ -37,6 +37,10 @@ const routes: Routes = [
                 component: JobsActiveComponent
             },
             {
+                path: 'desk',
+                component: JobsActiveComponent
+            },
+            {
                 path: 'completed',
                 component: JobsActiveComponent
             },

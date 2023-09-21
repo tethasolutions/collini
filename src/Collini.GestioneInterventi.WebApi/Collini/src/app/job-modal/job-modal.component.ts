@@ -312,7 +312,8 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     return this.options.status == this.jobStatusEnum.Completed ||
       this.options.status == this.jobStatusEnum.Billing ||
       this.options.status == this.jobStatusEnum.Billed ||
-      this.options.status == this.jobStatusEnum.Paid;
+      this.options.status == this.jobStatusEnum.Paid ||
+      this.options.status == this.jobStatusEnum.Warranty;
   }
 
   handleFilter(value: string) {

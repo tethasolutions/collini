@@ -7,8 +7,8 @@
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
         <form name="updateActivityForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" *ngIf="options"  class="redimensionModal">
-            <div class="row form-group">
-                <!-- <div class="col-md-12">
+            <!--<div class="row form-group">
+                 <div class="col-md-12">
                     <kendo-formfield>
                         <label>Operatore inserimento</label>
                         <kendo-combobox [data]="operators" 
@@ -31,9 +31,9 @@
                             <i class="fa fa-edit"></i> Allegati
                         </button>
                     </div>
-                </div> -->
+                </div> 
             </div>
-            <!-- <div class="row form-group" *ngIf="options.id != null">               
+            <div class="row form-group" *ngIf="options.id != null">               
                 <div class="row">
                     <div class="col-md-12 text-right allegati-grid-header-buttons">
                         <button type="button" (click)="aggiungiAllegato()" class="btn btn-primary btn-sm">
@@ -71,7 +71,10 @@
                         <kendo-upload [(ngModel)]="this.attachmentsFileInfo" (select)="AttachmentSelect($event)" (success)="AttachmentExecutionSuccess($event)" [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" name="myUpload">
                             <ng-template kendoUploadFileInfoTemplate let-files>
                                 <span *ngIf="!isUploaded">{{ files[0].name }}</span>
-                                <a [href]="CreateUrl(files[0].name)" target="_blank" *ngIf="isUploaded">{{ files[0].name }}</a>
+                                <a [href]="CreateUrl(files[0].name)" target="_blank" *ngIf="isUploaded">
+                                    <img [src]="CreateUrl(files[0].name)" *ngIf="this.imageExtensions.includes(files[0].extension)" class="imgNote" />
+                                </a>
+                                <a [href]="CreateUrl(files[0].name)" target="_blank" *ngIf="isUploaded" class="ms-2">{{ files[0].name }}</a>
                             </ng-template>
                         </kendo-upload>
                     </kendo-formfield>

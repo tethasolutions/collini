@@ -21,7 +21,7 @@ export class UsersComponent extends BaseComponent implements OnInit {
     data: GridDataResult;
     state: State = {
         skip: 0,
-        take: 10,
+        take: 15,
         group: [],
         sort: []
     };

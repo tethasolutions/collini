@@ -32,7 +32,7 @@ export class ActivitiesComponent extends BaseComponent implements OnInit {
   dataActivities: GridDataResult;
   stateGridActivities: State = {
       skip: 0,
-      take: 10,
+      take: 15,
       filter: {
           filters: [],
           logic: 'and'

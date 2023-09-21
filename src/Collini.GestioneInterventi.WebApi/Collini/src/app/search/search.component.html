@@ -19,7 +19,7 @@
             </div>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="customerAddress.telephone" title="Telefono"></kendo-grid-column>
+    <kendo-grid-column field="customer.telephone" title="Telefono"></kendo-grid-column>
     <kendo-grid-column field="customerFullAddress" title="Indirizzo"></kendo-grid-column>
     <kendo-grid-column field="productType.name" title="Categoria"></kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">
@@ -42,7 +42,7 @@
     <kendo-grid-column field="lastActivity" title="Ultimo Interv." [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             <div>{{dataItem.lastActivity | activityStatus}}<br/>
-            {{dataItem.lastActivityDate | date : "dd/MM/yyyy"}}</div>
+            {{dataItem.lastActivityDate | date : "dd/MM/yyyy HH:mm"}}</div>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">

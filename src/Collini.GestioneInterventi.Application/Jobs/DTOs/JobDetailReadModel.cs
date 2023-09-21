@@ -30,5 +30,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public ProductTypeDto? ProductType { get; set; }
         public JobStatus Status { get; set; }
         public bool HasNotes { get; set; }
+        public DateTimeOffset? ActivityStart { get; set; }
+        public DateTimeOffset? ActivityEnd { get; set; }
+        public string? ActivityOperator { get; set; }
     }
 }

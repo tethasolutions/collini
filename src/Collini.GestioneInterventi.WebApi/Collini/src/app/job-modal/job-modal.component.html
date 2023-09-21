@@ -78,7 +78,7 @@
             <div class="row" *ngIf="options.customerId != null">
                 <div class="col-12">
                     <label *ngIf="options.customer.telephone != null">Telefono: {{options.customer.telephone}} </label>
-                    <label *ngIf="options.customer.email != null"> - Email: <a href='mailto:{{options.customer.email}}'>{{options.customer.email}}</a> </label>
+                    <label *ngIf="options.customer.email != null">&nbsp; - Email: <a href='mailto:{{options.customer.email}}'>{{options.customer.email}}</a> </label>
                 </div>
             </div>
             <div class="row">
@@ -151,15 +151,6 @@
                                         kendoEditorAlignJustifyButton
                                       ></kendo-toolbar-button>
                                     </kendo-toolbar-buttongroup>
-                                    <kendo-toolbar-dropdownlist
-                                      kendoEditorFormat
-                                    ></kendo-toolbar-dropdownlist>
-                                    <kendo-toolbar-dropdownlist
-                                      kendoEditorFontSize
-                                    ></kendo-toolbar-dropdownlist>
-                                    <kendo-toolbar-dropdownlist
-                                      kendoEditorFontFamily
-                                    ></kendo-toolbar-dropdownlist>
                                     <kendo-toolbar-colorpicker
                                       kendoEditorForeColor
                                     ></kendo-toolbar-colorpicker>
@@ -193,7 +184,7 @@
             <div class="row" *ngIf="isVisibleResultNote()">
                 <div class="col-md-12">
                     <kendo-formfield class="form-group">
-                        <label>Descrizione interventi</label>
+                        <label>Descrizione interventi</label> <label> - Ultimo intervento: {{options.activityStart  | date : "dd/MM/yyyy"}}</label>
                         <kendo-textarea [(ngModel)]="options.resultNote" name="resultNote"></kendo-textarea>
                     </kendo-formfield>
                 </div>

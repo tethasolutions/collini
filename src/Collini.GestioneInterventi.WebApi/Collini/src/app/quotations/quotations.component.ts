@@ -31,7 +31,7 @@ export class QuotationsComponent extends BaseComponent implements OnInit {
   dataQuotations: GridDataResult;
   stateGridQuotations: State = {
       skip: 0,
-      take: 10,
+      take: 15,
       filter: {
           filters: [],
           logic: 'and'

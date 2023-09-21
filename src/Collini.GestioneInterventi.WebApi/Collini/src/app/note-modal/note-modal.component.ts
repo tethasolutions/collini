@@ -44,7 +44,7 @@ export class NoteModalComponent extends ModalComponent<NoteModel> {
     private readonly _baseUrl = `${ApiUrls.baseApiUrl}/notes`;
     uploadSaveUrl = `${this._baseUrl}/note-attachment/upload-file`;
     uploadRemoveUrl = `${this._baseUrl}/note-attachment/remove-file`; 
-
+    imageExtensions:Array<string>= ['.jpg','.png','.jpeg','.gif','.bmp','.webp'];
     
 
     constructor(

@@ -51,7 +51,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     dataJobs: GridDataResult;
     stateGridJobs: State = {
         skip: 0,
-        take: 10,
+        take: 15,
         filter: {
             filters: [],
             logic: 'and'
@@ -76,6 +76,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         console.log(this._router.url);
         if (this._router.url === '/jobs/acceptance') { this.jobType = 'acceptance'; }
         if (this._router.url === '/jobs/active') { this.jobType = 'active'; }
+        if (this._router.url === '/jobs/desk') { this.jobType = 'desk'; }
         if (this._router.url === '/jobs/completed') { this.jobType = 'completed'; }
         if (this._router.url === '/jobs/billing') { this.jobType = 'billing'; }
         if (this._router.url === '/jobs/paid') { this.jobType = 'paid'; }
@@ -164,6 +165,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
         request.jobId = job.id;
         request.jobDescription = job.description;
+        request.description = job.description;
         request.jobCode = job.code;
         request.customerName = job.customer.customerDescription;
 

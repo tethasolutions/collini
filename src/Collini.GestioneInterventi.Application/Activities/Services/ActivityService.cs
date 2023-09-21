@@ -103,7 +103,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             if (activity.Status is ActivityStatus.Canceled)
             {
-                activity.Job.Status = JobStatus.Working;
+                activity.Job.Status = JobStatus.Paid;
                 activity.Job.ResultNote += (activity.Job.ResultNote is {Length: > 0} ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
             }
 

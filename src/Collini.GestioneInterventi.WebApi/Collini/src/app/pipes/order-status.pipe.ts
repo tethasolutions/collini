@@ -15,7 +15,9 @@ export class OrderStatusPipe extends BaseComponent implements PipeTransform {
             case OrderStatusEnum.Sent:
                 return 'Ordinato';
             case OrderStatusEnum.Completed:
-                return 'Completato';
+                return 'Completato Lav.';
+            case OrderStatusEnum.CompletedDesk:
+                return 'Completato Banco';
             case OrderStatusEnum.Canceled:
                 return "Annullato";
             default:

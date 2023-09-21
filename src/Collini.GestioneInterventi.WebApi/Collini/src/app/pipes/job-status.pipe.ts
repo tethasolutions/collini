@@ -14,6 +14,8 @@ export class JobStatusPipe extends BaseComponent implements PipeTransform {
                 return 'In Attesa';
             case JobStatusEnum.Working:
                 return 'In Lavorazione';
+            case JobStatusEnum.Desk:
+                return 'Banco';
             case JobStatusEnum.Billing:
                 return 'Da Fatturare';
             case JobStatusEnum.Billed:

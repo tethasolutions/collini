@@ -27,7 +27,11 @@
     <kendo-grid-column field="jobCode" title="Richiesta"></kendo-grid-column>
     <kendo-grid-column field="jobDate" title="Data richiesta" filter="date" format="{0:d}"></kendo-grid-column>
     <kendo-grid-column field="customerName" title="Fornitore"></kendo-grid-column>
-    <kendo-grid-column field="description" title="Descrizione"></kendo-grid-column>
+    <kendo-grid-column field="description" title="Descrizione">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div [innerHTML]="dataItem.description"></div>
+        </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.status | orderStatus}}
