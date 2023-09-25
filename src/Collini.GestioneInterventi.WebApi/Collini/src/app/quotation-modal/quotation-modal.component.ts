@@ -15,6 +15,8 @@ import { RemoveEvent, SuccessEvent, FileInfo,FileState } from "@progress/kendo-a
 import { QuotationAttachmentUploadFileModel } from '../shared/models/quotation-attachment-upload-file.model';
 import { Observable, filter, map, switchMap, tap } from 'rxjs';
 import { NoteModalComponent } from '../note-modal/note-modal.component';
+import { JobModalComponent } from '../job-modal/job-modal.component';
+import { JobsService } from '../services/jobs.service';
 
 @Component({
   selector: 'app-quotation-modal',
@@ -26,6 +28,7 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
   @ViewChild('form') form: NgForm;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
   @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+  @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
   
   readonly role = Role;
   name = '';
@@ -43,6 +46,7 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
 
   constructor(private readonly _messageBox: MessageBoxService, 
               private readonly _quotationsService: QuotationsService,
+              private readonly _jobsService: JobsService,
               private readonly _notesService: NotesService) {
     super();
   this.options = new QuotationDetailModel();
@@ -131,6 +135,26 @@ export class QuotationModalComponent extends ModalComponent<QuotationDetailModel
   }
 
   public loadData() {
+  }
+  
+  editJob() {
+
+    this._subscriptions.push(
+      this._jobsService.getJobDetail(this.options.jobId)
+        .pipe(
+          map(e => {
+            return e;
+          }),
+          switchMap(e => this.jobModal.open(e)),
+          filter(e => e),
+          map(() => this.jobModal.options),
+          switchMap(e => this._jobsService.updateJob(e, e.id)),
+          map(() => this.jobModal.options),
+          tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
+          tap(() => this.loadData())
+        )
+        .subscribe()
+    );
   }
 }
 

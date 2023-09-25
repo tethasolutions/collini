@@ -9,14 +9,23 @@
         <form class="k-form" name="updateOrderForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" class="redimensionModal"
             *ngIf="options">
             <div class="row">
-                <div class="col-md-12">
-                    {{options.jobCode}} - 
-                    {{options.customerName}}
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{options.jobCode}} -
+                            {{options.customerName}}
+                        </div>
+                        <div class="col-md-12" [innerHTML]="options.jobDescription">
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-12" [innerHTML]="options.jobDescription">
-                </div>
-                <div class="col-md-12">
-                    <hr/>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" title="Modifica Richiesta" (click)="editJob()">
+                        <i class="fa fa-edit"></i>
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -140,3 +149,4 @@
 
 <app-notes-modal notesType="order" #notesModal></app-notes-modal>
 <app-note-modal #noteModal></app-note-modal>
+<app-job-modal #jobModal></app-job-modal>

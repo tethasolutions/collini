@@ -211,7 +211,9 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
           switchMap(e => this._jobsService.updateJob(e, e.id)),
           map(() => this.jobModal.options),
           tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
-          tap(() => this.loadData())
+          tap(e => {
+            this.options.jobDescription = e.description;
+          })
         )
         .subscribe()
     );

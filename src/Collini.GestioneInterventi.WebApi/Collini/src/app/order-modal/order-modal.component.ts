@@ -15,6 +15,7 @@ import { OrderStatusEnum } from '../shared/enums/order-status.enum';
 import { JobsService } from '../services/jobs.service';
 import { CustomerModel } from '../shared/models/customer.model';
 import { NoteModalComponent } from '../note-modal/note-modal.component';
+import { JobModalComponent } from '../job-modal/job-modal.component';
 
 @Component({
     selector: 'app-order-modal',
@@ -26,6 +27,7 @@ export class OrderModalComponent extends ModalComponent<OrderDetailModel> {
     @ViewChild('form') form: NgForm;
     @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
     @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+    @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
     readonly role = Role;
     name = '';
 
@@ -98,4 +100,26 @@ export class OrderModalComponent extends ModalComponent<OrderDetailModel> {
             )
             .subscribe();
     }
+    
+  editJob() {
+
+    this._subscriptions.push(
+      this._jobsService.getJobDetail(this.options.jobId)
+        .pipe(
+          map(e => {
+            return e;
+          }),
+          switchMap(e => this.jobModal.open(e)),
+          filter(e => e),
+          map(() => this.jobModal.options),
+          switchMap(e => this._jobsService.updateJob(e, e.id)),
+          map(() => this.jobModal.options),
+          tap(e => this._messageBox.success(`Job '${e.description}' aggiornato`)),
+          tap(e => {
+            this.options.jobDescription = e.description;
+          })
+        )
+        .subscribe()
+    );
+  }
 }

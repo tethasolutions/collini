@@ -9,17 +9,26 @@
         <form class="k-form" name="updateQuotationForm" #form="ngForm" novalidate autocomplete="off"
             (ngSubmit)="close()" *ngIf="options" class="redimensionModal">
             <div class="row">
-                <div class="col-md-12">
-                    {{options.jobCode}} -
-                    {{options.customerName}}
+                <div class="col-md-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{options.jobCode}} -
+                            {{options.customerName}}
+                        </div>
+                        <div class="col-md-12">
+                            {{options.customerContacts}}
+                        </div>
+                        <div class="col-md-12" [innerHTML]="options.jobDescription">
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-12">
-                    {{options.customerContacts}}
-                </div>
-                <div class="col-md-12" [innerHTML]="options.jobDescription">
-                </div>
-                <div class="col-md-12">
-                    <hr />
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" title="Modifica Richiesta" (click)="editJob()">
+                        <i class="fa fa-edit"></i>
+                    </button>
                 </div>
             </div>
 
@@ -49,9 +58,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <kendo-formfield class="form-group">                            
+                        <kendo-formfield class="form-group">
                             <label>Allegato</label>
-                            <kendo-upload [(ngModel)]="this.attachments" (success)="AttachmentExecutionSuccess($event)" [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" [multiple]="false" name="myUpload">
+                            <kendo-upload [(ngModel)]="this.attachments" (success)="AttachmentExecutionSuccess($event)"
+                                [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" [multiple]="false"
+                                name="myUpload">
                                 <ng-template kendoUploadFileInfoTemplate let-files>
                                     <span *ngIf="!isUploaded">{{ files[0].name }}</span>
                                     <a [href]="CreateUrl()" target="_blank" *ngIf="isUploaded">{{ files[0].name }}</a>
@@ -84,3 +95,4 @@
 
 <app-notes-modal notesType="job" #notesModal></app-notes-modal>
 <app-note-modal #noteModal></app-note-modal>
+<app-job-modal #jobModal></app-job-modal>
