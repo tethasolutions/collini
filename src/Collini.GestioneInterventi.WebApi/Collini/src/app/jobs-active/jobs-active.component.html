@@ -47,7 +47,7 @@
                 <div [innerHTML]="dataItem.description"></div>
             </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="lastActivity" title="Intervento" *ngIf="jobType == 'completed'">
+    <kendo-grid-column field="activityStart" title="Intervento" *ngIf="jobType == 'completed'">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.activityStart | date : "dd/MM/yyyy"}}<br/>
             {{dataItem.activityStart | date : "HH:mm"}} - {{dataItem.activityEnd | date : "HH:mm"}}<br/>

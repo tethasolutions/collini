@@ -81,3 +81,8 @@
     top:-2px;
     z-index: 1;
 }
+
+
+::ng-deep .calendar-interventi .k-scheduler-monthview .k-scheduler-table td {
+    height: 200px !important;
+}

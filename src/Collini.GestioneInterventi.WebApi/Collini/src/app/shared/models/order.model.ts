@@ -12,6 +12,7 @@ export class OrderModel {
     status: OrderStatusEnum;
     jobId: number;
     customerName: string;
+    supplierName: string;
     jobCode: string;
     jobDate: Date;
     jobDescription: string;

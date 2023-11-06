@@ -81,6 +81,8 @@ namespace Collini.GestioneInterventi.Application.Orders.Services
             var orders = orderRepository
                 .Query()
                 .AsNoTracking()
+                .Include(x => x.Job)
+                .ThenInclude(x => x.Customer)
                 .Where (x => x.Status == OrderStatus.Pending || x.Status == OrderStatus.Sent)
                 .Project<OrderDetailDto>(mapper);
 

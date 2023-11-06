@@ -22,6 +22,7 @@ namespace Collini.GestioneInterventi.Application.Orders.DTOs
         public DateTimeOffset? JobDate { get; set; }
         public string? JobDescription { get; set; }
         public string? CustomerName { get; set; }
+        public string? SupplierName { get; set; }
         public OrderStatus Status { get; set; }
     }
 }
