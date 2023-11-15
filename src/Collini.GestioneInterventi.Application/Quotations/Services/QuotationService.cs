@@ -25,7 +25,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         Task<QuotationDetailDto> CreateQuotation(QuotationDetailDto quotation);
         Task UpdateQuotation(long id, QuotationDetailDto quotation);
         Task<IEnumerable<QuotationReadModel>> getAllQuotations();
-
+        Task DeleteQuotation(long id);
 
         Task<IEnumerable<QuotationAttachmentReadModel>> GetQuotationAttachments(long quotationId);
         Task<QuotationAttachmentReadModel> GetQuotationAttachmentDetail(long attachmentId);
@@ -245,7 +245,21 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
             return attachment.MapTo<QuotationAttachmentDto>(mapper);
         }
 
+        public async Task DeleteQuotation(long id)
+        {
+            if (id == 0)
+                throw new ColliniException("Impossible eliminare il preventivo con id 0");
 
+            var quotation = await quotationRepository
+                .Query()
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
 
+            if (quotation == null)
+                throw new ColliniException($"Impossibile trovare il preventivo con id {id}");
+
+            quotationRepository.Delete(quotation);
+            await dbContext.SaveChanges();
+        }
     }
 }

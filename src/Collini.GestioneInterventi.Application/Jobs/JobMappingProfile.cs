@@ -34,6 +34,7 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .Ignore(x => x.Orders)
                 .Ignore(x => x.Activities)
                 .Ignore(x => x.Customer)
+                .MapMember(x => x.CreatedById, y => y.OperatorId)
                 .IgnoreCommonMembers();
            
             CreateMap<Job, JobDetailDto>()

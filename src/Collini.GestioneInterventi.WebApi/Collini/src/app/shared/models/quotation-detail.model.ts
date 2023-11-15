@@ -18,6 +18,9 @@ export class QuotationDetailModel {
     attachmentDisplayName: string;
     attachmentFileName: string;
     hasNotes: boolean;
+    activityStart: Date;
+    activityEnd: Date;
+    activityOperator: string;
 
     constructor() {
         this.id = null;

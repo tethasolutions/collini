@@ -118,6 +118,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             }
 
             jobDto.MapTo(job, mapper);
+            //se ho cambiato il creatore della richiesta lo aggiorno
+            if (job.CreatedById != jobDto.OperatorId) job.CreatedById = jobDto.OperatorId;
             jobRepository.Update(job);
             await dbContext.SaveChanges();
 

@@ -154,6 +154,13 @@ public class QuotationsController : ColliniApiController
         return Ok();
     }
 
+    [HttpDelete("quotation/{id}")]
+    public async Task<IActionResult> DeleteJob(long id)
+    {
+        await quotationService.DeleteQuotation(id);
+        return Ok();
+    }
+
     private async Task<string> SaveFile(IFormFile file)
     {
         var extension = Path.GetExtension(file.FileName);

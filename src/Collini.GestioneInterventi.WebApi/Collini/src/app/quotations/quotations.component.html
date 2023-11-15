@@ -27,6 +27,13 @@
     <kendo-grid-column field="createdOn" title="Data prev." filter="date" format="{0:d}"></kendo-grid-column>
     <kendo-grid-column field="customerName" title="Cliente"></kendo-grid-column>
     <kendo-grid-column field="customerContacts" title="Contatti"></kendo-grid-column>
+    <kendo-grid-column field="activityStart" title="Intervento">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.activityStart | date : "dd/MM/yyyy"}}<br/>
+            {{dataItem.activityStart | date : "HH:mm"}} - {{dataItem.activityEnd | date : "HH:mm"}}<br/>
+            {{dataItem.activityOperator}}
+        </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.status | quotationStatus}}
@@ -40,6 +47,9 @@
                 </button>
                 <button class="btn btn-primary btn-sm grid-action-button" title="Modifica" (click)="editQuotation(dataItem)">
                     <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" title="Elimina" (click)="deleteJob(dataItem)">
+                    <i class="fas fa-trash"></i>
                 </button>
             </div>
         </ng-template>

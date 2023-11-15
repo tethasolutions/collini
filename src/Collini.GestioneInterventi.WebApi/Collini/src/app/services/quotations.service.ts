@@ -160,4 +160,11 @@ export class QuotationsService {
             );
     }
     
+    deleteQuotation(id: number) {
+        return this._http.delete<void>(`${this._baseUrl}/quotation/${id}`)
+            .pipe(
+                map(() => { })
+            );
+    }
+    
 }

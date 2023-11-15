@@ -12,7 +12,7 @@
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Operatore inserimento</label>
-                        <kendo-combobox [data]="operators" [(ngModel)]="options.operatorId" name="operatorId" [disabled]="options.id != null"
+                        <kendo-combobox [data]="operators" [(ngModel)]="options.operatorId" name="operatorId" 
                             suggest="true" textField="description" [valuePrimitive]="true" valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>

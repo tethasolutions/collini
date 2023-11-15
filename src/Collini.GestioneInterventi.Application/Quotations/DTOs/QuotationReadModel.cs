@@ -22,6 +22,9 @@ namespace Collini.GestioneInterventi.Application.Quotations.DTOs
         public DateTimeOffset? JobDate { get; set; }
         public string? JobDescription { get; set; }
         public QuotationAttachmentReadModel? Attachment { get; set; }
+        public DateTimeOffset? ActivityStart { get; set; }
+        public DateTimeOffset? ActivityEnd { get; set; }
+        public string? ActivityOperator { get; set; }
 
     }
 }

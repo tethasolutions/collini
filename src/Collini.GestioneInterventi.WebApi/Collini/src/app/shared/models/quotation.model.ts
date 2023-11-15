@@ -14,6 +14,9 @@ export class QuotationModel {
     jobCode: string;
     jobDate: Date;
     jobDescription: string;
+    activityStart: Date;
+    activityEnd: Date;
+    activityOperator: string;
     
     get expired(): boolean {
         const today = new Date();
