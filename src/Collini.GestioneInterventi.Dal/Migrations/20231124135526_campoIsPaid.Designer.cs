@@ -4,6 +4,7 @@ using Collini.GestioneInterventi.Dal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Collini.GestioneInterventi.Dal.Migrations
 {
     [DbContext(typeof(ColliniDbContext))]
-    partial class ColliniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231124135526_campoIsPaid")]
+    partial class campoIsPaid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

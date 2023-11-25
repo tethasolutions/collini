@@ -5,5 +5,6 @@ public enum ActivityStatus
     Planned,
     CompletedSuccessfully,
     CompletedUnsuccessfully,
-    Canceled
+    Canceled,
+    ToComplete
 }

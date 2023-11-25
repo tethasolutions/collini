@@ -577,3 +577,59 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230903170110_release4')
+BEGIN
+    DECLARE @var3 sysname;
+    SELECT @var3 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Registry].[ContactAddresses]') AND [c].[name] = N'StreetAddress');
+    IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [Registry].[ContactAddresses] DROP CONSTRAINT [' + @var3 + '];');
+    ALTER TABLE [Registry].[ContactAddresses] ALTER COLUMN [StreetAddress] nvarchar(256) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230903170110_release4')
+BEGIN
+    DECLARE @var4 sysname;
+    SELECT @var4 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Registry].[ContactAddresses]') AND [c].[name] = N'Province');
+    IF @var4 IS NOT NULL EXEC(N'ALTER TABLE [Registry].[ContactAddresses] DROP CONSTRAINT [' + @var4 + '];');
+    ALTER TABLE [Registry].[ContactAddresses] ALTER COLUMN [Province] nvarchar(128) NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20230903170110_release4')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20230903170110_release4', N'7.0.5');
+END;
+GO
+
+COMMIT;
+GO
+
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231124135526_campoIsPaid')
+BEGIN
+    ALTER TABLE [Docs].[Jobs] ADD [IsPaid] bit NULL;
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20231124135526_campoIsPaid')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20231124135526_campoIsPaid', N'7.0.5');
+END;
+GO
+
+COMMIT;
+GO
+

@@ -33,5 +33,6 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public DateTimeOffset? ActivityStart { get; set; }
         public DateTimeOffset? ActivityEnd { get; set; }
         public string? ActivityOperator { get; set; }
+        public bool? IsPaid { get; set; }
     }
 }

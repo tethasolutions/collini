@@ -42,7 +42,8 @@
     <kendo-grid-column field="lastActivity" title="Ultimo Interv." [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             <div>{{dataItem.lastActivity | activityStatus}}<br/>
-            {{dataItem.lastActivityDate | date : "dd/MM/yyyy HH:mm"}}</div>
+            {{dataItem.lastActivityDate | date : "dd/MM/yyyy HH:mm"}}<br/>
+            {{dataItem.lastActivityOperator}}</div>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">

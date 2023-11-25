@@ -22,5 +22,6 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public long SourceId { get; set; }
         public long ProductTypeId { get; set; }
         public JobStatus Status { get; set; }
+        public bool? IsPaid { get; set; }
     }
 }

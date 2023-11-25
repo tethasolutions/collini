@@ -91,6 +91,21 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     );
   }
 
+  payJob() {
+    this._messageBox.confirm(`Salvare e impostare a pagato l'intervento?`, 'Conferma l\'azione').subscribe(result => {
+      if (result == true) {
+        this._subscriptions.push(
+          this._activityService.payJob(this.options.id)
+            .pipe(
+              tap(e => this._messageBox.success(`Intervento aggiornato con successo`)),
+              tap(() => this.dismiss())
+            )
+            .subscribe()
+        );
+      }
+    });
+  }
+
   copyActivity() {
     this.copyActivityModal.open(this.options.id)
       .pipe(
@@ -151,19 +166,19 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     ); */
   }
 
-  viewLastNote() {     
+  viewLastNote() {
     this.notesModal.id = this.options.jobId;
     this._subscriptions.push(
-            this._notesService.getLastJobNote(this.options.jobId)
-            .pipe(        
-                switchMap(e => this.noteModal.open(e)),
-                filter(e => e),
-                map(() => this.noteModal.options),
-                switchMap(e => this._notesService.updateNote(e, e.id)),
-                map(() => this.noteModal.options),
-                tap(e => this._messageBox.success(`Nota aggiornata`)),           
-            )
-    .subscribe()
+      this._notesService.getLastJobNote(this.options.jobId)
+        .pipe(
+          switchMap(e => this.noteModal.open(e)),
+          filter(e => e),
+          map(() => this.noteModal.options),
+          switchMap(e => this._notesService.updateNote(e, e.id)),
+          map(() => this.noteModal.options),
+          tap(e => this._messageBox.success(`Nota aggiornata`)),
+        )
+        .subscribe()
     );
   }
 

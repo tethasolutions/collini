@@ -51,7 +51,8 @@
         <ng-template kendoGridCellTemplate let-dataItem>
             {{dataItem.activityStart | date : "dd/MM/yyyy"}}<br/>
             {{dataItem.activityStart | date : "HH:mm"}} - {{dataItem.activityEnd | date : "HH:mm"}}<br/>
-            {{dataItem.activityOperator}}
+            {{dataItem.activityOperator}}<br/>            
+            <p *ngIf="dataItem.isPaid" ><strong>Pagato</strong></p>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">

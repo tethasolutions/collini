@@ -64,6 +64,7 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .MapMember(x => x.LastOrderDate, y => y.Orders.OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn)
                 .MapMember(x => x.LastActivity, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Status)
                 .MapMember(x => x.LastActivityDate, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Start)
+                .MapMember(x => x.LastActivityOperator, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Operator.Name + " " + y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Operator.Surname)
                 .Ignore(x => x.OperatorId);
         }
     }

@@ -12,6 +12,7 @@ public class Job : FullAuditedEntity
     public string? ResultNote { get; set; }
     public JobStatus Status { get; set; }
     public DateTimeOffset? StatusChangedOn { get; set; }
+    public bool? IsPaid { get; set; }
 
     public long CustomerId { get; set; }
     public Contact? Customer { get; set; }

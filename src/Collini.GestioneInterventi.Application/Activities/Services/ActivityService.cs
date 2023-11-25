@@ -31,6 +31,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         Task<ActivityViewModel> GetActivity(long id);
 
         Task<CalendarViewModel> GetCalendar();
+        Task PayJob(long id);
         Task DeleteActivity(long id);
 
     }
@@ -103,7 +104,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                     activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
                 }
 
-                if (activity.Status is ActivityStatus.Canceled)
+                if (activity.Status is ActivityStatus.Canceled
+                                    or ActivityStatus.ToComplete)
                 {
                     activity.Job.Status = JobStatus.Working;
                     activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
@@ -221,6 +223,29 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 .Project<ActivityDto>(mapper);
 
             return activities;
+        }
+
+        public async Task PayJob(long id)
+        {
+            if (id == 0)
+                throw new ColliniException("Impossible salvare intervento con id 0");
+
+            var activity = await activityRepository
+                .Query()
+                .Include(x => x.Job)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if (activity == null)
+                throw new ColliniException($"Impossibile trovare l'intervento con id {id}");
+
+            activity.Status = ActivityStatus.CompletedSuccessfully;
+            activity.Job.Status = JobStatus.Completed;
+            activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
+            activity.Job.IsPaid= true;
+
+            activityRepository.Update(activity);
+            await dbContext.SaveChanges();
         }
 
         public async Task DeleteActivity(long id)

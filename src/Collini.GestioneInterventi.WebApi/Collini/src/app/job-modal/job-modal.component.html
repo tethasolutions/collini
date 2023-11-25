@@ -6,13 +6,13 @@
             <div class="k-window-title">Richiesta</div>
             <button kendoWindowCloseAction></button>
         </kendo-window-titlebar>
-        <form class="k-form" name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()" class="redimensionModal"
-            *ngIf="options">
+        <form class="k-form" name="updateUserForm" #form="ngForm" novalidate autocomplete="off" (ngSubmit)="close()"
+            class="redimensionModal" *ngIf="options">
             <div class="row">
                 <div class="col-md-4">
                     <kendo-formfield class="form-group">
                         <label>Operatore inserimento</label>
-                        <kendo-combobox [data]="operators" [(ngModel)]="options.operatorId" name="operatorId" 
+                        <kendo-combobox [data]="operators" [(ngModel)]="options.operatorId" name="operatorId"
                             suggest="true" textField="description" [valuePrimitive]="true" valueField="id" required>
                         </kendo-combobox>
                         <kendo-formerror>Operatore è un campo obbligatorio</kendo-formerror>
@@ -41,8 +41,7 @@
                         <kendo-combobox [data]="customersFiltered" [(ngModel)]="options.customerId" name="customerId"
                             suggest="true" class="customer-combobox" textField="customerDescriptionWithAddress"
                             [valuePrimitive]="true" valueField="id" (valueChange)="customerChanged($event)"
-                            [filterable]="true" (filterChange)="handleFilter($event)"
-                            required>
+                            [filterable]="true" (filterChange)="handleFilter($event)" required>
                         </kendo-combobox>
                         <button [disabled]="options.customerId == null" (click)="editCustomer()" type="button"
                             class="btn btn-primary add-address-button" title="Modifica cliente">
@@ -78,7 +77,8 @@
             <div class="row" *ngIf="options.customerId != null">
                 <div class="col-12">
                     <label *ngIf="options.customer.telephone != null">Telefono: {{options.customer.telephone}} </label>
-                    <label *ngIf="options.customer.email != null">&nbsp; - Email: <a href='mailto:{{options.customer.email}}'>{{options.customer.email}}</a> </label>
+                    <label *ngIf="options.customer.email != null">&nbsp; - Email: <a
+                            href='mailto:{{options.customer.email}}'>{{options.customer.email}}</a> </label>
                 </div>
             </div>
             <div class="row">
@@ -119,56 +119,38 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- <kendo-formfield class="form-group"> -->
-                        <label>Descrizione richiesta</label>
-                        <kendo-editor name="description" [(ngModel)]="options.description" required>
-                            <kendo-toolbar>
-                                    <kendo-toolbar-button kendoEditorSelectAllButton></kendo-toolbar-button>
-                                    <kendo-toolbar-buttongroup>
-                                      <kendo-toolbar-button kendoEditorUndoButton></kendo-toolbar-button>
-                                      <kendo-toolbar-button kendoEditorRedoButton></kendo-toolbar-button>
-                                    </kendo-toolbar-buttongroup>
-                                    <kendo-toolbar-buttongroup>
-                                      <kendo-toolbar-button kendoEditorBoldButton></kendo-toolbar-button>
-                                      <kendo-toolbar-button kendoEditorItalicButton></kendo-toolbar-button>
-                                      <kendo-toolbar-button
-                                        kendoEditorUnderlineButton
-                                      ></kendo-toolbar-button>
-                                      <kendo-toolbar-button
-                                        kendoEditorStrikethroughButton
-                                      ></kendo-toolbar-button>
-                                    </kendo-toolbar-buttongroup>
-                                    <kendo-toolbar-buttongroup>
-                                      <kendo-toolbar-button
-                                        kendoEditorAlignLeftButton
-                                      ></kendo-toolbar-button>
-                                      <kendo-toolbar-button
-                                        kendoEditorAlignCenterButton
-                                      ></kendo-toolbar-button>
-                                      <kendo-toolbar-button
-                                        kendoEditorAlignRightButton
-                                      ></kendo-toolbar-button>
-                                      <kendo-toolbar-button
-                                        kendoEditorAlignJustifyButton
-                                      ></kendo-toolbar-button>
-                                    </kendo-toolbar-buttongroup>
-                                    <kendo-toolbar-colorpicker
-                                      kendoEditorForeColor
-                                    ></kendo-toolbar-colorpicker>
-                                    <kendo-toolbar-buttongroup>
-                                      <kendo-toolbar-button
-                                        kendoEditorInsertUnorderedListButton
-                                      ></kendo-toolbar-button>
-                                      <kendo-toolbar-button
-                                        kendoEditorInsertOrderedListButton
-                                      ></kendo-toolbar-button>
-                                      <kendo-toolbar-button kendoEditorIndentButton></kendo-toolbar-button>
-                                      <kendo-toolbar-button kendoEditorOutdentButton></kendo-toolbar-button>
-                                    </kendo-toolbar-buttongroup>
+                    <label>Descrizione richiesta</label>
+                    <kendo-editor name="description" [(ngModel)]="options.description" required>
+                        <kendo-toolbar>
+                            <kendo-toolbar-button kendoEditorSelectAllButton></kendo-toolbar-button>
+                            <kendo-toolbar-buttongroup>
+                                <kendo-toolbar-button kendoEditorUndoButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorRedoButton></kendo-toolbar-button>
+                            </kendo-toolbar-buttongroup>
+                            <kendo-toolbar-buttongroup>
+                                <kendo-toolbar-button kendoEditorBoldButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorItalicButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorUnderlineButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorStrikethroughButton></kendo-toolbar-button>
+                            </kendo-toolbar-buttongroup>
+                            <kendo-toolbar-buttongroup>
+                                <kendo-toolbar-button kendoEditorAlignLeftButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorAlignCenterButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorAlignRightButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorAlignJustifyButton></kendo-toolbar-button>
+                            </kendo-toolbar-buttongroup>
+                            <kendo-toolbar-colorpicker kendoEditorForeColor></kendo-toolbar-colorpicker>
+                            <kendo-toolbar-buttongroup>
+                                <kendo-toolbar-button kendoEditorInsertUnorderedListButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorInsertOrderedListButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorIndentButton></kendo-toolbar-button>
+                                <kendo-toolbar-button kendoEditorOutdentButton></kendo-toolbar-button>
+                            </kendo-toolbar-buttongroup>
 
-                            </kendo-toolbar>
-                        </kendo-editor>
-                        <!-- <kendo-textarea [(ngModel)]="options.description" name="description" required></kendo-textarea> -->
-                        <!-- <kendo-formerror>Descrizione richiesta è un campo obbligatorio</kendo-formerror> -->
+                        </kendo-toolbar>
+                    </kendo-editor>
+                    <!-- <kendo-textarea [(ngModel)]="options.description" name="description" required></kendo-textarea> -->
+                    <!-- <kendo-formerror>Descrizione richiesta è un campo obbligatorio</kendo-formerror> -->
                     <!-- </kendo-formfield> -->
                 </div>
                 <div *ngIf="options.id != null" class="col-md-4">
@@ -182,11 +164,20 @@
             </div>
 
             <div class="row" *ngIf="isVisibleResultNote()">
-                <div class="col-md-12">
+                <div class="col-md-10">
                     <kendo-formfield class="form-group">
-                        <label>Descrizione interventi</label> <label> - Ultimo intervento: {{options.activityStart  | date : "dd/MM/yyyy"}}</label>
+                        <label>Descrizione interventi</label> <label> - Ultimo intervento: {{options.activityStart |
+                            date : "dd/MM/yyyy"}}</label>
                         <kendo-textarea [(ngModel)]="options.resultNote" name="resultNote"></kendo-textarea>
                     </kendo-formfield>
+                </div>
+                <div class="col-md-2">
+                    <label>Pagato</label>
+                    <div class="form-group">
+                        <kendo-switch name="isPaid" [(ngModel)]="options.isPaid" onLabel="Si" offLabel="No">
+                        </kendo-switch>
+                        <div class="validation-message" [control]="form.controls['isPaid']"></div>
+                    </div>
                 </div>
             </div>
 

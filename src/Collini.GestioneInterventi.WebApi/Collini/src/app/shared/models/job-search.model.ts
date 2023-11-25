@@ -32,4 +32,5 @@ export class JobSearchModel {
     lastOrderDate: Date;
     lastActivity: ActivityStatusEnum;
     lastActivityDate: Date;
+    lastActivityOperator: string;
 }

@@ -79,7 +79,7 @@
                 <div class="col-md-8">
                     <kendo-formfield class="form-group">
                         <label>Descrizione</label>
-                        <kendo-textarea [(ngModel)]="options.description" name="description"></kendo-textarea>
+                        <kendo-textarea [(ngModel)]="options.description" [rows]="5" name="description"></kendo-textarea>
                     </kendo-formfield>
                 </div>
                 <div *ngIf="options.id != null" class="col-md-4">
@@ -112,6 +112,9 @@
                 </button>
                 <button *ngIf="options.id != null" type="button" class="btn btn-primary me-2" title="Copia" (click)="copyActivity()">
                     <i class="fa fa-copy"></i> Duplica
+                </button>
+                <button *ngIf="options.id != null" type="button" class="btn btn-success me-2" title="Pagato" (click)="payJob()">
+                    <i class="fa fa-euro-sign"></i> SALVA e PAGATO
                 </button>
                 <button type="submit" class="btn btn-primary">
                     SALVA

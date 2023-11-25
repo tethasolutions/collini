@@ -83,6 +83,17 @@ public class ActivitiesController : ColliniApiController
         return Ok();
     }
 
+    [HttpGet("payjob/{id}")]
+    public async Task<IActionResult> PayJob(long id)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await activityService.PayJob(id);
+        return Ok();
+    }
+
     [HttpDelete("activity/{id}")]
     public async Task<IActionResult> DeleteActivity(long id)
     {

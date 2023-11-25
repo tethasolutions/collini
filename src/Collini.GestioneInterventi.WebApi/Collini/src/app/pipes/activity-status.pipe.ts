@@ -18,6 +18,8 @@ export class ActivityStatusPipe extends BaseComponent implements PipeTransform {
                 return 'Completato KO';
             case ActivityStatusEnum.Canceled:
                 return "Annullato";
+            case ActivityStatusEnum.ToComplete:
+                return "Da Terminare";
             default:
                 return value;
         }

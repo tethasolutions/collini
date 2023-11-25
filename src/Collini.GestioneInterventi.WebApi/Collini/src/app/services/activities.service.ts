@@ -134,6 +134,13 @@ export class ActivitiesService {
             );
     }
     
+    payJob(activityId: number) {
+        return this._http.get<void>(`${this._baseUrl}/payjob/${activityId}`)
+            .pipe(
+                map(() => { })
+            );
+    }
+
     deleteActivity(id: number) {
         return this._http.delete<void>(`${this._baseUrl}/activity/${id}`)
             .pipe(

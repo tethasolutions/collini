@@ -27,6 +27,7 @@ export class JobDetailModel {
     activityStart: Date;
     activityEnd: Date;
     activityOperator: string;
+    isPaid: boolean;
 
     get expired(): boolean {
         const today = new Date();
@@ -56,5 +57,6 @@ export class JobDetailModel {
         this.productType = new ProductTypeModel();
         this.status = JobStatusEnum.Pending;
         this.hasNotes = false;
+        this.isPaid = false;
     }
 }
