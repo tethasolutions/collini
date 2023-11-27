@@ -33,4 +33,5 @@ export class JobSearchModel {
     lastActivity: ActivityStatusEnum;
     lastActivityDate: Date;
     lastActivityOperator: string;
+    lastOperatorColor: string;
 }

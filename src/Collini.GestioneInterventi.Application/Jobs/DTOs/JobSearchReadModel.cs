@@ -36,5 +36,6 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public ActivityStatus? LastActivity { get; set; }
         public DateTimeOffset? LastActivityDate { get; set; }
         public string? LastActivityOperator { get; set; }
+        public string? LastOperatorColor { get; set; }
     }
 }

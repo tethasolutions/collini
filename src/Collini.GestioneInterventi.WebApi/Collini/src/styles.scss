@@ -229,3 +229,18 @@ kendo-scheduler .k-event, .k-event
     padding-block: 0.1rem;
     padding-inline: 0.1rem;
 }
+
+.operator-color {
+    padding: 0 !important;
+    padding-block: 0 !important;
+    padding-inline: 0 !important;
+    position: relative !important;
+    &>div {
+        position: absolute;
+        top:0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px solid #FFF;
+    }
+}

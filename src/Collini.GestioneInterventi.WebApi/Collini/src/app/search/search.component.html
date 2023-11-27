@@ -9,6 +9,11 @@
             [group]="stateGridSearch.group" filterable="menu" 
             [sortable]="true" [pageable]="true" scrollable="none"
             (dataStateChange)="dataStateChange($event)">
+    <kendo-grid-column field="lastOperatorColor" [sortable]="false" [filterable]="false" title=" " class="operator-color">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <div [style.background-color]="dataItem.lastOperatorColor">&nbsp;</div>
+        </ng-template>>
+    </kendo-grid-column>
     <kendo-grid-column field="jobDate" title="Data richiesta" filter="date" format="{0:d}"></kendo-grid-column>
     <kendo-grid-column field="code" title="Progr."></kendo-grid-column>
     <kendo-grid-column field="customerName" title="Cliente">
