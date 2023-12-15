@@ -309,11 +309,12 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   }
 
   isVisibleResultNote(): boolean {
-    return this.options.status == this.jobStatusEnum.Completed ||
-      this.options.status == this.jobStatusEnum.Billing ||
-      this.options.status == this.jobStatusEnum.Billed ||
-      this.options.status == this.jobStatusEnum.Paid ||
-      this.options.status == this.jobStatusEnum.Warranty;
+    return true;
+    // this.options.status == this.jobStatusEnum.Completed ||
+    //   this.options.status == this.jobStatusEnum.Billing ||
+    //   this.options.status == this.jobStatusEnum.Billed ||
+    //   this.options.status == this.jobStatusEnum.Paid ||
+    //   this.options.status == this.jobStatusEnum.Warranty;
   }
 
   handleFilter(value: string) {

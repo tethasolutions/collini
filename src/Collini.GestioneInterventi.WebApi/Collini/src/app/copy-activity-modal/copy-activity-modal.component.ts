@@ -4,21 +4,19 @@ import { ModalComponent } from '../shared/modal.component';
 import { NgForm } from '@angular/forms';
 import { Role } from '../services/security/models';
 import { MessageBoxService } from '../services/common/message-box.service';
-import { listEnum, markAsDirty } from '../services/common/functions';
 import { JobOperatorModel } from '../shared/models/job-operator.model';
 import { JobsService } from '../services/jobs.service';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
-import { SimpleLookupModel } from '../shared/models/simple-lookup.model';
-import { JobModel } from '../shared/models/job.model';
 import { Observable } from 'rxjs';
 import { CopyActivityModel } from '../shared/models/copy-activity.model';
 import { ActivitiesService } from '../services/activities.service';
+import { markAsDirty } from '../services/common/functions';
 
 @Component({
   selector: 'app-copy-activity-modal',
   templateUrl: './copy-activity-modal.component.html'
 })
-export class CopyActivityModalComponent extends ModalComponent<number> {
+export class CopyActivityModalComponent extends ModalComponent<ActivityModel> {
 
     @ViewChild('form') form: NgForm;
     readonly role = Role;
@@ -37,13 +35,14 @@ export class CopyActivityModalComponent extends ModalComponent<number> {
         super();
     }
 
-    override open(options: number): Observable<boolean> 
+    override open(options: ActivityModel): Observable<boolean>
     {
-      const result = super.open(options);  
-      this.loadData()  
+      const result = super.open(options);
+
+      this.loadData()
       this.operatorId = null;
-      this.start = new Date()
-      this.end = new Date(this.start.getTime() + (1000 * 60 * 60));
+      this.start = options.start;
+      this.end = options.end;
       return result;
     }
     
@@ -53,7 +52,7 @@ export class CopyActivityModalComponent extends ModalComponent<number> {
         return;
       }
       const request = new CopyActivityModel();
-      request.id = this.options;
+      request.id = this.options.id;
       request.newOperatorId = this.operatorId;
       request.start = this.start;
       request.end = this.end;

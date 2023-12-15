@@ -411,6 +411,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ThenInclude(x => x.Addresses)
                 .Include(x=>x.CustomerAddress)
                 .Include(x => x.ProductType)
+                .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
                 .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid || x.Status == JobStatus.Warranty) && x.Number != 0)
                 .ToArrayAsync();
             return paidJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
@@ -464,6 +466,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x => x.CustomerAddress)
                 .Include(x => x.ProductType)
                 .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
                 .Where(x => x.Status == JobStatus.Desk && x.Number != 0)
                 .ToArrayAsync();
             return completedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
@@ -494,6 +497,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ThenInclude(x=>x.Addresses)
                 .Include(x=>x.CustomerAddress)
                 .Include(x=>x.ProductType)
+                .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
                 .Where(x => x.Status == JobStatus.Billing && x.Number != 0)
                 .ToArrayAsync();
             return  billingJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
@@ -508,6 +513,8 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .ThenInclude(x=>x.Addresses)
                 .Include(x=>x.CustomerAddress)
                 .Include(x=>x.ProductType)
+                .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
                 .Where(x => x.Status == JobStatus.Pending && x.Number != 0)
                 .ToArrayAsync();
             return acceptancedJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);

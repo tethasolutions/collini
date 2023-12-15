@@ -107,7 +107,7 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
   }
 
   copyActivity() {
-    this.copyActivityModal.open(this.options.id)
+    this.copyActivityModal.open(this.options)
       .pipe(
         filter(x => x),
         tap(() => this.dismiss())
