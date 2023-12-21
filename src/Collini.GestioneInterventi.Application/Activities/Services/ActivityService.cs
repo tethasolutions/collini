@@ -245,6 +245,9 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             activity.Job.IsPaid= true;
 
             activityRepository.Update(activity);
+            
+            await activityRepository.Update(x => x.JobId == activity.JobId && x.Id != activity.Id, e => e.Status = ActivityStatus.CompletedSuccessfully);
+
             await dbContext.SaveChanges();
         }
 
