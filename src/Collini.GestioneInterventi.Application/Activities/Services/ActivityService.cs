@@ -68,6 +68,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             //if (job.Status == JobStatus.Pending)
             job.Status = JobStatus.Working;
 
+            //activity.Description = job.ResultNote;
+
             if (activity.Status != ActivityStatus.Planned)
                 job.Status = JobStatus.Completed;
             await jobService.UpdateJob(job.Id, job.MapTo<JobDetailDto>(mapper));
@@ -101,15 +103,17 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                                     or ActivityStatus.CompletedUnsuccessfully)
                 {
                     activity.Job.Status = JobStatus.Completed;
-                    activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
                 }
 
                 if (activity.Status is ActivityStatus.Canceled
                                     or ActivityStatus.ToComplete)
                 {
                     activity.Job.Status = JobStatus.Working;
-                    activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
                 }
+                
+                //activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
+                activity.Job.ResultNote = activity.Description;
+
             }
 
             activityRepository.Update(activity);

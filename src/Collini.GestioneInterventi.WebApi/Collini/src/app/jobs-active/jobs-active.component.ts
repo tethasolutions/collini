@@ -191,7 +191,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         request.jobDescription = job.description;
         request.jobCode = job.code;
         request.customerName = job.customer.customerDescription;
-        //request.description = job.resultNote;
+        request.description = job.resultNote;
 
         this.activityModal.loadData();
 
