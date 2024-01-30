@@ -42,6 +42,7 @@ export class JobDetailModel {
     constructor() {
         this.id = null;
         this.description = null;
+        this.resultNote = null;
         this.operatorId = null;
         this.jobDate = new Date((new Date()).getTime());
         this.expirationDate = new Date((new Date()).getTime() + (1000 * 60 * 60 * 24 * 2));

@@ -33,7 +33,7 @@ export class CustomerModel {
         let result = '';
         if (this.companyName !== null) { result += `${this.companyName} `; }        
         if (this.surname !== null) { result +=  `${this.surname} `; }
-        if (this.name !== null) { result +=  `${this.name}`; }
+        if (this.name !== null) { result +=  `${this.name} `; }
         if (this.mainAddress !== null) { result += `${this.mainAddress.fullAddress}`}
         return result;
     }
