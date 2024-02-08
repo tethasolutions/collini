@@ -141,6 +141,14 @@ export class ActivitiesService {
             );
     }
 
+    saveAndQuotation(request: ActivityModel, id: number) {
+        return this._http.put<void>(`${this._baseUrl}/saveandquotation/${id}`, request)
+            .pipe(
+                map(() => { }),
+                tap(() => this._bus.jobUpdated())
+            );
+    }
+
     deleteActivity(id: number) {
         return this._http.delete<void>(`${this._baseUrl}/activity/${id}`)
             .pipe(

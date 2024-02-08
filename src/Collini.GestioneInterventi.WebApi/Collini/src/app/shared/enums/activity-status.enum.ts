@@ -3,5 +3,6 @@ export enum ActivityStatusEnum {
     CompletedSuccessfully,
     CompletedUnsuccessfully,
     Canceled,
-    ToComplete
+    ToComplete,
+    CompletedQuotation
 }

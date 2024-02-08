@@ -113,6 +113,9 @@
                 <button *ngIf="options.id != null" type="button" class="btn btn-primary me-2" title="Copia" (click)="copyActivity()">
                     <i class="fa fa-copy"></i> Duplica
                 </button>
+                <button *ngIf="options.id != null" type="button" class="btn btn-warning me-2" title="Preventivo" (click)="saveAndNewQuotation(options)">
+                    <i class="fa fa-file"></i> SALVA e PREV
+                </button>
                 <button *ngIf="options.id != null" type="button" class="btn btn-success me-2" title="Pagato" (click)="payJob()">
                     <i class="fa fa-euro-sign"></i> SALVA e PAGATO
                 </button>

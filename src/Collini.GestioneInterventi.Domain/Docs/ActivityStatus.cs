@@ -6,5 +6,6 @@ public enum ActivityStatus
     CompletedSuccessfully,
     CompletedUnsuccessfully,
     Canceled,
-    ToComplete
+    ToComplete,
+    CompletedQuotation
 }

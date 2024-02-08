@@ -19,6 +19,10 @@ import { CopyActivityModalComponent } from '../copy-activity-modal/copy-activity
 import { JobModalComponent } from '../job-modal/job-modal.component';
 import { NoteModalComponent } from '../note-modal/note-modal.component';
 import { NotesService } from '../services/notes.service';
+import { QuotationDetailModel } from '../shared/models/quotation-detail.model';
+import { QuotationsService } from '../services/quotations.service';
+import { QuotationModalComponent } from '../quotation-modal/quotation-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activity-modal',
@@ -44,7 +48,9 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
     private readonly _messageBox: MessageBoxService,
     private readonly _jobsService: JobsService,
     private readonly _notesService: NotesService,
-    private readonly _activityService: ActivitiesService
+    private readonly _quotationsService: QuotationsService,
+    private readonly _activityService: ActivitiesService,
+    private readonly _router: Router
   ) {
     super();
   }
@@ -96,6 +102,21 @@ export class ActivityModalComponent extends ModalComponent<ActivityModel> {
       if (result == true) {
         this._subscriptions.push(
           this._activityService.payJob(this.options.id)
+            .pipe(
+              tap(e => this._messageBox.success(`Intervento aggiornato con successo`)),
+              tap(() => this.dismiss())
+            )
+            .subscribe()
+        );
+      }
+    });
+  }
+
+  saveAndNewQuotation(activity: ActivityModel) {
+    this._messageBox.confirm(`Salvare e creare un preventivo?`, 'Conferma l\'azione').subscribe(result => {
+      if (result == true) {
+        this._subscriptions.push(
+          this._activityService.saveAndQuotation(activity, activity.id)
             .pipe(
               tap(e => this._messageBox.success(`Intervento aggiornato con successo`)),
               tap(() => this.dismiss())

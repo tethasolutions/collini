@@ -20,6 +20,8 @@ export class ActivityStatusPipe extends BaseComponent implements PipeTransform {
                 return "Annullato";
             case ActivityStatusEnum.ToComplete:
                 return "Da Terminare";
+            case ActivityStatusEnum.CompletedQuotation:
+                return "Completato OK Prev";
             default:
                 return value;
         }

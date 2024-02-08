@@ -9,6 +9,7 @@ using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.Services;
 using Collini.GestioneInterventi.Application.Quotations.DTOs;
+using Collini.GestioneInterventi.Application.Quotations.Services;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
 using Collini.GestioneInterventi.Domain.Registry;
@@ -27,6 +28,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
         Task UpdateActivity(long id, ActivityDto activityDto);
         Task CopyActivity(CopyActivityDto copyActivityDto);
+        Task SaveAndNewQuotation(long id, ActivityDto activityDto);
 
         Task<ActivityViewModel> GetActivity(long id);
 
@@ -41,18 +43,23 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         private readonly IMapper mapper;
         private readonly IRepository<Activity> activityRepository;
         private readonly IJobService jobService;
+        private readonly IRepository<Quotation> quotationRepository;
         private readonly IColliniDbContext dbContext;
         private readonly IColliniSession session;
 
         public ActivityService(
             IMapper mapper,
             IRepository<Activity> activityRepository,
-            IColliniDbContext dbContext, IJobService jobService, IColliniSession session)
+            IColliniDbContext dbContext,
+            IJobService jobService,
+            IRepository<Quotation> quotationRepository,
+            IColliniSession session)
         {
             this.mapper = mapper;
             this.activityRepository = activityRepository;
             this.dbContext = dbContext;
             this.jobService = jobService;
+            this.quotationRepository = quotationRepository;
             this.session = session;
         }
 
@@ -106,7 +113,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 }
 
                 if (activity.Status is ActivityStatus.Canceled
-                                    or ActivityStatus.ToComplete)
+                                    or ActivityStatus.ToComplete
+                                    or ActivityStatus.CompletedQuotation)
                 {
                     activity.Job.Status = JobStatus.Working;
                 }
@@ -245,12 +253,63 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             activity.Status = ActivityStatus.CompletedSuccessfully;
             activity.Job.Status = JobStatus.Completed;
-            activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description;
+            //activity.Job.ResultNote += (activity.Job.ResultNote is { Length: > 0 } ? Environment.NewLine + Environment.NewLine : "") + activity.Description; 
+            activity.Job.ResultNote = activity.Description;
             activity.Job.IsPaid= true;
 
             activityRepository.Update(activity);
             
             await activityRepository.Update(x => x.JobId == activity.JobId && x.Id != activity.Id, e => e.Status = ActivityStatus.CompletedSuccessfully);
+
+            await dbContext.SaveChanges();
+        }
+
+        public async Task SaveAndNewQuotation(long id, ActivityDto activityDto)
+        {
+            if (id == 0)
+                throw new ColliniException("Impossibile aggiornare una attività con id 0");
+
+            var activity = await activityRepository
+                .Query()
+                .Include(x => x.Job)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if (activity == null)
+                throw new ColliniException($"Impossibile trovare attività con id {id}");
+
+            activityDto.Status = ActivityStatus.CompletedQuotation;
+
+            activityDto.MapTo(activity, mapper);
+
+            if (activity.Job.Number != 0 && activity.Job.Status != JobStatus.Billed && activity.Job.Status != JobStatus.Paid && activity.Job.Status != JobStatus.Warranty)
+            {
+                if (activity.Status is ActivityStatus.CompletedSuccessfully
+                                    or ActivityStatus.CompletedUnsuccessfully)
+                {
+                    activity.Job.Status = JobStatus.Completed;
+                }
+
+                if (activity.Status is ActivityStatus.Canceled
+                                    or ActivityStatus.ToComplete
+                                    or ActivityStatus.CompletedQuotation)
+                {
+                    activity.Job.Status = JobStatus.Working;
+                }
+
+                activity.Job.ResultNote = activity.Description;
+
+                Quotation quotation = new Quotation();
+                quotation.Id = 0;
+                quotation.Status = QuotationStatus.Pending;
+                quotation.JobId = activity.JobId;
+                quotation.ExpirationDate = DateTimeOffset.Now.Date.AddDays(2);
+                quotation.Amount = 0;
+
+                await quotationRepository.Insert(quotation);
+            }
+
+            activityRepository.Update(activity);
 
             await dbContext.SaveChanges();
         }

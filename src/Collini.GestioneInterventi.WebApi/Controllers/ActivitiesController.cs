@@ -65,6 +65,17 @@ public class ActivitiesController : ColliniApiController
         return Ok();
     }
 
+    [HttpPut("saveandquotation/{id}")]
+    public async Task<IActionResult> SaveAndNewQuotation(long id, [FromBody] ActivityDto activityDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await activityService.SaveAndNewQuotation(id, activityDto);
+        return Ok();
+    }
+
     [HttpGet("calendar")]
     public async Task<CalendarViewModel> GetCalendar()
     {
