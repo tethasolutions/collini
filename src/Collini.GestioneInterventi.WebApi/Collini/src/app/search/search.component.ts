@@ -16,6 +16,7 @@ import { NoteModalComponent } from '../note-modal/note-modal.component';
 import { JobModel } from '../shared/models/job.model';
 import { JobsService } from '../services/jobs.service';
 import { JobModalComponent } from '../job-modal/job-modal.component';
+import { JobActivitiesModalComponent } from '../job-activities-modal/job-activities-modal.component';
 
 @Component({
   selector: 'app-search',
@@ -27,6 +28,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
   @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
   @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+  @ViewChild('jobActivitiesModal', { static: true }) jobActivitiesModal: JobActivitiesModalComponent;
 
   searchNotes: Array<NoteModel> = [];
   
@@ -112,6 +114,16 @@ export class SearchComponent extends BaseComponent implements OnInit {
                 switchMap(e => this._notesService.updateNote(e, e.id)),
                 map(() => this.noteModal.options),
                 tap(e => this._messageBox.success(`Nota aggiornata`)),           
+            )
+    .subscribe()
+    );
+  }
+
+  viewJobActivities(jobId: number) {     
+    this._subscriptions.push(
+            this._jobsService.getJobActivities(jobId)
+            .pipe(        
+                switchMap(e => this.jobActivitiesModal.open(e))
             )
     .subscribe()
     );

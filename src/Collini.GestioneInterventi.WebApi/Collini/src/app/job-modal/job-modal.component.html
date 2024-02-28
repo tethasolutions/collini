@@ -185,6 +185,9 @@
                 <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
                     ANNULLA
                 </button>
+                <button type="button" class="btn btn-primary me-2" title="Visualizza Interventi" (click)="viewJobActivities(options.id)">
+                    <i class="fas fa-calendar-days"></i>
+                </button>
                 <button type="submit" class="btn btn-primary">
                     SALVA
                 </button>
@@ -197,3 +200,4 @@
 <app-address-modal [customer]="options.customer" #addressModal></app-address-modal>
 <app-note-modal #noteModal></app-note-modal>
 <app-notes-modal notesType="job" #notesModal></app-notes-modal>
+<app-job-activities-modal #jobActivitiesModal></app-job-activities-modal>

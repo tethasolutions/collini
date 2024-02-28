@@ -53,9 +53,12 @@
     </kendo-grid-column>
     <kendo-grid-column field="number" [sortable]="false" [filterable]="false" title=" ">
         <ng-template kendoGridCellTemplate let-dataItem>
-            <div class="d-flex flex-wrap gap-1 justify-content-center">
+            <div class="d-flex flex-wrap gap-1 justify-content-center" style="width:110px">
                 <button class="btn btn-primary btn-sm grid-action-button" title="Note" (click)="viewLastNote(dataItem)">
                     <i class="fas fa-book"></i>
+                </button>
+                <button class="btn btn-primary btn-sm" title="Visualizza Interventi" (click)="viewJobActivities(dataItem.id)">
+                    <i class="fas fa-calendar-days"></i>
                 </button>
                 <button class="btn btn-primary btn-sm" title="Modifica" (click)="editJob(dataItem)">
                     <i class="fas fa-edit"></i>
@@ -68,3 +71,4 @@
 <app-job-modal #jobModal></app-job-modal>
 <app-notes-modal notesType="job-active" #notesModal></app-notes-modal>
 <app-note-modal #noteModal></app-note-modal>
+<app-job-activities-modal #jobActivitiesModal></app-job-activities-modal>

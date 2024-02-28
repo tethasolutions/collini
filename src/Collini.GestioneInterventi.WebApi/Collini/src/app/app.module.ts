@@ -79,6 +79,7 @@ import { SearchService } from './services/search.service';
 import { UploadInterceptor } from './services/interceptors/upload.iterceptor';
 import { EditorModule } from '@progress/kendo-angular-editor';
 import { SearchComponent } from './search/search.component';
+import { JobActivitiesModalComponent } from './job-activities-modal/job-activities-modal.component';
 
 
 
@@ -104,6 +105,7 @@ registerLocaleData(localeIt, 'it', localeExtraIt);
         JobsComponent,
         JobsActiveComponent,
         JobModalComponent,
+        JobActivitiesModalComponent,
         QuotationsComponent,
         QuotationModalComponent,
         OrdersComponent,

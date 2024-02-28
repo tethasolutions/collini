@@ -3,6 +3,7 @@ import { CustomerModel } from './customer.model';
 import { ProductTypeModel } from './product-type.model';
 import { JobSourceModel } from './job-source.model';
 import { JobStatusEnum } from '../enums/job-status.enum';
+import { ActivityModel } from './activity.model';
 
 export class JobDetailModel {
     id: number;
@@ -59,5 +60,15 @@ export class JobDetailModel {
         this.status = JobStatusEnum.Pending;
         this.hasNotes = false;
         this.isPaid = false;
+    }
+}
+
+export class JobActivitiesModel {
+    readonly id: number;
+    readonly activities: ActivityModel[];
+    
+    constructor() {
+        this.id = null;
+        this.activities = [];
     }
 }

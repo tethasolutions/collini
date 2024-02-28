@@ -13,7 +13,7 @@ import { AddressModel } from '../shared/models/address.model';
 import { CustomerModel } from '../shared/models/customer.model';
 import { JobSourceModel } from '../shared/models/job-source.model';
 import { ProductTypeModel } from '../shared/models/product-type.model';
-import { JobDetailModel } from '../shared/models/job-detail.model';
+import { JobActivitiesModel, JobDetailModel } from '../shared/models/job-detail.model';
 import { JobBusService } from './job-bus.service';
 
 @Injectable()
@@ -206,6 +206,16 @@ export class JobsService {
                     const productType: ProductTypeModel = Object.assign(new ProductTypeModel(), job.productType);
                     job.productType = productType;
 
+                    return job;
+                })
+            );
+    }
+    
+    getJobActivities(id: number) {
+        return this._http.get<JobActivitiesModel>(`${this._baseUrl}/job-activities/${id}`)
+            .pipe(
+                map(response => {
+                    const job: JobActivitiesModel = Object.assign(new JobActivitiesModel(), response);
                     return job;
                 })
             );

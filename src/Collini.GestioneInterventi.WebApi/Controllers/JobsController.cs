@@ -43,6 +43,13 @@ public class JobsController : ColliniApiController
         return dsr;
     }
 
+    [HttpGet("job-activities/{id}")]
+    public async Task<JobActivitiesDto> GetJobsActivities(long id)
+    {
+        JobActivitiesDto jobActivities = await jobsService.GetJobActivities(id);
+        return jobActivities;
+    }
+
     [HttpGet("jobs-active")]
     public async Task<DataSourceResult> GetJobsActive([DataSourceRequest] DataSourceRequest request)
     {

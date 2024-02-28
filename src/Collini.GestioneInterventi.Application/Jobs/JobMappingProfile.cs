@@ -67,6 +67,32 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .MapMember(x => x.LastActivityOperator, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Operator.Name + " " + y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Operator.Surname)
                 .MapMember(x => x.LastOperatorColor, y => y.Activities.OrderByDescending(z => z.Start).FirstOrDefault().Operator.ColorHex)
                 .Ignore(x => x.OperatorId);
+
+            CreateMap<Job, JobActivitiesDto>();
+            CreateMap<JobActivitiesDto, Job>()
+                .Ignore(x => x.Number)
+                .Ignore(x => x.Year)
+                .Ignore(x => x.StatusChangedOn)
+                .Ignore(x => x.CustomerAddress)
+                .Ignore(x => x.Source)
+                .Ignore(x => x.ProductType)
+                .Ignore(x => x.Notes)
+                .Ignore(x => x.Quotations)
+                .Ignore(x => x.Orders)
+                .Ignore(x => x.Activities)
+                .Ignore(x => x.Customer)
+                .Ignore(x => x.JobDate)
+                .Ignore(x => x.ExpirationDate)
+                .Ignore(x => x.Description)
+                .Ignore(x => x.ResultNote)
+                .Ignore(x => x.Status)
+                .Ignore(x => x.IsPaid)
+                .Ignore(x => x.CustomerId)
+                .Ignore(x => x.CustomerAddressId)
+                .Ignore(x => x.SourceId)
+                .Ignore(x => x.ProductTypeId)
+                .MapMember(x => x.Activities, y => y.Activities)
+                .IgnoreCommonMembers();
         }
     }
 }

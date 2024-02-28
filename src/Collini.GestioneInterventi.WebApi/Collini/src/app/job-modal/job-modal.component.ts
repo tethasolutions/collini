@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ModalComponent } from '../shared/modal.component';
-import { JobDetailModel } from '../shared/models/job-detail.model';
+import { JobActivitiesModel, JobDetailModel } from '../shared/models/job-detail.model';
 import { NgForm } from '@angular/forms';
 import { Role } from '../services/security/models';
 import { listEnum, markAsDirty } from '../services/common/functions';
@@ -25,6 +25,7 @@ import { emitDistinctChangesOnlyDefaultValue } from '@angular/compiler';
 import { Observable } from 'rxjs';
 import { ComboBoxComponent } from '@progress/kendo-angular-dropdowns';
 import { NoteModalComponent } from '../note-modal/note-modal.component';
+import { JobActivitiesModalComponent } from '../job-activities-modal/job-activities-modal.component';
 
 @Component({
   selector: 'app-job-modal',
@@ -38,6 +39,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   @ViewChild('addressModal', { static: true }) addressModal: AddressModalComponent;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
   @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
+  @ViewChild('jobActivitiesModal', { static: true }) jobActivitiesModal: JobActivitiesModalComponent;
   readonly role = Role;
   name = '';
 
@@ -51,6 +53,7 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
   productTypes: Array<ProductTypeModel> = [];
   states = listEnum<JobStatusEnum>(JobStatusEnum);
   jobNotes: Array<NoteModel> = [];
+  jobActivities: JobActivitiesModel = null;
 
   readonly jobStatusEnum = JobStatusEnum;
 
@@ -308,6 +311,16 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     );
   }
 
+  viewJobActivities(jobId: number) {     
+    this._subscriptions.push(
+            this._jobsService.getJobActivities(jobId)
+            .pipe(        
+                switchMap(e => this.jobActivitiesModal.open(e))
+            )
+    .subscribe()
+    );
+  }
+
   isVisibleResultNote(): boolean {
     return true;
     // this.options.status == this.jobStatusEnum.Completed ||
@@ -327,6 +340,22 @@ export class JobModalComponent extends ModalComponent<JobDetailModel> {
     this._readJobSources();
     this._readJobProductTypes();
     this._readCustomerAddresses();
+    
+    if (this.options.id > 0) {
+      this._readJobActivities(this.options.id);
+    }
+  }
+
+  protected _readJobActivities(id: number) {
+    this._subscriptions.push(
+      this._jobsService.getJobActivities(id)
+        .pipe(
+          tap(e => {
+            this.jobActivities = e;
+          })
+        )
+        .subscribe()
+    );
   }
 
   private _filterCustomers(value: string) {

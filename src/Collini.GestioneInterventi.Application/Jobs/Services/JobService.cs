@@ -38,6 +38,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         Task<IEnumerable<JobDetailReadModel>> GetJobsBilling();
         Task<IEnumerable<JobDetailReadModel>> GetJobsPaid();
         Task<IEnumerable<JobSearchReadModel>> GetJobsSearch();
+        Task<JobActivitiesDto> GetJobActivities(long id);
         Task<Job>  GetJob(long id);
     }
 
@@ -551,5 +552,23 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             await dbContext.SaveChanges();
         }
 
+        public async Task<JobActivitiesDto> GetJobActivities(long id)
+        {
+            if (id == 0)
+                throw new ColliniException("Impossibile recuperare un job con id 0");
+
+            var job = await jobRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+
+            if (job == null)
+                throw new ColliniException($"Impossibile trovare il job con id {id}");
+
+            return job.MapTo<JobActivitiesDto>(mapper);
+        }
     }
 }
