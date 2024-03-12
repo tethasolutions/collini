@@ -7,6 +7,7 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { MessageBoxService } from '../services/common/message-box.service';
 import { ActivitiesService } from '../services/activities.service';
 import { CalendarModel } from '../shared/models/calendar.model';
+import { ActivityStatusEnum } from '../shared/enums/activity-status.enum';
 
 @Component({
     selector: 'app-calendar',
@@ -19,6 +20,8 @@ export class CalendarComponent extends BaseComponent implements OnInit {
 
     calendar = new CalendarModel();
     toolbarWidth: number;
+
+    readonly status = ActivityStatusEnum;
 
     // public selectedDate: Date = displayDate;
     public selectedDate: Date = new Date();

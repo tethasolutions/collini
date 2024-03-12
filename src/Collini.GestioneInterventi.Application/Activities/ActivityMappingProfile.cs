@@ -31,9 +31,11 @@ namespace Collini.GestioneInterventi.Application.Activities
                 .MapMember(x => x.JobId, y => y.Job.Id)
                 .MapMember(x => x.JobCode, y => y.Job.Number.ToString() + "/" + y.Job.Year.ToString())
                 .MapMember(x => x.JobDescription, y => y.Job.Description)
-                .MapMember(x => x.CustomerName, y => y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name +
+                .MapMember(x => x.CustomerName, y => (y.Status == 0)
+                    ? (y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name +
                     ((y.Job.Customer.Telephone != null) ? " - Tel: " + y.Job.Customer.Telephone : "") +
                     ((y.Job.CustomerAddress != null) ? " - " + y.Job.CustomerAddress.StreetAddress + " " + y.Job.CustomerAddress.City : ""))
+                    : (y.Job.Customer.CompanyName + " " + y.Job.Customer.Surname + " " + y.Job.Customer.Name))
                 .MapMember(x => x.HasNotes, y => y.Job.Notes.Count > 0 ? y.Job.Notes.FirstOrDefault().Attachments.Count > 0 : false);
 
             CreateMap<User, CalendarResourceViewModel>()

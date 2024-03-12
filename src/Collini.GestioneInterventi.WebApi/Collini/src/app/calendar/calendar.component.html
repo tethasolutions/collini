@@ -15,14 +15,14 @@
     <ng-template kendoSchedulerAllDayEventTemplate let-event="event" let-resources="resources">
 
         <div>
-            <div class="calendar-icon-absolute calendar-icon-Ok" *ngIf="event.dataItem.status == 1">
+            <div class="calendar-icon-absolute calendar-icon-Ok" *ngIf="event.dataItem.status == status.CompletedSuccessfully">
                 <i class="fas fa-circle-check"></i>
             </div>
             <div class="calendar-icon-absolute calendar-icon-Ko"
-                *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3">
+                *ngIf="event.dataItem.status == status.CompletedUnsuccessfully || event.dataItem.status == status.Canceled">
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <span class="calendar-icon-absolute calendar-icon-quotation" *ngIf="event.dataItem.status == 5">
+            <span class="calendar-icon-absolute calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
                 <i class="fas fa-circle-check"></i>
             </span>
             <ng-container *ngFor="let resource of resources">
@@ -32,8 +32,8 @@
                 </ng-template>
             </ng-container>
         </div>
-        <div *ngIf="event.dataItem.status == 0">{{event.dataItem.cliente}}</div>
-        <div *ngIf="event.dataItem.status != 0"><strong>{{event.dataItem.cliente}}</strong></div>
+        <div *ngIf="event.dataItem.status == status.Planned">{{event.dataItem.cliente}}</div>
+        <div *ngIf="event.dataItem.status != status.Planned"><strong>{{event.dataItem.cliente}}</strong></div>
         <!-- <button (click)="test(event)">Test</button> -->
 
     </ng-template>
@@ -41,16 +41,16 @@
     <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
 
         <div>
-            <div class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 1">
+            <div class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == status.CompletedSuccessfully">
                 <i class="fas fa-circle-check"></i>
             </div>
             <div class="calendar-icon calendar-icon-Ko"
-                *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3">
+                *ngIf="event.dataItem.status == status.CompletedUnsuccessfully || event.dataItem.status == status.Canceled">
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <span class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == 5">
+            <div class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
                 <i class="fas fa-circle-check"></i>
-            </span>
+            </div>
             <ng-container *ngFor="let resource of resources">
                 <!-- <span *ngIf="!resource.length; else multipleResource"></span> -->
                 <ng-template #multipleResource>
@@ -58,8 +58,9 @@
                 </ng-template>
             </ng-container>
         </div>
-        <div class="cliente-title" *ngIf="event.dataItem.status == 0">{{event.dataItem.cliente}}</div>
-        <div class="cliente-title-status" *ngIf="event.dataItem.status != 0"><strong>{{event.dataItem.cliente}}</strong>
+        <div class="cliente-title" *ngIf="event.dataItem.status == status.Planned">{{event.dataItem.cliente}}</div>
+        <div class="cliente-title-status" *ngIf="event.dataItem.status != status.Planned && event.dataItem.status != status.ToComplete"><strong>{{event.dataItem.cliente}}</strong></div>
+        <div class="cliente-title-status4" *ngIf="event.dataItem.status == status.ToComplete"><strong>{{event.dataItem.cliente}}</strong>
         </div>
         <!-- <div class="commessa-title">{{event.dataItem.commessa}}-{{event.dataItem.description}}</div>
          <button (click)="test(event)">Test</button> -->
@@ -72,14 +73,14 @@
         <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
             <div class="d-flex gap-2 align-items-start">
                 {{event.dataItem.cliente}}
-                <span class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == 1">
+                <span class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == status.CompletedSuccessfully">
                     <i class="fas fa-circle-check"></i>
                 </span>
                 <span class="calendar-icon calendar-icon-Ko"
-                    *ngIf="event.dataItem.status == 2 || event.dataItem.status == 3">
+                    *ngIf="event.dataItem.status == status.CompletedUnsuccessfully || event.dataItem.status == status.Canceled">
                     <i class="fas fa-exclamation-triangle"></i>
                 </span>
-                <span class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == 5">
+                <span class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
                     <i class="fas fa-circle-check"></i>
                 </span>
             </div>
