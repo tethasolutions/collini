@@ -71,19 +71,20 @@
     <kendo-scheduler-week-view startTime="00:00" endTime="24:00"></kendo-scheduler-week-view>
     <kendo-scheduler-month-view>
         <ng-template kendoSchedulerEventTemplate let-event="event" let-resources="resources">
-            <div class="d-flex gap-2 align-items-start">
-                {{event.dataItem.cliente}}
-                <span class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == status.CompletedSuccessfully">
+            <div>
+                <div class="calendar-icon calendar-icon-Ok" *ngIf="event.dataItem.status == status.CompletedSuccessfully">
                     <i class="fas fa-circle-check"></i>
-                </span>
-                <span class="calendar-icon calendar-icon-Ko"
+                </div>
+                <div class="calendar-icon calendar-icon-Ko"
                     *ngIf="event.dataItem.status == status.CompletedUnsuccessfully || event.dataItem.status == status.Canceled">
                     <i class="fas fa-exclamation-triangle"></i>
-                </span>
-                <span class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
+                </div>
+                <div class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
                     <i class="fas fa-circle-check"></i>
-                </span>
+                </div>
             </div>
+            <div class="cliente-title-status4" *ngIf="event.dataItem.status == status.Planned || event.dataItem.status == status.ToComplete">{{event.dataItem.cliente}}</div>
+            <div class="cliente-title-status" *ngIf="event.dataItem.status != status.Planned && event.dataItem.status != status.ToComplete">{{event.dataItem.cliente}}</div>
         </ng-template>
     </kendo-scheduler-month-view>
     <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
