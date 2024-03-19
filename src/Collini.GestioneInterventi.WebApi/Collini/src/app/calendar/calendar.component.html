@@ -83,8 +83,9 @@
                     <i class="fas fa-circle-check"></i>
                 </div>
             </div>
-            <div class="cliente-title-status4" *ngIf="event.dataItem.status == status.Planned || event.dataItem.status == status.ToComplete">{{event.dataItem.cliente}}</div>
-            <div class="cliente-title-status" *ngIf="event.dataItem.status != status.Planned && event.dataItem.status != status.ToComplete">{{event.dataItem.cliente}}</div>
+            <div class="cliente-title" *ngIf="event.dataItem.status == status.Planned">{{event.dataItem.cliente}}</div>
+            <div class="cliente-title-status" *ngIf="event.dataItem.status != status.Planned && event.dataItem.status != status.ToComplete"><strong>{{event.dataItem.cliente}}</strong></div>
+            <div class="cliente-title-status4" *ngIf="event.dataItem.status == status.ToComplete"><strong>{{event.dataItem.cliente}}</strong></div>
         </ng-template>
     </kendo-scheduler-month-view>
     <kendo-scheduler-agenda-view> </kendo-scheduler-agenda-view>
