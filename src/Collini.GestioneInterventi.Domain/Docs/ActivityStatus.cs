@@ -7,5 +7,6 @@ public enum ActivityStatus
     CompletedUnsuccessfully,
     Canceled,
     ToComplete,
-    CompletedQuotation
+    CompletedQuotation,
+    MaterialReady
 }

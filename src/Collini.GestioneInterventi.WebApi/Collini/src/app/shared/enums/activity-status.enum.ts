@@ -4,5 +4,6 @@ export enum ActivityStatusEnum {
     CompletedUnsuccessfully,
     Canceled,
     ToComplete,
-    CompletedQuotation
+    CompletedQuotation,
+    MaterialReady
 }

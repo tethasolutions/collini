@@ -22,6 +22,8 @@ export class ActivityStatusPipe extends BaseComponent implements PipeTransform {
                 return "Da Terminare";
             case ActivityStatusEnum.CompletedQuotation:
                 return "Completato OK Prev";
+            case ActivityStatusEnum.MaterialReady:
+                return "Pianificato Materiale Pronto"
             default:
                 return value;
         }

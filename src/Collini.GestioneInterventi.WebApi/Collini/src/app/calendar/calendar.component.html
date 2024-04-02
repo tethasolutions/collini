@@ -51,6 +51,9 @@
             <div class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
                 <i class="fas fa-circle-check"></i>
             </div>
+            <div class="calendar-icon calendar-icon-check" *ngIf="event.dataItem.status == status.MaterialReady">
+                <i class="fas fa-square-check"></i>
+            </div>
             <ng-container *ngFor="let resource of resources">
                 <!-- <span *ngIf="!resource.length; else multipleResource"></span> -->
                 <ng-template #multipleResource>
@@ -81,6 +84,9 @@
                 </div>
                 <div class="calendar-icon calendar-icon-quotation" *ngIf="event.dataItem.status == status.CompletedQuotation">
                     <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="calendar-icon calendar-icon-check" *ngIf="event.dataItem.status == status.MaterialReady">
+                    <i class="fas fa-square-check"></i>
                 </div>
             </div>
             <div class="cliente-title" *ngIf="event.dataItem.status == status.Planned">{{event.dataItem.cliente}}</div>
