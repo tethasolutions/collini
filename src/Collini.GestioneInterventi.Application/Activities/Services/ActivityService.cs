@@ -231,7 +231,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             var activities = activityRepository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.Status == ActivityStatus.Planned)
+                .Where(x => x.Status == ActivityStatus.Planned || x.Status == ActivityStatus.MaterialReady)
                 .Project<ActivityDto>(mapper);
 
             return activities;
