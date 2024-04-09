@@ -285,7 +285,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var idJobActivities = await activityRepository
                 .Query()
                 .AsNoTracking()
-                .Where(x => x.Status == ActivityStatus.Planned)
+                .Where(x => x.Status == ActivityStatus.Planned || x.Status == ActivityStatus.MaterialReady)
                 .Select(x => x.JobId)
                 .Distinct()
                 .ToArrayAsync();
