@@ -110,6 +110,19 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                                     or ActivityStatus.CompletedUnsuccessfully)
                 {
                     activity.Job.Status = JobStatus.Completed;
+
+                    //14/04/2024 aggiunta chiusura automatica anche delle altre attività se lo stato è completato OK
+                    if (activity.Status == ActivityStatus.CompletedSuccessfully)
+                    {
+                        var activities = await activityRepository.Query()
+                            .Where(x => x.JobId == activity.JobId && x.Id != activity.Id)
+                            .ToArrayAsync();
+                        foreach (Activity act in activities)
+                        {
+                            act.Status = activity.Status;
+                            activityRepository.Update(act);
+                        }
+                    }
                 }
 
                 if (activity.Status is ActivityStatus.Canceled
