@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ActivityModel } from '../shared/models/activity.model';
 import { ModalComponent } from '../shared/modal.component';
 import { NgForm } from '@angular/forms';
@@ -31,10 +31,12 @@ import { Router } from '@angular/router';
 })
 export class ActivityModalComponent extends ModalComponent<ActivityModel> {
 
+  @Input() enableDetailRequest: boolean = true;
+
   @ViewChild('form') form: NgForm;
   @ViewChild('notesModal', { static: true }) notesModal: NotesModalComponent;
   @ViewChild('copyActivityModal', { static: true }) copyActivityModal: CopyActivityModalComponent;
-  @ViewChild('jobModal', { static: true }) jobModal: JobModalComponent;
+  @ViewChild('jobModal', { static: false }) jobModal: JobModalComponent;
   @ViewChild('noteModal', { static: true }) noteModal: NoteModalComponent;
   readonly role = Role;
 

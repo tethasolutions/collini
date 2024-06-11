@@ -13,7 +13,7 @@
                     {{options.jobCode}} - 
                     {{options.customerName}}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" *ngIf="enableDetailRequest">
                     <button type="button" class="btn btn-primary" title="Modifica Richiesta" (click)="editJob()">
                         <i class="fa fa-edit"></i>
                     </button>
@@ -103,7 +103,7 @@
                     <div style="min-height: 80px;">&nbsp;</div>
                 </div>
             </div>
-            <div class="text-right mt-5">
+            <div class="text-right mt-5" *ngIf="enableDetailRequest">
                 <button type="button" (click)="dismiss()" class="btn btn-secondary me-2">
                     ANNULLA
                 </button>
@@ -130,4 +130,4 @@
 <app-notes-modal notesType="activity" #notesModal></app-notes-modal>
 <app-copy-activity-modal #copyActivityModal></app-copy-activity-modal>
 <app-note-modal #noteModal></app-note-modal>
-<app-job-modal #jobModal></app-job-modal>
+<app-job-modal #jobModal *ngIf="enableDetailRequest"></app-job-modal>
