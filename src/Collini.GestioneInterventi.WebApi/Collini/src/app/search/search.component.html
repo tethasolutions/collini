@@ -24,7 +24,11 @@
             </div>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column field="customer.telephone" title="Telefono"></kendo-grid-column>
+    <kendo-grid-column field="customerContact" title="Contatti">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{dataItem.customer.telephone}}<br/><i>{{dataItem.customer.email}}</i>
+        </ng-template>  
+    </kendo-grid-column>
     <kendo-grid-column field="customerFullAddress" title="Indirizzo"></kendo-grid-column>
     <kendo-grid-column field="productType.name" title="Categoria"></kendo-grid-column>
     <kendo-grid-column field="status" title="Stato">

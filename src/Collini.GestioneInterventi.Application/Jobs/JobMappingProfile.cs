@@ -58,6 +58,7 @@ namespace Collini.GestioneInterventi.Application.Jobs
                 .MapMember(x => x.Code, y => y.Number + "/" + y.Year)
                 .MapMember(x => x.CustomerName, y => y.Customer.CompanyName + " " + y.Customer.Surname + " " + y.Customer.Name)
                 .MapMember(x => x.CustomerFullAddress, y => y.CustomerAddress.StreetAddress + " - " + y.CustomerAddress.City)
+                .MapMember(x => x.CustomerContact, y => y.Customer.Telephone + " - " + y.Customer.Email)
                 .MapMember(x => x.LastQuotation, y => y.Quotations.OrderByDescending(z => z.CreatedOn).FirstOrDefault().Status)
                 .MapMember(x => x.LastQuotationDate, y => y.Quotations.OrderByDescending(z => z.CreatedOn).FirstOrDefault().CreatedOn)
                 .MapMember(x => x.LastOrder, y => y.Orders.OrderByDescending(z => z.CreatedOn).FirstOrDefault().Status)

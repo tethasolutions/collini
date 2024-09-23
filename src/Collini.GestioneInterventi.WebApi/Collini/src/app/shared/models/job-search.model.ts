@@ -21,6 +21,7 @@ export class JobSearchModel {
     customerAddressId: number;
     customerAddress: AddressModel;
     customerFullAddress: string;
+    customerContact: string;
     sourceId: number;
     source: JobSourceModel;
     productTypeId: number;

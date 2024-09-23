@@ -24,6 +24,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public string? CustomerFullAddress { get; set; }
         public long? CustomerAddressId { get; set; }
         public AddressDto? CustomerAddress { get; set; }
+        public string? CustomerContact {  get; set; }
         public long SourceId { get; set; }
         public JobSourceDto? Source { get; set; }
         public long ProductTypeId { get; set; }
