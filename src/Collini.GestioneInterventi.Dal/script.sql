@@ -633,3 +633,30 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20250319140107_aggiunta tabella smtpsettings')
+BEGIN
+    CREATE TABLE [Registry].[SmtpSettings] (
+        [Id] bigint NOT NULL IDENTITY,
+        [Host] nvarchar(max) NOT NULL,
+        [Port] int NOT NULL,
+        [Username] nvarchar(max) NOT NULL,
+        [Password] nvarchar(max) NOT NULL,
+        [From] nvarchar(max) NOT NULL,
+        CONSTRAINT [PK_SmtpSettings] PRIMARY KEY ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20250319140107_aggiunta tabella smtpsettings')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20250319140107_aggiunta tabella smtpsettings', N'7.0.5');
+END;
+GO
+
+COMMIT;
+GO
+

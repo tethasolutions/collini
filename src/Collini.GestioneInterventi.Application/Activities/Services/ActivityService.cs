@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Mail;
+using System.Net;
 using AutoMapper;
 using Collini.GestioneInterventi.Application.Activities.DTOs;
-using Collini.GestioneInterventi.Application.Customers.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.DTOs;
 using Collini.GestioneInterventi.Application.Jobs.Services;
-using Collini.GestioneInterventi.Application.Quotations.DTOs;
-using Collini.GestioneInterventi.Application.Quotations.Services;
 using Collini.GestioneInterventi.Dal;
 using Collini.GestioneInterventi.Domain.Docs;
-using Collini.GestioneInterventi.Domain.Registry;
 using Collini.GestioneInterventi.Framework.Exceptions;
 using Collini.GestioneInterventi.Framework.Extensions;
 using Collini.GestioneInterventi.Framework.Session;
 using Microsoft.EntityFrameworkCore;
+using Collini.GestioneInterventi.Domain.Registry;
+using Microsoft.Extensions.Configuration;
 
 namespace Collini.GestioneInterventi.Application.Activities.Services
 {
@@ -45,7 +40,8 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
         private readonly IJobService jobService;
         private readonly IRepository<Quotation> quotationRepository;
         private readonly IColliniDbContext dbContext;
-        private readonly IColliniSession session;
+        private readonly IColliniSession session; 
+        private readonly IRepository<SmtpSettings> smtpRepository;
 
         public ActivityService(
             IMapper mapper,
@@ -53,7 +49,9 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             IColliniDbContext dbContext,
             IJobService jobService,
             IRepository<Quotation> quotationRepository,
-            IColliniSession session)
+            IRepository<SmtpSettings> smtpRepository,
+            IColliniSession session,
+            IConfiguration configuration)
         {
             this.mapper = mapper;
             this.activityRepository = activityRepository;
@@ -61,6 +59,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             this.jobService = jobService;
             this.quotationRepository = quotationRepository;
             this.session = session;
+            this.smtpRepository = smtpRepository;
         }
 
         public async Task<ActivityDto> CreateActivity(ActivityDto activityDto)
@@ -84,7 +83,9 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             await dbContext.SaveChanges();
  
             activity.Job = await jobService.GetJob(activityDto.JobId);
-            
+
+            await SendNotificationEmail(activity.Id);
+
             return activity.MapTo<ActivityDto>(mapper);
         }
 
@@ -342,6 +343,65 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
 
             activityRepository.Delete(activity);
             await dbContext.SaveChanges();
+        }
+
+        private async Task SendNotificationEmail(long activityId)
+        {
+            var activity = await activityRepository.Query()
+                .AsNoTracking()
+                .Include(x => x.Operator)
+                .Include(x => x.Job)
+                .ThenInclude(x => x.Customer)
+                .Where(u => u.Id == activityId)
+                .FirstOrDefaultAsync();
+
+            if (activity == null)
+            {
+                throw new ColliniException("L'attività non è stata trovata.");
+            }
+
+            if (string.IsNullOrEmpty(activity.Operator?.EmailAddress))
+            {
+                throw new ColliniException("L'operatore non ha un'email associata.");
+            }
+
+            var smtpSettings = await smtpRepository.Query().FirstOrDefaultAsync();
+            if (smtpSettings == null)
+            {
+                throw new ColliniException("Le impostazioni SMTP non sono state configurate.");
+            }
+
+            SmtpClient SmtpClient = new SmtpClient("smtp.sendgrid.net", 587)
+            {
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("apikey", "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"),
+                EnableSsl = false
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(smtpSettings.From),
+                Subject = "Nuovo Intervento Assegnato",
+                Body = $"<p>Ciao {activity.Operator?.Name},<br/>ti è stato assegnato un nuovo intervento</p>" +
+                $"<p><strong>Cliente:</strong> {activity.Job?.Customer?.CompanyName} {activity.Job?.Customer?.Surname} {activity.Job?.Customer?.Name}</p>" +
+                $"<p><strong>Descrizione:</strong> {activity.Job?.Description}<br/>{activity.Description}</p>" +
+                $"<p><strong>Inizio:</strong> {activity.Start.ToLocalTime().ToString("dd/MM/yyyy HH:mm")}<br/>" +
+                $"<strong>Fine:</strong> {activity.End.ToLocalTime().ToString("dd/MM/yyyy HH:mm")}</p>" +
+                $"<p>Cordiali saluti,\nStaff Collini</p>",
+                IsBodyHtml = true
+            };
+            mailMessage.To.Add(activity.Operator?.EmailAddress);
+
+
+            try
+            {
+                SmtpClient.Send(mailMessage);
+            }
+            catch (Exception e)
+            {
+                throw new ColliniException("Errore durante l'invio della mail", e);
+            }
         }
     }
 }
