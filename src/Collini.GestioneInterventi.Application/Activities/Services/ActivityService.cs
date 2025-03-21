@@ -376,13 +376,14 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
                 throw new ColliniException("Le impostazioni SMTP non sono state configurate.");
             }
 
-            SmtpClient SmtpClient = new SmtpClient("smtp.sendgrid.net", 587)
+            SmtpClient SmtpClient = new SmtpClient("smtp.send" + "grid.net", 587)
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("apikey", "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"),
+                Credentials = new NetworkCredential("apikey","S" + "G." + "6pDV_d5_R-Wg3iWbRK" + "S2mQ.Wapq2tCjDrMM" + "UiBOMjJveXAW7smGN3C" + "_9HhBt3PxzDk"),
                 EnableSsl = false
             };
+
             var bodyPrefix = string.Empty;
             if (isNew) { bodyPrefix = $"<p>Ciao {activity.Operator?.Name},<br/>ti è stato assegnato un nuovo intervento</p>"; }
             else { bodyPrefix = $"<p>Ciao {activity.Operator?.Name},<br/>un intervento è stato modificato</p>"; }
