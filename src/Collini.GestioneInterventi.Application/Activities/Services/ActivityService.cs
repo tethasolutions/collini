@@ -12,6 +12,7 @@ using Collini.GestioneInterventi.Framework.Session;
 using Microsoft.EntityFrameworkCore;
 using Collini.GestioneInterventi.Domain.Registry;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Collini.GestioneInterventi.Application.Activities.Services
 {
@@ -84,7 +85,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
  
             activity.Job = await jobService.GetJob(activityDto.JobId);
 
-            await SendNotificationEmail(activity.Id);
+            await SendNotificationEmail(activity.Id, true);
 
             return activity.MapTo<ActivityDto>(mapper);
         }
@@ -139,8 +140,11 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             }
 
             activityRepository.Update(activity);
-            
+
             await dbContext.SaveChanges();
+            
+            if (activity.Status == ActivityStatus.Planned) await SendNotificationEmail(activity.Id, false);
+
         }
 
         public async Task CopyActivity(CopyActivityDto copyActivityDto)
@@ -161,6 +165,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             await activityRepository.Insert(activity);
 
             await dbContext.SaveChanges();
+            await SendNotificationEmail(activity.Id, true);
         }
 
         public async Task<ActivityViewModel> GetActivity(long id)
@@ -345,7 +350,7 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             await dbContext.SaveChanges();
         }
 
-        private async Task SendNotificationEmail(long activityId)
+        private async Task SendNotificationEmail(long activityId, bool isNew)
         {
             var activity = await activityRepository.Query()
                 .AsNoTracking()
@@ -375,16 +380,19 @@ namespace Collini.GestioneInterventi.Application.Activities.Services
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("apikey", "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"),
+                Credentials = new NetworkCredential("apikey", "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"),
                 EnableSsl = false
             };
+            var bodyPrefix = string.Empty;
+            if (isNew) { bodyPrefix = $"<p>Ciao {activity.Operator?.Name},<br/>ti è stato assegnato un nuovo intervento</p>"; }
+            else { bodyPrefix = $"<p>Ciao {activity.Operator?.Name},<br/>un intervento è stato modificato</p>"; }
 
             var mailMessage = new MailMessage
             {
                 From = new MailAddress(smtpSettings.From),
                 Subject = "Nuovo Intervento Assegnato",
-                Body = $"<p>Ciao {activity.Operator?.Name},<br/>ti è stato assegnato un nuovo intervento</p>" +
-                $"<p><strong>Cliente:</strong> {activity.Job?.Customer?.CompanyName} {activity.Job?.Customer?.Surname} {activity.Job?.Customer?.Name}</p>" +
+
+                Body = $"{bodyPrefix}<p><strong>Cliente:</strong> {activity.Job?.Customer?.CompanyName} {activity.Job?.Customer?.Surname} {activity.Job?.Customer?.Name}</p>" +
                 $"<p><strong>Descrizione:</strong> {activity.Job?.Description}<br/>{activity.Description}</p>" +
                 $"<p><strong>Inizio:</strong> {activity.Start.ToLocalTime().ToString("dd/MM/yyyy HH:mm")}<br/>" +
                 $"<strong>Fine:</strong> {activity.End.ToLocalTime().ToString("dd/MM/yyyy HH:mm")}</p>" +
