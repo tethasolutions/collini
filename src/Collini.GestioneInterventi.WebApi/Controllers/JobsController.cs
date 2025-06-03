@@ -90,6 +90,13 @@ public class JobsController : ColliniApiController
         return dsr;
     }
 
+    [HttpGet("jobs-suspended")]
+    public async Task<DataSourceResult> GetJobsSuspendedd([DataSourceRequest] DataSourceRequest request)
+    {
+        var jobs = await jobsService.GetJobsSuspended();
+        DataSourceResult dsr = await jobs.ToDataSourceResultAsync(request);
+        return dsr;
+    }
 
     [HttpGet("job-counters")]
     public async Task<JobCountersDto> GetJobCounters()

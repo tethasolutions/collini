@@ -10,5 +10,6 @@ public enum JobStatus
     Paid,
     Canceled,
     Warranty,
-    Desk
+    Desk,
+    Suspended
 }

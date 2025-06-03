@@ -6,6 +6,7 @@
         <h3 *ngIf="jobType == 'completed'">Conti da fare</h3>
         <h3 *ngIf="jobType == 'billing'">Conti pronti</h3>
         <h3 *ngIf="jobType == 'paid'">Pagati</h3>
+        <h3 *ngIf="jobType == 'suspended'">Sospesi</h3>
     </div>
     
     <div class="col-auto" *ngIf="isVisibleNew()">

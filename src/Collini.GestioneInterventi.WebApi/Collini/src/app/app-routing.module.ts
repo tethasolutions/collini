@@ -63,7 +63,11 @@ const routes: Routes = [
             { 
                 path: 'activities', 
                 component: ActivitiesComponent
-            }
+            },
+            {
+                path: 'suspended',
+                component: JobsActiveComponent
+            },
         ]
     },
     { path: 'orders', component: OrdersComponent },

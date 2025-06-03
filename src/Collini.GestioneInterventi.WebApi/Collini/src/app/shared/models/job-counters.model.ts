@@ -9,6 +9,7 @@ export class JobCountersModel {
     interventions: JobCounterModel;
     completed: JobCounterModel;
     billing: JobCounterModel;
+    suspended: JobCounterModel;
 
     constructor() {
         this.acceptance = new JobCounterModel();
@@ -19,5 +20,6 @@ export class JobCountersModel {
         this.interventions = new JobCounterModel();
         this.completed = new JobCounterModel();
         this.billing = new JobCounterModel();
+        this.suspended = new JobCounterModel();
     }
 }

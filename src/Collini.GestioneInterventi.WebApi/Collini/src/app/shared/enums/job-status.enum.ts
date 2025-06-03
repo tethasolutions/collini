@@ -7,5 +7,6 @@ export enum JobStatusEnum {
     Paid,
     Canceled,
     Warranty,
-    Desk
+    Desk,
+    Suspended
 }

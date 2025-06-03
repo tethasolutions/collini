@@ -16,5 +16,6 @@ namespace Collini.GestioneInterventi.Application.Jobs.DTOs
         public JobCounterDto Interventions { get; set; }
         public JobCounterDto Completed { get; set; }
         public JobCounterDto Billing { get; set; }
+        public JobCounterDto Suspended { get; set; }
     }
 }

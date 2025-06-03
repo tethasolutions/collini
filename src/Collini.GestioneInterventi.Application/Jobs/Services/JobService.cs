@@ -37,6 +37,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
         Task<IEnumerable<JobDetailReadModel>> GetJobsCompleted();
         Task<IEnumerable<JobDetailReadModel>> GetJobsBilling();
         Task<IEnumerable<JobDetailReadModel>> GetJobsPaid();
+        Task<IEnumerable<JobDetailReadModel>> GetJobsSuspended();
         Task<IEnumerable<JobSearchReadModel>> GetJobsSearch();
         Task<JobActivitiesDto> GetJobActivities(long id);
         Task<Job>  GetJob(long id);
@@ -324,6 +325,10 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
             var DesksActive = Desks.Count(x => x.ExpirationDate >= DateTimeOffset.Now);
             var DesksExpired = Desks.Count(x => x.ExpirationDate < DateTimeOffset.Now);
 
+            var Suspendeds = jobs.Where(x => x.Status == JobStatus.Suspended && x.Number != 0);
+            var SuspendedsActive = Suspendeds.Count();
+            var SuspendedsExpired = Suspendeds.Count(x => x.ExpirationDate < DateTimeOffset.Now);
+
             var Preventives = quotationRepository
                 .Query()
                 .AsNoTracking()
@@ -395,15 +400,36 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 {
                     Active = BillingActive,
                     Expired = BillingExpired
+                },
+                Suspended = new JobCounterDto()
+                {
+                    Active = SuspendedsActive,
+                    Expired = SuspendedsExpired
                 }
             };
 
             return ret;
         }
 
-       
+
 
         public async Task<IEnumerable<JobDetailReadModel>> GetJobsPaid()
+        {
+            var paidJobs = await jobRepository
+                .Query()
+                .AsNoTracking()
+                .Include(x => x.Customer)
+                .ThenInclude(x => x.Addresses)
+                .Include(x => x.CustomerAddress)
+                .Include(x => x.ProductType)
+                .Include(x => x.Activities)
+                .ThenInclude(x => x.Operator)
+                .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid || x.Status == JobStatus.Warranty) && x.Number != 0)
+                .ToArrayAsync();
+            return paidJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
+        }
+
+        public async Task<IEnumerable<JobDetailReadModel>> GetJobsSuspended()
         {
             var paidJobs = await jobRepository
                 .Query()
@@ -414,7 +440,7 @@ namespace Collini.GestioneInterventi.Application.Jobs.Services
                 .Include(x => x.ProductType)
                 .Include(x => x.Activities)
                 .ThenInclude(x => x.Operator)
-                .Where(x => (x.Status == JobStatus.Billed || x.Status == JobStatus.Paid || x.Status == JobStatus.Warranty) && x.Number != 0)
+                .Where(x => (x.Status == JobStatus.Suspended) && x.Number != 0)
                 .ToArrayAsync();
             return paidJobs.MapTo<IEnumerable<JobDetailReadModel>>(mapper);
         }
