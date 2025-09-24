@@ -7,7 +7,7 @@ import { BaseComponent } from '../shared/base.component';
 import { State } from '@progress/kendo-data-query';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
-import { QuotationStatusEnum } from '../shared/enums/quotation-status.enum';
+import { QuotationStatusEnum, quotationStatusNames } from '../shared/enums/quotation-status.enum';
 import { NotesModalComponent } from '../notes-modal/notes-modal.component';
 import { NotesService } from '../services/notes.service';
 import { NoteModel } from '../shared/models/note.model';
@@ -28,12 +28,18 @@ export class QuotationsComponent extends BaseComponent implements OnInit {
 
   quotationNotes: Array<NoteModel> = [];
 
+  readonly quotationStatusNames = quotationStatusNames;
+
   dataQuotations: GridDataResult;
   stateGridQuotations: State = {
     skip: 0,
     take: 15,
     filter: {
-      filters: [],
+      filters: [{
+                    filters: [QuotationStatusEnum.Pending, QuotationStatusEnum.Sent]
+                        .map(e => ({ field: 'status', operator: 'eq', value: e })),
+                    logic: 'or'
+                }],
       logic: 'and'
     },
     group: [],

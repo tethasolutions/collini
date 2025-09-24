@@ -59,7 +59,7 @@ namespace Collini.GestioneInterventi.Application.Quotations.Services
         {
             var quotations = quotationRepository
                 .Query()
-                .Where(x => x.Status == QuotationStatus.Pending || x.Status == QuotationStatus.Sent)
+                //.Where(x => x.Status == QuotationStatus.Pending || x.Status == QuotationStatus.Sent)
                 .AsNoTracking()
                 .Project<QuotationDetailDto>(mapper);
 
