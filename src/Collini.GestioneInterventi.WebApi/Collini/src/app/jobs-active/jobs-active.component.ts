@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GridDataResult } from '@progress/kendo-angular-grid';
+import { CellClickEvent, GridDataResult } from '@progress/kendo-angular-grid';
 import { JobsService } from '../services/jobs.service';
 import { AddressesService } from '../services/addresses.service';
 import { MessageBoxService } from '../services/common/message-box.service';
@@ -48,6 +48,7 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
 
     jobNotes: Array<NoteModel> = [];
 
+    screenWidth: number;
     dataJobs: GridDataResult;
     stateGridJobs: State = {
         skip: 0,
@@ -59,6 +60,8 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         group: [],
         sort: [{ field: "jobDate", dir: "asc" }]
     };
+
+    private cellArgs: CellClickEvent;
 
     constructor(
         private readonly _jobsService: JobsService,
@@ -73,7 +76,6 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this._router.url);
         if (this._router.url === '/jobs/acceptance') { this.jobType = 'acceptance'; }
         if (this._router.url === '/jobs/active') { this.jobType = 'active'; }
         if (this._router.url === '/jobs/desk') { this.jobType = 'desk'; }
@@ -83,6 +85,13 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
         if (this._router.url === '/jobs/suspended') { this.jobType = 'suspended'; }
         this.statusList = Object.keys(ActivityStatusEnum);
         this._readJobs();
+        this.updateScreenSize();
+    }
+
+    private updateScreenSize(): void {
+        this.screenWidth = window.innerWidth - 44;
+        if (this.screenWidth > 1720) this.screenWidth = 1720;
+        if (this.screenWidth < 1400) this.screenWidth = 1400;
     }
 
     dataStateChange(state: State) {
@@ -120,6 +129,16 @@ export class JobsActiveComponent extends BaseComponent implements OnInit {
                 )
                 .subscribe()
         );
+    }
+
+    onDblClick(): void {
+        if (!this.cellArgs.isEdited) {
+            this.editJob(this.cellArgs.dataItem);
+        }
+    }
+
+    cellClickHandler(args: CellClickEvent): void {
+        this.cellArgs = args;
     }
 
     editJob(job: JobModel) {
